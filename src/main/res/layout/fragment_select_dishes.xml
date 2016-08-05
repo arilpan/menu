@@ -1,0 +1,18 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+             xmlns:tools="http://schemas.android.com/tools"
+             android:layout_width="match_parent"
+             android:layout_height="match_parent"
+             tools:context="com.xdkj.campus.menu.child.SelectFragment">
+    <TextView
+            android:id="@+id/class_name"
+            android:layout_width="match_parent" android:layout_height="wrap_content"/>
+
+    <ListView
+            android:horizontalSpacing="10dp"
+            android:numColumns="3"
+            android:verticalSpacing="10dp"
+            android:id="@+id/select_grid"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+
+</FrameLayout>

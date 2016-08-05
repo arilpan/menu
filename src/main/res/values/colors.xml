@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#F44336</color>
+    <color name="colorPrimaryDark">#D32F2F</color>
+    <color name="colorAccent">#536DFE</color>
+    <color name="bg_app">#F1F1F1</color>
+
+    <color name="tab_unselect">#c9c9c9</color>
+    <color name="bg_btn">#dadada</color>
+
+
+    <color name="pre_order_background">#F8F8F8</color>
+    <color name="pre_order_list_background">#ffffff</color>
+
+    <color name="font_color">#333333</color>
+    <color name="white">#fff</color>
+
+    <color name="line_divider">#E2E2E2</color>
+    <color name="red_background_btn">#FF6767</color>
+
+
+    <color name="gray_background_right">#FAFAFA</color>
+    <color name="black">#444444</color>
+    <color name="gray_light">#EBEDF0</color>
+</resources>

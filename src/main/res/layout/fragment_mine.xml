@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+    <include layout="@layout/common_title_back_grey_color"/>
+    <LinearLayout
+            android:background="@drawable/wode_bj"
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+    >
+        <ImageView
+                android:layout_marginTop="50dp"
+                android:layout_gravity="center"
+                android:layout_width="83dp"
+                android:layout_height="83dp"
+                android:src="@drawable/wode_touxiang"/>
+        <TextView
+                android:layout_gravity="center_horizontal"
+                android:layout_width="wrap_content" android:layout_height="match_parent"
+                android:text="mine "/>
+
+    </LinearLayout>
+
+    <RelativeLayout
+            android:layout_marginTop="10dp"
+            android:background="#fff"
+            android:id="@+id/uncomplete_layout"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+    >
+        <ImageView
+                android:layout_margin="10dp"
+                android:id="@+id/uncomplete_icon"
+                android:layout_alignParentLeft="true"
+                android:layout_centerVertical="true"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:gravity="center"
+                android:src="@drawable/yiwancheng"/>
+        <TextView
+                android:layout_marginLeft="0dp"
+                android:id="@+id/uncomplete_text"
+                android:layout_toRightOf="@id/uncomplete_icon"
+                android:layout_centerVertical="true"
+                android:layout_width="wrap_content"
+                android:gravity="center"
+                android:layout_height="match_parent"
+                android:text="未完成订单 "/>
+        <ImageView
+                android:layout_margin="10dp"
+                android:layout_centerVertical="true"
+                android:id="@+id/uncomplete_more"
+                android:layout_alignParentRight="true"
+                android:layout_width="10dp"
+                android:gravity="center"
+                android:layout_height="20dp"
+                android:src="@drawable/common_arrow_right"/>
+
+    </RelativeLayout>
+     <View style="@style/line_divider_h"/>
+    <RelativeLayout android:background="#fff"
+                    android:id="@+id/complete_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+    >
+        <ImageView
+                android:layout_margin="10dp"
+                android:id="@+id/complete_icon"
+                android:layout_alignParentLeft="true"
+                android:layout_centerVertical="true"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:gravity="center"
+                android:src="@drawable/weiwancheng"/>
+        <TextView
+                android:layout_marginLeft="0dp"
+                android:id="@+id/complete_text"
+                android:layout_toRightOf="@id/complete_icon"
+                android:layout_centerVertical="true"
+                android:layout_width="wrap_content"
+                android:gravity="center"
+                android:layout_height="match_parent"
+                android:text="已完成订单 "/>
+        <ImageView
+                android:layout_margin="10dp"
+                android:layout_centerVertical="true"
+                android:id="@+id/complete_more"
+                android:layout_alignParentRight="true"
+                android:layout_width="10dp"
+                android:gravity="center"
+                android:layout_height="20dp"
+                android:src="@drawable/common_arrow_right"/>
+
+    </RelativeLayout>
+    <View style="@style/line_divider_h"/>
+    <RelativeLayout android:background="#fff"
+                    android:id="@+id/running_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+    >
+        <ImageView
+                android:layout_margin="10dp"
+                android:id="@+id/running_icon"
+                android:layout_alignParentLeft="true"
+                android:layout_centerVertical="true"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:gravity="center"
+                android:src="@drawable/yiquxiao"/>
+        <TextView
+                android:layout_marginLeft="0dp"
+                android:id="@+id/running_text"
+                android:layout_toRightOf="@id/running_icon"
+                android:layout_centerVertical="true"
+                android:layout_width="wrap_content"
+                android:gravity="center"
+                android:layout_height="match_parent"
+                android:text="进行中的订单 "/>
+        <ImageView
+                android:layout_margin="10dp"
+                android:layout_centerVertical="true"
+                android:id="@+id/running_more"
+                android:layout_alignParentRight="true"
+                android:layout_width="10dp"
+                android:gravity="center"
+                android:layout_height="20dp"
+                android:src="@drawable/common_arrow_right"/>
+
+    </RelativeLayout>
+    <LinearLayout android:background="#fff"
+                  android:id="@+id/setting_layout"
+                  android:layout_marginTop="10dp"
+                  android:orientation="horizontal"
+                  android:layout_width="match_parent"
+                  android:layout_height="wrap_content"
+    >
+        <ImageView
+                android:layout_margin="10dp"
+                android:layout_gravity="center"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:src="@drawable/set"/>
+        <TextView
+                android:gravity="center"
+                android:layout_gravity="center"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:text="设置 "/>
+    </LinearLayout>
+    <View style="@style/line_divider_h"/>
+</LinearLayout>
