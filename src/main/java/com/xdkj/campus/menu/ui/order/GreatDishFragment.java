@@ -10,21 +10,21 @@ import com.xdkj.campus.menu.R;
 import com.xdkj.campus.menu.base.BaseFragment;
 
 
-public class CancleOrderFragment extends BaseFragment {
+public class GreatDishFragment extends BaseFragment {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
 
 
 //    private OnFragmentInteractionListener mListener;
 
-    public CancleOrderFragment() {
+    public GreatDishFragment() {
         // Required empty public constructor
     }
 
-    public static CancleOrderFragment newInstance() {
+    public static GreatDishFragment newInstance() {
 
         Bundle args = new Bundle();
-        CancleOrderFragment fragment = new CancleOrderFragment();
+        GreatDishFragment fragment = new GreatDishFragment();
         fragment.setArguments(args);
         return fragment;
     }
@@ -32,7 +32,7 @@ public class CancleOrderFragment extends BaseFragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_order_cancel, container, false);
+        View view = inflater.inflate(R.layout.fragment_dish_detail, container, false);
         initView(view);
         return view;
     }

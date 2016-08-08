@@ -3,233 +3,241 @@
               style="@style/pre_order_background"
               android:orientation="vertical">
     <include layout="@layout/common_title_back_grey_color"/>
-    <LinearLayout android:layout_width="match_parent"
-                  android:visibility="visible"
-                  android:background="@drawable/pre_order_title"
-                  android:layout_height="158dp">
-
-        <!--展示图158dp -->
-        <ImageView
-
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
-    </LinearLayout>
-    <LinearLayout
-            android:background="#fff"
-            android:orientation="vertical"
-            android:paddingLeft="20dp"
-            android:paddingTop="12dp"
-            android:paddingBottom="12dp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-        <TextView
-                android:textSize="15sp"
-                android:textColor="#333"
-                android:layout_marginBottom="12dp"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="商品名称：烤鳕鱼"/>
+    <ScrollView android:layout_width="match_parent" android:layout_height="match_parent">
         <LinearLayout
-                android:orientation="horizontal"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-            <TextView android:layout_width="wrap_content"
-                      android:layout_height="wrap_content"
-                      android:textSize="20sp"
-                      android:textColor="#ff6666"
-                      android:text="￥32"/>
-            <TextView
-                    android:layout_gravity="top"
+                android:orientation="vertical"
+                android:layout_width="match_parent" android:layout_height="match_parent">
+
+
+            <LinearLayout android:layout_width="match_parent"
+                          android:visibility="visible"
+                          android:background="@drawable/pre_order_title"
+                          android:layout_height="158dp">
+
+                <!--展示图158dp -->
+                <ImageView
+
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"/>
+            </LinearLayout>
+            <LinearLayout
+                    android:background="#fff"
+                    android:orientation="vertical"
+                    android:paddingLeft="20dp"
+                    android:paddingTop="12dp"
+                    android:paddingBottom="12dp"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:textColor="#999"
-                    android:textSize="11sp"
-                    android:text="￥32"/>
+                    android:layout_height="wrap_content">
+                <TextView
+                        android:textSize="15sp"
+                        android:textColor="#333"
+                        android:layout_marginBottom="12dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="商品名称：烤鳕鱼"/>
+                <LinearLayout
+                        android:orientation="horizontal"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+                    <TextView android:layout_width="wrap_content"
+                              android:layout_height="wrap_content"
+                              android:textSize="20sp"
+                              android:textColor="#ff6666"
+                              android:text="￥32"/>
+                    <TextView
+                            android:layout_gravity="top"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:textColor="#999"
+                            android:textSize="11sp"
+                            android:text="￥32"/>
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <RelativeLayout
+                    style="@style/pre_order_list_big_rl"
+                    android:background="#fff"
+            >
+
+                <ImageView
+                        android:id="@+id/icon_mall"
+                        android:layout_alignParentLeft="true"
+                        style="@style/pre_order_list_head_title_image"
+                        android:src="@drawable/pre_order_icon_mall"
+                />
+                <TextView
+                        style="@style/pre_order_list_head_desc_text"
+                        android:layout_toRightOf="@id/icon_mall"
+                        android:text="@string/eight_mall"/>
+                <ImageView
+                        style="@style/pre_order_list_head_img_right"
+                        android:src="@drawable/pre_order_icon_tel"
+                />
+            </RelativeLayout>
+            <View style="@style/line_divider"/>
+            <RelativeLayout
+                    style="@style/pre_order_list_small_rl"
+                    android:orientation="horizontal">
+
+                <TextView
+                        android:id="@+id/text_location"
+                        style="@style/pre_order_list_title"
+                        android:text="@string/mall_location"/>
+
+                <TextView
+                        android:layout_toRightOf="@id/text_location"
+                        style="@style/pre_order_list_desc"
+                        android:text="@string/mall_location_detail"
+                />
+                <ImageView
+                        style="@style/pre_order_list_head_img_right"
+                        android:src="@drawable/pre_order_icon_location"
+                />
+            </RelativeLayout>
+            <View style="@style/line_divider"/>
+            <RelativeLayout
+                    style="@style/pre_order_list_small_rl"
+            >
+
+                <TextView android:id="@+id/text_time"
+                          style="@style/pre_order_list_title"
+                          android:text="@string/mall_work_time"/>
+
+                <TextView
+                        android:layout_toRightOf="@id/text_time"
+                        style="@style/pre_order_list_desc"
+                        android:text="@string/mall_work_time_detail"
+                />
+            </RelativeLayout>
+            <View style="@style/line_divider"/>
+            <!--菜品内容-->
+            <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingTop="12dp"
+                    android:paddingBottom="5dp"
+
+                    style="@style/pre_order_list_big_rl"
+                    android:orientation="horizontal">
+
+                <ImageView android:layout_gravity="center_vertical"
+                           style="@style/pre_order_list_head_title_image"
+                           android:layout_width="4dp"
+                           android:layout_height="14dp"
+                           android:layout_marginLeft="0dp"
+                           android:layout_marginRight="4dp"
+                           android:background="@drawable/pre_order_icon_info"
+                />
+                <TextView
+                        android:layout_marginLeft="2dp"
+                        android:layout_gravity="center_vertical"
+                        style="@style/pre_order_list_head_desc_text"
+                        android:layout_width="70dp"
+                        android:layout_height="wrap_content"
+                        android:text="菜品描述:"/>
+            </LinearLayout>
+            <TextView android:background="#fff"
+                      android:paddingTop="5dp"
+                      android:paddingBottom="12dp"
+                      android:textColor="#666"
+                      android:paddingLeft="19dp"
+                      android:paddingRight="20dp"
+                      android:layout_width="match_parent"
+                      android:layout_height="wrap_content"
+                      android:text="预约请至少提前2个小时，成品已食物为准，图片仅供参考，用餐前2个小时可取消订单。"
+            />
+            <View style="@style/line_divider"/>
+
+
+            <!--预约用餐及人数-->
+            <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingTop="12dp"
+                    android:paddingBottom="5dp"
+
+                    style="@style/pre_order_list_big_rl"
+                    android:orientation="horizontal">
+
+                <ImageView android:layout_gravity="center_vertical"
+                           style="@style/pre_order_list_head_title_image"
+                           android:layout_width="4dp"
+                           android:layout_height="14dp"
+                           android:layout_marginLeft="0dp"
+                           android:layout_marginRight="4dp"
+                           android:background="@drawable/pre_order_icon_info"
+                />
+                <TextView
+                        android:layout_marginLeft="2dp"
+                        android:layout_gravity="center_vertical"
+                        style="@style/pre_order_list_head_desc_text"
+                        android:layout_width="70dp"
+                        android:layout_height="wrap_content"
+                        android:text="预约须知:"/>
+            </LinearLayout>
+            <TextView android:background="#fff"
+                      android:paddingTop="5dp"
+                      android:paddingBottom="12dp"
+                      android:textColor="#666"
+                      android:paddingLeft="19dp"
+                      android:paddingRight="20dp"
+                      android:layout_width="match_parent"
+                      android:layout_height="wrap_content"
+                      android:text="预约请至少提前2个小时，成品已食物为准，图片仅供参考，用餐前2个小时可取消订单。"
+            />
+            <View style="@style/line_divider"/>
+            <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingTop="12dp"
+                    android:paddingBottom="5dp"
+
+                    style="@style/pre_order_list_big_rl"
+                    android:orientation="horizontal">
+
+                <ImageView android:layout_gravity="center_vertical"
+                           style="@style/pre_order_list_head_title_image"
+                           android:layout_width="4dp"
+                           android:layout_height="14dp"
+                           android:layout_marginLeft="0dp"
+                           android:layout_marginRight="4dp"
+                           android:background="@drawable/pre_order_icon_info"
+                />
+                <TextView
+                        android:layout_marginLeft="2dp"
+                        android:layout_gravity="center_vertical"
+                        style="@style/pre_order_list_head_desc_text"
+                        android:layout_width="70dp"
+                        android:layout_height="wrap_content"
+                        android:text="用户评价:"/>
+            </LinearLayout>
+            <ListView android:background="#fff"
+                      android:paddingTop="5dp"
+                      android:paddingBottom="12dp"
+                      android:textColor="#666"
+                      android:paddingLeft="19dp"
+                      android:paddingRight="20dp"
+                      android:layout_width="match_parent"
+                      android:layout_height="wrap_content"
+                      android:text="预约请至少提前2个小时，成品已食物为准，图片仅供参考，用餐前2个小时可取消订单。"
+            />
+            <View style="@style/line_divider"/>
+
+            <Button
+                    android:layout_marginTop="5dp"
+                    android:layout_marginRight="20dp"
+                    android:layout_marginLeft="20dp"
+                    android:layout_width="match_parent"
+                    android:text="@string/dishes_order_now"
+                    android:textColor="#fff"
+                    android:gravity="center"
+                    android:textSize="14sp"
+                    android:paddingTop="13dp"
+                    android:paddingBottom="13dp"
+                    android:background="@color/red_font_color"
+                    android:layout_gravity="center_vertical"
+                    android:layout_height="40dp"/>
         </LinearLayout>
-
-    </LinearLayout>
-
-    <RelativeLayout
-            style="@style/pre_order_list_big_rl"
-            android:background="#fff"
-    >
-
-        <ImageView
-                android:id="@+id/icon_mall"
-                android:layout_alignParentLeft="true"
-                style="@style/pre_order_list_head_title_image"
-                android:src="@drawable/pre_order_icon_mall"
-        />
-        <TextView
-                style="@style/pre_order_list_head_desc_text"
-                android:layout_toRightOf="@id/icon_mall"
-                android:text="@string/eight_mall"/>
-        <ImageView
-                style="@style/pre_order_list_head_img_right"
-                android:src="@drawable/pre_order_icon_tel"
-        />
-    </RelativeLayout>
-    <View style="@style/line_divider"/>
-    <RelativeLayout
-            style="@style/pre_order_list_small_rl"
-            android:orientation="horizontal">
-
-        <TextView
-                android:id="@+id/text_location"
-                style="@style/pre_order_list_title"
-                android:text="@string/mall_location"/>
-
-        <TextView
-                android:layout_toRightOf="@id/text_location"
-                style="@style/pre_order_list_desc"
-                android:text="@string/mall_location_detail"
-        />
-        <ImageView
-                style="@style/pre_order_list_head_img_right"
-                android:src="@drawable/pre_order_icon_location"
-        />
-    </RelativeLayout>
-    <View style="@style/line_divider"/>
-    <RelativeLayout
-            style="@style/pre_order_list_small_rl"
-    >
-
-        <TextView android:id="@+id/text_time"
-                  style="@style/pre_order_list_title"
-                  android:text="@string/mall_work_time"/>
-
-        <TextView
-                android:layout_toRightOf="@id/text_time"
-                style="@style/pre_order_list_desc"
-                android:text="@string/mall_work_time_detail"
-        />
-    </RelativeLayout>
-    <View style="@style/line_divider"/>
-    <!--菜品内容-->
-    <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:paddingTop="12dp"
-            android:paddingBottom="5dp"
-
-            style="@style/pre_order_list_big_rl"
-            android:orientation="horizontal">
-
-        <ImageView android:layout_gravity="center_vertical"
-                   style="@style/pre_order_list_head_title_image"
-                   android:layout_width="4dp"
-                   android:layout_height="14dp"
-                   android:layout_marginLeft="0dp"
-                   android:layout_marginRight="4dp"
-                   android:background="@drawable/pre_order_icon_info"
-        />
-        <TextView
-                android:layout_marginLeft="2dp"
-                android:layout_gravity="center_vertical"
-                style="@style/pre_order_list_head_desc_text"
-                android:layout_width="70dp"
-                android:layout_height="wrap_content"
-                android:text="菜品描述:"/>
-    </LinearLayout>
-    <TextView android:background="#fff"
-              android:paddingTop="5dp"
-              android:paddingBottom="12dp"
-              android:textColor="#666"
-              android:paddingLeft="19dp"
-              android:paddingRight="20dp"
-              android:layout_width="match_parent"
-              android:layout_height="wrap_content"
-              android:text="预约请至少提前2个小时，成品已食物为准，图片仅供参考，用餐前2个小时可取消订单。"
-    />
-    <View style="@style/line_divider"/>
-
-
-    <!--预约用餐及人数-->
-    <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:paddingTop="12dp"
-            android:paddingBottom="5dp"
-
-            style="@style/pre_order_list_big_rl"
-            android:orientation="horizontal">
-
-        <ImageView android:layout_gravity="center_vertical"
-                   style="@style/pre_order_list_head_title_image"
-                   android:layout_width="4dp"
-                   android:layout_height="14dp"
-                   android:layout_marginLeft="0dp"
-                   android:layout_marginRight="4dp"
-                   android:background="@drawable/pre_order_icon_info"
-        />
-        <TextView
-                android:layout_marginLeft="2dp"
-                android:layout_gravity="center_vertical"
-                style="@style/pre_order_list_head_desc_text"
-                android:layout_width="70dp"
-                android:layout_height="wrap_content"
-                android:text="预约须知:"/>
-    </LinearLayout>
-    <TextView android:background="#fff"
-              android:paddingTop="5dp"
-              android:paddingBottom="12dp"
-              android:textColor="#666"
-              android:paddingLeft="19dp"
-              android:paddingRight="20dp"
-              android:layout_width="match_parent"
-              android:layout_height="wrap_content"
-              android:text="预约请至少提前2个小时，成品已食物为准，图片仅供参考，用餐前2个小时可取消订单。"
-    />
-    <View style="@style/line_divider"/>
-    <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:paddingTop="12dp"
-            android:paddingBottom="5dp"
-
-            style="@style/pre_order_list_big_rl"
-            android:orientation="horizontal">
-
-        <ImageView android:layout_gravity="center_vertical"
-                   style="@style/pre_order_list_head_title_image"
-                   android:layout_width="4dp"
-                   android:layout_height="14dp"
-                   android:layout_marginLeft="0dp"
-                   android:layout_marginRight="4dp"
-                   android:background="@drawable/pre_order_icon_info"
-        />
-        <TextView
-                android:layout_marginLeft="2dp"
-                android:layout_gravity="center_vertical"
-                style="@style/pre_order_list_head_desc_text"
-                android:layout_width="70dp"
-                android:layout_height="wrap_content"
-                android:text="用户评价:"/>
-    </LinearLayout>
-    <ListView android:background="#fff"
-              android:paddingTop="5dp"
-              android:paddingBottom="12dp"
-              android:textColor="#666"
-              android:paddingLeft="19dp"
-              android:paddingRight="20dp"
-              android:layout_width="match_parent"
-              android:layout_height="wrap_content"
-              android:text="预约请至少提前2个小时，成品已食物为准，图片仅供参考，用餐前2个小时可取消订单。"
-    />
-    <View style="@style/line_divider"/>
-
-    <Button
-            android:layout_marginTop="5dp"
-            android:layout_marginRight="20dp"
-            android:layout_marginLeft="20dp"
-            android:layout_width="match_parent"
-            android:text="@string/dishes_order_now"
-            android:textColor="#fff"
-            android:gravity="center"
-            android:textSize="14sp"
-            android:paddingTop="13dp"
-            android:paddingBottom="13dp"
-            android:background="@color/red_background_btn"
-            android:layout_gravity="center_vertical"
-            android:layout_height="40dp"/>
+    </ScrollView>
 </LinearLayout>

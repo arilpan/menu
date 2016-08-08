@@ -10,6 +10,7 @@ import android.widget.LinearLayout;
 import com.xdkj.campus.menu.base.BaseLazyMainFragment;
 import com.xdkj.campus.menu.event.StartBrotherEvent;
 import com.xdkj.campus.menu.good_dishes.DishesSwitchFragment;
+import com.xdkj.campus.menu.ui.order.GreatDishFragment;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
@@ -77,7 +78,7 @@ public class IndexFragment extends BaseLazyMainFragment {
 //                          (DishesSwitchFragment.newInstance()));
 //                ((MainActivity) getParentFragment()).startBrother
 //                        (new StartBrotherEvent(DishesSwitchFragment.newInstance()));
-                EventBus.getDefault().post(new StartBrotherEvent(DishesSwitchFragment.newInstance()));
+                EventBus.getDefault().post(new StartBrotherEvent(GreatDishFragment.newInstance()));
 
             }
         });

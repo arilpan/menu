@@ -18,7 +18,7 @@
     <color name="line_divider">#E2E2E2</color>
     <color name="red_background_btn">#FF6767</color>
 
-
+    <color name="red_font_color">#FF6666</color>
     <color name="gray_background_right">#FAFAFA</color>
     <color name="black">#444444</color>
     <color name="gray_light">#EBEDF0</color>

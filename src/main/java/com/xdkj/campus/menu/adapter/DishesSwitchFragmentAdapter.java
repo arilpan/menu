@@ -4,7 +4,6 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import com.xdkj.campus.menu.good_dishes.FirstPagerFragment;
-import com.xdkj.campus.menu.good_dishes.OtherPagerFragment;
 
 
 /**
@@ -22,7 +21,7 @@ public class DishesSwitchFragmentAdapter extends FragmentPagerAdapter {
         if (position == 0) {
             return FirstPagerFragment.newInstance();
         } else {
-            return OtherPagerFragment.newInstance();
+            return FirstPagerFragment.newInstance();
         }
     }
 

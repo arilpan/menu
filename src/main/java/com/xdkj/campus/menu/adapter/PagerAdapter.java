@@ -25,16 +25,31 @@ public class PagerAdapter extends RecyclerView.Adapter<PagerAdapter.MyViewHolder
 
     public PagerAdapter(Context context) {
         this.mInflater = LayoutInflater.from(context);
+
     }
 
     public void setDatas(List<Dish> items) {
         mItems.clear();
         mItems.addAll(items);
+        getRandomHeight(this.mItems);
         notifyDataSetChanged();
     }
 
+
+    private List<Integer> heights;
+
+    private void getRandomHeight(List<Dish> lists) {//得到随机item的高度
+        heights = new ArrayList<>();
+        for (int i = 0; i < lists.size(); i++) {
+            heights.add((int)(600+Math.random()*400));
+//            heights.add((int) (160 + (lists.get(i).getDesc().length()) / 12 * 20));
+        }
+    }
+
+
     @Override
     public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+
         View view = mInflater.inflate(R.layout.fragment_dish_switch_list_itme, parent, false);
         final MyViewHolder holder = new MyViewHolder(view);
         holder.itemView.setOnClickListener(new View.OnClickListener() {
@@ -51,6 +66,11 @@ public class PagerAdapter extends RecyclerView.Adapter<PagerAdapter.MyViewHolder
 
     @Override
     public void onBindViewHolder(MyViewHolder holder, int position) {
+        ViewGroup.LayoutParams params = holder.itemView.getLayoutParams();//得到item的LayoutParams布局参数
+        params.height = heights.get(position);//把随机的高度赋予itemView布局
+        holder.itemView.setLayoutParams(params);//把params设置给itemView布局
+
+
         Dish item = mItems.get(position);
         holder.name.setText(item.getName());
         holder.desc.setText(item.getDesc());

@@ -1,4 +1,4 @@
-package com.xdkj.campus.menu.ui.mine;
+package com.xdkj.campus.menu.ui.order;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -18,21 +18,21 @@ import com.xdkj.campus.menu.base.BaseFragment;
 // * Use the {@link TestOne#newInstance} factory method to
 // * create an instance of this fragment.
 // */
-public class SettingFragment extends BaseFragment {
+public class SelectPlaceFragment extends BaseFragment {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
 
 
 //    private OnFragmentInteractionListener mListener;
 
-    public SettingFragment() {
+    public SelectPlaceFragment() {
         // Required empty public constructor
     }
 
-    public static SettingFragment newInstance() {
+    public static SelectPlaceFragment newInstance() {
 
         Bundle args = new Bundle();
-        SettingFragment fragment = new SettingFragment();
+        SelectPlaceFragment fragment = new SelectPlaceFragment();
         fragment.setArguments(args);
         return fragment;
     }
@@ -40,7 +40,7 @@ public class SettingFragment extends BaseFragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_setting, container, false);
+        View view = inflater.inflate(R.layout.select_mall, container, false);
         initView(view);
         return view;
     }

@@ -8,9 +8,11 @@
     <include layout="@layout/common_title_back_grey_color"/>
     <ListView
             android:layout_marginLeft="7dp"
-            android:dividerHeight="10dp"
+            android:background="@color/bg_app"
             android:layout_marginTop="10dp"
             android:layout_gravity="center"
+            android:divider="@null"
+            android:dividerHeight="10dp"
             tools:listitem="@layout/fragment_discount_list_item"
             android:layout_width="match_parent"
             android:layout_height="match_parent"

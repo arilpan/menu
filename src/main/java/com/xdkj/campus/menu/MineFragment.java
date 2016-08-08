@@ -48,7 +48,7 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
 
         running_layout.setOnClickListener(this);
         complete_layout.setOnClickListener(this);
-        complete_layout.setOnClickListener(this);
+        uncomplete_layout.setOnClickListener(this);
         setting_layout.setOnClickListener(this);
 
         ((TextView) view.findViewById(R.id.title_middle)).setText("我的");
