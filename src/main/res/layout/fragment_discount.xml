@@ -2,10 +2,15 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               xmlns:tools="http://schemas.android.com/tools"
               android:orientation="vertical"
+              android:background="@color/bg_app"
               android:layout_width="match_parent"
               android:layout_height="match_parent">
     <include layout="@layout/common_title_back_grey_color"/>
     <ListView
+            android:layout_marginLeft="7dp"
+            android:dividerHeight="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_gravity="center"
             tools:listitem="@layout/fragment_discount_list_item"
             android:layout_width="match_parent"
             android:layout_height="match_parent"

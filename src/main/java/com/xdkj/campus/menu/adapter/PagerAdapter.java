@@ -5,8 +5,10 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 import com.xdkj.campus.menu.R;
+import com.xdkj.campus.menu.entity.Dish;
 import com.xdkj.campus.menu.listener.OnItemClickListener;
 
 import java.util.ArrayList;
@@ -16,7 +18,7 @@ import java.util.List;
  * Created by YoKeyword on 16/6/30.
  */
 public class PagerAdapter extends RecyclerView.Adapter<PagerAdapter.MyViewHolder> {
-    private List<String> mItems = new ArrayList<>();
+    private List<Dish> mItems = new ArrayList<>();
     private LayoutInflater mInflater;
 
     private OnItemClickListener mClickListener;
@@ -25,7 +27,7 @@ public class PagerAdapter extends RecyclerView.Adapter<PagerAdapter.MyViewHolder
         this.mInflater = LayoutInflater.from(context);
     }
 
-    public void setDatas(List<String> items) {
+    public void setDatas(List<Dish> items) {
         mItems.clear();
         mItems.addAll(items);
         notifyDataSetChanged();
@@ -33,7 +35,7 @@ public class PagerAdapter extends RecyclerView.Adapter<PagerAdapter.MyViewHolder
 
     @Override
     public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = mInflater.inflate(R.layout.item_pager, parent, false);
+        View view = mInflater.inflate(R.layout.fragment_dish_switch_list_itme, parent, false);
         final MyViewHolder holder = new MyViewHolder(view);
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -49,8 +51,12 @@ public class PagerAdapter extends RecyclerView.Adapter<PagerAdapter.MyViewHolder
 
     @Override
     public void onBindViewHolder(MyViewHolder holder, int position) {
-        String item = mItems.get(position);
-        holder.tvTitle.setText(item);
+        Dish item = mItems.get(position);
+        holder.name.setText(item.getName());
+        holder.desc.setText(item.getDesc());
+        holder.price.setText(item.getPrice());
+
+        holder.image.setImageResource(R.drawable.index_dishes_image_default);
     }
 
     @Override
@@ -59,11 +65,18 @@ public class PagerAdapter extends RecyclerView.Adapter<PagerAdapter.MyViewHolder
     }
 
     class MyViewHolder extends RecyclerView.ViewHolder {
-        private TextView tvTitle;
+        private TextView price;
+        private TextView desc;
+        private TextView name;
+        private ImageView image;
 
         public MyViewHolder(View itemView) {
             super(itemView);
-            tvTitle = (TextView) itemView.findViewById(R.id.tv_title);
+            name = (TextView) itemView.findViewById(R.id.switch_dish_name);
+            desc = (TextView) itemView.findViewById(R.id.switch_dish_desc);
+            price = (TextView) itemView.findViewById(R.id.switch_dish_price);
+
+            image = (ImageView) itemView.findViewById(R.id.switch_dish_image);
         }
     }
 
