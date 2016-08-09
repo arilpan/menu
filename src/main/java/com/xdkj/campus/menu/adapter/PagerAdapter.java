@@ -2,6 +2,7 @@ package com.xdkj.campus.menu.adapter;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -41,8 +42,13 @@ public class PagerAdapter extends RecyclerView.Adapter<PagerAdapter.MyViewHolder
     private void getRandomHeight(List<Dish> lists) {//得到随机item的高度
         heights = new ArrayList<>();
         for (int i = 0; i < lists.size(); i++) {
-            heights.add((int)(600+Math.random()*400));
-//            heights.add((int) (160 + (lists.get(i).getDesc().length()) / 12 * 20));
+//            heights.add((int)(600+Math.random()*400));
+            int desc_length = (lists.get(i).getDesc().length()) / 10;
+            int length = (int) (440 + desc_length * 10);
+            Log.e("arilpan", "描述信息：" + lists.get(i).getDesc() +
+                    ",单个长度：" + lists.get(i).getDesc().length()+
+                    ",每10个字是一行，高度：" +  length);
+            heights.add(length);
         }
     }
 
@@ -68,6 +74,7 @@ public class PagerAdapter extends RecyclerView.Adapter<PagerAdapter.MyViewHolder
     public void onBindViewHolder(MyViewHolder holder, int position) {
         ViewGroup.LayoutParams params = holder.itemView.getLayoutParams();//得到item的LayoutParams布局参数
         params.height = heights.get(position);//把随机的高度赋予itemView布局
+
         holder.itemView.setLayoutParams(params);//把params设置给itemView布局
 
 

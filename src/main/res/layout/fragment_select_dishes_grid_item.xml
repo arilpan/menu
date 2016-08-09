@@ -14,6 +14,7 @@
             android:layout_centerHorizontal="true">
     </ImageView>
     <LinearLayout
+            android:id="@+id/select_dish_layout"
             android:layout_margin="6dp"
             android:layout_marginTop="0dp"
             android:layout_alignParentBottom="true"
@@ -22,26 +23,26 @@
 
         <TextView
                 android:id="@+id/item_left"
-                android:text="aa "
-                              android:layout_weight="1"
+                android:text="土豆丝"
+                android:layout_weight="1"
                 android:layout_below="@+id/item_image"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerHorizontal="true">
         </TextView>
-        <TextView  android:layout_weight="1"
-                android:id="@+id/item_middle" android:text="aa "
-                android:layout_below="@+id/item_image"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerHorizontal="true">
+        <TextView android:layout_weight="1"
+                  android:id="@+id/item_middle" android:text="￥32"
+                  android:layout_below="@+id/item_image"
+                  android:layout_width="wrap_content"
+                  android:layout_height="wrap_content"
+                  android:layout_centerHorizontal="true">
         </TextView>
-        <TextView    android:layout_weight="1"
-                android:id="@+id/item_right" android:text="aa "
-                android:layout_below="@+id/item_image"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerHorizontal="true">
+        <TextView android:layout_weight="1"
+                  android:id="@+id/item_right" android:text="选择"
+                  android:layout_below="@+id/item_image"
+                  android:layout_width="wrap_content"
+                  android:layout_height="wrap_content"
+                  android:layout_centerHorizontal="true">
         </TextView>
     </LinearLayout>
 

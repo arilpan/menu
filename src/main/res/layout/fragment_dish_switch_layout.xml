@@ -16,16 +16,11 @@
                     android:id="@+id/switch_recv_left"
                     android:layout_width="0dp"
                     android:layout_weight="1"
+                    android:background="#F8F8F8"
                     android:layout_height="match_parent">
 
             </android.support.v7.widget.RecyclerView>
-            <android.support.v7.widget.RecyclerView
-                    android:id="@+id/switch_recv_right"
-                    android:layout_weight="1"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent">
 
-            </android.support.v7.widget.RecyclerView>
         </LinearLayout>
     </android.support.v4.widget.SwipeRefreshLayout>
 

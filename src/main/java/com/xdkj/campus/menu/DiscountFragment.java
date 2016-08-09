@@ -55,24 +55,46 @@ public class DiscountFragment extends BaseFragment {
     TextView mTvBtnSettings;
 
     private void initView(View view) {
-        ((TextView)view.findViewById(R.id.title_middle)).setText("优惠");
+        ((TextView) view.findViewById(R.id.title_middle)).setText("优惠");
 
         listview = (ListView) view.findViewById(R.id.listview);
         ArrayList<HashMap<String, Object>> item = new ArrayList<HashMap<String, Object>>();
 
-        for (int i = 0; i < 3; i++) {
-            Recharge recharge = new Recharge(1,
-                    "https://ss1.bdstatic.com/5eN1bjq8AAUYm2zgoY3K/r/www/cache/static/protocol/https/home/img/qrcode/nuomi_510f7472.png",
-                    "8号餐馆", "丽人卡", "充1000元送200元",
-                    "2016-07-09--2016-08-09");
-            HashMap<String, Object> map = new HashMap<String, Object>();
-            map.put("item_image", recharge.getImage());
-            map.put("item_mall_name", recharge.getMall_name());
-            map.put("item_card_name", recharge.getCard_name());
-            map.put("item_desc", recharge.getDesc());
-            map.put("item_time", recharge.getTime());
-            item.add(map);
-        }
+//        for (int i = 0; i < 3; i++) {
+        Recharge recharge = new Recharge(1,
+                R.drawable.chongzhi_lirenkabj,
+                "8号餐馆", "丽人卡", "充2000元送500元",
+                "2016-07-09--2016-08-09");
+        HashMap<String, Object> map = new HashMap<String, Object>();
+        map.put("item_image", recharge.getImage());
+        map.put("item_mall_name", recharge.getMall_name());
+        map.put("item_card_name", recharge.getCard_name());
+        map.put("item_desc", recharge.getDesc());
+        map.put("item_time", recharge.getTime());
+        item.add(map);
+        recharge = new Recharge(1,
+                R.drawable.chongzhi_jinkabj,
+                "8号餐馆", "黄金卡", "充1000元送200元",
+                "2016-07-09--2016-08-09");
+        map = new HashMap<String, Object>();
+        map.put("item_image", recharge.getImage());
+        map.put("item_mall_name", recharge.getMall_name());
+        map.put("item_card_name", recharge.getCard_name());
+        map.put("item_desc", recharge.getDesc());
+        map.put("item_time", recharge.getTime());
+        item.add(map);
+        recharge = new Recharge(1,
+               R.drawable.chongzhi_yinkabj,
+                "8号餐馆", "银卡", "充500元送50元",
+                "2016-07-09--2016-08-09");
+        map = new HashMap<String, Object>();
+        map.put("item_image", recharge.getImage());
+        map.put("item_mall_name", recharge.getMall_name());
+        map.put("item_card_name", recharge.getCard_name());
+        map.put("item_desc", recharge.getDesc());
+        map.put("item_time", recharge.getTime());
+        item.add(map);
+//        }
         SimpleAdapter simpleAdapter = new SimpleAdapter(getContext(), item,
                 R.layout.fragment_discount_list_item, new String[]
                 {"item_image", "item_mall_name", "item_card_name",

@@ -7,6 +7,7 @@
               android:layout_height="match_parent">
     <include layout="@layout/common_title_back_grey_color"/>
     <ListView
+            android:clickable="false"
             android:layout_marginLeft="7dp"
             android:background="@color/bg_app"
             android:layout_marginTop="10dp"

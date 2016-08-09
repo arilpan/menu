@@ -3,6 +3,7 @@
               android:layout_width="match_parent"
               android:layout_height="match_parent"
               xmlns:app="http://schemas.android.com/apk/res-auto"
+              xmlns:tools="http://schemas.android.com/tools"
               android:orientation="vertical">
 
     <include layout="@layout/common_title_back_grey_color"/>
@@ -13,7 +14,7 @@
             app:tabIndicatorColor="@android:color/white"
             app:tabSelectedTextColor="@android:color/white"
             app:tabTextColor="#EF9A9A"
-            android:background="#f0f"
+            android:background="#999"
             app:tabTextAppearance="@style/tab_appearance"
             android:layout_height="45dp"/>
 

@@ -5,20 +5,20 @@ import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 import com.xdkj.campus.menu.R;
-import com.xdkj.campus.menu.ShopFragment;
 import com.xdkj.campus.menu.fragment.CycleFragment;
 import me.yokeyword.fragmentation.SupportFragment;
 
 /**
  * Created by xdkj on 2016/8/4.
  */
-public class SelectPlaceFragment extends SupportFragment {
+public class SelectDishListFragment extends SupportFragment {
     private static final String ARG_NUMBER = "arg_number";
 
-    TextView mall_1;
-    TextView mall_2;
+    private TextView mTvName;
+    private Button mBtnNext, mBtnNextWithFinish;
 
     private int mNumber;
 
@@ -48,21 +48,24 @@ public class SelectPlaceFragment extends SupportFragment {
     }
 
     private void initView(View view) {
-        mall_1 = (TextView) view.findViewById(R.id.mall_1);
-        mall_2 = (TextView) view.findViewById(R.id.mall_2);
+        mTvName = (TextView) view.findViewById(R.id.tv_name);
+        mBtnNext = (Button) view.findViewById(R.id.btn_next);
+        mBtnNextWithFinish = (Button) view.findViewById(R.id.btn_next_with_finish);
+
         String title = "循环Fragment" + mNumber;
-        mall_1.setOnClickListener(new View.OnClickListener() {
+
+
+        mTvName.setText(title);
+        mBtnNext.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                start(CycleFragment.newInstance(mNumber + 1));
-                start(ShopFragment.newInstance());
+                start(CycleFragment.newInstance(mNumber + 1));
             }
         });
-        mall_2.setOnClickListener(new View.OnClickListener() {
+        mBtnNextWithFinish.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                start(ShopFragment.newInstance());
-//                startWithPop(CycleFragment.newInstance(mNumber + 1));
+                startWithPop(CycleFragment.newInstance(mNumber + 1));
             }
         });
     }

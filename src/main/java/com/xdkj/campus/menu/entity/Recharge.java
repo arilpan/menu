@@ -6,6 +6,7 @@ package com.xdkj.campus.menu.entity;
 public class Recharge {
     private int id;
     private String image;
+    private int backgoundRes;
     private String mall_name;
     private String card_name;
     private String desc;
@@ -18,6 +19,21 @@ public class Recharge {
         this.card_name = card_name;
         this.desc = desc;
         this.time = time;
+    }
+    public Recharge(int id,int backgoundRes, String mall_name, String card_name, String desc, String time) {
+        this.id = id;
+        this.backgoundRes = backgoundRes;
+        this.mall_name = mall_name;
+        this.card_name = card_name;
+        this.desc = desc;
+        this.time = time;
+    }
+    public int getBackgoundRes() {
+        return backgoundRes;
+    }
+
+    public void setBackgoundRes(int backgoundRes) {
+        this.backgoundRes = backgoundRes;
     }
 
     public int getId() {

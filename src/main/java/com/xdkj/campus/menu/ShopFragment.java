@@ -8,7 +8,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.Toast;
 import com.xdkj.campus.menu.base.BaseFragment;
 import com.xdkj.campus.menu.child.ContentFragment;
@@ -82,7 +82,7 @@ public class ShopFragment extends BaseFragment {
                     SelectFragment.newInstance("热门推荐", "1"), false);
 
 
-            ((LinearLayout) view.findViewById(R.id.menu_selected)).setOnClickListener(new View.OnClickListener() {
+            ((RelativeLayout) view.findViewById(R.id.menu_selected)).setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     if (showDishList) {

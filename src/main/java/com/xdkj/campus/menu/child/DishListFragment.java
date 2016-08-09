@@ -66,15 +66,16 @@ public class DishListFragment extends BaseFragment {
                 R.drawable.ic_account_circle_white_48dp,
                 R.drawable.ic_account_circle_white_48dp,
                 R.drawable.ic_account_circle_white_48dp};
-        String[] name = {"某菜1", "某菜2", "某菜3", "某菜4"};
+        String[] name = {"土豆丝", "青菜", "小白菜", "茄子"};
+        int[] price = {12,33,54,21};
         ArrayList<HashMap<String, Object>> item = new ArrayList<HashMap<String, Object>>();
         for (int i = 0; i < resIds.length; i++) {
             HashMap<String, Object> map = new HashMap<String, Object>();
             map.put("item_image", resIds[i]);
-            map.put("item_price", name[i]);
-            map.put("item_left", name[i]);
-            map.put("item_middle", name[i]);
-            map.put("item_right", name[i]);
+            map.put("item_price", price[i]);
+            map.put("item_left", "+");
+            map.put("item_middle", "1");
+            map.put("item_right", "-");
             item.add(map);
         }
         SimpleAdapter simpleAdapter = new SimpleAdapter(getContext(), item,

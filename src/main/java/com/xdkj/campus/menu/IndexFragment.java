@@ -7,10 +7,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import com.xdkj.campus.menu.base.BaseLazyMainFragment;
 import com.xdkj.campus.menu.event.StartBrotherEvent;
 import com.xdkj.campus.menu.good_dishes.DishesSwitchFragment;
 import com.xdkj.campus.menu.ui.order.GreatDishFragment;
+import com.xdkj.campus.menu.ui.order.SelectPlaceFragment;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
@@ -53,21 +55,7 @@ public class IndexFragment extends BaseLazyMainFragment {
     LinearLayout new_arrival_layout;
 
     private void initView(View view) {
-//        EventBus.getDefault().register(this);
-        ((LinearLayout) view.findViewById(R.id.pre_order_layout)).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                EventBus.getDefault().post(new StartBrotherEvent(DishesSwitchFragment.newInstance()));
-//                start(DishesSwitchFragment.newInstance(),
-//                          SupportFragment.SINGLETOP);
-//                EventBus.getDefault().post(new StartBrotherEvent
-//                          (DishesSwitchFragment.newInstance()));
-//                ((MainActivity) getParentFragment()).startBrother
-//                        (new StartBrotherEvent(DishesSwitchFragment.newInstance()));
-//                EventBus.getDefault().post(new StartBrotherEvent(PreOrder.newInstance()));
-
-            }
-        });
+        //        EventBus.getDefault().register(this);
         new_arrival_layout = (LinearLayout) view.findViewById(R.id.new_arrival_layout);
         new_arrival_layout.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -82,6 +70,51 @@ public class IndexFragment extends BaseLazyMainFragment {
 
             }
         });
+        ((LinearLayout) view.findViewById(R.id.pre_order_layout)).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                EventBus.getDefault().post(new StartBrotherEvent(SelectPlaceFragment.newInstance()));
+            }
+        });
+        ((LinearLayout) view.findViewById(R.id.greate_package_layout)).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                EventBus.getDefault().post(new StartBrotherEvent(DishesSwitchFragment.newInstance()));
+            }
+        });
+        ((LinearLayout) view.findViewById(R.id.recharge_layout)).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                EventBus.getDefault().post(new StartBrotherEvent(DiscountFragment.newInstance()));
+            }
+        });
+
+        ((RelativeLayout) view.findViewById(R.id.dish_rank_rl)).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                EventBus.getDefault().post(new StartBrotherEvent(DishesSwitchFragment.newInstance()));
+            }
+        });
+        ((RelativeLayout) view.findViewById(R.id.discount_dish_rl)).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                EventBus.getDefault().post(new StartBrotherEvent(DiscountFragment.newInstance()));
+            }
+        });
+        ((RelativeLayout) view.findViewById(R.id.recharge_rl)).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                EventBus.getDefault().post(new StartBrotherEvent(DiscountFragment.newInstance()));
+            }
+        });
+        ((RelativeLayout) view.findViewById(R.id.dayly_welfare_rl)).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                EventBus.getDefault().post(new StartBrotherEvent(DiscountFragment.newInstance()));
+            }
+        });
+
+
     }
 
     @Override

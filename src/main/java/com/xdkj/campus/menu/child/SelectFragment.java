@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.GridView;
+import android.widget.LinearLayout;
 import android.widget.SimpleAdapter;
 import android.widget.TextView;
 import com.xdkj.campus.menu.R;
@@ -57,6 +58,8 @@ public class SelectFragment extends BaseFragment {
         tvClassname.setText(classname);
         select_grid = (GridView) view.findViewById(R.id.select_grid);
     }
+
+    LinearLayout select_dish_layout;
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {

@@ -6,7 +6,9 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 import com.xdkj.campus.menu.R;
+import com.xdkj.campus.menu.ShopFragment;
 import com.xdkj.campus.menu.base.BaseFragment;
 
 
@@ -19,11 +21,8 @@ import com.xdkj.campus.menu.base.BaseFragment;
 // * create an instance of this fragment.
 // */
 public class SelectPlaceFragment extends BaseFragment {
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-
-
-//    private OnFragmentInteractionListener mListener;
+    TextView mall_1;
+    TextView mall_2;
 
     public SelectPlaceFragment() {
         // Required empty public constructor
@@ -47,6 +46,21 @@ public class SelectPlaceFragment extends BaseFragment {
 
 
     private void initView(View view) {
+        mall_1 = (TextView) view.findViewById(R.id.mall_1);
+        mall_2 = (TextView) view.findViewById(R.id.mall_2);
+
+        mall_1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                start(ShopFragment.newInstance());
+            }
+        });
+        mall_2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                start(ShopFragment.newInstance());
+            }
+        });
     }
 
     @Override
