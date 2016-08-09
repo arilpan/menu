@@ -1,4 +1,4 @@
-package com.xdkj.campus.menu.adapter;
+package com.xdkj.campus.menu.back;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
@@ -47,7 +47,7 @@ public class PagerAdapter extends RecyclerView.Adapter<PagerAdapter.MyViewHolder
             int length = (int) (440 + desc_length * 10);
             Log.e("arilpan", "描述信息：" + lists.get(i).getDesc() +
                     ",单个长度：" + lists.get(i).getDesc().length()+
-                    ",每10个字是一行，工：" +  length);
+                    ",每10个字是一行，高度：" +  length);
             heights.add(length);
         }
     }

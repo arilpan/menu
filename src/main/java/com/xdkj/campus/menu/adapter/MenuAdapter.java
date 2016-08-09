@@ -60,7 +60,7 @@ public class MenuAdapter extends RecyclerView.Adapter<MenuAdapter.MyViewHolder> 
     public void onBindViewHolder(MyViewHolder holder, int position) {
         if (!mBooleanArray.get(position)) {
             holder.viewLine.setVisibility(View.INVISIBLE);
-            holder.itemView.setBackgroundResource(R.color.bg_app);
+            holder.itemView.setBackgroundResource(R.color.shop_bg_app);
             holder.tvName.setTextColor(Color.BLACK);
         } else {
             holder.viewLine.setVisibility(View.VISIBLE);

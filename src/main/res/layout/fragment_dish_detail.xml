@@ -54,8 +54,9 @@
                 </LinearLayout>
 
             </LinearLayout>
-
+            <View style="@style/line_divider"/>
             <RelativeLayout
+                    android:paddingLeft="0dp"
                     style="@style/pre_order_list_big_rl"
                     android:background="#fff"
             >
@@ -95,7 +96,10 @@
                         android:src="@drawable/pre_order_icon_location"
                 />
             </RelativeLayout>
-            <View style="@style/line_divider"/>
+            <View
+                    android:layout_marginLeft="8dp"
+                    android:layout_marginRight="8dp"
+                    style="@style/line_divider"/>
             <RelativeLayout
                     style="@style/pre_order_list_small_rl"
             >
@@ -225,7 +229,7 @@
             <View style="@style/line_divider"/>
 
             <Button
-                    android:layout_marginTop="5dp"
+                    android:layout_marginTop="10dp"
                     android:layout_marginRight="20dp"
                     android:layout_marginLeft="20dp"
                     android:layout_marginBottom="20dp"

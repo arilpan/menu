@@ -3,7 +3,7 @@ package com.xdkj.campus.menu.adapter;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
-import com.xdkj.campus.menu.good_dishes.FirstPagerFragment;
+import com.xdkj.campus.menu.good_dishes.WaterFallDishesFragment;
 
 
 /**
@@ -19,9 +19,9 @@ public class DishesSwitchFragmentAdapter extends FragmentPagerAdapter {
     @Override
     public Fragment getItem(int position) {
         if (position == 0) {
-            return FirstPagerFragment.newInstance();
+            return WaterFallDishesFragment.newInstance();
         } else {
-            return FirstPagerFragment.newInstance();
+            return WaterFallDishesFragment.newInstance();
         }
     }
 

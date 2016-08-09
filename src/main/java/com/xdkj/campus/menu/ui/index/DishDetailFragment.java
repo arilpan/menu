@@ -10,13 +10,14 @@ import com.xdkj.campus.menu.R;
 import com.xdkj.campus.menu.base.BaseFragment;
 
 
-
 public class DishDetailFragment extends BaseFragment {
+    public static int dish_id;
+
     public DishDetailFragment() {
     }
 
-    public static DishDetailFragment newInstance() {
-
+    public static DishDetailFragment newInstance(int id) {
+        dish_id = id;
         Bundle args = new Bundle();
         DishDetailFragment fragment = new DishDetailFragment();
         fragment.setArguments(args);

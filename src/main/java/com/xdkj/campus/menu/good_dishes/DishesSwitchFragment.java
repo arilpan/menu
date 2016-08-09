@@ -21,11 +21,13 @@ import org.greenrobot.eventbus.Subscribe;
  */
 public class DishesSwitchFragment extends BaseBackFragment {
     private TabLayout mTab;
-//    private Toolbar mToolbar;
+    //    private Toolbar mToolbar;
     private ViewPager mViewPager;
 
-    public static DishesSwitchFragment newInstance() {
+    private static String title;
 
+    public static DishesSwitchFragment newInstance(String string) {
+        title = string;
         Bundle args = new Bundle();
 
         DishesSwitchFragment fragment = new DishesSwitchFragment();
@@ -43,8 +45,8 @@ public class DishesSwitchFragment extends BaseBackFragment {
 
     private void initView(View view) {
         EventBus.getDefault().register(this);
-        ((TextView)view.findViewById(R.id.title_middle)).setText("新品尝鲜");
-        ((LinearLayout)view.findViewById(R.id.title_ll_left)).setOnClickListener(new View.OnClickListener() {
+        ((TextView) view.findViewById(R.id.title_middle)).setText(title);
+        ((LinearLayout) view.findViewById(R.id.title_ll_left)).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 _mActivity.onBackPressed();
@@ -79,7 +81,7 @@ public class DishesSwitchFragment extends BaseBackFragment {
 //    }
 
 
-//    @Override
+    //    @Override
 //    public boolean onBackPressedSupport() {
 //        // 这里实际项目中推荐使用 EventBus接耦
 ////        ((TestOne) getParentFragment()).onBackToFirstFragment();

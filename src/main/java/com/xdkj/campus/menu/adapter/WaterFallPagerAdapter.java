@@ -18,13 +18,13 @@ import java.util.List;
 /**
  * Created by YoKeyword on 16/6/30.
  */
-public class PagerAdapter extends RecyclerView.Adapter<PagerAdapter.MyViewHolder> {
+public class WaterFallPagerAdapter extends RecyclerView.Adapter<WaterFallPagerAdapter.MyViewHolder> {
     private List<Dish> mItems = new ArrayList<>();
     private LayoutInflater mInflater;
 
     private OnItemClickListener mClickListener;
 
-    public PagerAdapter(Context context) {
+    public WaterFallPagerAdapter(Context context) {
         this.mInflater = LayoutInflater.from(context);
 
     }
@@ -43,11 +43,15 @@ public class PagerAdapter extends RecyclerView.Adapter<PagerAdapter.MyViewHolder
         heights = new ArrayList<>();
         for (int i = 0; i < lists.size(); i++) {
 //            heights.add((int)(600+Math.random()*400));
-            int desc_length = (lists.get(i).getDesc().length()) / 10;
-            int length = (int) (440 + desc_length * 10);
+            int desc_length = (lists.get(i).getDesc().length()) / 11;
+            int desc_length_add = (lists.get(i).getDesc().length()) % 11;
+            if (desc_length_add != 0) {
+                desc_length += 1;
+            }
+            int length = (int) (638 + desc_length * 40);
             Log.e("arilpan", "描述信息：" + lists.get(i).getDesc() +
-                    ",单个长度：" + lists.get(i).getDesc().length()+
-                    ",每10个字是一行，工：" +  length);
+                    ",单个长度：" + lists.get(i).getDesc().length() +
+                    ",每10个字是一行，共计：" + length);
             heights.add(length);
         }
     }
@@ -83,7 +87,7 @@ public class PagerAdapter extends RecyclerView.Adapter<PagerAdapter.MyViewHolder
         holder.desc.setText(item.getDesc());
         holder.price.setText(item.getPrice());
 
-        holder.image.setImageResource(R.drawable.index_dishes_image_default);
+//        holder.image.setImageResource(R.drawable.index_dishes_image_default);
     }
 
     @Override

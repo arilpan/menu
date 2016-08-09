@@ -11,10 +11,10 @@
             android:id="@+id/tab"
             android:layout_width="match_parent"
             xmlns:app="http://schemas.android.com/apk/res-auto"
-            app:tabIndicatorColor="@android:color/white"
-            app:tabSelectedTextColor="@android:color/white"
+            app:tabIndicatorColor="#999"
+            app:tabSelectedTextColor="#f86666"
             app:tabTextColor="#EF9A9A"
-            android:background="#999"
+            android:src="@drawable/meishipaihang_border"
             app:tabTextAppearance="@style/tab_appearance"
             android:layout_height="45dp"/>
 
