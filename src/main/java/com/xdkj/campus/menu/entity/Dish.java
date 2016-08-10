@@ -6,9 +6,15 @@ package com.xdkj.campus.menu.entity;
 public class Dish {
     private int id;
     private String name;
+    private int img;
+    private String imgurl;
     private String desc;
     private String price;
+    private String preOrder;
+    public  Dish()
+    {
 
+    }
     public Dish(String name, String desc, String price) {
         this.name = name;
         this.desc = desc;
@@ -21,6 +27,30 @@ public class Dish {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public int getImg() {
+        return img;
+    }
+
+    public void setImg(int img) {
+        this.img = img;
+    }
+
+    public String getImgurl() {
+        return imgurl;
+    }
+
+    public void setImgurl(String imgurl) {
+        this.imgurl = imgurl;
+    }
+
+    public String getPreOrder() {
+        return preOrder;
+    }
+
+    public void setPreOrder(String preOrder) {
+        this.preOrder = preOrder;
     }
 
     public String getName() {

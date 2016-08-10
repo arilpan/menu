@@ -62,16 +62,17 @@ public class DishListFragment extends BaseFragment {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        int[] resIds = {R.drawable.ic_account_circle_white_48dp,
-                R.drawable.ic_account_circle_white_48dp,
-                R.drawable.ic_account_circle_white_48dp,
-                R.drawable.ic_account_circle_white_48dp};
+//        int[] resIds = {R.drawable.index_dishes_image_default,
+//                R.drawable.index_dishes_image_default,
+//                R.drawable.index_dishes_image_default,
+//                R.drawable.index_dishes_image_default};
         String[] name = {"土豆丝", "青菜", "小白菜", "茄子"};
         int[] price = {12,33,54,21};
         ArrayList<HashMap<String, Object>> item = new ArrayList<HashMap<String, Object>>();
-        for (int i = 0; i < resIds.length; i++) {
+        for (int i = 0; i < name.length; i++) {
             HashMap<String, Object> map = new HashMap<String, Object>();
-            map.put("item_image", resIds[i]);
+//            map.put("item_image", resIds[i]);
+            map.put("item_image", name[i]);
             map.put("item_price", price[i]);
             map.put("item_left", "+");
             map.put("item_middle", "1");
