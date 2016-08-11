@@ -11,6 +11,8 @@ public class Dish {
     private String desc;
     private String price;
     private String preOrder;
+    private int num;
+
     public  Dish()
     {
 
@@ -27,6 +29,14 @@ public class Dish {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public int getNum() {
+        return num;
+    }
+
+    public void setNum(int num) {
+        this.num = num;
     }
 
     public int getImg() {

@@ -11,9 +11,11 @@ import android.widget.SimpleAdapter;
 import android.widget.TextView;
 import com.xdkj.campus.menu.R;
 import com.xdkj.campus.menu.base.BaseFragment;
+import com.xdkj.campus.menu.entity.Dish;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 /**
  */
@@ -61,93 +63,32 @@ public class DishListFragment extends BaseFragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+        initGridView();
+    }
 
-//        int[] resIds = {R.drawable.index_dishes_image_default,
-//                R.drawable.index_dishes_image_default,
-//                R.drawable.index_dishes_image_default,
-//                R.drawable.index_dishes_image_default};
-        String[] name = {"土豆丝", "青菜", "小白菜", "茄子"};
-        int[] price = {12,33,54,21};
+    public void initGridView() {
+        List<Dish> items = DishList.getlist();
+//        String[] name = {"土豆丝", "青菜", "小白菜", "茄子"};
+//        int[] price = {12, 33, 54, 21};
         ArrayList<HashMap<String, Object>> item = new ArrayList<HashMap<String, Object>>();
-        for (int i = 0; i < name.length; i++) {
+        for (int i = 0; i < items.size(); i++) {
             HashMap<String, Object> map = new HashMap<String, Object>();
 //            map.put("item_image", resIds[i]);
-            map.put("item_image", name[i]);
-            map.put("item_price", price[i]);
+            Dish dish_item = items.get(i);
+            map.put("item_image", dish_item.getName());
+            map.put("item_price", dish_item.getPrice());
             map.put("item_left", "+");
-            map.put("item_middle", "1");
+            map.put("item_middle", dish_item.getNum());
             map.put("item_right", "-");
             item.add(map);
         }
         SimpleAdapter simpleAdapter = new SimpleAdapter(getContext(), item,
                 R.layout.fragment_select_dishes_list_item, new String[]
-                {"item_image", "item_price","item_left", "item_middle", "item_right"},
+                {"item_image", "item_price", "item_left", "item_middle", "item_right"},
                 new int[]{R.id.dish_name, R.id.dish_price,
-                        R.id.item_left,   R.id.item_middle, R.id.item_right}) {
+                        R.id.item_left, R.id.item_middle, R.id.item_right}) {
         };
         select_grid.setAdapter(simpleAdapter);
-//        select_grid.setAdapter(new ListAdapter() {
-//            @Override
-//            public boolean areAllItemsEnabled() {
-//                return false;
-//            }
-//
-//            @Override
-//            public boolean isEnabled(int position) {
-//                return false;
-//            }
-//
-//            @Override
-//            public void registerDataSetObserver(DataSetObserver observer) {
-//
-//            }
-//
-//            @Override
-//            public void unregisterDataSetObserver(DataSetObserver observer) {
-//
-//            }
-//
-//            @Override
-//            public int getCount() {
-//                return 0;
-//            }
-//
-//            @Override
-//            public Object getItem(int position) {
-//                return null;
-//            }
-//
-//            @Override
-//            public long getItemId(int position) {
-//                return 0;
-//            }
-//
-//            @Override
-//            public boolean hasStableIds() {
-//                return false;
-//            }
-//
-//            @Override
-//            public View getView(int position, View convertView, ViewGroup parent) {
-//                return null;
-//            }
-//
-//            @Override
-//            public int getItemViewType(int position) {
-//                return 0;
-//            }
-//
-//            @Override
-//            public int getViewTypeCount() {
-//                return 0;
-//            }
-//
-//            @Override
-//            public boolean isEmpty() {
-//                return false;
-//            }
-//        });
-
     }
 
     @Override

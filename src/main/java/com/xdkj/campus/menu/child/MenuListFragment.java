@@ -35,13 +35,11 @@ public class MenuListFragment extends BaseFragment {
     private ArrayList<String> mAddMenus;
     private int mCurrentPosition = -1;
 
-    public static MenuListFragment newInstance(ArrayList<String> menus, ArrayList<String> addmenus) {
-
+    public static MenuListFragment newInstance(
+            ArrayList<String> menus, ArrayList<String> addmenus) {
         Bundle args = new Bundle();
         args.putStringArrayList(ARG_MENUS, menus);
         args.putStringArrayList(ARG_ADDMENUS, addmenus);
-
-
         MenuListFragment fragment = new MenuListFragment();
         fragment.setArguments(args);
         return fragment;
@@ -154,7 +152,7 @@ public class MenuListFragment extends BaseFragment {
 
 
         SelectFragment fragment1 = SelectFragment.newInstance(position < 3 ? mMenus.get(position) :
-                mAddMenus.get(position-4), "");
+                mAddMenus.get(position - 4), "");
         ((ShopFragment) getParentFragment()).switchSelectFragment(fragment1);
 
     }

@@ -9,13 +9,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 import com.xdkj.campus.menu.base.BaseFragment;
-import com.xdkj.campus.menu.child.ContentFragment;
-import com.xdkj.campus.menu.child.DishListFragment;
-import com.xdkj.campus.menu.child.MenuListFragment;
-import com.xdkj.campus.menu.child.SelectFragment;
+import com.xdkj.campus.menu.child.*;
+import com.xdkj.campus.menu.event.ShopEvent;
 import me.yokeyword.fragmentation.SupportFragment;
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
 
 import java.util.ArrayList;
 
@@ -50,12 +51,20 @@ public class ShopFragment extends BaseFragment {
         return view;
     }
 
+    public static TextView total_price;
+
+    public void setTotalPriceView() {
+        total_price.setText("￥" + DishList.getTotalPrice());
+    }
+
     private void initView(View view, Bundle savedInstanceState) {
+        EventBus.getDefault().register(this);
         mToolbar = (Toolbar) view.findViewById(R.id.toolbar);
 
         mToolbar.setTitle("商店");
         initToolbarMenu(mToolbar);
-
+        total_price = (TextView) view.findViewById(R.id.total_price);
+        setTotalPriceView();
         if (savedInstanceState == null) {
             ArrayList<String> listMenus = new ArrayList<>();
             listMenus.add("热门推荐");
@@ -82,19 +91,27 @@ public class ShopFragment extends BaseFragment {
                     SelectFragment.newInstance("热门推荐", "1"), false);
 
 
-            ((RelativeLayout) view.findViewById(R.id.menu_selected)).setOnClickListener(new View.OnClickListener() {
+            ((RelativeLayout) view.findViewById(R.id.menu_selected)).setOnClickListener(
+                    new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     if (showDishList) {
 //                        popChild();
 //                        pop();
                         FragmentManager fManager = getFragmentManager();
-                        fManager.beginTransaction().remove(dl);
+                        fManager.beginTransaction().remove(findFragment(DishListFragment.class));
+                        SupportFragment dishListFragment = findChildFragment(DishListFragment.class);
                         if (dl != null) {
                             dl.pop();
-                            Log.e("arilpan","不为空 Pop");
+                            Log.e("arilpan", "不为空 Pop");
                         } else {
-                            Log.e("arilpan","为空");
+                            Log.e("arilpan", "为空");
+                        }
+                        if (dishListFragment != null) {
+                            dishListFragment.pop();
+                            Log.e("arilpan", "dishListFragmentdish 不为空 Pop");
+                        } else {
+                            Log.e("arilpan", "dishListFragment 为空");
                         }
 
 //                        popToChild(DishListFragment.class, true);
@@ -120,7 +137,8 @@ public class ShopFragment extends BaseFragment {
     @Override
     public boolean onBackPressedSupport() {
         // ContentFragment是ShopFragment的栈顶子Fragment,会先调用ContentFragment的onBackPressedSupport方法
-        Toast.makeText(_mActivity, "onBackPressedSupport-->返回false,交给上层处理!", Toast.LENGTH_SHORT).show();
+        Toast.makeText(_mActivity, "onBackPressedSupport-->返回false,交给上层处理!",
+                Toast.LENGTH_SHORT).show();
         return false;
     }
 
@@ -130,6 +148,15 @@ public class ShopFragment extends BaseFragment {
             selectFragment.replaceFragment(fragment, false);
         }
     }
+
+    @Subscribe
+    public void setPrice(ShopEvent event) {
+        setTotalPriceView();
+    }
+//    @Subscribe
+//    public void swithFragment(ShopEvent event) {
+//        switchDishListFragment(event.targetFragment);
+//    }
 
     /**
      * 替换加载 内容Fragment
@@ -141,6 +168,18 @@ public class ShopFragment extends BaseFragment {
         if (contentFragment != null) {
             contentFragment.replaceFragment(fragment, false);
         }
+    }
 
+    public void switchDishListFragment(DishListFragment fragment) {
+        SupportFragment dishListFragment = findChildFragment(DishListFragment.class);
+        if (dishListFragment != null) {
+            dishListFragment.replaceFragment(fragment, false);
+        }
+    }
+
+    @Override
+    public void onDestroyView() {
+        EventBus.getDefault().unregister(this);
+        super.onDestroyView();
     }
 }

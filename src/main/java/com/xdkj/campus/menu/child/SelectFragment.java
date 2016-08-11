@@ -9,8 +9,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.*;
 import com.xdkj.campus.menu.R;
+import com.xdkj.campus.menu.ShopFragment;
 import com.xdkj.campus.menu.base.BaseFragment;
 import com.xdkj.campus.menu.entity.Dish;
+import com.xdkj.campus.menu.event.ShopEvent;
+import com.xdkj.campus.menu.ui.index.DishDetailFragment;
+import org.greenrobot.eventbus.EventBus;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -60,6 +64,7 @@ public class SelectFragment extends BaseFragment {
     }
 
     LinearLayout select_dish_layout;
+    ArrayList<Dish> item;
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
@@ -73,7 +78,7 @@ public class SelectFragment extends BaseFragment {
         String[] name = {"土豆丝", "青菜", "小白菜", "茄子"};
         String[] price = {"52", "48", "22", "92"};
         String pre_order = "预约";
-        ArrayList<Dish> item = new ArrayList<Dish>();
+        item = new ArrayList<Dish>();
         for (int i = 0; i < resIds.length; i++) {
             HashMap<String, Object> map = new HashMap<String, Object>();
             map.put("item_image", resIds[i]);
@@ -105,6 +110,15 @@ public class SelectFragment extends BaseFragment {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Log.e("arilpan", "选择菜品的item setOnItemClickListener +"
                         + view.getId() + ",position " + position);
+                //加入菜品信息到列表
+                Dish dish = item.get(position);
+                dish.setNum(dish.getNum() + 1);
+                DishList.getlist().remove(dish);
+                DishList.getlist().add(dish);
+//                EventBus.getDefault().post(new ShopEvent(ShopFragment.newInstance()));
+                EventBus.getDefault().post(new ShopEvent(ShopFragment.newInstance()));
+                ((ShopFragment) getParentFragment()).switchDishListFragment(
+                        DishListFragment.newInstance(null, null));
             }
         });
     }
@@ -154,7 +168,7 @@ public class SelectFragment extends BaseFragment {
         }
 
         @Override
-        public View getView(int position, View convertView, ViewGroup parent) {
+        public View getView(final int position, View convertView, ViewGroup parent) {
             if (convertView == null) {
                 convertView = inflater.inflate(resource, null);
             }
@@ -176,7 +190,10 @@ public class SelectFragment extends BaseFragment {
                 public void onClick(View view) {
                     Log.e("arilpan", "选择菜品的item Adapter dish_img +"
                             + view.getId());
-//                    Toast.makeText(context, good.getGoodProvider(), Toast.LENGTH_LONG).show();
+                    EventBus.getDefault().post(DishDetailFragment.newInstance(position));
+                    //start(DishDetailFragment.newInstance(1));
+                    //  Toast.makeText(context, good.getGoodProvider(),
+                    //  Toast.LENGTH_LONG).show();
                 }
 
             });
