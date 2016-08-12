@@ -1,4 +1,4 @@
-package com.xdkj.campus.menu.child;
+package com.xdkj.campus.menu.ui.menu;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -7,20 +7,25 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
 import com.xdkj.campus.menu.R;
 import com.xdkj.campus.menu.ShopFragment;
 import com.xdkj.campus.menu.adapter.MenuAdapter;
 import com.xdkj.campus.menu.base.BaseFragment;
 import com.xdkj.campus.menu.listener.OnItemClickListener;
+
 import me.yokeyword.fragmentation.anim.DefaultNoAnimator;
 import me.yokeyword.fragmentation.anim.FragmentAnimator;
 
 import java.util.ArrayList;
 
 /**
- * Created by YoKeyword on 16/2/9.
+ * 左侧选择菜品门类的listview
+ *
+ * @Author arilpan
  */
-public class MenuListFragment extends BaseFragment {
+public class MenuListFragment extends BaseFragment
+{
     private static final String ARG_MENUS = "arg_menus";
     private static final String ARG_ADDMENUS = "arg_addmenus";
     private static boolean SHOW = false;
@@ -36,7 +41,8 @@ public class MenuListFragment extends BaseFragment {
     private int mCurrentPosition = -1;
 
     public static MenuListFragment newInstance(
-            ArrayList<String> menus, ArrayList<String> addmenus) {
+            ArrayList<String> menus, ArrayList<String> addmenus)
+    {
         Bundle args = new Bundle();
         args.putStringArrayList(ARG_MENUS, menus);
         args.putStringArrayList(ARG_ADDMENUS, addmenus);
@@ -46,11 +52,13 @@ public class MenuListFragment extends BaseFragment {
     }
 
     @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
+    public void onCreate(@Nullable Bundle savedInstanceState)
+    {
         super.onCreate(savedInstanceState);
 
         Bundle args = getArguments();
-        if (args != null) {
+        if (args != null)
+        {
             mMenus = args.getStringArrayList(ARG_MENUS);
             mAddMenus = args.getStringArrayList(ARG_ADDMENUS);
         }
@@ -58,23 +66,28 @@ public class MenuListFragment extends BaseFragment {
 
     @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable
+    Bundle savedInstanceState)
+    {
         View view = inflater.inflate(R.layout.fragment_list_menu, container, false);
         initView(view);
         return view;
     }
 
     @Override
-    protected FragmentAnimator onCreateFragmentAnimator() {
+    protected FragmentAnimator onCreateFragmentAnimator()
+    {
         return new DefaultNoAnimator();
     }
 
-    private void initView(View view) {
+    private void initView(View view)
+    {
         mRecy = (RecyclerView) view.findViewById(R.id.recy);
     }
 
     @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+    public void onActivityCreated(@Nullable Bundle savedInstanceState)
+    {
         super.onActivityCreated(savedInstanceState);
 
         LinearLayoutManager manager = new LinearLayoutManager(_mActivity);
@@ -83,29 +96,38 @@ public class MenuListFragment extends BaseFragment {
         mRecy.setAdapter(mAdapter);
         mAdapter.setDatas(mMenus);
 
-        mAdapter.setOnItemClickListener(new OnItemClickListener() {
+        mAdapter.setOnItemClickListener(new OnItemClickListener()
+        {
             @Override
-            public void onItemClick(int position, View view, RecyclerView.ViewHolder vh) {
+            public void onItemClick(int position, View view, RecyclerView.ViewHolder vh)
+            {
                 showContent(position);
             }
         });
 
-        if (savedInstanceState != null) {
+        if (savedInstanceState != null)
+        {
             mCurrentPosition = savedInstanceState.getInt(SAVE_STATE_POSITION);
             mAdapter.setItemChecked(mCurrentPosition);
-        } else {
+        } else
+        {
             mCurrentPosition = 0;
             mAdapter.setItemChecked(0);
         }
     }
 
-    private void showContent(int position) {
-        if (position == mCurrentPosition) {
+    private void showContent(int position)
+    {
+        if (position == mCurrentPosition)
+        {
             return;
         }
-        if (position == 3) {
-            if (SHOW) {
-                for (String s : mAddMenus) {
+        if (position == 3)
+        {
+            if (SHOW)
+            {
+                for (String s : mAddMenus)
+                {
                     mMenus.remove(s);
                 }
                 LinearLayoutManager manager = new LinearLayoutManager(_mActivity);
@@ -114,15 +136,19 @@ public class MenuListFragment extends BaseFragment {
                 mRecy.setAdapter(mAdapter);
                 mAdapter.setDatas(mMenus);
 
-                mAdapter.setOnItemClickListener(new OnItemClickListener() {
+                mAdapter.setOnItemClickListener(new OnItemClickListener()
+                {
                     @Override
-                    public void onItemClick(int position, View view, RecyclerView.ViewHolder vh) {
+                    public void onItemClick(int position, View view, RecyclerView.ViewHolder vh)
+                    {
                         showContent(position);
                     }
                 });
                 SHOW = false;
-            } else {
-                for (String s : mAddMenus) {
+            } else
+            {
+                for (String s : mAddMenus)
+                {
                     mMenus.add(s);
                 }
                 LinearLayoutManager manager = new LinearLayoutManager(_mActivity);
@@ -131,9 +157,11 @@ public class MenuListFragment extends BaseFragment {
                 mRecy.setAdapter(mAdapter);
                 mAdapter.setDatas(mMenus);
 
-                mAdapter.setOnItemClickListener(new OnItemClickListener() {
+                mAdapter.setOnItemClickListener(new OnItemClickListener()
+                {
                     @Override
-                    public void onItemClick(int position, View view, RecyclerView.ViewHolder vh) {
+                    public void onItemClick(int position, View view, RecyclerView.ViewHolder vh)
+                    {
                         showContent(position);
                     }
                 });
@@ -158,13 +186,15 @@ public class MenuListFragment extends BaseFragment {
     }
 
     @Override
-    public void onSaveInstanceState(Bundle outState) {
+    public void onSaveInstanceState(Bundle outState)
+    {
         super.onSaveInstanceState(outState);
         outState.putInt(SAVE_STATE_POSITION, mCurrentPosition);
     }
 
     @Override
-    public void onDestroyView() {
+    public void onDestroyView()
+    {
         super.onDestroyView();
         mRecy.setAdapter(null);
     }

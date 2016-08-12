@@ -1,4 +1,4 @@
-package com.xdkj.campus.menu.child;
+package com.xdkj.campus.menu.ui.menu;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -8,12 +8,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.*;
+
 import com.xdkj.campus.menu.R;
 import com.xdkj.campus.menu.ShopFragment;
 import com.xdkj.campus.menu.base.BaseFragment;
 import com.xdkj.campus.menu.entity.Dish;
 import com.xdkj.campus.menu.event.ShopEvent;
 import com.xdkj.campus.menu.ui.index.DishDetailFragment;
+
 import org.greenrobot.eventbus.EventBus;
 
 import java.util.ArrayList;
@@ -21,17 +23,23 @@ import java.util.HashMap;
 import java.util.List;
 
 /**
+ * 右侧选择菜品的GridView
+ *
+ * @Author arilpan
  */
-public class SelectFragment extends BaseFragment {
+public class SelectFragment extends BaseFragment
+{
     private static final String ARG_PARAM1 = "select_dish";
     GridView select_grid;
     String classname;
 
-    public SelectFragment() {
+    public SelectFragment()
+    {
         // Required empty public constructor
     }
 
-    public static SelectFragment newInstance(String param1, String param2) {
+    public static SelectFragment newInstance(String param1, String param2)
+    {
         SelectFragment fragment = new SelectFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
@@ -40,23 +48,27 @@ public class SelectFragment extends BaseFragment {
     }
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState)
+    {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
+        if (getArguments() != null)
+        {
             classname = getArguments().getString(ARG_PARAM1);
         }
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+                             Bundle savedInstanceState)
+    {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_select, container, false);
         initView(view);
         return view;
     }
 
-    private void initView(View view) {
+    private void initView(View view)
+    {
 
         TextView tvClassname = (TextView) view.findViewById(R.id.class_name);
         tvClassname.setText(classname);
@@ -67,7 +79,8 @@ public class SelectFragment extends BaseFragment {
     ArrayList<Dish> item;
 
     @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+    public void onActivityCreated(@Nullable Bundle savedInstanceState)
+    {
         super.onActivityCreated(savedInstanceState);
 
         int[] resIds = {R.drawable.index_dishes_image_default,
@@ -79,7 +92,8 @@ public class SelectFragment extends BaseFragment {
         String[] price = {"52", "48", "22", "92"};
         String pre_order = "预约";
         item = new ArrayList<Dish>();
-        for (int i = 0; i < resIds.length; i++) {
+        for (int i = 0; i < resIds.length; i++)
+        {
             HashMap<String, Object> map = new HashMap<String, Object>();
             map.put("item_image", resIds[i]);
             map.put("item_right", pre_order);
@@ -105,9 +119,11 @@ public class SelectFragment extends BaseFragment {
 //                Log.e("arilpan", "选择菜品的item setOnClickListener+" + v.getId());
 //            }
 //        });
-        select_grid.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        select_grid.setOnItemClickListener(new AdapterView.OnItemClickListener()
+        {
             @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id)
+            {
                 Log.e("arilpan", "选择菜品的item setOnItemClickListener +"
                         + view.getId() + ",position " + position);
                 //加入菜品信息到列表
@@ -117,6 +133,8 @@ public class SelectFragment extends BaseFragment {
                 DishList.getlist().add(dish);
 //                EventBus.getDefault().post(new ShopEvent(ShopFragment.newInstance()));
                 EventBus.getDefault().post(new ShopEvent(ShopFragment.newInstance()));
+
+//               switchDishListFragment(DishListFragment.newInstance(null, null));
                 ((ShopFragment) getParentFragment()).switchDishListFragment(
                         DishListFragment.newInstance(null, null));
             }
@@ -124,16 +142,19 @@ public class SelectFragment extends BaseFragment {
     }
 
     @Override
-    public void onAttach(Context context) {
+    public void onAttach(Context context)
+    {
         super.onAttach(context);
     }
 
     @Override
-    public void onDetach() {
+    public void onDetach()
+    {
         super.onDetach();
     }
 
-    class DishGridAdapter extends BaseAdapter {
+    class DishGridAdapter extends BaseAdapter
+    {
         private List<Dish> dishs;//ListView显示的数据
 
         private int resource;//显示列表项的Layout
@@ -142,10 +163,12 @@ public class SelectFragment extends BaseFragment {
 
         private Context context;
 
-        class ViewHolder {
+        class ViewHolder
+        {
         }
 
-        DishGridAdapter(List dishs, int resource, Context context) {
+        DishGridAdapter(List dishs, int resource, Context context)
+        {
             this.dishs = dishs;
             this.resource = resource;
             this.context = context.getApplicationContext();
@@ -153,23 +176,28 @@ public class SelectFragment extends BaseFragment {
         }
 
         @Override
-        public int getCount() {
+        public int getCount()
+        {
             return dishs.size();
         }
 
         @Override
-        public Object getItem(int position) {
+        public Object getItem(int position)
+        {
             return position;
         }
 
         @Override
-        public long getItemId(int position) {
+        public long getItemId(int position)
+        {
             return position;
         }
 
         @Override
-        public View getView(final int position, View convertView, ViewGroup parent) {
-            if (convertView == null) {
+        public View getView(final int position, View convertView, ViewGroup parent)
+        {
+            if (convertView == null)
+            {
                 convertView = inflater.inflate(resource, null);
             }
 
@@ -185,9 +213,11 @@ public class SelectFragment extends BaseFragment {
 
             dish_img.setImageResource(R.drawable.index_dishes_image_default);
 
-            dish_img.setOnClickListener(new View.OnClickListener() {
+            dish_img.setOnClickListener(new View.OnClickListener()
+            {
                 @Override
-                public void onClick(View view) {
+                public void onClick(View view)
+                {
                     Log.e("arilpan", "选择菜品的item Adapter dish_img +"
                             + view.getId());
                     EventBus.getDefault().post(DishDetailFragment.newInstance(position));

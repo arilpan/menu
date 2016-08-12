@@ -1,4 +1,4 @@
-package com.xdkj.campus.menu.child;
+package com.xdkj.campus.menu.ui.menu;
 
 
 import android.os.Bundle;
@@ -9,17 +9,22 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
+
 import com.xdkj.campus.menu.R;
 import com.xdkj.campus.menu.ShopFragment;
 import com.xdkj.campus.menu.base.BaseFragment;
 import com.xdkj.campus.menu.fragment.CycleFragment;
+
 import me.yokeyword.fragmentation.anim.DefaultNoAnimator;
 import me.yokeyword.fragmentation.anim.FragmentAnimator;
 
 /**
- * Created by YoKeyword on 16/2/9.
+ *
+ * 测死fragment
+ * Created by arilpan on 16/2/9.
  */
-public class ContentFragment extends BaseFragment {
+public class ContentFragment extends BaseFragment
+{
     private static final String ARG_MENU = "arg_menu";
 
     private TextView mTvContent;
@@ -27,7 +32,8 @@ public class ContentFragment extends BaseFragment {
 
     private String mMenu;
 
-    public static ContentFragment newInstance(String menu) {
+    public static ContentFragment newInstance(String menu)
+    {
 
         Bundle args = new Bundle();
         args.putString(ARG_MENU, menu);
@@ -38,41 +44,50 @@ public class ContentFragment extends BaseFragment {
     }
 
     @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
+    public void onCreate(@Nullable Bundle savedInstanceState)
+    {
         super.onCreate(savedInstanceState);
 
         Bundle args = getArguments();
-        if (args != null) {
+        if (args != null)
+        {
             mMenu = args.getString(ARG_MENU);
             Log.e("arilpan", "aMenu:" + mMenu);
         }
     }
 
     @Override
-    protected FragmentAnimator onCreateFragmentAnimator() {
+    protected FragmentAnimator onCreateFragmentAnimator()
+    {
         return new DefaultNoAnimator();
     }
 
     @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable
+    Bundle savedInstanceState)
+    {
         View view = inflater.inflate(R.layout.fragment_content, container, false);
         initView(view);
         return view;
     }
 
-    private void initView(View view) {
+    private void initView(View view)
+    {
         mTvContent = (TextView) view.findViewById(R.id.tv_content);
         mBtnNext = (Button) view.findViewById(R.id.btn_next);
 
         mTvContent.setText("Fragment内容:\n" + mMenu);
         Log.e("arilpan", "aMenu:" + mMenu);
 
-        mBtnNext.setOnClickListener(new View.OnClickListener() {
+        mBtnNext.setOnClickListener(new View.OnClickListener()
+        {
             @Override
-            public void onClick(View v) {
+            public void onClick(View v)
+            {
                 // 和MsgFragment同级别的跳转 交给MsgFragment处理
-                if (getParentFragment() instanceof ShopFragment) {
+                if (getParentFragment() instanceof ShopFragment)
+                {
                     ((ShopFragment) getParentFragment()).start(CycleFragment.newInstance(1));
                 }
             }
@@ -80,7 +95,8 @@ public class ContentFragment extends BaseFragment {
     }
 
     @Override
-    public boolean onBackPressedSupport() {
+    public boolean onBackPressedSupport()
+    {
         // ContentFragment是ShopFragment的栈顶子Fragment,可以在此处理返回按键事件
         return super.onBackPressedSupport();
     }

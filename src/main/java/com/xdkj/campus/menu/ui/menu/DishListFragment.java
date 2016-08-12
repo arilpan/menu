@@ -1,4 +1,4 @@
-package com.xdkj.campus.menu.child;
+package com.xdkj.campus.menu.ui.menu;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
 import android.widget.TextView;
+
 import com.xdkj.campus.menu.R;
 import com.xdkj.campus.menu.base.BaseFragment;
 import com.xdkj.campus.menu.entity.Dish;
@@ -18,17 +19,23 @@ import java.util.HashMap;
 import java.util.List;
 
 /**
+ * 下测查看已经选择的菜品信息
+ *
+ * @Author arilpan
  */
-public class DishListFragment extends BaseFragment {
+public class DishListFragment extends BaseFragment
+{
     private static final String ARG_PARAM1 = "select_dish";
     ListView select_grid;
     String classname;
 
-    public DishListFragment() {
+    public DishListFragment()
+    {
         // Required empty public constructor
     }
 
-    public static DishListFragment newInstance(String param1, String param2) {
+    public static DishListFragment newInstance(String param1, String param2)
+    {
         DishListFragment fragment = new DishListFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
@@ -37,23 +44,27 @@ public class DishListFragment extends BaseFragment {
     }
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState)
+    {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
+        if (getArguments() != null)
+        {
             classname = getArguments().getString(ARG_PARAM1);
         }
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+                             Bundle savedInstanceState)
+    {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_select_dishes, container, false);
         initView(view);
         return view;
     }
 
-    private void initView(View view) {
+    private void initView(View view)
+    {
 
         TextView tvClassname = (TextView) view.findViewById(R.id.class_name);
         tvClassname.setText(classname);
@@ -61,17 +72,20 @@ public class DishListFragment extends BaseFragment {
     }
 
     @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+    public void onActivityCreated(@Nullable Bundle savedInstanceState)
+    {
         super.onActivityCreated(savedInstanceState);
         initGridView();
     }
 
-    public void initGridView() {
+    public void initGridView()
+    {
         List<Dish> items = DishList.getlist();
 //        String[] name = {"土豆丝", "青菜", "小白菜", "茄子"};
 //        int[] price = {12, 33, 54, 21};
         ArrayList<HashMap<String, Object>> item = new ArrayList<HashMap<String, Object>>();
-        for (int i = 0; i < items.size(); i++) {
+        for (int i = 0; i < items.size(); i++)
+        {
             HashMap<String, Object> map = new HashMap<String, Object>();
 //            map.put("item_image", resIds[i]);
             Dish dish_item = items.get(i);
@@ -86,18 +100,21 @@ public class DishListFragment extends BaseFragment {
                 R.layout.fragment_select_dishes_list_item, new String[]
                 {"item_image", "item_price", "item_left", "item_middle", "item_right"},
                 new int[]{R.id.dish_name, R.id.dish_price,
-                        R.id.item_left, R.id.item_middle, R.id.item_right}) {
+                        R.id.item_left, R.id.item_middle, R.id.item_right})
+        {
         };
         select_grid.setAdapter(simpleAdapter);
     }
 
     @Override
-    public void onAttach(Context context) {
+    public void onAttach(Context context)
+    {
         super.onAttach(context);
     }
 
     @Override
-    public void onDetach() {
+    public void onDetach()
+    {
         super.onDetach();
     }
 

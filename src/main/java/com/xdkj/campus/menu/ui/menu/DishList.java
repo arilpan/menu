@@ -1,4 +1,4 @@
-package com.xdkj.campus.menu.child;
+package com.xdkj.campus.menu.ui.menu;
 
 import com.xdkj.campus.menu.entity.Dish;
 
@@ -6,7 +6,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by xdkj on 2016/8/11.
+ * 选择过的菜品的信息list
+ * Created by arilpan on 2016/8/11.
  */
 public class DishList {
     public static List<Dish> dishes;

@@ -2,7 +2,7 @@
              xmlns:tools="http://schemas.android.com/tools"
              android:layout_width="match_parent"
              android:layout_height="match_parent"
-             tools:context="com.xdkj.campus.menu.child.SelectFragment">
+             tools:context=".ui.menu.SelectFragment">
     <TextView
             android:id="@+id/class_name"
             android:layout_gravity="top|center"
