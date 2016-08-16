@@ -1,56 +1,61 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:orientation="vertical"
-              android:background="@color/bg_app"
               android:layout_width="match_parent"
-              android:layout_height="80dp">
+              android:layout_height="80dp"
+              android:background="@color/bg_app"
+              android:orientation="vertical">
 
     <RelativeLayout
-            android:background="#fff"
-            android:layout_width="match_parent"
-            android:layout_height="80dp">
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:background="#fff">
+
         <ImageView
-                android:id="@+id/dish_icon"
-                android:layout_alignParentLeft="true"
-                android:layout_centerVertical="true"
-                android:layout_marginLeft="18dp"
-                android:src="@drawable/zixun_pic"
-                android:layout_width="60dp"
-                android:layout_height="60dp"/>
-        <TextView
-                android:id="@+id/dish_name"
-                android:layout_marginLeft="8dp"
-                android:layout_marginTop="18dp"
-                android:layout_toRightOf="@id/dish_icon"
-                android:textSize="16sp"
-                android:textColor="#333"
-                android:text="烤鳕鱼"
-                android:layout_width="86dp"
-                android:layout_height="wrap_content"/>
-        <TextView
-                   android:layout_alignParentRight="true"
-                android:layout_marginLeft="8dp"
-                android:layout_marginTop="17dp"
-                   android:layout_marginRight="18dp"
-                android:textSize="18sp"
-                android:textColor="#ff6666"
-                android:text="￥28"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
+            android:id="@+id/dish_icon"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="18dp"
+            android:src="@drawable/zixun_pic"/>
 
         <TextView
-                android:id="@+id/dish_price"
-                android:layout_marginTop="12dp"
-                android:layout_below="@id/dish_name"
-                android:layout_toRightOf="@id/dish_icon"
-                android:layout_marginLeft="8dp"
-                android:layout_marginRight="8dp"
-                android:layout_centerVertical="true"
-                android:textSize="13sp"
-                android:textColor="#666"
-                android:text="鳕鱼低脂肪，高蛋白，刺少"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
+            android:id="@+id/dish_name"
+            android:layout_width="86dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="8dp"
+            android:layout_marginTop="18dp"
+            android:layout_toRightOf="@id/dish_icon"
+            android:text="烤鳕鱼"
+            android:textColor="#333"
+            android:textSize="16sp"/>
+
+        <TextView
+            android:id="@+id/dish_price"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="18dp"
+            android:layout_marginTop="17dp"
+            android:text="￥28"
+
+            android:textColor="#ff6666"
+            android:textSize="18sp"/>
+
+        <TextView
+            android:id="@+id/dish_desc"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/dish_name"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp"
+            android:layout_marginTop="12dp"
+            android:layout_toRightOf="@id/dish_icon"
+            android:text="鳕鱼低脂肪，高蛋白，刺少"
+            android:textColor="#666"
+            android:textSize="13sp"/>
 
     </RelativeLayout>
 </LinearLayout>

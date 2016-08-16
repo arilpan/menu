@@ -128,13 +128,8 @@ public class DiscountFragment extends BaseFragment
                         R.id.item_mall_name,
                         R.id.item_card_name,
                         R.id.item_desc,
-                        R.id.item_time})
-        {
-//            @Override
-//            public View getView(int position, View convertView, ViewGroup parent) {
-//                return super.getView(position, convertView, parent);
-//            }
-        };
+                        R.id.item_time}
+        );
         simpleAdapter.setViewBinder(new SimpleAdapter.ViewBinder()
         {
             public boolean setViewValue(View view, Object data,

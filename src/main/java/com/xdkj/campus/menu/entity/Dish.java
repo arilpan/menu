@@ -3,7 +3,8 @@ package com.xdkj.campus.menu.entity;
 /**
  * Created by xdkj on 2016/8/8.
  */
-public class Dish {
+public class Dish
+{
     private int id;
     private String name;
     private int img;
@@ -13,77 +14,103 @@ public class Dish {
     private String preOrder;
     private int num;
 
-    public  Dish()
+    @Override
+    public String toString()
+    {
+        String res = "id: " + getId() + " , num :" + getName() + " ,name " + getName()
+                + " ,desc " + getDesc() + ",price " + getPrice();
+        return res;
+    }
+
+    public Dish()
     {
 
     }
-    public Dish(String name, String desc, String price) {
+
+    public Dish(String name, String desc, String price)
+    {
         this.name = name;
         this.desc = desc;
         this.price = price;
     }
 
-    public int getId() {
+    public int getId()
+    {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(int id)
+    {
         this.id = id;
     }
 
-    public int getNum() {
+    public int getNum()
+    {
         return num;
     }
 
-    public void setNum(int num) {
+    public void setNum(int num)
+    {
         this.num = num;
     }
 
-    public int getImg() {
+    public int getImg()
+    {
         return img;
     }
 
-    public void setImg(int img) {
+    public void setImg(int img)
+    {
         this.img = img;
     }
 
-    public String getImgurl() {
+    public String getImgurl()
+    {
         return imgurl;
     }
 
-    public void setImgurl(String imgurl) {
+    public void setImgurl(String imgurl)
+    {
         this.imgurl = imgurl;
     }
 
-    public String getPreOrder() {
+    public String getPreOrder()
+    {
         return preOrder;
     }
 
-    public void setPreOrder(String preOrder) {
+    public void setPreOrder(String preOrder)
+    {
         this.preOrder = preOrder;
     }
 
-    public String getName() {
+    public String getName()
+    {
         return name;
     }
 
-    public void setName(String name) {
+    public void setName(String name)
+    {
         this.name = name;
     }
 
-    public String getDesc() {
+    public String getDesc()
+    {
         return desc;
     }
 
-    public void setDesc(String desc) {
+    public void setDesc(String desc)
+    {
         this.desc = desc;
     }
 
-    public String getPrice() {
+    public String getPrice()
+    {
         return price;
     }
 
-    public void setPrice(String price) {
+    public void setPrice(String price)
+    {
         this.price = price;
     }
 }
