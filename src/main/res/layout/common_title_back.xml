@@ -17,4 +17,6 @@
                 android:layout_marginLeft="9dp"
                 android:src="@drawable/btn_back"/>
     </LinearLayout>
+    <View
+        style="@style/line_divider_h"/>
 </LinearLayout>

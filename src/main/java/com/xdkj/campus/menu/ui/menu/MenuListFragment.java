@@ -172,7 +172,6 @@ public class MenuListFragment extends BaseFragment
         }
 
         mCurrentPosition = position;
-
         mAdapter.setItemChecked(position);
 
 //        ContentFragment fragment = ContentFragment.newInstance(mMenus.get(position));

@@ -2,12 +2,15 @@ package com.xdkj.campus.menu;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -17,11 +20,13 @@ import com.xdkj.campus.menu.ui.menu.*;
 import com.xdkj.campus.menu.event.ShopEvent;
 
 import me.yokeyword.fragmentation.SupportFragment;
+import me.yokeyword.fragmentation.debug.DebugFragmentRecord;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by YoKeyword on 16/2/4.
@@ -29,7 +34,7 @@ import java.util.ArrayList;
 public class ShopFragment extends BaseFragment
 {
     public static final String TAG = ShopFragment.class.getSimpleName();
-
+    FrameLayout fl_child_list_content_container;
     private Toolbar mToolbar;
 
     public static ShopFragment newInstance()
@@ -61,6 +66,9 @@ public class ShopFragment extends BaseFragment
     }
 
     public static TextView total_price;
+    FragmentManager fManager;
+    FragmentTransaction transaction;
+
 
     public void setTotalPriceView()
     {
@@ -71,6 +79,11 @@ public class ShopFragment extends BaseFragment
     {
         EventBus.getDefault().register(this);
         mToolbar = (Toolbar) view.findViewById(R.id.toolbar);
+        fl_child_list_content_container = (FrameLayout) view.findViewById(R.id.fl_child_list_content_container);
+
+
+        fManager = getFragmentManager();
+        transaction = fManager.beginTransaction();
 
         mToolbar.setTitle("商店");
         initToolbarMenu(mToolbar);
@@ -111,40 +124,70 @@ public class ShopFragment extends BaseFragment
                         {
                             if (showDishList)
                             {
-//                        popChild();
-//                        pop();
-                                FragmentManager fManager = getFragmentManager();
-                                fManager.beginTransaction().remove(findFragment(DishListFragment
-                                        .class));
+                                /***
+                                 *
+                                 * 方法1,无法获取sf
+                                 *   FragmentManager fManager = getFragmentManager();
+                                 *   SupportFragment sf = findFragment(DishListFragment.class);
+                                 * 方法2,只能获取mainfragment
+                                 *   List<Fragment> fragmentList = _mActivity
+                                 *   .getSupportFragmentManager().getFragments();
+                                 */
+
+
+                                //隐藏已经选择的菜品
+//                                SupportFragment dishListFragment = findChildFragment
+//                                        (DishListFragment.class);
+//                                if (dishListFragment != null)
+//                                {
+//                                    dishListFragment.pop();
+//                                    Log.e("arilpan", "hide dishListFragmentdish 不为空 Pop");
+//                                } else
+//                                {
+//                                    Log.e("arilpan", "hide dishListFragment 为空");
+//                                }
+
+//                                SupportFragment s = findFragment(DishListFragment.class);
+//                                {
+//                                    s.pop();
+//                                }
+
+                                //栈-->子栈
                                 SupportFragment dishListFragment = findChildFragment
                                         (DishListFragment.class);
-                                if (dl != null)
-                                {
-                                    dl.pop();
-                                    Log.e("arilpan", "不为空 Pop");
-                                } else
-                                {
-                                    Log.e("arilpan", "为空");
-                                }
                                 if (dishListFragment != null)
                                 {
                                     dishListFragment.pop();
-                                    Log.e("arilpan", "dishListFragmentdish 不为空 Pop");
+                                    //方法：hide无效
+//                                    transaction.hide(dishListFragment);
+                                    //方法：setVisible(需要多次恢复)麻烦
+//                                    fl_child_list_content_container.setVisibility(View.GONE);
+//                                    Log.e("arilpan", "fl_child_list_content_container.setVisibility(View.GONE);");
                                 } else
                                 {
-                                    Log.e("arilpan", "dishListFragment 为空");
+                                    Log.e("arilpan", "hiden程序异常");
                                 }
-
-//                        popToChild(DishListFragment.class, true);
                                 showDishList = false;
                             } else
                             {
-                                dl = DishListFragment.newInstance("菜单列表栏目", "1");
-//                        replaceLoadRootFragment(R.id.fl_child_list_content_container,
-//                                dl, true);
-                                switchDishListFragment(dl);
+                                SupportFragment dishListFragment = findChildFragment
+                                        (DishListFragment.class);
+                                if (dishListFragment == null)
+                                {
+                                    replaceLoadRootFragment(
+                                            R.id.fl_child_list_content_container,
+                                            DishListFragment.newInstance("菜单列表栏目", "1")
+                                            , true);
+//                                switchDishListFragment(
+//                                        DishListFragment.newInstance("菜单列表栏目", "1"));
+                                    Log.e("arilpan", "show new dishListFragment ");
+                                } else
+                                {
+                                    Log.e("arilpan", "show dishListFragment ");
+                                    transaction.show(dishListFragment);
+                                }
+                                //显示已经选择的菜品
                                 showDishList = true;
-
                             }
 
                             //新的菜单列表 浮动listview
@@ -155,7 +198,6 @@ public class ShopFragment extends BaseFragment
         }
     }
 
-    DishListFragment dl;
     static boolean showDishList = false;
 
     @Override
@@ -198,15 +240,44 @@ public class ShopFragment extends BaseFragment
         {
             contentFragment.replaceFragment(fragment, false);
         }
+//        else
+//        {
+//            dl = DishListFragment.newInstance("菜单列表栏目", "1");
+//            replaceLoadRootFragment(R.id.fl_child_list_content_container,
+//                                dl, true);
+////            replaceLoadRootFragment(fragment, false);
+//        }
     }
 
-    public void switchDishListFragment(DishListFragment fragment)
+    public void switchDishListFragment()
     {
         SupportFragment dishListFragment = findChildFragment(DishListFragment.class);
+//        if (dishListFragment != null)
+//        {
+//            dishListFragment.pop();
+//            Log.e("arilpan","pop in switchDishListFragment");
+////            dishListFragment.replaceFragment(fragment, false);
+//        }
         if (dishListFragment != null)
         {
-            dishListFragment.replaceFragment(fragment, false);
+            dishListFragment.pop();
+//            if (!dishListFragment.isHidden())
+//            {
+//                transaction.hide(dishListFragment);
+//                Log.e("arilpan", "switchDishListFragment hide dishListFragment ");
+//            } else
+//            {
+//                Log.e("arilpan", "dishListFragment already hidden ! ");
+//            }
+        } else
+        {
+            Log.e("arilpan", "dishListFragment == null ");
         }
+
+//        replaceLoadRootFragment(
+//                R.id.fl_child_list_content_container,
+//                DishListFragment.newInstance("菜单列表栏目", "1")
+//                , true);
     }
 
     @Override

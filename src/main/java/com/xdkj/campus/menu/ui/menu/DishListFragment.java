@@ -34,6 +34,8 @@ public class DishListFragment extends BaseFragment
         // Required empty public constructor
     }
 
+    static DishListFragment fragment;
+
     public static DishListFragment newInstance(String param1, String param2)
     {
         DishListFragment fragment = new DishListFragment();
