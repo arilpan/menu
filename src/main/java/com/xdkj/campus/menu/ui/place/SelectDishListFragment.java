@@ -8,7 +8,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 import com.xdkj.campus.menu.R;
-import com.xdkj.campus.menu.fragment.CycleFragment;
+import com.xdkj.campus.menu.backup.CycleFragment;
 import me.yokeyword.fragmentation.SupportFragment;
 
 /**
@@ -22,8 +22,8 @@ public class SelectDishListFragment extends SupportFragment {
 
     private int mNumber;
 
-    public static CycleFragment newInstance(int number) {
-        CycleFragment fragment = new CycleFragment();
+    public static SelectDishListFragment newInstance(int number) {
+        SelectDishListFragment fragment = new SelectDishListFragment();
         Bundle args = new Bundle();
         args.putInt(ARG_NUMBER, number);
         fragment.setArguments(args);

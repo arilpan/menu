@@ -8,9 +8,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.RelativeLayout;
-import android.widget.TextClock;
 import android.widget.TextView;
 
 import com.xdkj.campus.menu.R;
@@ -19,27 +18,24 @@ import com.xdkj.campus.menu.entity.Dish;
 import com.xdkj.campus.menu.entity.Order;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-import java.util.Set;
 
 /***
- * don't delete notes
- * 取消订单
+ * 未完成订单
+ *  最大支持99個不同菜品數量訂單
  * @Author arilpan@qq.com
  */
-public class CancleOrderFragment extends BaseFragment
+public class UncompleteOrderFragment extends BaseFragment
 {
 
-    public CancleOrderFragment()
+    public UncompleteOrderFragment()
     {
     }
 
-    public static CancleOrderFragment newInstance()
+    public static UncompleteOrderFragment newInstance()
     {
         Bundle args = new Bundle();
-        CancleOrderFragment fragment = new CancleOrderFragment();
+        UncompleteOrderFragment fragment = new UncompleteOrderFragment();
         fragment.setArguments(args);
         return fragment;
     }
@@ -165,7 +161,8 @@ public class CancleOrderFragment extends BaseFragment
         public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType)
         {
             MyViewHolder holder = new MyViewHolder(LayoutInflater.from(
-                    parent.getContext()).inflate(R.layout.fragment_order_cancel_order_item, parent,
+                    parent.getContext()).inflate(
+                    R.layout.fragment_order_uncomplete_order_item, parent,
                     false));
 /**************************設置高度信息****1  2  2* =>都是5个单位，为何*************************************/
 
@@ -186,6 +183,11 @@ public class CancleOrderFragment extends BaseFragment
             return holder;
         }
 
+        public void cancelOrder(int pos)
+        {
+            Log.e("arilpan","電價了位置+"+pos);
+        }
+
         @Override
         public void onBindViewHolder(MyViewHolder holder, int position)
         {
@@ -197,16 +199,15 @@ public class CancleOrderFragment extends BaseFragment
             holder.order_item_order_time.setText(order.getPre_order_time());
             holder.order_item_total_price.setText(order.getTotalPrice());
 
-
-//            RecyclerView.LayoutParams p = (RecyclerView.LayoutParams)
-//                    holder.order_item_recyview
-//                            .getLayoutParams();
-
-//            RelativeLayout.LayoutParams lp = new RelativeLayout.LayoutParams(
-//                    (dm.widthPixels - dip2px(20)) / 3,
-//                    (dm.widthPixels - dip2px(20)) / 3);
-//            holder.order_item_recyview.setLayoutParams(lp);
-
+            final int pos =position;
+            holder.order_item_cancel_button.setOnClickListener(new View.OnClickListener()
+            {
+                @Override
+                public void onClick(View view)
+                {
+                    cancelOrder(pos);
+                }
+            });
 
             holder.order_item_recyview.setAdapter(
                     new RecyclerView.Adapter()
@@ -268,19 +269,6 @@ public class CancleOrderFragment extends BaseFragment
                                 super(view);
                                 view.setMinimumHeight(35);
 
-//                                ViewGroup.LayoutParams layoutParams = view.getLayoutParams();
-//                                layoutParams.height = 35;
-//                                if (itemDishes != null)
-//                                {
-//                                    int size = itemDishes.size();
-//                                    Log.e("arilpan", " dishes size: " + size);
-//                                    if (size > 0)
-//                                    {
-//                                        layoutParams.height = 35 + size * 100;
-//                                    }
-//                                }
-//                                view.setLayoutParams(layoutParams);
-
                                 dish_icon = (ImageView) view.findViewById(R.id
                                         .dish_icon);
                                 dish_name = (TextView) view.findViewById(R.id
@@ -322,6 +310,7 @@ public class CancleOrderFragment extends BaseFragment
             TextView order_item_total_price;
             TextView order_item_order_time;
             TextView order_item_mall_name;
+            Button order_item_cancel_button;
 
             public MyViewHolder(View view)
             {
@@ -331,6 +320,8 @@ public class CancleOrderFragment extends BaseFragment
                 order_item_total_price = (TextView) view.findViewById(R.id.order_item_total_price);
                 order_item_order_time = (TextView) view.findViewById(R.id.order_item_order_time);
                 order_item_mall_name = (TextView) view.findViewById(R.id.order_item_mall_name);
+
+                order_item_cancel_button = (Button) view.findViewById(R.id.order_item_cancle_button);
 
             }
         }

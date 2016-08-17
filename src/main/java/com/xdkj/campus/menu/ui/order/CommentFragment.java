@@ -6,7 +6,9 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
+
 import com.xdkj.campus.menu.R;
 import com.xdkj.campus.menu.fragment.ShopFragment;
 import com.xdkj.campus.menu.base.BaseFragment;
@@ -20,51 +22,55 @@ import com.xdkj.campus.menu.base.BaseFragment;
 // * Use the {@link TestOne#newInstance} factory method to
 // * create an instance of this fragment.
 // */
-public class SelectPlaceFragment extends BaseFragment {
-    TextView mall_1;
-    TextView mall_2;
+public class CommentFragment extends BaseFragment
+{
+    TextView comment;
+    Button comment_button;
 
-    public SelectPlaceFragment() {
+    public CommentFragment()
+    {
         // Required empty public constructor
     }
 
-    public static SelectPlaceFragment newInstance() {
+    public static CommentFragment newInstance()
+    {
 
         Bundle args = new Bundle();
-        SelectPlaceFragment fragment = new SelectPlaceFragment();
+        CommentFragment fragment = new CommentFragment();
         fragment.setArguments(args);
         return fragment;
     }
 
     @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.select_mall, container, false);
+    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable
+    Bundle savedInstanceState)
+    {
+        View view = inflater.inflate(R.layout.fragment_comment, container, false);
         initView(view);
         return view;
     }
 
 
-    private void initView(View view) {
-        mall_1 = (TextView) view.findViewById(R.id.mall_1);
-        mall_2 = (TextView) view.findViewById(R.id.mall_2);
+    private void initView(View view)
+    {
+        comment = (TextView) view.findViewById(R.id.comment);
+        comment_button = (Button) view.findViewById(R.id.comment_button);
 
-        mall_1.setOnClickListener(new View.OnClickListener() {
+        comment_button.setOnClickListener(new View.OnClickListener()
+        {
             @Override
-            public void onClick(View v) {
-                start(ShopFragment.newInstance());
-            }
-        });
-        mall_2.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+            public void onClick(View v)
+            {
+                //提交后退出
                 start(ShopFragment.newInstance());
             }
         });
     }
 
     @Override
-    public boolean onBackPressedSupport() {
+    public boolean onBackPressedSupport()
+    {
         // 这里实际项目中推荐使用 EventBus接耦
 //        ((TestOne) getParentFragment()).onBackToFirstFragment();
         Log.e("arilpan", "on back press");

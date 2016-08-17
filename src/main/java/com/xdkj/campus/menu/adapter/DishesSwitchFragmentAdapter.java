@@ -3,7 +3,7 @@ package com.xdkj.campus.menu.adapter;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
-import com.xdkj.campus.menu.good_dishes.WaterFallDishesFragment;
+import com.xdkj.campus.menu.ui.good_dishes.WaterFallDishesFragment;
 
 
 /**

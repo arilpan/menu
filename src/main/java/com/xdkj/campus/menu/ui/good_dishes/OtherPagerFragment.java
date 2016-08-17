@@ -1,4 +1,4 @@
-package com.xdkj.campus.menu.good_dishes;
+package com.xdkj.campus.menu.ui.good_dishes;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;

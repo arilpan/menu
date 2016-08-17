@@ -1,4 +1,4 @@
-package com.xdkj.campus.menu.good_dishes;
+package com.xdkj.campus.menu.ui.good_dishes;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -14,8 +14,9 @@ import com.xdkj.campus.menu.base.BaseFragment;
 import com.xdkj.campus.menu.entity.Dish;
 import com.xdkj.campus.menu.event.StartBrotherEvent;
 import com.xdkj.campus.menu.event.TabSelectedEvent;
-import com.xdkj.campus.menu.fragment.CycleFragment;
 import com.xdkj.campus.menu.listener.OnItemClickListener;
+import com.xdkj.campus.menu.ui.index.DishDetailFragment;
+
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
@@ -166,7 +167,8 @@ public class WaterfallDishes extends BaseFragment implements SwipeRefreshLayout.
             @Override
             public void onItemClick(int position, View view, RecyclerView.ViewHolder holder) {
                 // 通知MainActivity跳转至CycleFragment
-                EventBus.getDefault().post(new StartBrotherEvent(CycleFragment.newInstance(1)));
+                EventBus.getDefault().post(new StartBrotherEvent(
+                        DishDetailFragment.newInstance(1)));
             }
         });
 

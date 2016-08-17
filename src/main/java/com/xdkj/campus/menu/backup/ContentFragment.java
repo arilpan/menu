@@ -1,4 +1,4 @@
-package com.xdkj.campus.menu.ui.menu;
+package com.xdkj.campus.menu.backup;
 
 
 import android.os.Bundle;
@@ -11,9 +11,8 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.xdkj.campus.menu.R;
-import com.xdkj.campus.menu.ShopFragment;
+import com.xdkj.campus.menu.fragment.ShopFragment;
 import com.xdkj.campus.menu.base.BaseFragment;
-import com.xdkj.campus.menu.fragment.CycleFragment;
 
 import me.yokeyword.fragmentation.anim.DefaultNoAnimator;
 import me.yokeyword.fragmentation.anim.FragmentAnimator;

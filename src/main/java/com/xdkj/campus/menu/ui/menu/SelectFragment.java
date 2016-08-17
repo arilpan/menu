@@ -10,7 +10,7 @@ import android.view.ViewGroup;
 import android.widget.*;
 
 import com.xdkj.campus.menu.R;
-import com.xdkj.campus.menu.ShopFragment;
+import com.xdkj.campus.menu.fragment.ShopFragment;
 import com.xdkj.campus.menu.base.BaseFragment;
 import com.xdkj.campus.menu.entity.Dish;
 import com.xdkj.campus.menu.event.ShopEvent;

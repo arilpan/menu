@@ -8,38 +8,38 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.RelativeLayout;
-import android.widget.TextClock;
 import android.widget.TextView;
 
 import com.xdkj.campus.menu.R;
+import com.xdkj.campus.menu.adapter.PagerAdapter;
 import com.xdkj.campus.menu.base.BaseFragment;
 import com.xdkj.campus.menu.entity.Dish;
 import com.xdkj.campus.menu.entity.Order;
+import com.xdkj.campus.menu.event.StartBrotherEvent;
+
+import org.greenrobot.eventbus.EventBus;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-import java.util.Set;
 
 /***
- * don't delete notes
- * 取消订单
+ * 已完成订单
+ *
  * @Author arilpan@qq.com
  */
-public class CancleOrderFragment extends BaseFragment
+public class CompleteOrderFragment extends BaseFragment
 {
 
-    public CancleOrderFragment()
+    public CompleteOrderFragment()
     {
     }
 
-    public static CancleOrderFragment newInstance()
+    public static CompleteOrderFragment newInstance()
     {
         Bundle args = new Bundle();
-        CancleOrderFragment fragment = new CancleOrderFragment();
+        CompleteOrderFragment fragment = new CompleteOrderFragment();
         fragment.setArguments(args);
         return fragment;
     }
@@ -148,11 +148,8 @@ public class CancleOrderFragment extends BaseFragment
     @Override
     public boolean onBackPressedSupport()
     {
-        // 这里实际项目中推荐使用 EventBus接耦
-//        ((TestOne) getParentFragment()).onBackToFirstFragment();
         Log.e("arilpan", "on back press");
         return false;
-//        return true;
     }
 
 
@@ -165,23 +162,23 @@ public class CancleOrderFragment extends BaseFragment
         public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType)
         {
             MyViewHolder holder = new MyViewHolder(LayoutInflater.from(
-                    parent.getContext()).inflate(R.layout.fragment_order_cancel_order_item, parent,
+                    parent.getContext()).inflate(
+                    R.layout.fragment_order_cancel_order_item,
+                    parent,
                     false));
-/**************************設置高度信息****1  2  2* =>都是5个单位，为何*************************************/
-
+/****************************************************************************/
             ViewGroup.LayoutParams layoutParams =
                     holder.order_item_recyview.getLayoutParams();
             layoutParams.height = 35;
             if (viewType > 0)
             {
                 layoutParams.height = 35 + viewType * 230;
-                Log.e("arilpan", " dishes size: " + viewType + ",height:" + layoutParams.height);
+                Log.e("arilpan", " dishes size: " + viewType + ",height:" +
+                        layoutParams.height);
             }
             holder.order_item_recyview.setLayoutManager(new LinearLayoutManager
                     (_mActivity.getApplicationContext(), LinearLayoutManager.VERTICAL, true));
             holder.order_item_recyview.setLayoutParams(layoutParams);
-//            holder.order_item_recyview.setLayoutManager(
-//                    new LinearLayoutManager(_mActivity.getApplicationContext()));
 /****************************************************************************/
             return holder;
         }
@@ -189,59 +186,69 @@ public class CancleOrderFragment extends BaseFragment
         @Override
         public void onBindViewHolder(MyViewHolder holder, int position)
         {
-//          holder.tv.setText(mDatas.get(position));
             holder.order_item_recyview.setMinimumHeight(35);
-
             Order order = mDatas.get(position);
             holder.order_item_mall_name.setText(order.getShopName());
             holder.order_item_order_time.setText(order.getPre_order_time());
             holder.order_item_total_price.setText(order.getTotalPrice());
 
-
-//            RecyclerView.LayoutParams p = (RecyclerView.LayoutParams)
-//                    holder.order_item_recyview
-//                            .getLayoutParams();
-
-//            RelativeLayout.LayoutParams lp = new RelativeLayout.LayoutParams(
-//                    (dm.widthPixels - dip2px(20)) / 3,
-//                    (dm.widthPixels - dip2px(20)) / 3);
-//            holder.order_item_recyview.setLayoutParams(lp);
-
-
             holder.order_item_recyview.setAdapter(
                     new RecyclerView.Adapter()
                     {
                         @Override
-                        public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int
+                        public RecyclerView.ViewHolder onCreateViewHolder(
+                                ViewGroup parent, int
                                 viewType)
                         {
                             MyItemViewHolder itemholder = new MyItemViewHolder(
                                     LayoutInflater.from(parent.getContext()).
-                                            inflate(R.layout.fragment_order_cancel_list_item,
+                                            inflate(R.layout.fragment_order_complete_list_item,
                                                     parent,
                                                     false));
                             return itemholder;
                         }
 
                         @Override
-                        public void onBindViewHolder(RecyclerView.ViewHolder holder, int position)
+                        public void onBindViewHolder(RecyclerView.ViewHolder holder,
+                                                     int position)
                         {
                             MyItemViewHolder newholder = (MyItemViewHolder) holder;
 
+                            String name = null;
                             Log.e("arilpan", "该item data的大小" + itemDishes.size());
                             if (position < itemDishes.size())
                             {
                                 Dish dish = itemDishes.get(position);
+                                name = dish.getName();
                                 newholder.dish_name.setText(dish.getName());
                                 newholder.dish_price.setText(dish.getPrice());
                                 newholder.dish_desc.setText(dish.getDesc());
                             } else
                             {
-                                Log.e("arilpan", " will throw java.lang.IndexOutOfBoundsException");
+                                Log.e("arilpan",
+                                        " will throw java.lang.IndexOutOfBoundsException");
                             }
-
-                            Log.e("arilpan", "item onBindViewHolder position: " + position + " ," +
+                            Log.e("arilpan", "item onBindViewHolder position: "
+                                    + position + " ," +
                                     "size : " + itemDishes.size());
+                            final int pos = position;
+                            final String dish_name = name;
+                            newholder.dish_comment.setOnClickListener(new View.OnClickListener()
+                            {
+                                @Override
+                                public void onClick(View view)
+                                {
+                                    goToComment(dish_name, pos);
+                                }
+                            });
+                        }
+
+                        public void goToComment(String name, int pos)
+                        {
+                            //跳轉到評價頁面
+                            Log.e("arilpan", "電價了評價位置 name :" + name + ",pos :" + pos);
+                            EventBus.getDefault().post(
+                                    new StartBrotherEvent(CommentFragment.newInstance()));
                         }
 
                         @Override
@@ -262,24 +269,12 @@ public class CancleOrderFragment extends BaseFragment
                             TextView dish_name;
                             TextView dish_price;
                             TextView dish_desc;
+                            Button dish_comment;
 
                             public MyItemViewHolder(View view)
                             {
                                 super(view);
                                 view.setMinimumHeight(35);
-
-//                                ViewGroup.LayoutParams layoutParams = view.getLayoutParams();
-//                                layoutParams.height = 35;
-//                                if (itemDishes != null)
-//                                {
-//                                    int size = itemDishes.size();
-//                                    Log.e("arilpan", " dishes size: " + size);
-//                                    if (size > 0)
-//                                    {
-//                                        layoutParams.height = 35 + size * 100;
-//                                    }
-//                                }
-//                                view.setLayoutParams(layoutParams);
 
                                 dish_icon = (ImageView) view.findViewById(R.id
                                         .dish_icon);
@@ -289,14 +284,14 @@ public class CancleOrderFragment extends BaseFragment
                                         .dish_price);
                                 dish_desc = (TextView) view.findViewById(R.id
                                         .dish_desc);
+
+                                dish_comment = (Button) view.findViewById(R.id
+                                        .dish_comment);
                             }
                         }
                     }
-
             );
-
         }
-
 
         @Override
         public int getItemViewType(int position)
@@ -331,7 +326,6 @@ public class CancleOrderFragment extends BaseFragment
                 order_item_total_price = (TextView) view.findViewById(R.id.order_item_total_price);
                 order_item_order_time = (TextView) view.findViewById(R.id.order_item_order_time);
                 order_item_mall_name = (TextView) view.findViewById(R.id.order_item_mall_name);
-
             }
         }
     }

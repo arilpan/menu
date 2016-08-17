@@ -1,8 +1,7 @@
-package com.xdkj.campus.menu;
+package com.xdkj.campus.menu.fragment;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.Toolbar;
@@ -15,18 +14,18 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.xdkj.campus.menu.R;
+import com.xdkj.campus.menu.backup.ContentFragment;
 import com.xdkj.campus.menu.base.BaseFragment;
 import com.xdkj.campus.menu.ui.menu.*;
 import com.xdkj.campus.menu.event.ShopEvent;
 
 import me.yokeyword.fragmentation.SupportFragment;
-import me.yokeyword.fragmentation.debug.DebugFragmentRecord;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by YoKeyword on 16/2/4.

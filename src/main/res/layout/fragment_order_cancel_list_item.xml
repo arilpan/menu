@@ -50,12 +50,12 @@
             android:layout_below="@id/dish_name"
             android:layout_centerVertical="true"
             android:layout_marginLeft="8dp"
-            android:layout_marginRight="8dp"
-            android:layout_marginTop="12dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="10dp"
             android:layout_toRightOf="@id/dish_icon"
-            android:text="鳕鱼低脂肪，高蛋白，刺少"
+            android:maxLines="1"
+            android:text="鳕鱼低脂肪，高蛋白，刺少鳕鱼低脂肪，高蛋白，刺少鳕鱼低脂肪，高蛋白，刺少"
             android:textColor="#666"
             android:textSize="13sp"/>
-
     </RelativeLayout>
 </LinearLayout>

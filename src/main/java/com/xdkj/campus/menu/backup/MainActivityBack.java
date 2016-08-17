@@ -1,7 +1,14 @@
-package com.xdkj.campus.menu;
+package com.xdkj.campus.menu.backup;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+
+import com.xdkj.campus.menu.fragment.DiscountFragment;
+import com.xdkj.campus.menu.fragment.IndexFragment;
+import com.xdkj.campus.menu.fragment.MineFragment;
+import com.xdkj.campus.menu.R;
+import com.xdkj.campus.menu.fragment.ShopFragment;
+import com.xdkj.campus.menu.ZhihuThirdFragment;
 import com.xdkj.campus.menu.base.BaseLazyMainFragment;
 import com.xdkj.campus.menu.event.TabSelectedEvent;
 import com.xdkj.campus.menu.view.BottomBar;

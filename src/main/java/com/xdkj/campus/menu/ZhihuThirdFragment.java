@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import com.xdkj.campus.menu.base.BaseLazyMainFragment;
+import com.xdkj.campus.menu.fragment.ShopFragment;
 
 /**
  * Created by YoKeyword on 16/6/3.

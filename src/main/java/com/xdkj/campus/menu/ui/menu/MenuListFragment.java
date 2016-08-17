@@ -9,7 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.xdkj.campus.menu.R;
-import com.xdkj.campus.menu.ShopFragment;
+import com.xdkj.campus.menu.fragment.ShopFragment;
 import com.xdkj.campus.menu.adapter.MenuAdapter;
 import com.xdkj.campus.menu.base.BaseFragment;
 import com.xdkj.campus.menu.listener.OnItemClickListener;

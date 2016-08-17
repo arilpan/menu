@@ -14,7 +14,6 @@ import com.xdkj.campus.menu.base.BaseFragment;
 import com.xdkj.campus.menu.entity.Dish;
 import com.xdkj.campus.menu.event.StartBrotherEvent;
 import com.xdkj.campus.menu.event.TabSelectedEvent;
-import com.xdkj.campus.menu.fragment.CycleFragment;
 import com.xdkj.campus.menu.listener.OnItemClickListener;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;

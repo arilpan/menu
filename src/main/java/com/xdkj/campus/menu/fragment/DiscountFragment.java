@@ -1,4 +1,4 @@
-package com.xdkj.campus.menu;
+package com.xdkj.campus.menu.fragment;
 
 import android.graphics.Bitmap;
 import android.os.Bundle;
@@ -13,6 +13,7 @@ import android.widget.ListView;
 import android.widget.SimpleAdapter;
 import android.widget.TextView;
 
+import com.xdkj.campus.menu.R;
 import com.xdkj.campus.menu.base.BaseFragment;
 import com.xdkj.campus.menu.entity.Recharge;
 
@@ -32,8 +33,6 @@ public class DiscountFragment extends BaseFragment
 {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-
-
 //    private OnFragmentInteractionListener mListener;
 
     public DiscountFragment()
@@ -43,7 +42,6 @@ public class DiscountFragment extends BaseFragment
 
     public static DiscountFragment newInstance()
     {
-
         Bundle args = new Bundle();
         DiscountFragment fragment = new DiscountFragment();
         fragment.setArguments(args);

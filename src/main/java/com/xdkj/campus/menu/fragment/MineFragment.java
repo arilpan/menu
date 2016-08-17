@@ -1,4 +1,4 @@
-package com.xdkj.campus.menu;
+package com.xdkj.campus.menu.fragment;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -9,10 +9,15 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+
+import com.xdkj.campus.menu.R;
 import com.xdkj.campus.menu.base.BaseFragment;
 import com.xdkj.campus.menu.event.StartBrotherEvent;
 import com.xdkj.campus.menu.ui.mine.SettingFragment;
 import com.xdkj.campus.menu.ui.order.CancleOrderFragment;
+import com.xdkj.campus.menu.ui.order.CompleteOrderFragment;
+import com.xdkj.campus.menu.ui.order.UncompleteOrderFragment;
+
 import org.greenrobot.eventbus.EventBus;
 
 
@@ -35,18 +40,20 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
         return view;
     }
 
-    RelativeLayout running_layout;
+    RelativeLayout cancel_layout;
     RelativeLayout complete_layout;
     RelativeLayout uncomplete_layout;
+
     LinearLayout setting_layout;
 
     private void initView(View view) {
-        running_layout = (RelativeLayout) view.findViewById(R.id.running_layout);
+        cancel_layout = (RelativeLayout) view.findViewById(R.id.cancel_layout);
+
         complete_layout = (RelativeLayout) view.findViewById(R.id.complete_layout);
         uncomplete_layout = (RelativeLayout) view.findViewById(R.id.uncomplete_layout);
         setting_layout = (LinearLayout) view.findViewById(R.id.setting_layout);
 
-        running_layout.setOnClickListener(this);
+        cancel_layout.setOnClickListener(this);
         complete_layout.setOnClickListener(this);
         uncomplete_layout.setOnClickListener(this);
         setting_layout.setOnClickListener(this);
@@ -66,21 +73,22 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.running_layout:
+            //已取消的訂單
+            case R.id.cancel_layout:
                 EventBus.getDefault().post(new StartBrotherEvent(CancleOrderFragment.newInstance()));
 //                start(CancleOrderFragment.newInstance());
                 break;
+            //已完成的訂單
             case R.id.complete_layout:
-                EventBus.getDefault().post(new StartBrotherEvent(CancleOrderFragment.newInstance()));
-//                start(MineFragment.newInstance());
+                EventBus.getDefault().post(new StartBrotherEvent(CompleteOrderFragment.newInstance()));
                 break;
+            //未完成的訂單
             case R.id.uncomplete_layout:
-                EventBus.getDefault().post(new StartBrotherEvent(CancleOrderFragment.newInstance()));
-//                start(MineFragment.newInstance());
+                EventBus.getDefault().post(new StartBrotherEvent(UncompleteOrderFragment.newInstance()));
                 break;
+            //設置
             case R.id.setting_layout:
                 EventBus.getDefault().post(new StartBrotherEvent(SettingFragment.newInstance()));
-//                start(MineFragment.newInstance());
                 break;
         }
 

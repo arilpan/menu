@@ -3,7 +3,7 @@ package com.xdkj.campus.menu.event;
 import me.yokeyword.fragmentation.SupportFragment;
 
 /**
- * Created by YoKeyword on 16/6/30.
+ * Created by arilpan@qq.com on 16/8/2.
  */
 public class ShopEvent {
     public SupportFragment targetFragment;

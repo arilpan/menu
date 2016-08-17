@@ -1,4 +1,4 @@
-package com.xdkj.campus.menu;
+package com.xdkj.campus.menu.fragment;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -8,9 +8,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
+
+import com.xdkj.campus.menu.R;
 import com.xdkj.campus.menu.base.BaseLazyMainFragment;
 import com.xdkj.campus.menu.event.StartBrotherEvent;
-import com.xdkj.campus.menu.good_dishes.DishesSwitchFragment;
+import com.xdkj.campus.menu.ui.good_dishes.DishesSwitchFragment;
 import com.xdkj.campus.menu.ui.order.SelectPlaceFragment;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;

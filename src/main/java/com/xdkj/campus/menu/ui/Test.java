@@ -7,8 +7,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 import com.xdkj.campus.menu.R;
-import com.xdkj.campus.menu.ShopFragment;
-import com.xdkj.campus.menu.fragment.CycleFragment;
+import com.xdkj.campus.menu.fragment.ShopFragment;
+import com.xdkj.campus.menu.backup.CycleFragment;
 import me.yokeyword.fragmentation.SupportFragment;
 
 /**
