@@ -12,7 +12,10 @@ import android.widget.RelativeLayout;
 import com.xdkj.campus.menu.R;
 import com.xdkj.campus.menu.base.BaseLazyMainFragment;
 import com.xdkj.campus.menu.event.StartBrotherEvent;
+import com.xdkj.campus.menu.ui.dishdiscount.DishesDishcountSwitchFragment;
+import com.xdkj.campus.menu.ui.dishrank.DishesRankSwitchFragment;
 import com.xdkj.campus.menu.ui.good_dishes.DishesSwitchFragment;
+import com.xdkj.campus.menu.ui.news.NewsListFragment;
 import com.xdkj.campus.menu.ui.order.SelectPlaceFragment;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -81,7 +84,9 @@ public class IndexFragment extends BaseLazyMainFragment {
         ((LinearLayout) view.findViewById(R.id.greate_package_layout)).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                EventBus.getDefault().post(new StartBrotherEvent(DishesSwitchFragment.newInstance("精品套餐")));
+                EventBus.getDefault().post(new StartBrotherEvent(
+                        //TODO:1
+                        DishesSwitchFragment.newInstance("精品套餐")));
             }
         });
         ((LinearLayout) view.findViewById(R.id.recharge_layout)).setOnClickListener(new View.OnClickListener() {
@@ -94,13 +99,15 @@ public class IndexFragment extends BaseLazyMainFragment {
         ((RelativeLayout) view.findViewById(R.id.dish_rank_rl)).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                EventBus.getDefault().post(new StartBrotherEvent(DishesSwitchFragment.newInstance("美食排行")));
+                EventBus.getDefault().post(new StartBrotherEvent(
+                        DishesRankSwitchFragment.newInstance("美食排行")));
             }
         });
         ((RelativeLayout) view.findViewById(R.id.discount_dish_rl)).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                EventBus.getDefault().post(new StartBrotherEvent(DishesSwitchFragment.newInstance("超值折扣菜")));
+                EventBus.getDefault().post(new StartBrotherEvent(
+                        DishesDishcountSwitchFragment.newInstance("超值折扣菜")));
             }
         });
         ((RelativeLayout) view.findViewById(R.id.recharge_rl)).setOnClickListener(new View.OnClickListener() {
@@ -112,7 +119,7 @@ public class IndexFragment extends BaseLazyMainFragment {
         ((RelativeLayout) view.findViewById(R.id.dayly_welfare_rl)).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                EventBus.getDefault().post(new StartBrotherEvent(DiscountFragment.newInstance()));
+                EventBus.getDefault().post(new StartBrotherEvent(NewsListFragment.newInstance()));
             }
         });
 

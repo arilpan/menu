@@ -61,7 +61,7 @@ public class WaterFallDishesFragment extends BaseFragment implements SwipeRefres
     /****************************************************************/
     private void initView(View view)
     {
-        EventBus.getDefault().register(this);
+//        EventBus.getDefault().register(this);
 
         mRecy = (RecyclerView) view.findViewById(R.id.switch_recv_left);
         mRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.refresh_layout_left);
@@ -207,6 +207,6 @@ public class WaterFallDishesFragment extends BaseFragment implements SwipeRefres
     {
         super.onDestroyView();
         mRecy.setAdapter(null);
-        EventBus.getDefault().unregister(this);
+//        EventBus.getDefault().unregister(this);
     }
 }

@@ -44,7 +44,6 @@ public class DishesSwitchFragment extends BaseBackFragment {
     }
 
     private void initView(View view) {
-        EventBus.getDefault().register(this);
         ((TextView) view.findViewById(R.id.title_middle)).setText(title);
         ((LinearLayout) view.findViewById(R.id.title_ll_left)).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -65,13 +64,6 @@ public class DishesSwitchFragment extends BaseBackFragment {
         mTab.setupWithViewPager(mViewPager);
     }
 
-    /**
-     * start other BrotherFragment
-     */
-    @Subscribe
-    public void startBrother(StartBrotherEvent event) {
-        start(event.targetFragment);
-    }
 
 //    protected void initLazyView(@Nullable Bundle savedInstanceState) {
 //        mViewPager.setAdapter(new DishesSwitchFragmentAdapter(getChildFragmentManager()));
@@ -90,6 +82,5 @@ public class DishesSwitchFragment extends BaseBackFragment {
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        EventBus.getDefault().unregister(this);
     }
 }

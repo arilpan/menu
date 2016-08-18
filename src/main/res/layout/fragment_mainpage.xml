@@ -179,7 +179,7 @@
                     android:textColor="#7687f1"
                     android:id="@+id/activity_title_4"
                     style="@style/index_activity_select_layout_text_title"
-                    android:text="@string/index_day_welfare"
+                    android:text="@string/index_news_list"
             />
             <TextView
                     android:layout_below="@id/activity_title_4"

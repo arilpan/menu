@@ -22,6 +22,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import me.yokeyword.fragmentation.SupportFragment;
+
 /**
  * 右侧选择菜品的GridView
  *
@@ -219,8 +221,21 @@ public class SelectFragment extends BaseFragment
                 {
                     Log.e("arilpan", "选择菜品的item Adapter dish_img +"
                             + view.getId());
+                    SupportFragment sf = findChildFragment(DishDetailFragment.class);
+                    if (sf != null)
+                    {
+                        sf.pop();
+
+                        Log.e("arilpan", "findChildFragment不空 已经pop");
+                    }
+                    sf = findFragment(DishDetailFragment.class);
+                    if (sf != null)
+                    {
+                        sf.pop();
+                        Log.e("arilpan", "findFragment 已经pop");
+                    }
                     EventBus.getDefault().post(DishDetailFragment.newInstance(position));
-                    //start(DishDetailFragment.newInstance(1));
+//                    start(DishDetailFragment.newInstance(1));
                     //  Toast.makeText(context, good.getGoodProvider(),
                     //  Toast.LENGTH_LONG).show();
                 }

@@ -52,18 +52,21 @@
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">match_parent</item>
     </style>
+
     <style name="pre_order_list_big_rl">
         <item name="android:background">@color/pre_order_list_background</item>
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">45dp</item>
         <item name="android:paddingLeft">9dp</item>
     </style>
+
     <style name="pre_order_list_small_rl">
         <item name="android:background">@color/pre_order_list_background</item>
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">42dp</item>
         <item name="android:paddingLeft">9dp</item>
     </style>
+
     <style name="pre_order_list_head_title_image">
         <item name="android:layout_width">15dp</item>
         <item name="android:layout_height">13dp</item>
@@ -145,6 +148,7 @@
         <item name="android:orientation">vertical</item>
         <item name="android:layout_weight">1</item>
     </style>
+
     <style name="index_class_select_layout_image">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">50dp</item>
@@ -153,6 +157,7 @@
         <item name="android:layout_marginLeft">22dp</item>
         <item name="android:layout_marginRight">22dp</item>
     </style>
+
     <style name="index_class_select_layout_text">
         <item name="android:layout_marginBottom">14dp</item>
         <item name="android:layout_width">match_parent</item>
@@ -166,6 +171,7 @@
         <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_weight">1</item>
     </style>
+
     <style name="index_activity_select_layout_image">
         <item name="android:layout_width">46dp</item>
         <item name="android:layout_height">46dp</item>
@@ -174,6 +180,7 @@
         <item name="android:layout_marginRight">20dp</item>
         <item name="android:layout_alignParentRight">true</item>
     </style>
+
     <style name="index_activity_select_layout_text_title">
         <item name="android:layout_marginLeft">20dp</item>
         <item name="android:textSize">16sp</item>
@@ -210,21 +217,25 @@
         <item name="android:textColor">@color/white</item>
         <item name="android:gravity">center</item>
     </style>
+
     <style name="line_h">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">1dp</item>
         <item name="android:background">@color/line_divider</item>
     </style>
+
     <style name="line_divider_h">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">0.3dp</item>
         <item name="android:background">@color/line_divider</item>
     </style>
+
     <style name="line_divider_v">
         <item name="android:layout_height">match_parent</item>
         <item name="android:layout_width">0.3dp</item>
         <item name="android:background">@color/line_divider</item>
     </style>
+
     <style name="line_divider">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">0.3dp</item>
@@ -284,5 +295,58 @@
         <item name="android:paddingRight">4dp</item>
         <item name="android:paddingTop">8dp</item>
         <item name="android:paddingBottom">8dp</item>
+    </style>
+
+    <!--自定义dialog-->
+
+    <style name="Button">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginTop">@dimen/grid_1</item>
+        <item name="android:layout_marginBottom">@dimen/grid_1</item>
+        <item name="android:layout_marginLeft">@dimen/grid_2</item>
+        <item name="android:layout_marginRight">@dimen/grid_2</item>
+    </style>
+
+    <style name="AppThemeDark" parent="Theme.AppCompat">
+        <item name="colorPrimary">@color/primary</item>
+        <item name="colorPrimaryDark">@color/primary_dark</item>
+        <item name="colorAccent">@color/accent</item>
+        <item name="actionOverflowButtonStyle">@style/OverFlow</item>
+    </style>
+
+    <style name="JayneHatDialogTheme" parent="SDL.Dialog">
+        <item name="sdlTextPrimaryColor">@color/jayne_text_primary_light</item>
+        <item name="sdlTextSecondaryColor">@color/jayne_text_secondary_light</item>
+        <item name="sdlDividerColor">@color/jayne_divider_light</item>
+        <item name="sdlPressedColor">@color/jayne_pressed_light</item>
+        <item name="colorAccent">@color/jayne_accent</item>
+    </style>
+
+    <style name="OverFlow" parent="Widget.AppCompat.ActionButton.Overflow">
+        <item name="android:src">@drawable/ic_menu</item>
+    </style>
+
+
+    <!--fanjunyan -->
+    <style name="fragment_food_list_text_style">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textColor">#333333</item>
+        <item name="android:layout_below">@id/fragment_food_list_item_showiamge</item>
+        <item name="android:paddingTop">15dp</item>
+        <item name="android:paddingBottom">15dp</item>
+        <item name="android:layout_centerVertical">true</item>
+    </style>
+    <style name="discount_item_text_style">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:textColor">@color/brown</item>
+        <item name="android:layout_toRightOf">@id/discount_item_line1</item>
+        <item name="android:paddingLeft">10dp</item>
+        <item name="android:paddingRight">10dp</item>
+        <item name="android:paddingTop">5dp</item>
+        <item name="android:paddingBottom">5dp</item>
     </style>
 </resources>

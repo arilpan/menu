@@ -1,5 +1,7 @@
 package com.xdkj.campus.menu.ui.order;
 
+import android.app.Activity;
+import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
@@ -11,22 +13,81 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.avast.android.dialogs.fragment.SimpleDialogFragment;
+import com.avast.android.dialogs.iface.IDateDialogListener;
+import com.avast.android.dialogs.iface.IListDialogListener;
+import com.avast.android.dialogs.iface.IMultiChoiceListDialogListener;
+import com.avast.android.dialogs.iface.ISimpleDialogCancelListener;
+import com.avast.android.dialogs.iface.ISimpleDialogListener;
 import com.xdkj.campus.menu.R;
 import com.xdkj.campus.menu.base.BaseFragment;
 import com.xdkj.campus.menu.entity.Dish;
 import com.xdkj.campus.menu.entity.Order;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /***
  * 未完成订单
- *  最大支持99個不同菜品數量訂單
+ * 最大支持99個不同菜品數量訂單
+ *
  * @Author arilpan@qq.com
  */
 public class UncompleteOrderFragment extends BaseFragment
+        implements ISimpleDialogListener
 {
+    int REQUEST_SIMPLE_DIALOG = 42;
+    Context c = getContext();
+
+    @Override
+    public void onPositiveButtonClicked(int requestCode)
+    {
+        if (requestCode == REQUEST_SIMPLE_DIALOG)
+        {
+            Log.e("arilpan", "UncompleteOrderFragment Positive button clicked");
+            Toast.makeText(getContext(), "Positive button clicked", Toast.LENGTH_SHORT).show();
+        } else
+        {
+            Log.e("arilpan", "UncompleteOrderFragment Positive button clicked");
+        }
+    }
+
+    @Override
+    public void onAttach(Context context)
+    {
+        super.onAttach(context);
+        c = context;
+    }
+
+    @Override
+    public void onNegativeButtonClicked(int requestCode)
+    {
+        if (requestCode == REQUEST_SIMPLE_DIALOG)
+        {
+            Log.e("arilpan", "UncompleteOrderFragment Negative button clicked");
+            Toast.makeText(c, "Negative button clicked", Toast.LENGTH_SHORT).show();
+        } else
+        {
+            Log.e("arilpan", "UncompleteOrderFragment Negative button clicked");
+        }
+    }
+
+    @Override
+    public void onNeutralButtonClicked(int requestCode)
+    {
+        if (requestCode == REQUEST_SIMPLE_DIALOG)
+        {
+            Log.e("arilpan", "UncompleteOrderFragment Neutral button clicked");
+            Toast.makeText(c, "Neutral button clicked", Toast.LENGTH_SHORT).show();
+        } else
+        {
+            Log.e("arilpan", "UncompleteOrderFragment Neutral button clicked");
+        }
+    }
+
 
     public UncompleteOrderFragment()
     {
@@ -154,6 +215,7 @@ public class UncompleteOrderFragment extends BaseFragment
 
     /****************************************************************************/
     class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.MyViewHolder>
+            implements ISimpleDialogListener
     {
         List<Dish> itemDishes;
 
@@ -183,9 +245,64 @@ public class UncompleteOrderFragment extends BaseFragment
             return holder;
         }
 
+        private static final int REQUEST_SIMPLE_DIALOG = 42;
+        Context c = getContext();
+//        getContext();
+
+        @Override
+        public void onPositiveButtonClicked(int requestCode)
+        {
+            if (requestCode == REQUEST_SIMPLE_DIALOG)
+            {
+                Log.e("arilpan", "Positive button clicked");
+                Toast.makeText(c, "Positive button clicked", Toast.LENGTH_SHORT).show();
+            } else
+            {
+                Log.e("arilpan", "Positive button clicked else");
+            }
+        }
+
+        @Override
+        public void onNegativeButtonClicked(int requestCode)
+        {
+            if (requestCode == REQUEST_SIMPLE_DIALOG)
+            {
+                Log.e("arilpan", "Negative button clicked");
+                Toast.makeText(c, "Negative button clicked", Toast.LENGTH_SHORT).show();
+            } else
+            {
+                Log.e("arilpan", "Negative button clicked else");
+            }
+        }
+
+        @Override
+        public void onNeutralButtonClicked(int requestCode)
+        {
+            if (requestCode == REQUEST_SIMPLE_DIALOG)
+            {
+                Log.e("arilpan", "Neutral button clicked");
+                Toast.makeText(c, "Neutral button clicked", Toast.LENGTH_SHORT).show();
+            } else
+            {
+                Log.e("arilpan", "Neutral button clicked else");
+            }
+        }
+
         public void cancelOrder(int pos)
         {
-            Log.e("arilpan","電價了位置+"+pos);
+            Log.e("arilpan", "電價了位置+" + pos);
+            SimpleDialogFragment.createBuilder(getContext(),
+                    getFragmentManager())
+                    .setTitle(" 是否取消订单?")
+                    .setTargetFragment(
+                            UncompleteOrderFragment.this, REQUEST_SIMPLE_DIALOG
+                    )
+                    .setMessage("提示: 点击右侧\"取消\"取消订单.")
+                    .setPositiveButtonText("取消")
+                    .setNegativeButtonText("不取消")
+                    .setNeutralButtonText("再想想?")
+//                    .setRequestCode(REQUEST_SIMPLE_DIALOG)
+                    .show();
         }
 
         @Override
@@ -199,7 +316,7 @@ public class UncompleteOrderFragment extends BaseFragment
             holder.order_item_order_time.setText(order.getPre_order_time());
             holder.order_item_total_price.setText(order.getTotalPrice());
 
-            final int pos =position;
+            final int pos = position;
             holder.order_item_cancel_button.setOnClickListener(new View.OnClickListener()
             {
                 @Override
@@ -304,6 +421,7 @@ public class UncompleteOrderFragment extends BaseFragment
             return mDatas.size();
         }
 
+
         class MyViewHolder extends RecyclerView.ViewHolder
         {
             RecyclerView order_item_recyview;
@@ -321,7 +439,8 @@ public class UncompleteOrderFragment extends BaseFragment
                 order_item_order_time = (TextView) view.findViewById(R.id.order_item_order_time);
                 order_item_mall_name = (TextView) view.findViewById(R.id.order_item_mall_name);
 
-                order_item_cancel_button = (Button) view.findViewById(R.id.order_item_cancle_button);
+                order_item_cancel_button = (Button) view.findViewById(R.id
+                        .order_item_cancle_button);
 
             }
         }

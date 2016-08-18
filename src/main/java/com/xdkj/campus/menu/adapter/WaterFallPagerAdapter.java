@@ -36,7 +36,6 @@ public class WaterFallPagerAdapter extends RecyclerView.Adapter<WaterFallPagerAd
         notifyDataSetChanged();
     }
 
-
     private List<Integer> heights;
 
     private void getRandomHeight(List<Dish> lists) {//得到随机item的高度
