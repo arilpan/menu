@@ -2,6 +2,7 @@ package com.xdkj.campus.menu.fragment;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,18 +14,23 @@ import com.xdkj.campus.menu.R;
 import com.xdkj.campus.menu.base.BaseLazyMainFragment;
 import com.xdkj.campus.menu.event.StartBrotherEvent;
 import com.xdkj.campus.menu.ui.dishdiscount.DishesDishcountSwitchFragment;
+import com.xdkj.campus.menu.ui.dishhot.HotDishesFragment;
 import com.xdkj.campus.menu.ui.dishrank.DishesRankSwitchFragment;
 import com.xdkj.campus.menu.ui.good_dishes.DishesSwitchFragment;
 import com.xdkj.campus.menu.ui.news.NewsListFragment;
 import com.xdkj.campus.menu.ui.order.SelectPlaceFragment;
+
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
-public class IndexFragment extends BaseLazyMainFragment {
-    public IndexFragment() {
+public class IndexFragment extends BaseLazyMainFragment
+{
+    public IndexFragment()
+    {
     }
 
-    public static IndexFragment newInstance() {
+    public static IndexFragment newInstance()
+    {
 
         Bundle args = new Bundle();
         IndexFragment fragment = new IndexFragment();
@@ -32,9 +38,13 @@ public class IndexFragment extends BaseLazyMainFragment {
         return fragment;
     }
 
+    RecyclerView index_list;
+
     @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable
+    Bundle savedInstanceState)
+    {
         View view = inflater.inflate(R.layout.fragment_mainpage, container, false);
 
 //        SupportFragment supportFragment;
@@ -45,7 +55,8 @@ public class IndexFragment extends BaseLazyMainFragment {
 //            Log.e("arilpan", "IndexFragment view  inflate");
 //        } else {
 //            // 这里库已经做了Fragment恢复,所有不需要额外的处理了, 不会出现重叠问题
-//            // 这里我们需要拿到mFragments的引用,也可以通过getSupportFragmentManager.getFragments()自行进行判断查找(效率更高些),用下面的方法查找更方便些
+//            // 这里我们需要拿到mFragments的引用,也可以通过getSupportFragmentManager.getFragments()自行进行判断查找
+// (效率更高些),用下面的方法查找更方便些
 //            supportFragment = findFragment(IndexFragment.class);
 //            Log.e("arilpan", "MainFragment savedInstanceState != null ");
 //        }
@@ -58,68 +69,111 @@ public class IndexFragment extends BaseLazyMainFragment {
 
     LinearLayout new_arrival_layout;
 
-    private void initView(View view) {
-        //        EventBus.getDefault().register(this);
-        ((LinearLayout) view.findViewById(R.id.pre_order_layout)).setOnClickListener(new View.OnClickListener() {
+    private void addBtn(View view)
+    {
+        ((LinearLayout) view.findViewById(R.id.pre_order_layout)).setOnClickListener(new View
+                .OnClickListener()
+        {
             @Override
-            public void onClick(View v) {
-                EventBus.getDefault().post(new StartBrotherEvent(SelectPlaceFragment.newInstance()));
+            public void onClick(View v)
+            {
+                EventBus.getDefault().post(new StartBrotherEvent(SelectPlaceFragment.newInstance
+                        ()));
             }
         });
-        new_arrival_layout = (LinearLayout) view.findViewById(R.id.new_arrival_layout);
-        new_arrival_layout.setOnClickListener(new View.OnClickListener() {
+        ((LinearLayout) view.findViewById(R.id.greate_package_layout)).setOnClickListener(new View.OnClickListener()
+        {
             @Override
-            public void onClick(View v) {
+            public void onClick(View v)
+            {
+                EventBus.getDefault().post(new StartBrotherEvent(
+                        //TODO:1
+                        DishesSwitchFragment.newInstance("精品套餐")));
+            }
+        });
+        ((LinearLayout) view.findViewById(R.id.recharge_layout)).setOnClickListener(new View
+                .OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+                EventBus.getDefault().post(new StartBrotherEvent(DiscountFragment.newInstance()));
+            }
+        });
+
+        ((RelativeLayout) view.findViewById(R.id.dish_rank_rl)).setOnClickListener(new View
+                .OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+                EventBus.getDefault().post(new StartBrotherEvent(
+                        DishesRankSwitchFragment.newInstance("美食排行")));
+            }
+        });
+        ((RelativeLayout) view.findViewById(R.id.discount_dish_rl)).setOnClickListener(new View
+                .OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+                EventBus.getDefault().post(new StartBrotherEvent(
+                        DishesDishcountSwitchFragment.newInstance("超值折扣菜")));
+            }
+        });
+        ((RelativeLayout) view.findViewById(R.id.recharge_rl)).setOnClickListener(new View
+                .OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+                EventBus.getDefault().post(new StartBrotherEvent(DiscountFragment.newInstance()));
+            }
+        });
+        ((RelativeLayout) view.findViewById(R.id.dayly_welfare_rl)).setOnClickListener(new View
+                .OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+                EventBus.getDefault().post(new StartBrotherEvent(NewsListFragment.newInstance()));
+            }
+        });
+
+        ((RelativeLayout) view.findViewById(R.id.more_hot_dish)).setOnClickListener(new View
+                .OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+                EventBus.getDefault().post(new StartBrotherEvent(HotDishesFragment.newInstance()));
+            }
+        });
+    }
+
+    private void initView(View view)
+    {
+        index_list = (RecyclerView) view.findViewById(R.id.index_list);
+
+        addBtn(view);
+
+        //        EventBus.getDefault().register(this);
+
+        new_arrival_layout = (LinearLayout) view.findViewById(R.id.new_arrival_layout);
+        new_arrival_layout.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
 //                start(DishesSwitchFragment.newInstance(),
 //                          SupportFragment.SINGLETOP);
 //                EventBus.getDefault().post(new StartBrotherEvent
 //                          (DishesSwitchFragment.newInstance()));
 //                ((MainActivity) getParentFragment()).startBrother
 //                        (new StartBrotherEvent(DishesSwitchFragment.newInstance()));
-                EventBus.getDefault().post(new StartBrotherEvent(DishesSwitchFragment.newInstance("新品尝鲜")));
+                EventBus.getDefault().post(new StartBrotherEvent(DishesSwitchFragment.newInstance
+                        ("新品尝鲜")));
 
-            }
-        });
-
-        ((LinearLayout) view.findViewById(R.id.greate_package_layout)).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                EventBus.getDefault().post(new StartBrotherEvent(
-                        //TODO:1
-                        DishesSwitchFragment.newInstance("精品套餐")));
-            }
-        });
-        ((LinearLayout) view.findViewById(R.id.recharge_layout)).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                EventBus.getDefault().post(new StartBrotherEvent(DiscountFragment.newInstance()));
-            }
-        });
-
-        ((RelativeLayout) view.findViewById(R.id.dish_rank_rl)).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                EventBus.getDefault().post(new StartBrotherEvent(
-                        DishesRankSwitchFragment.newInstance("美食排行")));
-            }
-        });
-        ((RelativeLayout) view.findViewById(R.id.discount_dish_rl)).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                EventBus.getDefault().post(new StartBrotherEvent(
-                        DishesDishcountSwitchFragment.newInstance("超值折扣菜")));
-            }
-        });
-        ((RelativeLayout) view.findViewById(R.id.recharge_rl)).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                EventBus.getDefault().post(new StartBrotherEvent(DiscountFragment.newInstance()));
-            }
-        });
-        ((RelativeLayout) view.findViewById(R.id.dayly_welfare_rl)).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                EventBus.getDefault().post(new StartBrotherEvent(NewsListFragment.newInstance()));
             }
         });
 
@@ -127,7 +181,8 @@ public class IndexFragment extends BaseLazyMainFragment {
     }
 
     @Override
-    protected void initLazyView(@Nullable Bundle savedInstanceState) {
+    protected void initLazyView(@Nullable Bundle savedInstanceState)
+    {
 
     }
 
@@ -137,13 +192,15 @@ public class IndexFragment extends BaseLazyMainFragment {
 //    }
 
     @Override
-    public void onDestroyView() {
+    public void onDestroyView()
+    {
 //        EventBus.getDefault().unregister(this);
         super.onDestroyView();
     }
 
     @Override
-    public boolean onBackPressedSupport() {
+    public boolean onBackPressedSupport()
+    {
         // 这里实际项目中推荐使用 EventBus接耦
 //        ((TestOne) getParentFragment()).onBackToFirstFragment();
         Log.e("arilpan", "on back press");

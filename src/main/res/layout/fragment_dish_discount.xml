@@ -2,47 +2,16 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               xmlns:tools="http://schemas.android.com/tools"
               android:orientation="vertical"
+              android:background="@color/bg_app"
               android:layout_width="match_parent"
-              android:layout_height="wrap_content"
-              android:background="@color/screen_background">
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/white"
-        android:layout_marginTop="15dp">
-        <View
-            android:id="@+id/discount_item_line1"
-            android:layout_width="4dp"
-            android:layout_height="16dp"
-            android:background="@color/pink"
-            android:layout_marginLeft="20dp"
-            android:layout_centerVertical="true"/>
-        <TextView
-            android:id="@+id/discount_item_type"
-            android:text="五折菜品"
-            style="@style/discount_item_text_style" />
-        <View
-            android:id="@+id/discount_item_line2"
-            android:layout_width="match_parent"
-            android:layout_height="0.5dp"
-            android:background="@color/gray"
-            android:layout_below="@id/discount_item_type"/>
+              android:layout_height="match_parent">
+    <include layout="@layout/common_title_back_grey_color"/>
 
-    </RelativeLayout>
-    <View style="@style/line_h"/>
-
-    <!--
-        android:layout_below="@id/total_title_layout"
-        android:layout_above="@id/total_price_layout"
-    -->
     <android.support.v7.widget.RecyclerView
-        android:id="@+id/dish_discount_item_recyview"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        tools:listitem="@layout/fragment_dish_discount_item">
-
+            android:id="@+id/dish_discount_recyview"
+            tools:listitem="@layout/fragment_dish_discount_list_item"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
     </android.support.v7.widget.RecyclerView>
-
 
 </LinearLayout>

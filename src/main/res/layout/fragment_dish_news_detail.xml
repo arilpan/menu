@@ -48,7 +48,6 @@
             android:layout_marginLeft="18dp"
             android:layout_marginRight="18dp"
             android:layout_marginTop="10dp"
-            android:maxLines="2"
             tools:text=" 料采购一站式，注重新鲜8号菜馆原料采购一站式，注重新鲜"
             android:textColor="#666"
             android:textSize="14sp"/>

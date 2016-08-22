@@ -45,7 +45,7 @@ public class DishDiscountFragment extends BaseFragment
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable
     Bundle savedInstanceState)
     {
-        View view = inflater.inflate(R.layout.fragment_order_cancel, container, false);
+        View view = inflater.inflate(R.layout.fragment_dish_discount, container, false);
         initView(view);
         return view;
     }
@@ -57,7 +57,7 @@ public class DishDiscountFragment extends BaseFragment
     private void initView(View view)
     {
 
-        order_recyview = (RecyclerView) view.findViewById(R.id.order_recyview);
+        order_recyview = (RecyclerView) view.findViewById(R.id.dish_discount_recyview);
         order_recyview.setLayoutManager(new LinearLayoutManager(view.getContext(),
                 LinearLayoutManager.VERTICAL, false));
 
@@ -130,7 +130,7 @@ public class DishDiscountFragment extends BaseFragment
                 default:
                     break;
             }
-            order.setShopName("8号参观");
+            order.setShopName("8号餐馆");
             order.setDishes(mData);
             mDatas.add(order);
         }
@@ -161,7 +161,7 @@ public class DishDiscountFragment extends BaseFragment
         public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType)
         {
             MyViewHolder holder = new MyViewHolder(LayoutInflater.from(
-                    parent.getContext()).inflate(R.layout.fragment_dish_discount, parent,
+                    parent.getContext()).inflate(R.layout.fragment_dish_discount_list_item, parent,
                     false));
 /**************************設置高度信息****1  2  2* =>都是5个单位，为何*************************************/
 
@@ -298,9 +298,11 @@ public class DishDiscountFragment extends BaseFragment
             {
                 super(view);
                 view.setMinimumHeight(35);
-                dish_discount_item_recyview = (RecyclerView) view.findViewById(R.id
-                        .dish_discount_item_recyview);
-                discount_item_type = (TextView) view.findViewById(R.id.discount_item_type);
+                dish_discount_item_recyview = (RecyclerView) view.findViewById(
+                        R.id
+                        .dish_discount_list_recyview);
+                discount_item_type =
+                        (TextView) view.findViewById(R.id.discount_item_type);
 
             }
         }

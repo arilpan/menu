@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:tools="http://schemas.android.com/tools"
+              android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:layout_marginTop="15dp">
+        <View
+            android:id="@+id/discount_item_line1"
+            android:layout_width="4dp"
+            android:layout_height="16dp"
+            android:background="@color/pink"
+            android:layout_marginLeft="20dp"
+            android:layout_centerVertical="true"/>
+        <TextView
+            android:id="@+id/discount_item_type"
+            android:text="五折菜品"
+            android:layout_toRightOf="@id/discount_item_line1"
+            style="@style/discount_item_text_style" />
+        <View
+            style="@style/line_divider_h"
+            android:layout_below="@id/discount_item_type"/>
+
+    </RelativeLayout>
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/dish_discount_list_recyview"
+        tools:listitem="@layout/fragment_dish_discount_item"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+    </android.support.v7.widget.RecyclerView>
+</LinearLayout>
