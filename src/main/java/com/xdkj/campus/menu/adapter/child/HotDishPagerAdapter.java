@@ -19,33 +19,40 @@ import java.util.List;
 /**
  * Created by YoKeyword on 16/6/30.
  */
-public class HotDishPagerAdapter extends RecyclerView.Adapter<HotDishPagerAdapter.MyViewHolder> {
+public class HotDishPagerAdapter extends RecyclerView.Adapter<HotDishPagerAdapter.MyViewHolder>
+{
     private List<Dish> mItems = new ArrayList<>();
     private LayoutInflater mInflater;
 
     private OnItemClickListener mClickListener;
 
-    public HotDishPagerAdapter(Context context) {
+    public HotDishPagerAdapter(Context context)
+    {
         this.mInflater = LayoutInflater.from(context);
 
     }
 
-    public void setDatas(List<Dish> items) {
+    public void setDatas(List<Dish> items)
+    {
         mItems.clear();
         mItems.addAll(items);
         notifyDataSetChanged();
     }
 
     @Override
-    public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType)
+    {
 
         View view = mInflater.inflate(R.layout.index_list_item, parent, false);
         final MyViewHolder holder = new MyViewHolder(view);
-        holder.itemView.setOnClickListener(new View.OnClickListener() {
+        holder.itemView.setOnClickListener(new View.OnClickListener()
+        {
             @Override
-            public void onClick(View v) {
+            public void onClick(View v)
+            {
                 int position = holder.getAdapterPosition();
-                if (mClickListener != null) {
+                if (mClickListener != null)
+                {
                     mClickListener.onItemClick(position, v, holder);
                 }
             }
@@ -54,23 +61,32 @@ public class HotDishPagerAdapter extends RecyclerView.Adapter<HotDishPagerAdapte
     }
 
     @Override
-    public void onBindViewHolder(MyViewHolder holder, int position) {
-        Dish item = mItems.get(position);
-        holder.name.setText(item.getName());
-        holder.desc.setText(item.getDesc());
-        holder.price.setText(item.getPrice());
+    public void onBindViewHolder(MyViewHolder holder, int position)
+    {
+        if (mItems != null)
+        {
+            Dish item = mItems.get(position);
+            Log.e("arilpan","position:" + position +", tostring:"+item.toString());
+            holder.name.setText(item.getName());
+            holder.desc.setText(item.getDesc());
+            holder.price.setText(item.getPrice());
 
-        holder.sold_num.setText(item.getNum());
-        holder.mall_price.setText(item.getPrice());
-//        holder.image.setImageResource(R.drawable.index_dishes_image_default);
+            holder.sold_num.setText("已售:"+item.getNum());
+            holder.mall_price.setText(item.getMallprice());
+            //holder.image.setImageResource
+            // (R.drawable.index_dishes_image_default);
+
+        }
     }
 
     @Override
-    public int getItemCount() {
+    public int getItemCount()
+    {
         return mItems.size();
     }
 
-    class MyViewHolder extends RecyclerView.ViewHolder {
+    class MyViewHolder extends RecyclerView.ViewHolder
+    {
         private TextView price;
         private TextView desc;
         private TextView name;
@@ -79,7 +95,8 @@ public class HotDishPagerAdapter extends RecyclerView.Adapter<HotDishPagerAdapte
         private TextView sold_num;
         private ImageView image;
 
-        public MyViewHolder(View itemView) {
+        public MyViewHolder(View itemView)
+        {
             super(itemView);
             name = (TextView) itemView.findViewById(R.id.dish_name);
             desc = (TextView) itemView.findViewById(R.id.dish_desc);
@@ -90,7 +107,8 @@ public class HotDishPagerAdapter extends RecyclerView.Adapter<HotDishPagerAdapte
         }
     }
 
-    public void setOnItemClickListener(OnItemClickListener itemClickListener) {
+    public void setOnItemClickListener(OnItemClickListener itemClickListener)
+    {
         this.mClickListener = itemClickListener;
     }
 }

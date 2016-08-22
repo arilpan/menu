@@ -3,6 +3,7 @@ package com.xdkj.campus.menu.fragment;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,7 +12,9 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
 import com.xdkj.campus.menu.R;
+import com.xdkj.campus.menu.adapter.child.HotDishPagerAdapter;
 import com.xdkj.campus.menu.base.BaseLazyMainFragment;
+import com.xdkj.campus.menu.entity.Dish;
 import com.xdkj.campus.menu.event.StartBrotherEvent;
 import com.xdkj.campus.menu.ui.dishdiscount.DishesDishcountSwitchFragment;
 import com.xdkj.campus.menu.ui.dishhot.HotDishesFragment;
@@ -22,6 +25,9 @@ import com.xdkj.campus.menu.ui.order.SelectPlaceFragment;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class IndexFragment extends BaseLazyMainFragment
 {
@@ -38,7 +44,7 @@ public class IndexFragment extends BaseLazyMainFragment
         return fragment;
     }
 
-    RecyclerView index_list;
+
 
     @Nullable
     @Override
@@ -151,9 +157,70 @@ public class IndexFragment extends BaseLazyMainFragment
         });
     }
 
+    RecyclerView index_list;
+    HotDishPagerAdapter mAdapter;
+    private void dishList()
+    {
+        mAdapter = new HotDishPagerAdapter(_mActivity);
+        index_list.setHasFixedSize(true);
+        index_list.setLayoutManager(new StaggeredGridLayoutManager(1, StaggeredGridLayoutManager
+                .VERTICAL));
+        index_list.setAdapter(mAdapter);
+        Log.e("arilpan","init index_list hot dishes");
+        updateData();
+    }
+    private void updateData()
+    {
+        List<Dish> items = new ArrayList<>();
+        for (int i = 0; i < 20; i++)
+        {
+            if (i == 0)
+            {
+                Dish item = new Dish("粉蒸肉L" + i, "这是五个字加上五个字共是十五字", "￥22");
+                items.add(item);
+            } else if (i == 1)
+            {
+                Dish item = new Dish("粉蒸肉L" + i, "这是五个字加上五个字共是", "￥16");
+                items.add(item);
+            } else if (i == 2)
+            {
+                Dish item = new Dish("粉蒸肉L" + i, "这是五个字加上五个字共是十四", "￥32");
+                items.add(item);
+            } else if (i == 3)
+            {
+                Dish item = new Dish("粉蒸肉L" + i, "这是五个字", "￥17");
+                items.add(item);
+            } else if (i == 5)
+            {
+                Dish item = new Dish("粉蒸肉L" + i, "这是五个字这是五个字这是五个字这是五个字五五二十五", "￥32");
+                items.add(item);
+            } else if (i == 6)
+            {
+                Dish item = new Dish("粉蒸肉L" + i, "这是五个字这是五个字这是五个字这是五个字五五二十五再加五个字", "￥32");
+                items.add(item);
+            } else if (i == 7)
+            {
+                Dish item = new Dish("粉蒸肉L" + i, "这是五个字这是五个字这是五个字这是五个字五五二十五再加五个字再加五个字", "￥32");
+                items.add(item);
+            } else if (i == 8)
+            {
+                Dish item = new Dish("粉蒸肉L" + i, "这是五个字这是五个字这是五个字这是五个字五五二十五再加五个字再加五个字再加五个字", "￥32");
+                items.add(item);
+            } else
+            {
+                Dish item = new Dish("粉蒸肉L" + i, "这是五个字加上五个字共是十五字", "￥86");
+                items.add(item);
+            }
+
+        }
+        mAdapter.setDatas(items);
+        Log.e("arilpan","set data of  index_list hot dishes");
+    }
     private void initView(View view)
     {
         index_list = (RecyclerView) view.findViewById(R.id.index_list);
+
+
 
         addBtn(view);
 

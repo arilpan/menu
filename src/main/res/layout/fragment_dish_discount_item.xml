@@ -43,7 +43,6 @@
             android:layout_toRightOf="@id/discount_item_showimage"
             android:textColor="@color/pink"
             android:layout_below="@id/discount_item_dishes_description"
-            android:paddingTop="10dp"
             android:paddingBottom="14dp"/>
 
         <TextView
@@ -55,7 +54,6 @@
             android:layout_toRightOf="@id/discount_item_dishes_price"
             android:layout_below="@id/discount_item_dishes_description"
             android:paddingBottom="0dp"
-            android:paddingTop="10dp"
             android:paddingLeft="5dp"/>
     </RelativeLayout>
 

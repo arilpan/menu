@@ -11,8 +11,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.xdkj.campus.menu.R;
-import com.xdkj.campus.menu.adapter.DishesSwitchFragmentAdapter;
-import com.xdkj.campus.menu.adapter.HotDishesSwitchFragmentAdapter;
+import com.xdkj.campus.menu.adapter.child.HotDishesSwitchFragmentAdapter;
 import com.xdkj.campus.menu.base.BaseBackFragment;
 
 /**

@@ -6,11 +6,19 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 
 import com.xdkj.campus.menu.R;
 import com.xdkj.campus.menu.base.BaseFragment;
+import com.xdkj.campus.menu.event.StartBrotherEvent;
+import com.xdkj.campus.menu.ui.place.SelectDishListFragment;
+import com.xdkj.campus.menu.ui.place.SelectPlaceFragment;
 
+import org.greenrobot.eventbus.EventBus;
 
+/**
+ * 接受菜品id,并且可以进入预约页面
+ */
 public class DishDetailFragment extends BaseFragment
 {
     public static int dish_id;
@@ -38,9 +46,23 @@ public class DishDetailFragment extends BaseFragment
         return view;
     }
 
+    public void gotoSubscribe()
+    {
+        EventBus.getDefault().post(
+                new StartBrotherEvent(SelectPlaceFragment.newInstance(dish_id)));
+    }
 
     private void initView(View view)
     {
+        Button btn_subscribe = (Button) view.findViewById(R.id.btn_subscribe);
+        btn_subscribe.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View view)
+            {
+                gotoSubscribe();
+            }
+        });
     }
 
     @Override

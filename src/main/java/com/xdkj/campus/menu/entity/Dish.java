@@ -11,13 +11,15 @@ public class Dish
     private String imgurl;
     private String desc;
     private String price;
+    private String mallprice;
     private String preOrder;
     private int num;
 
     @Override
     public String toString()
     {
-        String res = "id: " + getId() + " , num :" + getName() + " ,name " + getName()
+        String res = "id: " + getId() + " , num :" + getName()
+                + " ,name " + getName() + ",mallPrice " + getMallprice()
                 + " ,desc " + getDesc() + ",price " + getPrice();
         return res;
     }
@@ -42,6 +44,16 @@ public class Dish
     public void setId(int id)
     {
         this.id = id;
+    }
+
+    public String getMallprice()
+    {
+        return mallprice;
+    }
+
+    public void setMallprice(String mallprice)
+    {
+        this.mallprice = mallprice;
     }
 
     public int getNum()

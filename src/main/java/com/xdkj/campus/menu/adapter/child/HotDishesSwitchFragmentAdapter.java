@@ -1,9 +1,10 @@
-package com.xdkj.campus.menu.adapter;
+package com.xdkj.campus.menu.adapter.child;
 
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
+import com.xdkj.campus.menu.ui.dishhot.HotDishesFragment;
 import com.xdkj.campus.menu.ui.dishhot.HotDishesSwitchFragment;
 import com.xdkj.campus.menu.ui.good_dishes.WaterFallDishesFragment;
 
@@ -11,29 +12,36 @@ import com.xdkj.campus.menu.ui.good_dishes.WaterFallDishesFragment;
 /**
  * Created by YoKeyword on 16/6/5.
  */
-public class HotDishesSwitchFragmentAdapter extends FragmentPagerAdapter {
+public class HotDishesSwitchFragmentAdapter extends FragmentPagerAdapter
+{
     private String[] mTab = new String[]{"8号餐馆", "北京烤鸭馆"};
 
-    public HotDishesSwitchFragmentAdapter(FragmentManager fm) {
+    public HotDishesSwitchFragmentAdapter(FragmentManager fm)
+    {
         super(fm);
     }
 
     @Override
-    public Fragment getItem(int position) {
-        if (position == 0) {
-            return HotDishesSwitchFragment.newInstance("");
-        } else {
-            return HotDishesSwitchFragment.newInstance("");
+    public Fragment getItem(int position)
+    {
+        if (position == 0)
+        {
+            return HotDishesFragment.newInstance();
+        } else
+        {
+            return HotDishesFragment.newInstance();
         }
     }
 
     @Override
-    public int getCount() {
+    public int getCount()
+    {
         return mTab.length;
     }
 
     @Override
-    public CharSequence getPageTitle(int position) {
+    public CharSequence getPageTitle(int position)
+    {
         return mTab[position];
     }
 }

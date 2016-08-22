@@ -172,8 +172,8 @@
     <string name="index_list_dish_price">￥68</string>
     <string name="index_list_dish_sold">已售12345</string>
     <string name="index_list_dish_sold_num">12345</string>
-    <string name="index_list_dish_mall">门市价:</string>
-    <string name="index_list_dish_mall_price">￥72</string>
+    <string name="index_list_dish_mall">门市价:￥</string>
+    <string name="index_list_dish_mall_price">72</string>
     <string name="title_activity_left">Left</string>
     <string name="title_activity_right">Right</string>
 

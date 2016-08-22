@@ -2,7 +2,8 @@
 <RelativeLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
-        android:layout_height="90dp">
+        android:background="@color/white"
+        android:layout_height="wrap_content">
 
     <ImageView
             android:id="@+id/dish_image"
@@ -24,19 +25,6 @@
             android:layout_height="wrap_content"
             android:text="@string/index_list_dish_name"
     />
-
-    <TextView
-            android:textSize="11sp"
-            android:layout_marginTop="16dp"
-            android:id="@+id/dish_sold_num"
-            android:textColor="#999"
-            android:layout_width="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_marginRight="20dp"
-            android:layout_height="wrap_content"
-            android:text="@string/index_list_dish_sold"
-    />
-
     <TextView
             android:layout_marginTop="5dp"
             android:id="@+id/dish_desc"

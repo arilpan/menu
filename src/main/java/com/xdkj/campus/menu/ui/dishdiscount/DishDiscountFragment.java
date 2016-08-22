@@ -20,8 +20,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /***
- * don't delete notes
- * 取消订单
+ * 折扣菜
  *
  * @Author arilpan@qq.com
  */
@@ -57,9 +56,11 @@ public class DishDiscountFragment extends BaseFragment
     private void initView(View view)
     {
 
-        order_recyview = (RecyclerView) view.findViewById(R.id.dish_discount_recyview);
-        order_recyview.setLayoutManager(new LinearLayoutManager(view.getContext(),
-                LinearLayoutManager.VERTICAL, false));
+        order_recyview = (RecyclerView)
+                view.findViewById(R.id.dish_discount_recyview);
+        order_recyview.setLayoutManager(
+                new LinearLayoutManager(view.getContext(),
+                        LinearLayoutManager.VERTICAL, false));
 
         mDatas = new ArrayList<Order>();
         for (int i = 1; i < 6; i++)
@@ -170,7 +171,17 @@ public class DishDiscountFragment extends BaseFragment
             layoutParams.height = 35;
             if (viewType > 0)
             {
-                layoutParams.height = 35 + viewType * 230;
+                layoutParams.height = 35 + viewType * 250;
+                int addTotal = 0;
+                int add = 1;
+                int numItem = viewType;
+                while (add != 0)
+                {
+                    add = numItem / 2;
+                    addTotal += add * 10;
+                    numItem = add;
+                }
+                layoutParams.height += addTotal;
                 Log.e("arilpan", " dishes size: " + viewType + ",height:" + layoutParams.height);
             }
             holder.dish_discount_item_recyview.setLayoutManager(new LinearLayoutManager
@@ -200,7 +211,7 @@ public class DishDiscountFragment extends BaseFragment
                         {
                             MyItemViewHolder itemholder = new MyItemViewHolder(
                                     LayoutInflater.from(parent.getContext()).
-                                            inflate(R.layout.fragment_dish_discount_item,
+                                            inflate(R.layout.discount_list_item,
                                                     parent,
                                                     false));
                             return itemholder;
@@ -217,7 +228,7 @@ public class DishDiscountFragment extends BaseFragment
                                 Dish dish = itemDishes.get(position);
                                 newholder.dish_name.setText(dish.getName());
                                 newholder.dish_price.setText(dish.getPrice());
-                                newholder.dish_old_price.setText("门市价：￥132");
+                                newholder.dish_old_price.setText("132");
                                 newholder.dish_desc.setText(dish.getDesc());
                             } else
                             {
@@ -253,15 +264,15 @@ public class DishDiscountFragment extends BaseFragment
                                 super(view);
                                 view.setMinimumHeight(35);
                                 dish_icon = (ImageView) view.findViewById(R.id
-                                        .discount_item_showimage);
+                                        .dish_image);
                                 dish_name = (TextView) view.findViewById(R.id
-                                        .discount_item_dishes_name);
+                                        .dish_name);
                                 dish_price = (TextView) view.findViewById(R.id
-                                        .discount_item_dishes_price);
+                                        .dish_price);
                                 dish_old_price = (TextView) view.findViewById(R.id
-                                        .discount_item_rack_rate);
+                                        .dish_mall_price);
                                 dish_desc = (TextView) view.findViewById(R.id
-                                        .discount_item_dishes_description);
+                                        .dish_desc);
                             }
                         }
                     }
@@ -300,7 +311,7 @@ public class DishDiscountFragment extends BaseFragment
                 view.setMinimumHeight(35);
                 dish_discount_item_recyview = (RecyclerView) view.findViewById(
                         R.id
-                        .dish_discount_list_recyview);
+                                .dish_discount_list_recyview);
                 discount_item_type =
                         (TextView) view.findViewById(R.id.discount_item_type);
 

@@ -69,7 +69,7 @@ public class HotDishesFragment extends BaseFragment implements SwipeRefreshLayou
         mRefreshLayout.setOnRefreshListener(this);
         mAdapter = new HotDishPagerAdapter(_mActivity);
         mRecy.setHasFixedSize(true);
-        mRecy.setLayoutManager(new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager
+        mRecy.setLayoutManager(new StaggeredGridLayoutManager(1, StaggeredGridLayoutManager
                 .VERTICAL));
         mRecy.setAdapter(mAdapter);
 
@@ -116,38 +116,57 @@ public class HotDishesFragment extends BaseFragment implements SwipeRefreshLayou
             if (i == 0)
             {
                 Dish item = new Dish("粉蒸肉L" + i, "这是五个字加上五个字共是十五字", "￥22");
+                item.setMallprice("44");
+                item.setNum(1111);
                 items.add(item);
             } else if (i == 1)
             {
                 Dish item = new Dish("粉蒸肉L" + i, "这是五个字加上五个字共是", "￥16");
+                item.setMallprice("32");
+                item.setNum(2222);
                 items.add(item);
             } else if (i == 2)
             {
                 Dish item = new Dish("粉蒸肉L" + i, "这是五个字加上五个字共是十四", "￥32");
+
+                item.setMallprice("64");
+                item.setNum(3333);
                 items.add(item);
             } else if (i == 3)
             {
                 Dish item = new Dish("粉蒸肉L" + i, "这是五个字", "￥17");
+                item.setMallprice("34");
+                item.setNum(4444);
                 items.add(item);
             } else if (i == 5)
             {
                 Dish item = new Dish("粉蒸肉L" + i, "这是五个字这是五个字这是五个字这是五个字五五二十五", "￥32");
+                item.setMallprice("64");
+                item.setNum(5555);
                 items.add(item);
             } else if (i == 6)
             {
                 Dish item = new Dish("粉蒸肉L" + i, "这是五个字这是五个字这是五个字这是五个字五五二十五再加五个字", "￥32");
+                item.setMallprice("64");
+                item.setNum(6666);
                 items.add(item);
             } else if (i == 7)
             {
                 Dish item = new Dish("粉蒸肉L" + i, "这是五个字这是五个字这是五个字这是五个字五五二十五再加五个字再加五个字", "￥32");
-                items.add(item);
+
+                item.setMallprice("64");
+                item.setNum(7777); items.add(item);
             } else if (i == 8)
             {
                 Dish item = new Dish("粉蒸肉L" + i, "这是五个字这是五个字这是五个字这是五个字五五二十五再加五个字再加五个字再加五个字", "￥32");
+                item.setMallprice("64");
+                item.setNum(8888);
                 items.add(item);
             } else
             {
                 Dish item = new Dish("粉蒸肉L" + i, "这是五个字加上五个字共是十五字", "￥86");
+                item.setMallprice("192");
+                item.setNum(9999);
                 items.add(item);
             }
 

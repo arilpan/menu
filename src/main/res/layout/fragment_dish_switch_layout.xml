@@ -5,6 +5,7 @@
         android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
+    <include layout="@layout/common_title_back_grey_color"/>
     <android.support.v4.widget.SwipeRefreshLayout
             android:id="@+id/refresh_layout_left"
             android:layout_width="match_parent"
