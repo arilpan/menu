@@ -3,190 +3,203 @@
               style="@style/pre_order_background"
               android:orientation="vertical">
 
-    <LinearLayout
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="158dp"
-        android:background="@drawable/pre_order_title"
-        android:visibility="visible">
+        android:layout_height="match_parent">
 
-        <include layout="@layout/common_title_back"/>
-        <!--展示图158dp -->
-        <ImageView
-
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
-    </LinearLayout>
+            android:layout_height="match_parent"
+            android:orientation="vertical">
 
-    <RelativeLayout
-        style="@style/pre_order_list_big_rl"
-        android:layout_marginTop="10dp"
-        android:background="#fff"
-        >
 
-        <ImageView
-            android:id="@+id/icon_mall"
-            style="@style/pre_order_list_head_title_image"
-            android:layout_alignParentLeft="true"
-            android:src="@drawable/pre_order_icon_mall"
-            />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="158dp"
+                android:background="@drawable/pre_order_title"
+                android:visibility="visible">
 
-        <TextView
-            style="@style/pre_order_list_head_desc_text"
-            android:layout_toRightOf="@id/icon_mall"
-            android:text="@string/eight_mall"/>
+                <include layout="@layout/common_title_back"/>
+                <!--展示图158dp -->
+                <ImageView
 
-        <ImageView
-            style="@style/pre_order_list_head_img_right"
-            android:src="@drawable/pre_order_icon_tel"
-            />
-    </RelativeLayout>
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
+            </LinearLayout>
 
-    <View style="@style/line_divider"/>
+            <RelativeLayout
+                style="@style/pre_order_list_big_rl"
+                android:layout_marginTop="10dp"
+                android:background="#fff"
+                >
 
-    <RelativeLayout
-        style="@style/pre_order_list_small_rl"
-        android:orientation="horizontal">
+                <ImageView
+                    android:id="@+id/icon_mall"
+                    style="@style/pre_order_list_head_title_image"
+                    android:layout_alignParentLeft="true"
+                    android:src="@drawable/pre_order_icon_mall"
+                    />
 
-        <TextView
-            android:id="@+id/text_location"
-            style="@style/pre_order_list_title"
-            android:text="@string/mall_location"/>
+                <TextView
+                    style="@style/pre_order_list_head_desc_text"
+                    android:layout_toRightOf="@id/icon_mall"
+                    android:text="@string/eight_mall"/>
 
-        <TextView
-            style="@style/pre_order_list_desc"
-            android:layout_toRightOf="@id/text_location"
-            android:text="@string/mall_location_detail"
-            />
+                <ImageView
+                    style="@style/pre_order_list_head_img_right"
+                    android:src="@drawable/pre_order_icon_tel"
+                    />
+            </RelativeLayout>
 
-        <ImageView
-            style="@style/pre_order_list_head_img_right"
-            android:src="@drawable/pre_order_icon_location"
-            />
-    </RelativeLayout>
+            <View style="@style/line_divider"/>
 
-    <View style="@style/line_divider"/>
+            <RelativeLayout
+                style="@style/pre_order_list_small_rl"
+                android:orientation="horizontal">
 
-    <RelativeLayout
-        style="@style/pre_order_list_small_rl"
-        >
+                <TextView
+                    android:id="@+id/text_location"
+                    style="@style/pre_order_list_title"
+                    android:text="@string/mall_location"/>
 
-        <TextView
-            android:id="@+id/text_time"
-            style="@style/pre_order_list_title"
-            android:text="@string/mall_work_time"/>
+                <TextView
+                    style="@style/pre_order_list_desc"
+                    android:layout_toRightOf="@id/text_location"
+                    android:text="@string/mall_location_detail"
+                    />
 
-        <TextView
-            style="@style/pre_order_list_desc"
-            android:layout_toRightOf="@id/text_time"
-            android:text="@string/mall_work_time_detail"
-            />
-    </RelativeLayout>
+                <ImageView
+                    style="@style/pre_order_list_head_img_right"
+                    android:src="@drawable/pre_order_icon_location"
+                    />
+            </RelativeLayout>
 
-    <View style="@style/line_divider"/>
-    <!--预约用餐及人数-->
-    <LinearLayout
-        style="@style/pre_order_list_big_rl"
-        android:layout_marginTop="10dp"
-        android:orientation="horizontal">
+            <View style="@style/line_divider"/>
 
-        <ImageView
-            style="@style/pre_order_list_head_title_image"
-            android:layout_width="14dp"
-            android:layout_height="14dp"
-            android:layout_gravity="center_vertical"
-            android:src="@drawable/pre_order_icon_info"
-            />
+            <RelativeLayout
+                style="@style/pre_order_list_small_rl"
+                >
 
-        <TextView
-            style="@style/pre_order_list_head_desc_text"
-            android:layout_width="70dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:text="@string/pre_order"/>
+                <TextView
+                    android:id="@+id/text_time"
+                    style="@style/pre_order_list_title"
+                    android:text="@string/mall_work_time"/>
 
-    </LinearLayout>
+                <TextView
+                    style="@style/pre_order_list_desc"
+                    android:layout_toRightOf="@id/text_time"
+                    android:text="@string/mall_work_time_detail"
+                    />
+            </RelativeLayout>
 
-    <View style="@style/line_divider"/>
+            <View style="@style/line_divider"/>
+            <!--预约用餐及人数-->
+            <LinearLayout
+                style="@style/pre_order_list_big_rl"
+                android:layout_marginTop="10dp"
+                android:orientation="horizontal">
 
-    <RelativeLayout
-        android:id="@+id/order_person_num"
-        style="@style/pre_order_list_small_rl"
-        android:orientation="horizontal">
+                <ImageView
+                    style="@style/pre_order_list_head_title_image"
+                    android:layout_width="14dp"
+                    android:layout_height="14dp"
+                    android:layout_gravity="center_vertical"
+                    android:src="@drawable/pre_order_icon_info"
+                    />
 
-        <TextView
-            style="@style/pre_order_list_desc"
-            android:text="@string/pre_order_person_num"/>
+                <TextView
+                    style="@style/pre_order_list_head_desc_text"
+                    android:layout_width="70dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:text="@string/pre_order"/>
 
-        <ImageView
-            style="@style/pre_order_list_img_right"
-            android:src="@drawable/common_arrow_right"
-            />
-    </RelativeLayout>
+            </LinearLayout>
 
-    <View style="@style/line_divider"/>
+            <View style="@style/line_divider"/>
 
-    <RelativeLayout
-        android:id="@+id/order_time"
-        style="@style/pre_order_list_small_rl"
-        android:orientation="horizontal">
+            <RelativeLayout
+                android:id="@+id/order_person_num"
+                style="@style/pre_order_list_small_rl"
+                android:orientation="horizontal">
 
-        <TextView
-            style="@style/pre_order_list_desc"
-            android:text="@string/pre_order_time"/>
+                <TextView
+                    style="@style/pre_order_list_desc"
+                    android:text="@string/pre_order_person_num"/>
 
-        <ImageView
-            style="@style/pre_order_list_img_right"
-            android:src="@drawable/common_arrow_right"
-            />
-    </RelativeLayout>
+                <ImageView
+                    style="@style/pre_order_list_img_right"
+                    android:src="@drawable/common_arrow_right"
+                    />
+            </RelativeLayout>
 
-    <View style="@style/line_divider"/>
+            <View style="@style/line_divider"/>
 
-    <RelativeLayout
-        android:id="@+id/order_room"
-        style="@style/pre_order_list_small_rl"
-        android:orientation="horizontal">
+            <RelativeLayout
+                android:id="@+id/order_time"
+                style="@style/pre_order_list_small_rl"
+                android:orientation="horizontal">
 
-        <TextView
-            style="@style/pre_order_list_desc"
-            android:text="@string/pre_order_rooms"/>
+                <TextView
+                    style="@style/pre_order_list_desc"
+                    android:text="@string/pre_order_time"/>
 
-        <ImageView
-            style="@style/pre_order_list_img_right"
-            android:src="@drawable/common_arrow_right"
-            />
-    </RelativeLayout>
+                <ImageView
+                    style="@style/pre_order_list_img_right"
+                    android:src="@drawable/common_arrow_right"
+                    />
+            </RelativeLayout>
 
-    <View style="@style/line_divider"/>
+            <View style="@style/line_divider"/>
 
-    <RelativeLayout
-        android:id="@+id/order_dishes"
-        style="@style/pre_order_list_small_rl"
-        android:layout_marginTop="10dp"
-        android:orientation="horizontal">
+            <RelativeLayout
+                android:id="@+id/order_room"
+                style="@style/pre_order_list_small_rl"
+                android:orientation="horizontal">
 
-        <TextView
-            style="@style/pre_order_list_desc"
-            android:text="@string/pre_order_food_menu"/>
+                <TextView
+                    style="@style/pre_order_list_desc"
+                    android:text="@string/pre_order_rooms"/>
 
-        <ImageView
-            style="@style/pre_order_list_img_right"
-            android:src="@drawable/common_arrow_right"
-            />
-    </RelativeLayout>
+                <ImageView
+                    style="@style/pre_order_list_img_right"
+                    android:src="@drawable/common_arrow_right"
+                    />
+            </RelativeLayout>
 
-    <Button
-        android:layout_width="match_parent"
-        android:layout_height="40dp"
-        android:layout_gravity="center_vertical"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"
-        android:layout_marginTop="30dp"
-        android:background="@color/red_background_btn"
-        android:gravity="center"
-        android:paddingBottom="13dp"
-        android:paddingTop="13dp"
-        android:text="@string/pre_order_confirm"
-        android:textColor="#fff"
-        android:textSize="14sp"/>
+            <View style="@style/line_divider"/>
+
+            <RelativeLayout
+                android:id="@+id/order_dishes"
+                style="@style/pre_order_list_small_rl"
+                android:layout_marginTop="10dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    style="@style/pre_order_list_desc"
+                    android:text="@string/pre_order_food_menu"/>
+
+                <ImageView
+                    style="@style/pre_order_list_img_right"
+                    android:src="@drawable/common_arrow_right"
+                    />
+            </RelativeLayout>
+
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:layout_marginTop="30dp"
+                android:background="@color/red_background_btn"
+                android:gravity="center"
+                android:paddingBottom="13dp"
+                android:paddingTop="13dp"
+                android:text="@string/pre_order_confirm"
+                android:textColor="#fff"
+                android:textSize="14sp"/>
+        </LinearLayout>
+
+    </ScrollView>
 </LinearLayout>
