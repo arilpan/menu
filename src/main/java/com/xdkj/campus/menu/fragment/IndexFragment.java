@@ -2,6 +2,7 @@ package com.xdkj.campus.menu.fragment;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.view.ViewPager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.util.Log;
@@ -16,10 +17,12 @@ import com.xdkj.campus.menu.adapter.child.HotDishPagerAdapter;
 import com.xdkj.campus.menu.base.BaseLazyMainFragment;
 import com.xdkj.campus.menu.entity.Dish;
 import com.xdkj.campus.menu.event.StartBrotherEvent;
+import com.xdkj.campus.menu.listener.OnItemClickListener;
 import com.xdkj.campus.menu.ui.dishdiscount.DishesDishcountSwitchFragment;
 import com.xdkj.campus.menu.ui.dishhot.HotDishesFragment;
 import com.xdkj.campus.menu.ui.dishrank.DishesRankSwitchFragment;
 import com.xdkj.campus.menu.ui.good_dishes.DishesSwitchFragment;
+import com.xdkj.campus.menu.ui.index.DishDetailFragment;
 import com.xdkj.campus.menu.ui.news.NewsListFragment;
 import com.xdkj.campus.menu.ui.order.SelectPlaceFragment;
 
@@ -28,6 +31,10 @@ import org.greenrobot.eventbus.Subscribe;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import cn.bingoogolapple.bgabanner.BGABanner;
+import cn.bingoogolapple.bgabanner.BGABannerUtil;
+
 /**
  * Created by aril_pan@qq.com on 16/8.
  */
@@ -45,7 +52,6 @@ public class IndexFragment extends BaseLazyMainFragment
         fragment.setArguments(args);
         return fragment;
     }
-
 
 
     @Nullable
@@ -74,8 +80,6 @@ public class IndexFragment extends BaseLazyMainFragment
 
         return view;
     }
-
-
 
     private void addBtn(View view)
     {
@@ -166,9 +170,23 @@ public class IndexFragment extends BaseLazyMainFragment
         index_list.setLayoutManager(new StaggeredGridLayoutManager(1, StaggeredGridLayoutManager
                 .VERTICAL));
         index_list.setAdapter(mAdapter);
-        Log.e("arilpan","init index_list hot dishes");
+        Log.e("arilpan", "init index_list hot dishes");
         updateData();
+
+        mAdapter.setOnItemClickListener(new OnItemClickListener()
+        {
+            @Override
+            public void onItemClick(int position, View view,
+                                    RecyclerView.ViewHolder holder)
+            {
+                EventBus.getDefault().post(
+                        new StartBrotherEvent(
+                                DishDetailFragment.newInstance(1)));
+            }
+        });
+
     }
+
     private void updateData()
     {
         List<Dish> items = new ArrayList<>();
@@ -214,17 +232,52 @@ public class IndexFragment extends BaseLazyMainFragment
 
         }
         mAdapter.setDatas(items);
-        Log.e("arilpan","set data of  index_list hot dishes");
+        Log.e("arilpan", "set data of  index_list hot dishes");
     }
+
     private void initView(View view)
     {
         index_list = (RecyclerView) view.findViewById(R.id.index_list);
-
-
+        index_list.setFocusable(false);
+        index_banner = (BGABanner) view.findViewById(R.id.index_banner);
+        List<View> views = new ArrayList<>();
+        views.add(BGABannerUtil.getItemImageView(getContext(),
+                R.drawable.index_banner_default));
+        views.add(BGABannerUtil.getItemImageView(getContext(),
+                R.drawable.index_banner_default));
+        views.add(BGABannerUtil.getItemImageView(getContext(),
+                R.drawable.index_banner_default));
+        views.add(BGABannerUtil.getItemImageView(getContext(),
+                R.drawable.index_banner_default));
+        index_banner.setData(views);
+        index_banner.setOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener()
+        {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels)
+            {
+                Log.i("arilpan",
+                        "onPageScrolled  点击了第" + (position + 1) + "个banner");
+            }
+        });
+        index_banner.setOnItemClickListener(
+                new BGABanner.OnItemClickListener()
+                {
+                    @Override
+                    public void onBannerItemClick(BGABanner banner,
+                                                  View view,
+                                                  Object model,
+                                                  int position)
+                    {
+                        Log.i("arilpan",
+                                "点击了第" + (position + 1) + "个banner");
+                    }
+                });
+        index_banner.setVerticalScrollbarPosition(10);
+        dishList();
 
         addBtn(view);
 
-        //        EventBus.getDefault().register(this);
+        //EventBus.getDefault().register(this);
 
         new_arrival_layout = (LinearLayout) view.findViewById(R.id.new_arrival_layout);
         new_arrival_layout.setOnClickListener(new View.OnClickListener()
@@ -267,6 +320,8 @@ public class IndexFragment extends BaseLazyMainFragment
         return false;
 //        return true;
     }
+
+    private BGABanner index_banner;
 
     private LinearLayout new_arrival_layout;
     private RecyclerView index_list;

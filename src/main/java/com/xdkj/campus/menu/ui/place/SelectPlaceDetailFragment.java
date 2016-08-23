@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.xdkj.campus.menu.R;
@@ -20,10 +21,6 @@ import me.yokeyword.fragmentation.SupportFragment;
 public class SelectPlaceDetailFragment extends SupportFragment
 {
     private static final String ARG_NUMBER = "arg_number";
-
-    private TextView mTvName;
-    private Button mBtnNext, mBtnNextWithFinish;
-
     private int mNumber;
 
     public static SelectPlaceDetailFragment newInstance(int number)
@@ -56,30 +53,54 @@ public class SelectPlaceDetailFragment extends SupportFragment
         return view;
     }
 
+    //pre_order_list_small_rl
+    // 用餐人数
+    // 用餐时间
+    // 包间
+    // 选择菜品
+    RelativeLayout orderPersonNumRl;
+    RelativeLayout orderTimeRl;
+    RelativeLayout orderRoomRl;
+    RelativeLayout orderSelectDishRl;
+
+
     private void initView(View view)
     {
-        mTvName = (TextView) view.findViewById(R.id.tv_name);
-        mBtnNext = (Button) view.findViewById(R.id.btn_next);
-        mBtnNextWithFinish = (Button) view.findViewById(R.id.btn_next_with_finish);
+        orderPersonNumRl = (RelativeLayout) view.findViewById(R.id.order_person_num);
+        orderTimeRl = (RelativeLayout) view.findViewById(R.id.order_time);
+        orderRoomRl = (RelativeLayout) view.findViewById(R.id.order_room);
+        orderSelectDishRl = (RelativeLayout) view.findViewById(R.id.order_dishes);
 
-        String title = "循环Fragment" + mNumber;
-
-
-        mTvName.setText(title);
-        mBtnNext.setOnClickListener(new View.OnClickListener()
+        orderSelectDishRl.setOnClickListener(new View.OnClickListener()
         {
             @Override
             public void onClick(View v)
             {
-                start(CycleFragment.newInstance(mNumber + 1));
+                //调用选择菜品
             }
         });
-        mBtnNextWithFinish.setOnClickListener(new View.OnClickListener()
+        orderRoomRl.setOnClickListener(new View.OnClickListener()
         {
             @Override
             public void onClick(View v)
             {
-
+                //调用选择房间
+            }
+        });
+        orderPersonNumRl.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+                //调用填写人数
+            }
+        });
+        orderTimeRl.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+                //调用选择时间
             }
         });
 

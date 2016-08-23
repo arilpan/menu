@@ -4,7 +4,8 @@
                 xmlns:tools="http://schemas.android.com/tools"
                 style="@style/MatchMatch">
 
-    <com.xdkj.campus.menu.view.GuideLinkageLayout style="@style/MatchMatch">
+    <com.xdkj.campus.menu.view.GuideLinkageLayout
+        style="@style/MatchMatch">
 
         <cn.bingoogolapple.bgabanner.BGABanner
             android:id="@+id/banner_guide_background"

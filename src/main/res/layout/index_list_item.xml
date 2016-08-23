@@ -47,6 +47,8 @@
         android:layout_toRightOf="@id/dish_image"
         android:text="@string/index_list_dish_desc"
         android:textColor="#999"
+        android:maxLines="1"
+        android:layout_marginRight="8dp"
         android:textSize="12sp"
         />
 

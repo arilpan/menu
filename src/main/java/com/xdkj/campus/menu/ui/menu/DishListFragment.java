@@ -99,6 +99,7 @@ public class DishListFragment extends BaseFragment
         initGridView();
     }
 
+    //TODO:item_left item_right
     public void initGridView()
     {
         List<Dish> items = DishList.getlist();

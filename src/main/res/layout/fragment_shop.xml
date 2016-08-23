@@ -40,6 +40,7 @@
                 android:textSize="11sp"/>
 
             <Button
+                android:id="@+id/order_now_btn"
                 style="@style/dishes_order_btn"
                 android:text="@string/dishes_order_now"/>
         </RelativeLayout>

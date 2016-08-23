@@ -104,7 +104,7 @@ public class SelectFragment extends BaseFragment
             map.put("item_right", pre_order);
             Dish dish = new Dish();
             dish.setName(name[i]);
-            dish.setPrice("$" + price[i]);
+            dish.setPrice(price[i]);
             dish.setPreOrder("预约");
             dish.setImg(R.drawable.index_dishes_image_default);
             item.add(dish);

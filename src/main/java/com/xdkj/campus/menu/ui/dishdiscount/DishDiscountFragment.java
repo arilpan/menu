@@ -15,6 +15,11 @@ import com.xdkj.campus.menu.R;
 import com.xdkj.campus.menu.base.BaseFragment;
 import com.xdkj.campus.menu.entity.Dish;
 import com.xdkj.campus.menu.entity.Order;
+import com.xdkj.campus.menu.event.StartBrotherEvent;
+import com.xdkj.campus.menu.listener.OnItemClickListener;
+import com.xdkj.campus.menu.ui.index.DishDetailFragment;
+
+import org.greenrobot.eventbus.EventBus;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -156,6 +161,7 @@ public class DishDiscountFragment extends BaseFragment
     class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.MyViewHolder>
     {
         List<Dish> itemDishes;
+        private OnItemClickListener mClickListener;
 
         @Override
         public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType)
@@ -208,11 +214,22 @@ public class DishDiscountFragment extends BaseFragment
                         public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int
                                 viewType)
                         {
-                            MyItemViewHolder itemholder = new MyItemViewHolder(
+                            final MyItemViewHolder itemholder = new MyItemViewHolder(
                                     LayoutInflater.from(parent.getContext()).
                                             inflate(R.layout.discount_list_item,
                                                     parent,
                                                     false));
+                            itemholder.itemView.setOnClickListener(new View.OnClickListener()
+                            {
+                                @Override
+                                public void onClick(View v)
+                                {
+                                    int position = itemholder.getAdapterPosition();
+                                    EventBus.getDefault().post(
+                                            new StartBrotherEvent(DishDetailFragment.newInstance(1)));
+                                }
+                            });
+
                             return itemholder;
                         }
 
@@ -275,6 +292,7 @@ public class DishDiscountFragment extends BaseFragment
                             }
                         }
                     }
+
 
             );
 

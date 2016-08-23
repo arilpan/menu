@@ -181,13 +181,6 @@ public class DishesRankFragment extends BaseFragment implements SwipeRefreshLayo
         }
     }
 
-//    @Subscribe
-//    public void start(StartBrotherEvent event)
-//    {
-//        Log.e("arilpan","start in child DishesRankFragment");
-//        start(event.targetFragment);
-//    }
-
     private void scrollToTop()
     {
         mRecy.smoothScrollToPosition(0);

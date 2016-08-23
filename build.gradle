@@ -33,6 +33,8 @@ dependencies {
     compile 'org.greenrobot:eventbus:3.0.0'
     compile 'me.yokeyword:fragmentation:0.7.9'
     compile 'me.yokeyword:fragmentation-swipeback:0.7.9'
+    compile 'com.squareup.okhttp3:okhttp:3.4.1'
+    compile 'com.squareup.moshi:moshi:1.2.0'
 
     compile 'com.squareup.picasso:picasso:2.5.2'
     compile 'com.nineoldandroids:library:2.4.0'

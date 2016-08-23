@@ -32,7 +32,10 @@
             android:layout_toRightOf="@id/dish_image"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="12sp" android:textColor="#999"
+            android:textSize="12sp"
+            android:textColor="#999"
+            android:maxLines="1"
+            android:layout_marginRight="8dp"
             android:text="@string/index_list_dish_desc"
     />
     <TextView

@@ -9,6 +9,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -17,8 +18,10 @@ import android.widget.Toast;
 import com.xdkj.campus.menu.R;
 import com.xdkj.campus.menu.backup.ContentFragment;
 import com.xdkj.campus.menu.base.BaseFragment;
+import com.xdkj.campus.menu.event.StartBrotherEvent;
 import com.xdkj.campus.menu.ui.menu.*;
 import com.xdkj.campus.menu.event.ShopEvent;
+import com.xdkj.campus.menu.ui.place.SelectPlaceDetailFragment;
 
 import me.yokeyword.fragmentation.SupportFragment;
 
@@ -47,6 +50,7 @@ public class ShopFragment extends BaseFragment
         return fragment;
     }
 
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable
@@ -66,6 +70,7 @@ public class ShopFragment extends BaseFragment
         return view;
     }
 
+    private Button order_now_btn;
     public static TextView total_price;
     FragmentManager fManager;
     FragmentTransaction transaction;
@@ -76,13 +81,26 @@ public class ShopFragment extends BaseFragment
         total_price.setText("￥" + DishList.getTotalPrice());
     }
 
+    public void gotoSelectDetail()
+    {
+        EventBus.getDefault().post(new StartBrotherEvent(SelectPlaceDetailFragment.newInstance(1)));
+    }
+
     private void initView(View view, Bundle savedInstanceState)
     {
         EventBus.getDefault().register(this);
         mToolbar = (Toolbar) view.findViewById(R.id.toolbar);
         fl_child_list_content_container = (FrameLayout) view.findViewById(R.id
                 .fl_child_list_content_container);
-
+        order_now_btn = (Button)view.findViewById(R.id.order_now_btn);
+        order_now_btn.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View view)
+            {
+                gotoSelectDetail();
+            }
+        });
 
         fManager = getFragmentManager();
         transaction = fManager.beginTransaction();
@@ -186,7 +204,7 @@ public class ShopFragment extends BaseFragment
     @Subscribe
     public void setPrice(ShopEvent event)
     {
-        Log.e("arilpan", "以前能收到 现在收不到通知了");
+        Log.e("arilpan", "以前能收到 现在收到通知无法设置总额了");
         setTotalPriceView();
     }
 
