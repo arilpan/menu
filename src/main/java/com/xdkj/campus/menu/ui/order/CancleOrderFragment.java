@@ -27,7 +27,7 @@ import java.util.Set;
 /***
  * don't delete notes
  * 取消订单
- * @Author arilpan@qq.com
+ * Created by aril_pan@qq.com on 16/8.
  */
 public class CancleOrderFragment extends BaseFragment
 {

@@ -7,14 +7,18 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
+
 import com.xdkj.campus.menu.R;
 import com.xdkj.campus.menu.backup.CycleFragment;
+
 import me.yokeyword.fragmentation.SupportFragment;
 
 /**
- * Created by xdkj on 2016/8/4.
+ * Create/**
+ * Created by aril_pan@qq.com on 16/8.
  */
-public class SelectDishListFragment extends SupportFragment {
+public class SelectPlaceDetailFragment extends SupportFragment
+{
     private static final String ARG_NUMBER = "arg_number";
 
     private TextView mTvName;
@@ -22,8 +26,9 @@ public class SelectDishListFragment extends SupportFragment {
 
     private int mNumber;
 
-    public static SelectDishListFragment newInstance(int number) {
-        SelectDishListFragment fragment = new SelectDishListFragment();
+    public static SelectPlaceDetailFragment newInstance(int number)
+    {
+        SelectPlaceDetailFragment fragment = new SelectPlaceDetailFragment();
         Bundle args = new Bundle();
         args.putInt(ARG_NUMBER, number);
         fragment.setArguments(args);
@@ -31,23 +36,28 @@ public class SelectDishListFragment extends SupportFragment {
     }
 
     @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
+    public void onCreate(@Nullable Bundle savedInstanceState)
+    {
         super.onCreate(savedInstanceState);
         Bundle args = getArguments();
-        if (args != null) {
+        if (args != null)
+        {
             mNumber = args.getInt(ARG_NUMBER);
         }
     }
 
     @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.select_mall, container, false);
+    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable
+    Bundle savedInstanceState)
+    {
+        View view = inflater.inflate(R.layout.fragment_pre_order, container, false);
         initView(view);
         return view;
     }
 
-    private void initView(View view) {
+    private void initView(View view)
+    {
         mTvName = (TextView) view.findViewById(R.id.tv_name);
         mBtnNext = (Button) view.findViewById(R.id.btn_next);
         mBtnNextWithFinish = (Button) view.findViewById(R.id.btn_next_with_finish);
@@ -56,17 +66,22 @@ public class SelectDishListFragment extends SupportFragment {
 
 
         mTvName.setText(title);
-        mBtnNext.setOnClickListener(new View.OnClickListener() {
+        mBtnNext.setOnClickListener(new View.OnClickListener()
+        {
             @Override
-            public void onClick(View v) {
+            public void onClick(View v)
+            {
                 start(CycleFragment.newInstance(mNumber + 1));
             }
         });
-        mBtnNextWithFinish.setOnClickListener(new View.OnClickListener() {
+        mBtnNextWithFinish.setOnClickListener(new View.OnClickListener()
+        {
             @Override
-            public void onClick(View v) {
-                startWithPop(CycleFragment.newInstance(mNumber + 1));
+            public void onClick(View v)
+            {
+
             }
         });
+
     }
 }

@@ -28,6 +28,7 @@ import me.yokeyword.fragmentation.SupportFragment;
  * 右侧选择菜品的GridView
  *
  * @Author arilpan
+ * Created by aril_pan@qq.com on 16/8.
  */
 public class SelectFragment extends BaseFragment
 {
@@ -79,7 +80,6 @@ public class SelectFragment extends BaseFragment
     }
 
 
-
     LinearLayout select_dish_layout;
     ArrayList<Dish> item;
 
@@ -104,7 +104,7 @@ public class SelectFragment extends BaseFragment
             map.put("item_right", pre_order);
             Dish dish = new Dish();
             dish.setName(name[i]);
-            dish.setPrice("$"+price[i]);
+            dish.setPrice("$" + price[i]);
             dish.setPreOrder("预约");
             dish.setImg(R.drawable.index_dishes_image_default);
             item.add(dish);

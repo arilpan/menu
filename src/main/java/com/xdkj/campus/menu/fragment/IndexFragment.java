@@ -28,7 +28,9 @@ import org.greenrobot.eventbus.Subscribe;
 
 import java.util.ArrayList;
 import java.util.List;
-
+/**
+ * Created by aril_pan@qq.com on 16/8.
+ */
 public class IndexFragment extends BaseLazyMainFragment
 {
     public IndexFragment()
@@ -73,7 +75,7 @@ public class IndexFragment extends BaseLazyMainFragment
         return view;
     }
 
-    LinearLayout new_arrival_layout;
+
 
     private void addBtn(View view)
     {
@@ -157,8 +159,6 @@ public class IndexFragment extends BaseLazyMainFragment
         });
     }
 
-    RecyclerView index_list;
-    HotDishPagerAdapter mAdapter;
     private void dishList()
     {
         mAdapter = new HotDishPagerAdapter(_mActivity);
@@ -250,18 +250,11 @@ public class IndexFragment extends BaseLazyMainFragment
     @Override
     protected void initLazyView(@Nullable Bundle savedInstanceState)
     {
-
     }
-
-    @Subscribe
-//    public void startBrother(StartBrotherEvent event) {
-//        start(event.targetFragment, SupportFragment.SINGLETOP);
-//    }
 
     @Override
     public void onDestroyView()
     {
-//        EventBus.getDefault().unregister(this);
         super.onDestroyView();
     }
 
@@ -274,4 +267,8 @@ public class IndexFragment extends BaseLazyMainFragment
         return false;
 //        return true;
     }
+
+    private LinearLayout new_arrival_layout;
+    private RecyclerView index_list;
+    private HotDishPagerAdapter mAdapter;
 }

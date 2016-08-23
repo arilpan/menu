@@ -22,7 +22,7 @@ import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
 /**
- * Created by xdkj on 2016/8/4.
+ * Created by arilpan@qq.com on 2016/8/4.
  */
 public class MainFragment extends BaseFragment {
     public static final int FIRST = 0;

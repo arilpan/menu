@@ -9,7 +9,9 @@ import android.view.ViewGroup;
 import com.xdkj.campus.menu.R;
 import com.xdkj.campus.menu.base.BaseFragment;
 
-
+/**
+ * Created by aril_pan@qq.com on 16/8.
+ */
 public class GreatDishFragment extends BaseFragment {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER

@@ -1,7 +1,7 @@
 package com.xdkj.campus.menu.entity;
 
 /**
- * Created by xdkj on 2016/8/3.
+ * Created by aril_pan@qq.com on 2016/8/3.
  */
 public class Recharge
 {

@@ -25,7 +25,7 @@ import java.util.List;
 /**
  * 下测查看已经选择的菜品信息
  *
- * @Author arilpan
+ * Created by aril_pan@qq.com on 16/8.
  */
 public class DishListFragment extends BaseFragment
 {

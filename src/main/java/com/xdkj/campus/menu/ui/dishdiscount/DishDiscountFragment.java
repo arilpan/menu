@@ -21,8 +21,7 @@ import java.util.List;
 
 /***
  * 折扣菜
- *
- * @Author arilpan@qq.com
+ * Created by aril_pan@qq.com on 16/8.
  */
 public class DishDiscountFragment extends BaseFragment
 {

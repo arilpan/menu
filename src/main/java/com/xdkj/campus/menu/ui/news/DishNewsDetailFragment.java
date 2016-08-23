@@ -13,6 +13,9 @@ import com.xdkj.campus.menu.base.BaseFragment;
 import com.xdkj.campus.menu.entity.News;
 
 
+/**
+ * Created by aril_pan@qq.com on 16/8.
+ */
 public class DishNewsDetailFragment extends BaseFragment
 {
     public static int dish_id;

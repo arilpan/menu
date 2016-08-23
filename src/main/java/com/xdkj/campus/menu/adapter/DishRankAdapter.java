@@ -17,7 +17,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by YoKeyword on 16/6/30.
+ * Created by arilpan@qq.com on 16/8.
  */
 public class DishRankAdapter extends RecyclerView.Adapter<DishRankAdapter.MyViewHolder>
 {
@@ -71,7 +71,6 @@ public class DishRankAdapter extends RecyclerView.Adapter<DishRankAdapter.MyView
         holder.soldNum.setText("  " + item.getNum() + "2688人购买");
 //        holder.soldNum.setText(item.getNum() + "人购买");
         //todo : load image
-//
 //     holder.image.setImageResource(R.drawable.index_dishes_image_default);
     }
 

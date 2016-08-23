@@ -26,14 +26,16 @@
 
         <!--test start-->
         <activity
-            android:name=".Demo3Activity">
+            android:name=".Demo3Activity"
+            android:label="Test Time Select">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
         <activity
-            android:name=".DemoActivity">
+            android:name=".DemoActivity"
+            android:label="Test Dialog">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
                 <category android:name="android.intent.category.LAUNCHER"/>

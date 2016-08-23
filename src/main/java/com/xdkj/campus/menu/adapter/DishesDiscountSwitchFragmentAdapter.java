@@ -9,7 +9,7 @@ import com.xdkj.campus.menu.ui.good_dishes.WaterFallDishesFragment;
 
 
 /**
- * Created by YoKeyword on 16/6/5.
+ * Created by arilpan@qq.com on 16/8.
  */
 public class DishesDiscountSwitchFragmentAdapter extends FragmentPagerAdapter {
     private String[] mTab = new String[]{"8号餐馆", "北京烤鸭馆"};

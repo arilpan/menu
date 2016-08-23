@@ -19,8 +19,6 @@ import java.util.Date;
 /**
  * Created by aril_pan@qq.com on 16-8-17.
  */
-
-
 public class Demo3Activity extends Activity
 {
     private TextView tvTime, tvOptions;
@@ -75,7 +73,6 @@ public class Demo3Activity extends Activity
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm");
         return format.format(date);
     }
-
 
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event)

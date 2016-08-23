@@ -26,8 +26,7 @@ import java.util.List;
 
 /***
  * 已完成订单
- *
- * @Author arilpan@qq.com
+ * Created by aril_pan@qq.com on 16/8.
  */
 public class CompleteOrderFragment extends BaseFragment
 {

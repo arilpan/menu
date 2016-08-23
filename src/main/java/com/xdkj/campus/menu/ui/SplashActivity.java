@@ -20,7 +20,10 @@ import java.util.List;
 
 import cn.bingoogolapple.bgabanner.BGABanner;
 import cn.bingoogolapple.bgabanner.BGABannerUtil;
-
+/**
+ * 首页 入口
+ * Created by aril_pan@qq.com on 16/8.
+ */
 public class SplashActivity extends AppCompatActivity implements View.OnClickListener
 {
     private static final String TAG = SplashActivity.class.getSimpleName();
@@ -142,31 +145,4 @@ public class SplashActivity extends AppCompatActivity implements View.OnClickLis
         // 在界面可见时给背景Banner设置一个白色背景，避免滑动过程中两个Banner都设置透明度后能看到Launcher
         mBackgroundBanner.setBackgroundResource(android.R.color.white);
     }
-
-
-//
-//    BGABanner mContentBanner;
-//
-//    @Override
-//    protected void onCreate(Bundle savedInstanceState)
-//    {
-//        super.onCreate(savedInstanceState);
-//        setContentView(R.layout.activity_splash);
-//
-//        mContentBanner.setAdapter(new BGABanner.Adapter()
-//        {
-//            @Override
-//            public void fillBannerItem(BGABanner banner, View view,
-//                                       Object model, int position)
-//            {
-//                ((ImageView) view).setImageResource((int) model);
-//            }
-//        });
-//        mContentBanner.setData(
-//                Arrays.asList(
-//                        R.drawable.splash_index_1,
-//                        R.drawable.splash_index_2,
-//                        R.drawable.splash_index_3,
-//                        R.drawable.splash_index_4), null);
-//    }
 }

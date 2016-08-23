@@ -25,7 +25,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by YoKeyword on 16/6/30.
+ * Created by aril_pan@qq.com on 16/8.
  */
 public class WaterFallDishesFragment extends BaseFragment implements SwipeRefreshLayout
         .OnRefreshListener

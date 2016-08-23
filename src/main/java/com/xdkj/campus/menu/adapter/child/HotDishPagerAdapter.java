@@ -17,7 +17,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by YoKeyword on 16/6/30.
+ * Created by arilpan@qq.com on 16/8.
  */
 public class HotDishPagerAdapter extends RecyclerView.Adapter<HotDishPagerAdapter.MyViewHolder>
 {
@@ -73,8 +73,6 @@ public class HotDishPagerAdapter extends RecyclerView.Adapter<HotDishPagerAdapte
 
             holder.sold_num.setText("已售:"+item.getNum());
             holder.mall_price.setText(item.getMallprice());
-            //holder.image.setImageResource
-            // (R.drawable.index_dishes_image_default);
 
         }
     }

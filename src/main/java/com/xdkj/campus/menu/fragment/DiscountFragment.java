@@ -20,24 +20,13 @@ import com.xdkj.campus.menu.entity.Recharge;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-
-///**
-// * A simple {@link Fragment} subclass.
-// * Activities that contain this fragment must implement the
-// * {@link TestOne.OnFragmentInteractionListener} interface
-// * to handle interaction events.
-// * Use the {@link TestOne#newInstance} factory method to
-// * create an instance of this fragment.
-// */
+/**
+ * Created by aril_pan@qq.com on 16/8.
+ */
 public class DiscountFragment extends BaseFragment
 {
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-//    private OnFragmentInteractionListener mListener;
-
     public DiscountFragment()
     {
-        // Required empty public constructor
     }
 
     public static DiscountFragment newInstance()
@@ -68,7 +57,6 @@ public class DiscountFragment extends BaseFragment
         listview = (ListView) view.findViewById(R.id.listview);
         ArrayList<HashMap<String, Object>> item = new ArrayList<HashMap<String, Object>>();
 
-//        for (int i = 0; i < 3; i++) {
         Recharge recharge = new Recharge(1,
                 R.drawable.chongzhi_dianpu,
                 "8号餐馆", "丽人卡", "充2000元送500元",
@@ -108,7 +96,7 @@ public class DiscountFragment extends BaseFragment
         map.put("item_desc", recharge.getDesc());
         map.put("item_time", recharge.getTime());
         item.add(map);
-//        }
+
         SimpleAdapter simpleAdapter = new SimpleAdapter(
                 getContext(), item,
                 R.layout.fragment_discount_list_item, new String[]
@@ -156,21 +144,12 @@ public class DiscountFragment extends BaseFragment
             }
         });
         listview.setAdapter(simpleAdapter);
-//        mTvBtnSettings.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                start(DiscountFragment.newInstance());
-//            }
-//        });
     }
 
     @Override
     public boolean onBackPressedSupport()
     {
-        // 这里实际项目中推荐使用 EventBus接耦
-//        ((TestOne) getParentFragment()).onBackToFirstFragment();
         Log.e("arilpan", "on back press");
         return false;
-//        return true;
     }
 }

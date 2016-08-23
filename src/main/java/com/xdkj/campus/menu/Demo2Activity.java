@@ -47,7 +47,9 @@ import com.bigkoo.pickerview.OptionsPickerView;
 import com.bigkoo.pickerview.TimePickerView;
 import com.bigkoo.pickerview.model.IPickerViewData;
 
-
+/**
+ * Created by aril_pan@qq.com on 16-8-17.
+ */
 public class Demo2Activity extends Activity
 {
 

@@ -20,7 +20,9 @@ import com.xdkj.campus.menu.ui.order.UncompleteOrderFragment;
 
 import org.greenrobot.eventbus.EventBus;
 
-
+/**
+ * Created by aril_pan@qq.com on 16/8.
+ */
 public class MineFragment extends BaseFragment implements View.OnClickListener {
     public MineFragment() {
     }
@@ -63,11 +65,8 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
 
     @Override
     public boolean onBackPressedSupport() {
-        // 这里实际项目中推荐使用 EventBus接耦
-//        ((TestOne) getParentFragment()).onBackToFirstFragment();
         Log.e("arilpan", "on back press");
         return false;
-//        return true;
     }
 
     @Override
@@ -76,7 +75,6 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
             //已取消的訂單
             case R.id.cancel_layout:
                 EventBus.getDefault().post(new StartBrotherEvent(CancleOrderFragment.newInstance()));
-//                start(CancleOrderFragment.newInstance());
                 break;
             //已完成的訂單
             case R.id.complete_layout:

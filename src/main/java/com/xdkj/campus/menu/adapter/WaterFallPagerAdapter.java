@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+
 import com.xdkj.campus.menu.R;
 import com.xdkj.campus.menu.entity.Dish;
 import com.xdkj.campus.menu.listener.OnItemClickListener;
@@ -16,20 +17,23 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by YoKeyword on 16/6/30.
+ * Created by arilpan@qq.com on 16/8.
  */
-public class WaterFallPagerAdapter extends RecyclerView.Adapter<WaterFallPagerAdapter.MyViewHolder> {
+public class WaterFallPagerAdapter extends RecyclerView.Adapter<WaterFallPagerAdapter.MyViewHolder>
+{
     private List<Dish> mItems = new ArrayList<>();
     private LayoutInflater mInflater;
 
     private OnItemClickListener mClickListener;
 
-    public WaterFallPagerAdapter(Context context) {
+    public WaterFallPagerAdapter(Context context)
+    {
         this.mInflater = LayoutInflater.from(context);
 
     }
 
-    public void setDatas(List<Dish> items) {
+    public void setDatas(List<Dish> items)
+    {
         mItems.clear();
         mItems.addAll(items);
         getRandomHeight(this.mItems);
@@ -38,18 +42,21 @@ public class WaterFallPagerAdapter extends RecyclerView.Adapter<WaterFallPagerAd
 
     private List<Integer> heights;
 
-    private void getRandomHeight(List<Dish> lists) {//得到随机item的高度
+    //得到随机item的高度
+    private void getRandomHeight(List<Dish> lists)
+    {
         heights = new ArrayList<>();
-        for (int i = 0; i < lists.size(); i++) {
+        for (int i = 0; i < lists.size(); i++)
+        {
 //            heights.add((int)(600+Math.random()*400));
             int desc_length = (lists.get(i).getDesc().length()) / 11;
             int desc_length_add = (lists.get(i).getDesc().length()) % 11;
-            if (desc_length_add != 0) {
+            if (desc_length_add != 0)
+            {
                 desc_length += 1;
             }
             int length = (int) (638 + desc_length * 40);
-            Log.e("arilpan", "描述信息：" + lists.get(i).getDesc() +
-                    ",单个长度：" + lists.get(i).getDesc().length() +
+            Log.e("arilpan", ",单个长度：" + lists.get(i).getDesc().length() +
                     ",每10个字是一行，共计：" + length);
             heights.add(length);
         }
@@ -57,15 +64,19 @@ public class WaterFallPagerAdapter extends RecyclerView.Adapter<WaterFallPagerAd
 
 
     @Override
-    public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType)
+    {
 
         View view = mInflater.inflate(R.layout.fragment_dish_switch_list_itme, parent, false);
         final MyViewHolder holder = new MyViewHolder(view);
-        holder.itemView.setOnClickListener(new View.OnClickListener() {
+        holder.itemView.setOnClickListener(new View.OnClickListener()
+        {
             @Override
-            public void onClick(View v) {
+            public void onClick(View v)
+            {
                 int position = holder.getAdapterPosition();
-                if (mClickListener != null) {
+                if (mClickListener != null)
+                {
                     mClickListener.onItemClick(position, v, holder);
                 }
             }
@@ -74,7 +85,8 @@ public class WaterFallPagerAdapter extends RecyclerView.Adapter<WaterFallPagerAd
     }
 
     @Override
-    public void onBindViewHolder(MyViewHolder holder, int position) {
+    public void onBindViewHolder(MyViewHolder holder, int position)
+    {
         ViewGroup.LayoutParams params = holder.itemView.getLayoutParams();//得到item的LayoutParams布局参数
         params.height = heights.get(position);//把随机的高度赋予itemView布局
 
@@ -90,17 +102,20 @@ public class WaterFallPagerAdapter extends RecyclerView.Adapter<WaterFallPagerAd
     }
 
     @Override
-    public int getItemCount() {
+    public int getItemCount()
+    {
         return mItems.size();
     }
 
-    class MyViewHolder extends RecyclerView.ViewHolder {
+    class MyViewHolder extends RecyclerView.ViewHolder
+    {
         private TextView price;
         private TextView desc;
         private TextView name;
         private ImageView image;
 
-        public MyViewHolder(View itemView) {
+        public MyViewHolder(View itemView)
+        {
             super(itemView);
             name = (TextView) itemView.findViewById(R.id.switch_dish_name);
             desc = (TextView) itemView.findViewById(R.id.switch_dish_desc);
@@ -110,7 +125,8 @@ public class WaterFallPagerAdapter extends RecyclerView.Adapter<WaterFallPagerAd
         }
     }
 
-    public void setOnItemClickListener(OnItemClickListener itemClickListener) {
+    public void setOnItemClickListener(OnItemClickListener itemClickListener)
+    {
         this.mClickListener = itemClickListener;
     }
 }

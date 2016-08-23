@@ -29,7 +29,9 @@ import java.util.ArrayList;
 
 /**
  * Created by YoKeyword on 16/2/4.
+ * Modifed by arilpan on 16/8.
  */
+
 public class ShopFragment extends BaseFragment
 {
     public static final String TAG = ShopFragment.class.getSimpleName();
@@ -78,7 +80,8 @@ public class ShopFragment extends BaseFragment
     {
         EventBus.getDefault().register(this);
         mToolbar = (Toolbar) view.findViewById(R.id.toolbar);
-        fl_child_list_content_container = (FrameLayout) view.findViewById(R.id.fl_child_list_content_container);
+        fl_child_list_content_container = (FrameLayout) view.findViewById(R.id
+                .fl_child_list_content_container);
 
 
         fManager = getFragmentManager();
@@ -122,44 +125,12 @@ public class ShopFragment extends BaseFragment
                         {
                             if (showDishList)
                             {
-                                /***
-                                 *
-                                 * 方法1,无法获取sf
-                                 *   FragmentManager fManager = getFragmentManager();
-                                 *   SupportFragment sf = findFragment(DishListFragment.class);
-                                 * 方法2,只能获取mainfragment
-                                 *   List<Fragment> fragmentList = _mActivity
-                                 *   .getSupportFragmentManager().getFragments();
-                                 */
-
-                                //隐藏已经选择的菜品
-//                                SupportFragment dishListFragment = findChildFragment
-//                                        (DishListFragment.class);
-//                                if (dishListFragment != null)
-//                                {
-//                                    dishListFragment.pop();
-//                                    Log.e("arilpan", "hide dishListFragmentdish 不为空 Pop");
-//                                } else
-//                                {
-//                                    Log.e("arilpan", "hide dishListFragment 为空");
-//                                }
-
-//                                SupportFragment s = findFragment(DishListFragment.class);
-//                                {
-//                                    s.pop();
-//                                }
-
                                 //栈-->子栈
                                 SupportFragment dishListFragment = findChildFragment
                                         (DishListFragment.class);
                                 if (dishListFragment != null)
                                 {
                                     dishListFragment.pop();
-                                    //方法：hide无效
-//                                    transaction.hide(dishListFragment);
-                                    //方法：setVisible(需要多次恢复)麻烦
-//                                    fl_child_list_content_container.setVisibility(View.GONE);
-//                                    Log.e("arilpan", "fl_child_list_content_container.setVisibility(View.GONE);");
                                 } else
                                 {
                                     Log.e("arilpan", "hiden程序异常");
@@ -186,10 +157,7 @@ public class ShopFragment extends BaseFragment
                                 //显示已经选择的菜品
                                 showDishList = true;
                             }
-
                             //新的菜单列表 浮动listview
-
-
                         }
                     });
         }
@@ -218,13 +186,9 @@ public class ShopFragment extends BaseFragment
     @Subscribe
     public void setPrice(ShopEvent event)
     {
-        Log.e("arilpan","以前能收到 现在收不到通知了");
+        Log.e("arilpan", "以前能收到 现在收不到通知了");
         setTotalPriceView();
     }
-//    @Subscribe
-//    public void swithFragment(ShopEvent event) {
-//        switchDishListFragment(event.targetFragment);
-//    }
 
     /**
      * 替换加载 内容Fragment
@@ -238,13 +202,6 @@ public class ShopFragment extends BaseFragment
         {
             contentFragment.replaceFragment(fragment, false);
         }
-//        else
-//        {
-//            dl = DishListFragment.newInstance("菜单列表栏目", "1");
-//            replaceLoadRootFragment(R.id.fl_child_list_content_container,
-//                                dl, true);
-////            replaceLoadRootFragment(fragment, false);
-//        }
     }
 
     public void switchDishListFragment()
@@ -257,11 +214,6 @@ public class ShopFragment extends BaseFragment
         {
             Log.e("arilpan", "dishListFragment == null ");
         }
-
-//        replaceLoadRootFragment(
-//                R.id.fl_child_list_content_container,
-//                DishListFragment.newInstance("菜单列表栏目", "1")
-//                , true);
     }
 
     @Override

@@ -16,7 +16,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by YoKeyword on 16/6/30.
+ * Created by arilpan@qq.com on 16/8.
  */
 public class PagerAdapter extends RecyclerView.Adapter<PagerAdapter.MyViewHolder> {
     private List<Dish> mItems = new ArrayList<>();
@@ -45,8 +45,7 @@ public class PagerAdapter extends RecyclerView.Adapter<PagerAdapter.MyViewHolder
 //            heights.add((int)(600+Math.random()*400));
             int desc_length = (lists.get(i).getDesc().length()) / 10;
             int length = (int) (440 + desc_length * 10);
-            Log.e("arilpan", "描述信息：" + lists.get(i).getDesc() +
-                    ",单个长度：" + lists.get(i).getDesc().length()+
+            Log.e("arilpan", ",单个长度：" + lists.get(i).getDesc().length()+
                     ",每10个字是一行，工：" +  length);
             heights.add(length);
         }

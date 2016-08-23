@@ -10,7 +10,7 @@ import com.xdkj.campus.menu.ui.good_dishes.WaterFallDishesFragment;
 
 
 /**
- * Created by YoKeyword on 16/6/5.
+ * Created by arilpan@qq.com on 16/8.
  */
 public class HotDishesSwitchFragmentAdapter extends FragmentPagerAdapter
 {

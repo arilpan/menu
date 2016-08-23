@@ -33,8 +33,7 @@ import java.util.List;
 /***
  * 未完成订单
  * 最大支持99個不同菜品數量訂單
- *
- * @Author arilpan@qq.com
+ * Created by aril_pan@qq.com on 16/8.
  */
 public class UncompleteOrderFragment extends BaseFragment
         implements ISimpleDialogListener

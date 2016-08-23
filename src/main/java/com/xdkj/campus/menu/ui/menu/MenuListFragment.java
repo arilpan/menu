@@ -22,7 +22,7 @@ import java.util.ArrayList;
 /**
  * 左侧选择菜品门类的listview
  *
- * @Author arilpan
+ * Created by aril_pan@qq.com on 16/8.
  */
 public class MenuListFragment extends BaseFragment
 {

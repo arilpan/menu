@@ -16,7 +16,7 @@ import com.xdkj.campus.menu.adapter.DishesSwitchFragmentAdapter;
 import com.xdkj.campus.menu.base.BaseBackFragment;
 
 /**
- * Created by YoKeyword on 16/6/30.
+ * Created by aril_pan@qq.com on 16/8.
  */
 public class DishesDishcountSwitchFragment extends BaseBackFragment
 {

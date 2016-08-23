@@ -1,7 +1,7 @@
 package com.xdkj.campus.menu.entity;
 
 /**
- * Created by xdkj on 2016/8/8.
+ * Created by arilpan@qq.com on 2016/8/8.
  */
 public class Dish
 {

@@ -1,6 +1,5 @@
 package com.xdkj.campus.menu.backup;
 
-
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.util.Log;
@@ -19,7 +18,7 @@ import me.yokeyword.fragmentation.anim.FragmentAnimator;
 
 /**
  *
- * 测死fragment
+ * test fragment
  * Created by arilpan on 16/2/9.
  */
 public class ContentFragment extends BaseFragment

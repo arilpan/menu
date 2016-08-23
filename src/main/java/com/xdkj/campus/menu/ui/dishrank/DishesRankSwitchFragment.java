@@ -21,7 +21,7 @@ import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
 /**
- * Created by YoKeyword on 16/6/30.
+ * Created by aril_pan@qq.com on 16/8.
  */
 public class DishesRankSwitchFragment extends BaseBackFragment {
     private TabLayout mTab;

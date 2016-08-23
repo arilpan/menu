@@ -12,7 +12,7 @@ import com.xdkj.campus.menu.fragment.ShopFragment;
 import me.yokeyword.fragmentation.SupportFragment;
 
 /**
- * Created by xdkj on 2016/8/4.
+ * Created by aril_pan@qq.com on 16/8.
  */
 public class SelectPlaceFragment extends SupportFragment {
     private static final String ARG_NUMBER = "arg_number";

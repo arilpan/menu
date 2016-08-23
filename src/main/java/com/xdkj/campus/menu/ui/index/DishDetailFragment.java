@@ -11,13 +11,13 @@ import android.widget.Button;
 import com.xdkj.campus.menu.R;
 import com.xdkj.campus.menu.base.BaseFragment;
 import com.xdkj.campus.menu.event.StartBrotherEvent;
-import com.xdkj.campus.menu.ui.place.SelectDishListFragment;
 import com.xdkj.campus.menu.ui.place.SelectPlaceFragment;
 
 import org.greenrobot.eventbus.EventBus;
 
 /**
  * 接受菜品id,并且可以进入预约页面
+ * Created by aril_pan@qq.com on 16/8.
  */
 public class DishDetailFragment extends BaseFragment
 {
