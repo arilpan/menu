@@ -71,5 +71,7 @@
             android:layout_below="@id/dish_desc"
             android:text="@string/index_list_dish_mall_price"
     />
-
+    <View
+        style="@style/line_divider_h"
+        android:layout_below="@id/dish_mall_price"/>
 </RelativeLayout>

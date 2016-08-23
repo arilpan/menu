@@ -9,6 +9,8 @@
     <color name="tab_unselect">#c9c9c9</color>
     <color name="bg_btn">#dadada</color>
 
+    <color name="pre_order_selected_list_background">#f6f6f6</color>
+
     <color name="pre_order_background">#F8F8F8</color>
     <color name="pre_order_list_background">#ffffff</color>
 

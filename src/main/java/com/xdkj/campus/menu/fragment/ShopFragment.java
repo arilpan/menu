@@ -114,7 +114,6 @@ public class ShopFragment extends BaseFragment
             replaceLoadRootFragment(R.id.fl_content_container,
                     SelectFragment.newInstance("热门推荐", "1"), false);
 
-
             ((RelativeLayout) view.findViewById(R.id.menu_selected)).setOnClickListener(
                     new View.OnClickListener()
                     {
@@ -132,7 +131,6 @@ public class ShopFragment extends BaseFragment
                                  *   List<Fragment> fragmentList = _mActivity
                                  *   .getSupportFragmentManager().getFragments();
                                  */
-
 
                                 //隐藏已经选择的菜品
 //                                SupportFragment dishListFragment = findChildFragment
@@ -220,6 +218,7 @@ public class ShopFragment extends BaseFragment
     @Subscribe
     public void setPrice(ShopEvent event)
     {
+        Log.e("arilpan","以前能收到 现在收不到通知了");
         setTotalPriceView();
     }
 //    @Subscribe
@@ -251,23 +250,9 @@ public class ShopFragment extends BaseFragment
     public void switchDishListFragment()
     {
         SupportFragment dishListFragment = findChildFragment(DishListFragment.class);
-//        if (dishListFragment != null)
-//        {
-//            dishListFragment.pop();
-//            Log.e("arilpan","pop in switchDishListFragment");
-////            dishListFragment.replaceFragment(fragment, false);
-//        }
         if (dishListFragment != null)
         {
             dishListFragment.pop();
-//            if (!dishListFragment.isHidden())
-//            {
-//                transaction.hide(dishListFragment);
-//                Log.e("arilpan", "switchDishListFragment hide dishListFragment ");
-//            } else
-//            {
-//                Log.e("arilpan", "dishListFragment already hidden ! ");
-//            }
         } else
         {
             Log.e("arilpan", "dishListFragment == null ");

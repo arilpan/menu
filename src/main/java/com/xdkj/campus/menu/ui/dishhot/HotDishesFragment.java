@@ -52,7 +52,7 @@ public class HotDishesFragment extends BaseFragment implements SwipeRefreshLayou
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable
     Bundle savedInstanceState)
     {
-        View view = inflater.inflate(R.layout.fragment_dish_switch_layout, container, false);
+        View view = inflater.inflate(R.layout.fragment_dish_hot_switch_layout, container, false);
         initView(view);
         return view;
     }

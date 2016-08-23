@@ -74,8 +74,11 @@ public class SelectFragment extends BaseFragment
 
         TextView tvClassname = (TextView) view.findViewById(R.id.class_name);
         tvClassname.setText(classname);
+
         select_grid = (GridView) view.findViewById(R.id.select_grid);
     }
+
+
 
     LinearLayout select_dish_layout;
     ArrayList<Dish> item;
@@ -101,7 +104,7 @@ public class SelectFragment extends BaseFragment
             map.put("item_right", pre_order);
             Dish dish = new Dish();
             dish.setName(name[i]);
-            dish.setPrice(price[i]);
+            dish.setPrice("$"+price[i]);
             dish.setPreOrder("预约");
             dish.setImg(R.drawable.index_dishes_image_default);
             item.add(dish);
@@ -133,9 +136,7 @@ public class SelectFragment extends BaseFragment
                 dish.setNum(dish.getNum() + 1);
                 DishList.getlist().remove(dish);
                 DishList.getlist().add(dish);
-//                EventBus.getDefault().post(new ShopEvent(ShopFragment.newInstance()));
                 EventBus.getDefault().post(new ShopEvent(ShopFragment.newInstance()));
-
 //               switchDishListFragment(DishListFragment.newInstance(null, null));
                 ((ShopFragment) getParentFragment()).switchDishListFragment();
             }
@@ -209,7 +210,7 @@ public class SelectFragment extends BaseFragment
 
             Dish dish = dishs.get(position);
             dish_name.setText(dish.getName());
-            dish_desc.setText(dish.getDesc());
+            dish_desc.setText(dish.getPrice());
             dish_order_btn.setText("预约");
 
             dish_img.setImageResource(R.drawable.index_dishes_image_default);

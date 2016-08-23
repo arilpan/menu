@@ -13,6 +13,10 @@ import android.widget.TextView;
 import com.xdkj.campus.menu.R;
 import com.xdkj.campus.menu.base.BaseFragment;
 import com.xdkj.campus.menu.entity.Dish;
+import com.xdkj.campus.menu.event.ShopEvent;
+import com.xdkj.campus.menu.fragment.ShopFragment;
+
+import org.greenrobot.eventbus.EventBus;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -70,9 +74,24 @@ public class DishListFragment extends BaseFragment
 
         TextView tvClassname = (TextView) view.findViewById(R.id.class_name);
         tvClassname.setText(classname);
+        TextView clear_dish= (TextView) view.findViewById(R.id.clear_dish);
+        clear_dish.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View view)
+            {
+                clearDish();
+            }
+        });
+
         select_grid = (ListView) view.findViewById(R.id.select_grid);
     }
-
+    public void clearDish()
+    {
+        DishList.getlist().clear();
+        EventBus.getDefault().post(new ShopEvent(ShopFragment.newInstance()));
+        ((ShopFragment) getParentFragment()).switchDishListFragment();
+    }
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState)
     {
