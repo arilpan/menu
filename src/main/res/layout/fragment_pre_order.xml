@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:tools="http://schemas.android.com/tools"
               style="@style/pre_order_background"
               android:orientation="vertical">
 
@@ -126,6 +127,11 @@
                 <TextView
                     style="@style/pre_order_list_desc"
                     android:text="@string/pre_order_person_num"/>
+                <TextView
+                    android:id="@+id/select_num"
+                    android:layout_centerHorizontal="true"
+                    style="@style/pre_order_list_desc"
+                    tools:text="11"/>
 
                 <ImageView
                     style="@style/pre_order_list_img_right"
@@ -143,7 +149,11 @@
                 <TextView
                     style="@style/pre_order_list_desc"
                     android:text="@string/pre_order_time"/>
-
+                <TextView
+                    android:id="@+id/select_time"
+                    android:layout_centerHorizontal="true"
+                    style="@style/pre_order_list_desc"
+                    tools:text="2016-08-08 08:08"/>
                 <ImageView
                     style="@style/pre_order_list_img_right"
                     android:src="@drawable/common_arrow_right"
@@ -160,7 +170,11 @@
                 <TextView
                     style="@style/pre_order_list_desc"
                     android:text="@string/pre_order_rooms"/>
-
+                <TextView
+                    android:id="@+id/select_room"
+                    android:layout_centerHorizontal="true"
+                    style="@style/pre_order_list_desc"
+                    tools:text="雅间"/>
                 <ImageView
                     style="@style/pre_order_list_img_right"
                     android:src="@drawable/common_arrow_right"
@@ -199,6 +213,13 @@
                 android:text="@string/pre_order_confirm"
                 android:textColor="#fff"
                 android:textSize="14sp"/>
+
+            <View
+                android:id="@+id/vMasker"
+                android:visibility="gone"
+                android:background="#e0000000"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"/>
         </LinearLayout>
 
     </ScrollView>

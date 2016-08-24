@@ -21,7 +21,7 @@ import java.util.Date;
  */
 public class Demo3Activity extends Activity
 {
-    private TextView tvTime, tvOptions;
+    private TextView tvTime ;
     TimePickerView pvTime;
     View vMasker;
 
@@ -33,8 +33,6 @@ public class Demo3Activity extends Activity
 
         vMasker = findViewById(R.id.vMasker);
         tvTime = (TextView) findViewById(R.id.tvTime);
-        tvOptions = (TextView) findViewById(R.id.tvOptions);
-        tvOptions.setVisibility(View.GONE);
 
         //时间选择器
         pvTime = new TimePickerView(this, TimePickerView.Type.ALL);
