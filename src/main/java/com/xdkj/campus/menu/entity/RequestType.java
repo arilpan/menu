@@ -7,6 +7,7 @@ import com.xdkj.campus.menu.api.APIAddr;
  */
 public class RequestType
 {
+    public final static String test_org_id= "36dbde58-5ab5-41b5-915c-66048e63a5df";
     //TEMP
     public final static int LOGIN = 1;
     public final static int REGISTE = 1;

@@ -1,6 +1,7 @@
 package com.xdkj.campus.menu.ui.dishdiscount;
 
 import android.os.Bundle;
+import android.support.annotation.IntegerRes;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -11,18 +12,35 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.squareup.moshi.JsonAdapter;
+import com.squareup.moshi.Types;
+import com.xdkj.campus.menu.MainActivity;
 import com.xdkj.campus.menu.R;
+import com.xdkj.campus.menu.api.APIAddr;
+import com.xdkj.campus.menu.api.message.APPDishDiscount;
 import com.xdkj.campus.menu.base.BaseFragment;
 import com.xdkj.campus.menu.entity.Dish;
 import com.xdkj.campus.menu.entity.Order;
+import com.xdkj.campus.menu.entity.RequestType;
+import com.xdkj.campus.menu.event.NetworkEvent;
 import com.xdkj.campus.menu.event.StartBrotherEvent;
 import com.xdkj.campus.menu.listener.OnItemClickListener;
 import com.xdkj.campus.menu.ui.index.DishDetailFragment;
 
 import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Set;
+
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
+import okhttp3.ResponseBody;
 
 /***
  * 折扣菜
@@ -55,96 +73,125 @@ public class DishDiscountFragment extends BaseFragment
 
     RecyclerView order_recyview;
     private HomeAdapter mAdapter;
-    private List<Order> mDatas;
+    private List<APPDishDiscount.ValueBean.DataBean> mDatas;
+
+    @Override
+    public void onDestroy()
+    {
+        EventBus.getDefault().unregister(this);
+        super.onDestroy();
+    }
 
     private void initView(View view)
     {
-
+        EventBus.getDefault().register(this);
         order_recyview = (RecyclerView)
                 view.findViewById(R.id.dish_discount_recyview);
         order_recyview.setLayoutManager(
                 new LinearLayoutManager(view.getContext(),
                         LinearLayoutManager.VERTICAL, false));
 
-        mDatas = new ArrayList<Order>();
-        for (int i = 1; i < 6; i++)
-        {
-            List mData = new ArrayList<Dish>();
-            Order order = new Order();
-            Dish dish = new Dish("酸菜鱼", "开始大家案例疯狂啦的你们呢就服务空气节目额", "$32");
-            switch (i)
-            {
-                case 1:
-                    dish = new Dish("酸菜鱼", "开始大家案例疯狂啦的你们呢就服务空气节目额", "$11");
-                    mData.add(dish);
-                    order.setTotalPrice("20$");
-                    order.setPre_order_time("2017-06-04");
-                    break;
-                case 2:
-                    order.setPre_order_time("2017-06-11");
-                    order.setTotalPrice("40$");
-                    dish = new Dish("酸菜鱼", "开始大家案例疯狂啦的你们呢就服务空气节目额", "$22");
-                    mData.add(dish);
-                    dish = new Dish("酸菜鱼", "开始大家案例疯狂啦的你们呢就服务空气节目额", "$22");
-                    mData.add(dish);
-                    break;
-                case 3:
-                    order.setPre_order_time("2017-07-03");
-                    order.setTotalPrice("60$");
-
-                    dish = new Dish("酸菜鱼", "开始大家案例疯狂啦的你们呢就服务空气节目额", "$33");
-                    mData.add(dish);
-                    dish = new Dish("酸菜鱼", "开始大家案例疯狂啦的你们呢就服务空气节目额", "$33");
-                    mData.add(dish);
-                    break;
-                case 4:
-                    order.setPre_order_time("2017-08-12");
-                    order.setTotalPrice("80$");
-                    dish = new Dish("酸菜鱼", "开始大家案例疯狂啦的你们呢就服务空气节目额", "$44");
-                    mData.add(dish);
-                    dish = new Dish("酸菜鱼", "开始大家案例疯狂啦的你们呢就服务空气节目额", "$44");
-                    mData.add(dish);
-                    dish = new Dish("酸菜鱼", "开始大家案例疯狂啦的你们呢就服务空气节目额", "$44");
-                    mData.add(dish);
-                    break;
-                case 5:
-                    order.setTotalPrice("100$");
-                    order.setPre_order_time("2017-08-15");
-                    dish = new Dish("酸菜鱼", "开始大家案例疯狂啦的你们呢就服务空气节目额", "$55");
-                    mData.add(dish);
-                    dish = new Dish("酸菜鱼", "开始大家案例疯狂啦的你们呢就服务空气节目额", "$55");
-                    mData.add(dish);
-                    dish = new Dish("酸菜鱼", "开始大家案例疯狂啦的你们呢就服务空气节目额", "$55");
-                    mData.add(dish);
-                    dish = new Dish("酸菜鱼", "开始大家案例疯狂啦的你们呢就服务空气节目额", "$55");
-                    mData.add(dish);
-                    break;
-                case 6:
-                    order.setTotalPrice("120$");
-                    dish = new Dish("酸菜鱼", "开始大家案例疯狂啦的你们呢就服务空气节目额", "$66");
-                    mData.add(dish);
-                    dish = new Dish("酸菜鱼", "开始大家案例疯狂啦的你们呢就服务空气节目额", "$66");
-                    mData.add(dish);
-                    dish = new Dish("酸菜鱼", "开始大家案例疯狂啦的你们呢就服务空气节目额", "$66");
-                    mData.add(dish);
-                    dish = new Dish("酸菜鱼", "开始大家案例疯狂啦的你们呢就服务空气节目额", "$66");
-                    mData.add(dish);
-                    dish = new Dish("酸菜鱼", "开始大家案例疯狂啦的你们呢就服务空气节目额", "$66");
-                    mData.add(dish);
-                    break;
-                default:
-                    break;
-            }
-            order.setShopName("8号餐馆");
-            order.setDishes(mData);
-            mDatas.add(order);
-        }
+        mDatas = new ArrayList<APPDishDiscount.ValueBean.DataBean>();
         order_recyview.setAdapter(mAdapter = new HomeAdapter());
 //        basicParamInit();
 //        initData();
 //        initRecyclerView();
+        EventBus.getDefault().post(new NetworkEvent(
+                RequestType.INDEX_DISH_DISCOUNT,
+                RequestType.test_org_id));
+
     }
 
+    @Subscribe(threadMode = ThreadMode.ASYNC)
+    public void onNetWork(NetworkEvent event)
+    {
+        Log.e("arilpan", "HotDishFragment 你调用咩?");
+        if (RequestType.INDEX_DISH_DISCOUNT == event.reqType)
+        {
+            Log.e("arilpan", "HotDishFragment equals?");
+            setData(getData(event.url + event.id));
+        } else
+        {
+            Log.e("arilpan", "HotDishFragment what happend?");
+        }
+    }
+
+    public List<APPDishDiscount.ValueBean.DataBean> getData(String url)
+    {
+        try
+        {
+            final JsonAdapter<APPDishDiscount>
+                    COM_JSON_ADAPTER = MainActivity.MOSHI.adapter(
+                    Types.newParameterizedType(APPDishDiscount.class));
+            OkHttpClient client = new OkHttpClient();
+            Request request = new Request.Builder()
+                    .url(url)
+                    .build();
+            Response response = client.newCall(request).execute();
+            ResponseBody body = response.body();
+
+            APPDishDiscount datas_arry =
+                    COM_JSON_ADAPTER.fromJson(body.source());
+            body.close();
+            List<APPDishDiscount.ValueBean.DataBean> datas
+                    = datas_arry.getValue().getData();
+            for (APPDishDiscount.ValueBean.DataBean data : datas)
+            {
+                Log.e("arilpan", data.getDiscount_type() +
+                        ",code :" + data.getDishes_price());
+            }
+            return datas;
+        } catch (Exception e)
+        {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    //List<APPDishDiscount.ValueBean.DataBean> types;
+    HashMap<Integer, List<String>> discountDishesMap;
+    List<Integer> discountDishesMapKey;
+
+
+    public void setData(final List<APPDishDiscount.ValueBean.DataBean> items)
+    {
+        try
+        {
+            _mActivity.runOnUiThread(new Runnable()
+            {
+                @Override
+                public void run()
+                {
+                    mDatas = items;
+
+                    discountDishesMap = new HashMap<Integer, List<String>>();
+                    for (APPDishDiscount.ValueBean.DataBean oneData : mDatas)
+                    {
+                        int type = Integer.parseInt(oneData.getDiscount_type());
+                        List<String> ids = discountDishesMap.get(type);
+                        ids.add(oneData.getDishes_id());
+                        discountDishesMap.put(type, ids);
+                    }
+
+                    discountDishesMapKey = new ArrayList<Integer>();
+                    Set<Integer> mapSet = discountDishesMap.keySet();    //获取所有的key值 为set的集合
+                    Iterator<Integer> itor = mapSet.iterator();//获取key的Iterator便利
+                    while (itor.hasNext())
+                    {
+                        Integer key = itor.next();//当前key值
+                        discountDishesMapKey.add(key);
+                    }
+
+
+                    order_recyview.setAdapter(mAdapter = new HomeAdapter());
+                    //stuff that updates ui
+                }
+            });
+        } catch (Exception e)
+        {
+            e.printStackTrace();
+        }
+    }
 
     @Override
     public boolean onBackPressedSupport()
@@ -160,7 +207,7 @@ public class DishDiscountFragment extends BaseFragment
     /****************************************************************************/
     class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.MyViewHolder>
     {
-        List<Dish> itemDishes;
+        List<APPDishDiscount.ValueBean.DataBean> itemDishes;
         private OnItemClickListener mClickListener;
 
         @Override
@@ -174,6 +221,7 @@ public class DishDiscountFragment extends BaseFragment
             ViewGroup.LayoutParams layoutParams =
                     holder.dish_discount_item_recyview.getLayoutParams();
             layoutParams.height = 35;
+
             if (viewType > 0)
             {
                 layoutParams.height = 35 + viewType * 250;
@@ -203,9 +251,49 @@ public class DishDiscountFragment extends BaseFragment
         {
             holder.dish_discount_item_recyview.setMinimumHeight(35);
 
-            Order order = mDatas.get(position);
+            APPDishDiscount.ValueBean.DataBean order = mDatas.get(position);
 //            holder.discount_item_type.setText(order.getTotalPrice());
-            holder.discount_item_type.setText("50% off");
+            int key = discountDishesMapKey.get(position);
+            switch (key)
+            {
+//                case 0:
+//                    holder.discount_item_type.setText("零折免费菜品");
+//                    break;
+                case 1:
+                    holder.discount_item_type.setText("一折菜品");
+                    break;
+                case 2:
+                    holder.discount_item_type.setText("二折菜品");
+                    break;
+                case 3:
+                    holder.discount_item_type.setText("三折菜品");
+                    break;
+                case 4:
+                    holder.discount_item_type.setText("四折菜品");
+                    break;
+                case 5:
+                    holder.discount_item_type.setText("五折菜品");
+                    break;
+                case 6:
+                    holder.discount_item_type.setText("六折菜品");
+                    break;
+                case 7:
+                    holder.discount_item_type.setText("七折菜品");
+                    break;
+                case 8:
+                    holder.discount_item_type.setText("八折菜品");
+                    break;
+                case 9:
+                    holder.discount_item_type.setText("九折菜品");
+                    break;
+                case 10:
+                    holder.discount_item_type.setText("十折菜品");
+                    break;
+                default:
+                    holder.discount_item_type.setText("未知折扣");
+                    break;
+            }
+
 
             holder.dish_discount_item_recyview.setAdapter(
                     new RecyclerView.Adapter()
@@ -226,7 +314,8 @@ public class DishDiscountFragment extends BaseFragment
                                 {
                                     int position = itemholder.getAdapterPosition();
                                     EventBus.getDefault().post(
-                                            new StartBrotherEvent(DishDetailFragment.newInstance(1)));
+                                            new StartBrotherEvent(DishDetailFragment.newInstance
+                                                    (1)));
                                 }
                             });
 
@@ -238,14 +327,13 @@ public class DishDiscountFragment extends BaseFragment
                         {
                             MyItemViewHolder newholder = (MyItemViewHolder) holder;
 
-                            Log.e("arilpan", "该item data的大小" + itemDishes.size());
                             if (position < itemDishes.size())
                             {
-                                Dish dish = itemDishes.get(position);
-                                newholder.dish_name.setText(dish.getName());
-                                newholder.dish_price.setText(dish.getPrice());
-                                newholder.dish_old_price.setText("132");
-                                newholder.dish_desc.setText(dish.getDesc());
+                                APPDishDiscount.ValueBean.DataBean dish = itemDishes.get(position);
+                                newholder.dish_name.setText(dish.getDishes_name());
+                                newholder.dish_price.setText(dish.getDishes_price());
+                                newholder.dish_old_price.setText(dish.getRack_rate());
+                                newholder.dish_desc.setText(dish.getDishes_description());
                             } else
                             {
                                 Log.e("arilpan", " will throw java.lang.IndexOutOfBoundsException");
@@ -292,21 +380,29 @@ public class DishDiscountFragment extends BaseFragment
                             }
                         }
                     }
-
-
             );
-
         }
 
 
         @Override
         public int getItemViewType(int position)
         {
-            Order order = mDatas.get(position);
-            itemDishes = order.getDishes();
-            if (itemDishes != null)
+            if (discountDishesMapKey != null)
             {
-                return itemDishes.size();
+                int key = discountDishesMapKey.get(position);
+                List<String> ids = discountDishesMap.get(key);
+                for (String id : ids)
+                {
+                    for (APPDishDiscount.ValueBean.DataBean dataBean : mDatas)
+                    {
+                        if (dataBean.getDishes_id().equals(id))
+                        {
+                            //todo:speed up
+                            itemDishes.add(dataBean);
+                        }
+                    }
+                }
+                return discountDishesMap.get(key).size();
             }
             return 0;
         }
@@ -314,7 +410,11 @@ public class DishDiscountFragment extends BaseFragment
         @Override
         public int getItemCount()
         {
-            return mDatas.size();
+            if (discountDishesMap != null)
+            {
+                return discountDishesMap.size();
+            }
+            return 0;
         }
 
         class MyViewHolder extends RecyclerView.ViewHolder

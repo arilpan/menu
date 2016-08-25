@@ -14,16 +14,16 @@ public class NetworkEvent
 {
     public String url;
     public int reqType;
+    public String id;
 
     public NetworkEvent()
     {
-
     }
 
-    //JsonAdapter<List<Objects>> mode;
-    public NetworkEvent(int  reqType)
+    public NetworkEvent(int reqType, String id)
     {
-//        this.url = url;
+        this.id = id;
+        this.reqType = reqType;
         switch (reqType)
         {
             case RequestType.INDEX_ALL:
@@ -59,6 +59,12 @@ public class NetworkEvent
 //                this.url = APIAddr.shop_detail_url;
 //                break;
         }
+    }
+
+    //JsonAdapter<List<Objects>> mode;
+    public NetworkEvent(int reqType)
+    {
+        this(reqType, "");
     }
 
 }

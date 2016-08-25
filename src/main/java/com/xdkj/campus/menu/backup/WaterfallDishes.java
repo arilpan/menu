@@ -204,7 +204,7 @@ public class WaterfallDishes extends BaseFragment implements SwipeRefreshLayout.
             public void run() {
                 mRefreshLayout.setRefreshing(false);
             }
-        }, 2500);
+        }, 1500);
 
     }
 

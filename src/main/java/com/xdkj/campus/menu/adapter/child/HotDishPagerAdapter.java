@@ -10,9 +10,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.xdkj.campus.menu.R;
-import com.xdkj.campus.menu.api.entitiy.APIALL;
-import com.xdkj.campus.menu.api.entitiy.APIDish;
-import com.xdkj.campus.menu.entity.Dish;
+import com.xdkj.campus.menu.api.message.APIALL;
 import com.xdkj.campus.menu.listener.OnItemClickListener;
 
 import java.util.ArrayList;

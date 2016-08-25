@@ -196,7 +196,7 @@ public class NewsListFragment extends BaseFragment implements SwipeRefreshLayout
             {
                 mRefreshLayout.setRefreshing(false);
             }
-        }, 2500);
+        }, 1500);
     }
 
     /**

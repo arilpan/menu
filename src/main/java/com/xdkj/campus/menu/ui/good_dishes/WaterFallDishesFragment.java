@@ -164,7 +164,7 @@ public class WaterFallDishesFragment extends BaseFragment implements SwipeRefres
             {
                 mRefreshLayout.setRefreshing(false);
             }
-        }, 2500);
+        }, 1500);
     }
 
     /**

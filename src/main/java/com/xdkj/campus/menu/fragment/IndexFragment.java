@@ -13,15 +13,12 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
 import com.squareup.moshi.JsonAdapter;
-import com.squareup.moshi.Moshi;
 import com.squareup.moshi.Types;
 import com.xdkj.campus.menu.MainActivity;
 import com.xdkj.campus.menu.R;
 import com.xdkj.campus.menu.adapter.child.HotDishPagerAdapter;
-import com.xdkj.campus.menu.api.entitiy.APIALL;
-import com.xdkj.campus.menu.api.entitiy.APIDish;
+import com.xdkj.campus.menu.api.message.APIALL;
 import com.xdkj.campus.menu.base.BaseLazyMainFragment;
-import com.xdkj.campus.menu.entity.Dish;
 import com.xdkj.campus.menu.entity.RequestType;
 import com.xdkj.campus.menu.event.NetworkEvent;
 import com.xdkj.campus.menu.event.StartBrotherEvent;
@@ -39,8 +36,6 @@ import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
 
 import cn.bingoogolapple.bgabanner.BGABanner;
@@ -342,7 +337,11 @@ public class IndexFragment extends BaseLazyMainFragment
     public void onNetWork(NetworkEvent event)
     {
         Log.e("arilpan", "IndexFragment哥 你调用咩?");
-        setData(getData(event));
+        if (RequestType.INDEX_ALL == event.reqType)
+        {
+            setData(getData(event));
+        }
+
     }
 
     public List<APIALL.ValueBean.DataBean> getData(NetworkEvent event)

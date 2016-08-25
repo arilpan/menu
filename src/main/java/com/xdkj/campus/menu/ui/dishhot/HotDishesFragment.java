@@ -10,15 +10,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.squareup.moshi.JsonAdapter;
+import com.squareup.moshi.Types;
+import com.xdkj.campus.menu.MainActivity;
 import com.xdkj.campus.menu.R;
-import com.xdkj.campus.menu.adapter.WaterFallPagerAdapter;
 import com.xdkj.campus.menu.adapter.child.HotDishPagerAdapter;
 import com.xdkj.campus.menu.api.APIAddr;
-import com.xdkj.campus.menu.api.DishAPI;
-import com.xdkj.campus.menu.api.entitiy.APIALL;
-import com.xdkj.campus.menu.api.entitiy.APIDish;
+import com.xdkj.campus.menu.api.message.APIALL;
 import com.xdkj.campus.menu.base.BaseFragment;
-import com.xdkj.campus.menu.entity.Dish;
 import com.xdkj.campus.menu.entity.RequestType;
 import com.xdkj.campus.menu.event.NetworkEvent;
 import com.xdkj.campus.menu.event.StartBrotherEvent;
@@ -32,6 +31,11 @@ import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
+import okhttp3.ResponseBody;
 
 /**
  * Created by aril_pan@qq.com on 16/8.
@@ -117,25 +121,20 @@ public class HotDishesFragment extends BaseFragment implements SwipeRefreshLayou
             }
         });
 
-        // Init Datas
-        List<APIALL.ValueBean.DataBean > items = new ArrayList<>();
-        for (int i = 0; i < 20; i++)
-        {
-            APIALL.ValueBean.DataBean  item =
-                    new APIALL.ValueBean.DataBean ();
-            item.setDishes_price("192");
-            item.setPurchase_count(9999);
-            items.add(item);
-
-        }
+//        // Init Datas
+        List<APIALL.ValueBean.DataBean> items = new ArrayList<>();
         mAdapter.setDatas(items);
 
-        EventBus.getDefault().post(new NetworkEvent(RequestType.INDEX_ALL));
+        EventBus.getDefault().post(new NetworkEvent(RequestType.INDEX_DISH_HOT,
+                "36dbde58-5ab5-41b5-915c-66048e63a5df"));
     }
 
     @Override
     public void onRefresh()
     {
+        EventBus.getDefault().post(new NetworkEvent(RequestType.INDEX_DISH_HOT,
+                "36dbde58-5ab5-41b5-915c-66048e63a5df"));
+        Log.e("arilpan","HotDishesFragment onRefresh  ");
         mRefreshLayout.postDelayed(new Runnable()
         {
             @Override
@@ -143,7 +142,7 @@ public class HotDishesFragment extends BaseFragment implements SwipeRefreshLayou
             {
                 mRefreshLayout.setRefreshing(false);
             }
-        }, 2500);
+        }, 1500);
     }
 
     /**
@@ -169,9 +168,64 @@ public class HotDishesFragment extends BaseFragment implements SwipeRefreshLayou
     public void onNetWork(NetworkEvent event)
     {
         Log.e("arilpan", "HotDishFragment 你调用咩?");
-        if(event.url == APIAddr.dish_hot_more_url)
+        if (APIAddr.dish_hot_more_url.equals(event.url))
         {
+            Log.e("arilpan", "HotDishFragment equals?");
+            setData(getData(event.url + event.id));
+        } else
+        {
+            Log.e("arilpan", "HotDishFragment what happend?");
+        }
+    }
 
+    public List<APIALL.ValueBean.DataBean> getData(String url)
+    {
+        try
+        {
+            final JsonAdapter<APIALL>
+                    COM_JSON_ADAPTER = MainActivity.MOSHI.adapter(
+                    Types.newParameterizedType(APIALL.class));
+            OkHttpClient client = new OkHttpClient();
+            Request request = new Request.Builder()
+                    .url(url)
+                    .build();
+            Response response = client.newCall(request).execute();
+            ResponseBody body = response.body();
+
+            APIALL datas_arry =
+                    COM_JSON_ADAPTER.fromJson(body.source());
+            body.close();
+            List<APIALL.ValueBean.DataBean> datas
+                    = datas_arry.getValue().getData();
+            for (APIALL.ValueBean.DataBean data : datas)
+            {
+                Log.e("arilpan", data.getDiscount_type() +
+                        ",code :" + data.getDishes_price());
+            }
+            return datas;
+        } catch (Exception e)
+        {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public void setData(final List<APIALL.ValueBean.DataBean> items)
+    {
+        try
+        {
+            _mActivity.runOnUiThread(new Runnable()
+            {
+                @Override
+                public void run()
+                {
+                    mAdapter.setDatas(items);
+                    //stuff that updates ui
+                }
+            });
+        } catch (Exception e)
+        {
+            e.printStackTrace();
         }
     }
 

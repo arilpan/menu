@@ -1,4 +1,4 @@
-package com.xdkj.campus.menu.api.entitiy;
+package com.xdkj.campus.menu.api.message;
 
 import java.util.List;
 

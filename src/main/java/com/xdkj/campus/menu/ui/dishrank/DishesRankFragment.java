@@ -160,7 +160,7 @@ public class DishesRankFragment extends BaseFragment implements SwipeRefreshLayo
             {
                 mRefreshLayout.setRefreshing(false);
             }
-        }, 2500);
+        }, 1500);
     }
 
     /**

@@ -201,7 +201,7 @@ public class FirstPagerFragment extends BaseFragment implements SwipeRefreshLayo
             public void run() {
                 mRefreshLayout.setRefreshing(false);
             }
-        }, 2500);
+        }, 1500);
 
     }
 
