@@ -48,13 +48,15 @@ import okhttp3.ResponseBody;
  */
 public class DishDiscountFragment extends BaseFragment
 {
+    static String shop_id;
 
     public DishDiscountFragment()
     {
     }
 
-    public static DishDiscountFragment newInstance()
+    public static DishDiscountFragment newInstance(String shop_org_id)
     {
+        shop_id = shop_org_id;
         Bundle args = new Bundle();
         DishDiscountFragment fragment = new DishDiscountFragment();
         fragment.setArguments(args);
@@ -98,8 +100,7 @@ public class DishDiscountFragment extends BaseFragment
 //        initRecyclerView();
         EventBus.getDefault().post(new NetworkEvent(
                 RequestType.INDEX_DISH_DISCOUNT,
-                RequestType.test_org_id));
-
+                shop_id));
     }
 
     @Subscribe(threadMode = ThreadMode.ASYNC)
@@ -149,9 +150,8 @@ public class DishDiscountFragment extends BaseFragment
     }
 
     //List<APPDishDiscount.ValueBean.DataBean> types;
-    HashMap<Integer, List<String>> discountDishesMap;
+    HashMap<Integer, ArrayList<String>> discountDishesMap;
     List<Integer> discountDishesMapKey;
-
 
     public void setData(final List<APPDishDiscount.ValueBean.DataBean> items)
     {
@@ -164,15 +164,19 @@ public class DishDiscountFragment extends BaseFragment
                 {
                     mDatas = items;
 
-                    discountDishesMap = new HashMap<Integer, List<String>>();
-                    for (APPDishDiscount.ValueBean.DataBean oneData : mDatas)
-                    {
-                        int type = Integer.parseInt(oneData.getDiscount_type());
-                        List<String> ids = discountDishesMap.get(type);
-                        ids.add(oneData.getDishes_id());
-                        discountDishesMap.put(type, ids);
-                    }
-
+                    discountDishesMap = new HashMap<Integer, ArrayList<String>>();
+                    if (mDatas != null)
+                        for (APPDishDiscount.ValueBean.DataBean oneData : mDatas)
+                        {
+                            int type = Integer.parseInt(oneData.getDiscount_type());
+                            ArrayList<String> ids = discountDishesMap.get(type);
+                            if (ids == null)
+                            {
+                                ids = new ArrayList<String>();
+                            }
+                            ids.add(oneData.getDishes_id());
+                            discountDishesMap.put(type, ids);
+                        }
                     discountDishesMapKey = new ArrayList<Integer>();
                     Set<Integer> mapSet = discountDishesMap.keySet();    //获取所有的key值 为set的集合
                     Iterator<Integer> itor = mapSet.iterator();//获取key的Iterator便利
@@ -181,8 +185,6 @@ public class DishDiscountFragment extends BaseFragment
                         Integer key = itor.next();//当前key值
                         discountDishesMapKey.add(key);
                     }
-
-
                     order_recyview.setAdapter(mAdapter = new HomeAdapter());
                     //stuff that updates ui
                 }
@@ -203,7 +205,6 @@ public class DishDiscountFragment extends BaseFragment
 //        return true;
     }
 
-
     /****************************************************************************/
     class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.MyViewHolder>
     {
@@ -217,21 +218,20 @@ public class DishDiscountFragment extends BaseFragment
                     parent.getContext()).inflate(R.layout.fragment_dish_discount_list_item, parent,
                     false));
 /**************************設置高度信息****1  2  2* =>都是5个单位，为何*************************************/
-
             ViewGroup.LayoutParams layoutParams =
                     holder.dish_discount_item_recyview.getLayoutParams();
             layoutParams.height = 35;
 
             if (viewType > 0)
             {
-                layoutParams.height = 35 + viewType * 250;
+                layoutParams.height = 35 + viewType * 225;
                 int addTotal = 0;
                 int add = 1;
                 int numItem = viewType;
                 while (add != 0)
                 {
-                    add = numItem / 2;
-                    addTotal += add * 10;
+                    add = numItem / 4;
+                    addTotal += add * 30;
                     numItem = add;
                 }
                 layoutParams.height += addTotal;
@@ -240,8 +240,6 @@ public class DishDiscountFragment extends BaseFragment
             holder.dish_discount_item_recyview.setLayoutManager(new LinearLayoutManager
                     (_mActivity.getApplicationContext(), LinearLayoutManager.VERTICAL, true));
             holder.dish_discount_item_recyview.setLayoutParams(layoutParams);
-//            holder.order_item_recyview.setLayoutManager(
-//                    new LinearLayoutManager(_mActivity.getApplicationContext()));
 /****************************************************************************/
             return holder;
         }
@@ -331,7 +329,7 @@ public class DishDiscountFragment extends BaseFragment
                             {
                                 APPDishDiscount.ValueBean.DataBean dish = itemDishes.get(position);
                                 newholder.dish_name.setText(dish.getDishes_name());
-                                newholder.dish_price.setText(dish.getDishes_price());
+                                newholder.dish_price.setText("￥" + dish.getDishes_price());
                                 newholder.dish_old_price.setText(dish.getRack_rate());
                                 newholder.dish_desc.setText(dish.getDishes_description());
                             } else
@@ -387,6 +385,7 @@ public class DishDiscountFragment extends BaseFragment
         @Override
         public int getItemViewType(int position)
         {
+            itemDishes = new ArrayList<APPDishDiscount.ValueBean.DataBean>();
             if (discountDishesMapKey != null)
             {
                 int key = discountDishesMapKey.get(position);

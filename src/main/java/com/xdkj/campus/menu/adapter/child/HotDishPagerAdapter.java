@@ -71,7 +71,7 @@ public class HotDishPagerAdapter extends RecyclerView.Adapter<HotDishPagerAdapte
                     ", tostring:" + item.toString());
             holder.name.setText(item.getDishes_name());
             holder.desc.setText(item.getDishes_description());
-            holder.price.setText(item.getDishes_price());
+            holder.price.setText("￥"+item.getRack_rate());
 
             holder.sold_num.setText("已售:" + item.getPurchase_count());
             holder.mall_price.setText(item.getDishes_price());

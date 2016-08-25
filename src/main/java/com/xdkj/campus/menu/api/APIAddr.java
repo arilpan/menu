@@ -7,6 +7,9 @@ import android.database.DatabaseUtils;
  */
 public class APIAddr
 {
+    public static String shop_one_id = "36dbde58-5ab5-41b5-915c-66048e63a5df";
+    public static String shop_two_id = "ba262eba-05da-4886-947c-5a557c954af5";
+
     public static String BASE_URL = "http://172.16.0.56:8080/GrogshopSystem/appShop";
     public static String BASE_IMG_URL = "http://172.16.0.56:8080";
     //http://172.16.0.56:8080/GrogshopSystem/appShop/shop_dishes_index

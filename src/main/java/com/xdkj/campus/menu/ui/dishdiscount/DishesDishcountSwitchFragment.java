@@ -62,7 +62,8 @@ public class DishesDishcountSwitchFragment extends BaseBackFragment
         mTab.addTab(mTab.newTab().setText("全部"));
         mTab.addTab(mTab.newTab().setText("陌生人"));
 
-        mViewPager.setAdapter(new DishesDiscountSwitchFragmentAdapter(getChildFragmentManager()));
+        mViewPager.setAdapter(new DishesDiscountSwitchFragmentAdapter(
+                getChildFragmentManager()));
         mTab.setupWithViewPager(mViewPager);
     }
 
