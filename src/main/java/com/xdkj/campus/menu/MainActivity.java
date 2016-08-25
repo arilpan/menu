@@ -16,6 +16,7 @@ import com.xdkj.campus.menu.event.NetworkEvent;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
+import java.io.IOException;
 import java.lang.ref.ReferenceQueue;
 import java.util.Collections;
 import java.util.Comparator;
@@ -29,6 +30,7 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
 import okhttp3.ResponseBody;
+import okio.BufferedSource;
 
 /**
  * 类知乎 复杂嵌套Demo tip: 多使用右上角的"查看栈视图"
@@ -37,12 +39,14 @@ import okhttp3.ResponseBody;
 public class MainActivity extends SupportActivity implements BaseLazyMainFragment
         .OnBackToFirstListener
 {
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.wechat_activity_main);
         EventBus.getDefault().register(MainActivity.this);
+
 
         if (savedInstanceState == null)
         {
@@ -77,7 +81,34 @@ public class MainActivity extends SupportActivity implements BaseLazyMainFragmen
         super.onBackPressedSupport();
     }
 
-    private static final Moshi MOSHI = new Moshi.Builder().build();
+    public static final Moshi MOSHI = new Moshi.Builder().build();
+
+    public static BufferedSource getNetWorkResult(String url)
+    {
+        Log.e("arilpan", "Main url : " + url);
+        ResponseBody body = null;
+        try
+        {
+            OkHttpClient client = new OkHttpClient();
+            Request request = new Request.Builder()
+                    .url(url)
+                    .build();
+            Response response = null;
+            response = client.newCall(request).execute();
+            body = response.body();
+            Log.e("arilpan", "Main getNetWorkResult : " + body.toString());
+            final BufferedSource bs = body.source();
+            return bs;
+        } catch (IOException e)
+        {
+            e.printStackTrace();
+        } finally
+        {
+            body.close();
+        }
+        return null;
+
+    }
 
     @Subscribe
     public Object getData(NetworkEvent event)

@@ -4,7 +4,6 @@ import android.util.Log;
 
 import com.squareup.moshi.JsonAdapter;
 import com.xdkj.campus.menu.entity.Dish;
-import com.xdkj.campus.menu.entity.RequestType;
 import com.xdkj.campus.menu.event.NetworkEvent;
 
 import java.util.Collections;
@@ -26,13 +25,11 @@ public class DishAPI
 
     public DishAPI()
     {
-
     }
 
     public DishAPI(NetworkEvent event)
     {
         this.event = event;
-
     }
 
     public Objects getData()
@@ -41,15 +38,19 @@ public class DishAPI
         JsonAdapter<List<Dish>> CONTRIBUTORS_JSON_ADAPTER = null;
         try
         {
+            //network
             OkHttpClient client = new OkHttpClient();
             Request request = new Request.Builder()
                     .url(ENDPOINT)
                     .build();
             Response response = client.newCall(request).execute();
             ResponseBody body = response.body();
+
+            //type convert
             List<Dish> datas =
                     CONTRIBUTORS_JSON_ADAPTER.fromJson(body.source());
             body.close();
+            //sort ,selectable
             Collections.sort(datas, new Comparator<Dish>()
             {
                 @Override
@@ -58,6 +59,8 @@ public class DishAPI
                     return c2.getId() - c1.getId();
                 }
             });
+
+
             Log.e("arilpan", "res : " + body.source());
             for (Dish dish : datas)
             {

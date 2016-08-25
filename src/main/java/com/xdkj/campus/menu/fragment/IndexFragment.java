@@ -12,10 +12,18 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
+import com.squareup.moshi.JsonAdapter;
+import com.squareup.moshi.Moshi;
+import com.squareup.moshi.Types;
+import com.xdkj.campus.menu.MainActivity;
 import com.xdkj.campus.menu.R;
 import com.xdkj.campus.menu.adapter.child.HotDishPagerAdapter;
+import com.xdkj.campus.menu.api.entitiy.APIALL;
+import com.xdkj.campus.menu.api.entitiy.APIDish;
 import com.xdkj.campus.menu.base.BaseLazyMainFragment;
 import com.xdkj.campus.menu.entity.Dish;
+import com.xdkj.campus.menu.entity.RequestType;
+import com.xdkj.campus.menu.event.NetworkEvent;
 import com.xdkj.campus.menu.event.StartBrotherEvent;
 import com.xdkj.campus.menu.listener.OnItemClickListener;
 import com.xdkj.campus.menu.ui.dishdiscount.DishesDishcountSwitchFragment;
@@ -28,12 +36,19 @@ import com.xdkj.campus.menu.ui.order.SelectPlaceFragment;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import cn.bingoogolapple.bgabanner.BGABanner;
 import cn.bingoogolapple.bgabanner.BGABannerUtil;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
+import okhttp3.ResponseBody;
 
 /**
  * Created by aril_pan@qq.com on 16/8.
@@ -46,7 +61,6 @@ public class IndexFragment extends BaseLazyMainFragment
 
     public static IndexFragment newInstance()
     {
-
         Bundle args = new Bundle();
         IndexFragment fragment = new IndexFragment();
         fragment.setArguments(args);
@@ -60,7 +74,6 @@ public class IndexFragment extends BaseLazyMainFragment
     Bundle savedInstanceState)
     {
         View view = inflater.inflate(R.layout.fragment_mainpage, container, false);
-
 //        SupportFragment supportFragment;
 //        if (savedInstanceState == null) {
 //            supportFragment = IndexFragment.newInstance();
@@ -189,54 +202,57 @@ public class IndexFragment extends BaseLazyMainFragment
 
     private void updateData()
     {
-        List<Dish> items = new ArrayList<>();
-        for (int i = 0; i < 20; i++)
-        {
-            if (i == 0)
-            {
-                Dish item = new Dish("粉蒸肉L" + i, "这是五个字加上五个字共是十五字", "￥22");
-                items.add(item);
-            } else if (i == 1)
-            {
-                Dish item = new Dish("粉蒸肉L" + i, "这是五个字加上五个字共是", "￥16");
-                items.add(item);
-            } else if (i == 2)
-            {
-                Dish item = new Dish("粉蒸肉L" + i, "这是五个字加上五个字共是十四", "￥32");
-                items.add(item);
-            } else if (i == 3)
-            {
-                Dish item = new Dish("粉蒸肉L" + i, "这是五个字", "￥17");
-                items.add(item);
-            } else if (i == 5)
-            {
-                Dish item = new Dish("粉蒸肉L" + i, "这是五个字这是五个字这是五个字这是五个字五五二十五", "￥32");
-                items.add(item);
-            } else if (i == 6)
-            {
-                Dish item = new Dish("粉蒸肉L" + i, "这是五个字这是五个字这是五个字这是五个字五五二十五再加五个字", "￥32");
-                items.add(item);
-            } else if (i == 7)
-            {
-                Dish item = new Dish("粉蒸肉L" + i, "这是五个字这是五个字这是五个字这是五个字五五二十五再加五个字再加五个字", "￥32");
-                items.add(item);
-            } else if (i == 8)
-            {
-                Dish item = new Dish("粉蒸肉L" + i, "这是五个字这是五个字这是五个字这是五个字五五二十五再加五个字再加五个字再加五个字", "￥32");
-                items.add(item);
-            } else
-            {
-                Dish item = new Dish("粉蒸肉L" + i, "这是五个字加上五个字共是十五字", "￥86");
-                items.add(item);
-            }
-
-        }
-        mAdapter.setDatas(items);
-        Log.e("arilpan", "set data of  index_list hot dishes");
+//        List<Dish> items = new ArrayList<>();
+//        for (int i = 0; i < 20; i++)
+//        {
+//            if (i == 0)
+//            {
+//                Dish item = new Dish("粉蒸肉L" + i, "这是五个字加上五个字共是十五字", "￥22");
+//                items.add(item);
+//            } else if (i == 1)
+//            {
+//                Dish item = new Dish("粉蒸肉L" + i, "这是五个字加上五个字共是", "￥16");
+//                items.add(item);
+//            } else if (i == 2)
+//            {
+//                Dish item = new Dish("粉蒸肉L" + i, "这是五个字加上五个字共是十四", "￥32");
+//                items.add(item);
+//            } else if (i == 3)
+//            {
+//                Dish item = new Dish("粉蒸肉L" + i, "这是五个字", "￥17");
+//                items.add(item);
+//            } else if (i == 5)
+//            {
+//                Dish item = new Dish("粉蒸肉L" + i, "这是五个字这是五个字这是五个字这是五个字五五二十五", "￥32");
+//                items.add(item);
+//            } else if (i == 6)
+//            {
+//                Dish item = new Dish("粉蒸肉L" + i, "这是五个字这是五个字这是五个字这是五个字五五二十五再加五个字", "￥32");
+//                items.add(item);
+//            } else if (i == 7)
+//            {
+//                Dish item = new Dish("粉蒸肉L" + i, "这是五个字这是五个字这是五个字这是五个字五五二十五再加五个字再加五个字", "￥32");
+//                items.add(item);
+//            } else if (i == 8)
+//            {
+//                Dish item = new Dish("粉蒸肉L" + i, "这是五个字这是五个字这是五个字这是五个字五五二十五再加五个字再加五个字再加五个字",
+// "￥32");
+//                items.add(item);
+//            } else
+//            {
+//                Dish item = new Dish("粉蒸肉L" + i, "这是五个字加上五个字共是十五字", "￥86");
+//                items.add(item);
+//            }
+//
+//        }
+//        mAdapter.setDatas(items);
+//        Log.e("arilpan", "set data of  index_list hot dishes");
     }
 
     private void initView(View view)
     {
+        EventBus.getDefault().register(this);
+
         index_list = (RecyclerView) view.findViewById(R.id.index_list);
         index_list.setFocusable(false);
         index_banner = (BGABanner) view.findViewById(R.id.index_banner);
@@ -297,7 +313,7 @@ public class IndexFragment extends BaseLazyMainFragment
             }
         });
 
-
+        EventBus.getDefault().post(new NetworkEvent(RequestType.INDEX_ALL));
     }
 
     @Override
@@ -308,6 +324,7 @@ public class IndexFragment extends BaseLazyMainFragment
     @Override
     public void onDestroyView()
     {
+        EventBus.getDefault().unregister(this);
         super.onDestroyView();
     }
 
@@ -321,8 +338,65 @@ public class IndexFragment extends BaseLazyMainFragment
 //        return true;
     }
 
-    private BGABanner index_banner;
+    @Subscribe(threadMode = ThreadMode.ASYNC)
+    public void onNetWork(NetworkEvent event)
+    {
+        Log.e("arilpan", "IndexFragment哥 你调用咩?");
+        setData(getData(event));
+    }
 
+    public List<APIALL.ValueBean.DataBean> getData(NetworkEvent event)
+    {
+        try
+        {
+            final JsonAdapter<APIALL>
+                    COM_JSON_ADAPTER = MainActivity.MOSHI.adapter(
+                    Types.newParameterizedType(APIALL.class));
+            OkHttpClient client = new OkHttpClient();
+            Request request = new Request.Builder()
+                    .url(event.url)
+                    .build();
+            Response response = client.newCall(request).execute();
+            ResponseBody body = response.body();
+
+            APIALL datas_arry =
+                    COM_JSON_ADAPTER.fromJson(body.source());
+            body.close();
+            List<APIALL.ValueBean.DataBean> datas
+                    = datas_arry.getValue().getData();
+            for (APIALL.ValueBean.DataBean data : datas)
+            {
+                Log.e("arilpan", data.getDiscount_type() +
+                        ",code :" + data.getDishes_price());
+            }
+//            Collections.sort(contributors, new Comparator<APIDish>()
+//            {
+//                @Override
+//                public int compare(APIDish c1, APIDish c2)
+//                {
+//                    return c2.getDishes_id() - c1.getDishes_id();
+//                }
+//            });
+            return datas;
+        } catch (Exception e)
+        {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public void setData(List<APIALL.ValueBean.DataBean> items)
+    {
+        try
+        {
+            mAdapter.setDatas(items);
+        } catch (Exception e)
+        {
+            e.printStackTrace();
+        }
+    }
+
+    private BGABanner index_banner;
     private LinearLayout new_arrival_layout;
     private RecyclerView index_list;
     private HotDishPagerAdapter mAdapter;

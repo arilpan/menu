@@ -10,6 +10,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.xdkj.campus.menu.R;
+import com.xdkj.campus.menu.api.entitiy.APIALL;
+import com.xdkj.campus.menu.api.entitiy.APIDish;
 import com.xdkj.campus.menu.entity.Dish;
 import com.xdkj.campus.menu.listener.OnItemClickListener;
 
@@ -21,7 +23,7 @@ import java.util.List;
  */
 public class HotDishPagerAdapter extends RecyclerView.Adapter<HotDishPagerAdapter.MyViewHolder>
 {
-    private List<Dish> mItems = new ArrayList<>();
+    private List<APIALL.ValueBean.DataBean> mItems = new ArrayList<>();
     private LayoutInflater mInflater;
 
     private OnItemClickListener mClickListener;
@@ -32,7 +34,7 @@ public class HotDishPagerAdapter extends RecyclerView.Adapter<HotDishPagerAdapte
 
     }
 
-    public void setDatas(List<Dish> items)
+    public void setDatas(List<APIALL.ValueBean.DataBean> items)
     {
         mItems.clear();
         mItems.addAll(items);
@@ -65,14 +67,16 @@ public class HotDishPagerAdapter extends RecyclerView.Adapter<HotDishPagerAdapte
     {
         if (mItems != null)
         {
-            Dish item = mItems.get(position);
-            Log.e("arilpan","position:" + position +", tostring:"+item.toString());
-            holder.name.setText(item.getName());
-            holder.desc.setText(item.getDesc());
-            holder.price.setText(item.getPrice());
+            //APIALL.ValueBean.DataBean
+            APIALL.ValueBean.DataBean item = mItems.get(position);
+            Log.e("arilpan", "position:" + position +
+                    ", tostring:" + item.toString());
+            holder.name.setText(item.getDishes_name());
+            holder.desc.setText(item.getDishes_description());
+            holder.price.setText(item.getDishes_price());
 
-            holder.sold_num.setText("已售:"+item.getNum());
-            holder.mall_price.setText(item.getMallprice());
+            holder.sold_num.setText("已售:" + item.getPurchase_count());
+            holder.mall_price.setText(item.getDishes_price());
 
         }
     }

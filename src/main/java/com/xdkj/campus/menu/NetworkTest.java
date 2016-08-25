@@ -61,7 +61,7 @@ public class NetworkTest extends Activity
     }
 
     @Subscribe(threadMode = ThreadMode.ASYNC)
-    public void network(networkEvent event)
+    public void onNetWork(networkEvent event)
     {
         Log.e("arilpan", "哥 你调用咩?");
         getData();

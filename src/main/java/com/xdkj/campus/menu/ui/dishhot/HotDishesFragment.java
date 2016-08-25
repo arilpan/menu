@@ -5,6 +5,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,8 +13,14 @@ import android.view.ViewGroup;
 import com.xdkj.campus.menu.R;
 import com.xdkj.campus.menu.adapter.WaterFallPagerAdapter;
 import com.xdkj.campus.menu.adapter.child.HotDishPagerAdapter;
+import com.xdkj.campus.menu.api.APIAddr;
+import com.xdkj.campus.menu.api.DishAPI;
+import com.xdkj.campus.menu.api.entitiy.APIALL;
+import com.xdkj.campus.menu.api.entitiy.APIDish;
 import com.xdkj.campus.menu.base.BaseFragment;
 import com.xdkj.campus.menu.entity.Dish;
+import com.xdkj.campus.menu.entity.RequestType;
+import com.xdkj.campus.menu.event.NetworkEvent;
 import com.xdkj.campus.menu.event.StartBrotherEvent;
 import com.xdkj.campus.menu.event.TabSelectedEvent;
 import com.xdkj.campus.menu.listener.OnItemClickListener;
@@ -21,6 +28,7 @@ import com.xdkj.campus.menu.ui.index.DishDetailFragment;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -62,7 +70,7 @@ public class HotDishesFragment extends BaseFragment implements SwipeRefreshLayou
     /****************************************************************/
     private void initView(View view)
     {
-//        EventBus.getDefault().register(this);
+        EventBus.getDefault().register(this);
 
         mRecy = (RecyclerView) view.findViewById(R.id.switch_recv_left);
         mRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.refresh_layout_left);
@@ -110,68 +118,19 @@ public class HotDishesFragment extends BaseFragment implements SwipeRefreshLayou
         });
 
         // Init Datas
-        List<Dish> items = new ArrayList<>();
+        List<APIALL.ValueBean.DataBean > items = new ArrayList<>();
         for (int i = 0; i < 20; i++)
         {
-            if (i == 0)
-            {
-                Dish item = new Dish("粉蒸肉L" + i, "这是五个字加上五个字共是十五字", "￥22");
-                item.setMallprice("44");
-                item.setNum(1111);
-                items.add(item);
-            } else if (i == 1)
-            {
-                Dish item = new Dish("粉蒸肉L" + i, "这是五个字加上五个字共是", "￥16");
-                item.setMallprice("32");
-                item.setNum(2222);
-                items.add(item);
-            } else if (i == 2)
-            {
-                Dish item = new Dish("粉蒸肉L" + i, "这是五个字加上五个字共是十四", "￥32");
-
-                item.setMallprice("64");
-                item.setNum(3333);
-                items.add(item);
-            } else if (i == 3)
-            {
-                Dish item = new Dish("粉蒸肉L" + i, "这是五个字", "￥17");
-                item.setMallprice("34");
-                item.setNum(4444);
-                items.add(item);
-            } else if (i == 5)
-            {
-                Dish item = new Dish("粉蒸肉L" + i, "这是五个字这是五个字这是五个字这是五个字五五二十五", "￥32");
-                item.setMallprice("64");
-                item.setNum(5555);
-                items.add(item);
-            } else if (i == 6)
-            {
-                Dish item = new Dish("粉蒸肉L" + i, "这是五个字这是五个字这是五个字这是五个字五五二十五再加五个字", "￥32");
-                item.setMallprice("64");
-                item.setNum(6666);
-                items.add(item);
-            } else if (i == 7)
-            {
-                Dish item = new Dish("粉蒸肉L" + i, "这是五个字这是五个字这是五个字这是五个字五五二十五再加五个字再加五个字", "￥32");
-
-                item.setMallprice("64");
-                item.setNum(7777); items.add(item);
-            } else if (i == 8)
-            {
-                Dish item = new Dish("粉蒸肉L" + i, "这是五个字这是五个字这是五个字这是五个字五五二十五再加五个字再加五个字再加五个字", "￥32");
-                item.setMallprice("64");
-                item.setNum(8888);
-                items.add(item);
-            } else
-            {
-                Dish item = new Dish("粉蒸肉L" + i, "这是五个字加上五个字共是十五字", "￥86");
-                item.setMallprice("192");
-                item.setNum(9999);
-                items.add(item);
-            }
+            APIALL.ValueBean.DataBean  item =
+                    new APIALL.ValueBean.DataBean ();
+            item.setDishes_price("192");
+            item.setPurchase_count(9999);
+            items.add(item);
 
         }
         mAdapter.setDatas(items);
+
+        EventBus.getDefault().post(new NetworkEvent(RequestType.INDEX_ALL));
     }
 
     @Override
@@ -204,10 +163,16 @@ public class HotDishesFragment extends BaseFragment implements SwipeRefreshLayou
             scrollToTop();
         }
     }
-    @Subscribe
-    public void start(StartBrotherEvent event)
+
+
+    @Subscribe(threadMode = ThreadMode.ASYNC)
+    public void onNetWork(NetworkEvent event)
     {
-        start(event.targetFragment);
+        Log.e("arilpan", "HotDishFragment 你调用咩?");
+        if(event.url == APIAddr.dish_hot_more_url)
+        {
+
+        }
     }
 
     private void scrollToTop()
@@ -227,6 +192,6 @@ public class HotDishesFragment extends BaseFragment implements SwipeRefreshLayou
     {
         super.onDestroyView();
         mRecy.setAdapter(null);
-//        EventBus.getDefault().unregister(this);
+        EventBus.getDefault().unregister(this);
     }
 }
