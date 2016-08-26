@@ -10,6 +10,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.xdkj.campus.menu.R;
+import com.xdkj.campus.menu.api.message.APPNew;
 import com.xdkj.campus.menu.entity.Dish;
 import com.xdkj.campus.menu.listener.OnItemClickListener;
 
@@ -21,7 +22,7 @@ import java.util.List;
  */
 public class WaterFallPagerAdapter extends RecyclerView.Adapter<WaterFallPagerAdapter.MyViewHolder>
 {
-    private List<Dish> mItems = new ArrayList<>();
+    public List<APPNew.ValueBean.DataBean> mItems = new ArrayList<>();
     private LayoutInflater mInflater;
 
     private OnItemClickListener mClickListener;
@@ -32,7 +33,7 @@ public class WaterFallPagerAdapter extends RecyclerView.Adapter<WaterFallPagerAd
 
     }
 
-    public void setDatas(List<Dish> items)
+    public void setDatas(List<APPNew.ValueBean.DataBean> items)
     {
         mItems.clear();
         mItems.addAll(items);
@@ -43,20 +44,20 @@ public class WaterFallPagerAdapter extends RecyclerView.Adapter<WaterFallPagerAd
     private List<Integer> heights;
 
     //得到随机item的高度
-    private void getRandomHeight(List<Dish> lists)
+    private void getRandomHeight(List<APPNew.ValueBean.DataBean> lists)
     {
         heights = new ArrayList<>();
         for (int i = 0; i < lists.size(); i++)
         {
 //            heights.add((int)(600+Math.random()*400));
-            int desc_length = (lists.get(i).getDesc().length()) / 11;
-            int desc_length_add = (lists.get(i).getDesc().length()) % 11;
+            int desc_length = (lists.get(i).getDishes_description().length()) / 11;
+            int desc_length_add = (lists.get(i).getDishes_description().length()) % 11;
             if (desc_length_add != 0)
             {
                 desc_length += 1;
             }
             int length = (int) (638 + desc_length * 40);
-            Log.e("arilpan", ",单个长度：" + lists.get(i).getDesc().length() +
+            Log.e("arilpan", ",单个长度：" + lists.get(i).getDishes_description().length() +
                     ",每10个字是一行，共计：" + length);
             heights.add(length);
         }
@@ -93,10 +94,10 @@ public class WaterFallPagerAdapter extends RecyclerView.Adapter<WaterFallPagerAd
         holder.itemView.setLayoutParams(params);//把params设置给itemView布局
 
 
-        Dish item = mItems.get(position);
-        holder.name.setText(item.getName());
-        holder.desc.setText(item.getDesc());
-        holder.price.setText(item.getPrice());
+        APPNew.ValueBean.DataBean item = mItems.get(position);
+        holder.name.setText(item.getDishes_name());
+        holder.desc.setText(item.getDishes_description());
+        holder.price.setText("￥"+item.getDishes_price());
 
 //        holder.image.setImageResource(R.drawable.index_dishes_image_default);
     }

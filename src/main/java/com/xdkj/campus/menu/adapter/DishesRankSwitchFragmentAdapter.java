@@ -4,16 +4,16 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
+import com.xdkj.campus.menu.api.APIAddr;
 import com.xdkj.campus.menu.ui.dishrank.DishesRankFragment;
-import com.xdkj.campus.menu.ui.good_dishes.WaterFallDishesFragment;
 
 
 /**
  * Created by arilpan@qq.com on 16/8.
  */
 public class DishesRankSwitchFragmentAdapter extends FragmentPagerAdapter {
-    private String[] mTab = new String[]{"8号餐馆", "北京烤鸭馆"};
-
+//    private String[] mTab = new String[]{"8号餐馆", "北京烤鸭馆"};
+private String[] mTab = new String[]{APIAddr.shop_one_name, APIAddr.shop_two_name};
     public DishesRankSwitchFragmentAdapter(FragmentManager fm) {
         super(fm);
     }
@@ -21,9 +21,9 @@ public class DishesRankSwitchFragmentAdapter extends FragmentPagerAdapter {
     @Override
     public Fragment getItem(int position) {
         if (position == 0) {
-            return DishesRankFragment.newInstance();
+            return DishesRankFragment.newInstance(APIAddr.shop_one_id);
         } else {
-            return DishesRankFragment.newInstance();
+            return DishesRankFragment.newInstance(APIAddr.shop_two_id);
         }
     }
 

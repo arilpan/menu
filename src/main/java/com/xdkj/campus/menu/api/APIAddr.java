@@ -7,11 +7,21 @@ import android.database.DatabaseUtils;
  */
 public class APIAddr
 {
-    public static String shop_one_id = "36dbde58-5ab5-41b5-915c-66048e63a5df";
-    public static String shop_two_id = "ba262eba-05da-4886-947c-5a557c954af5";
+    public static String shop_one_id = "";
+    public static String shop_two_id = "";
 
-    public static String BASE_URL = "http://172.16.0.56:8080/GrogshopSystem/appShop";
-    public static String BASE_IMG_URL = "http://172.16.0.56:8080";
+    public static String user_id ="059a286f-f743-421a-8fa6-5123c9367574";
+    public static String shop_one_name = "";
+    public static String shop_two_name = "";
+    public static String dish_id = "23dbde58-5ab5-41b5-915c-66048e63a5df2324";
+
+    public static String BASE_PROJECT_URL = "http://172.16.0.75:8080/GrogshopSystem";
+    public static String BASE_URL = "http://172.16.0.75:8080/GrogshopSystem/appShop";
+    public static String BASE_DISH_URL = "http://172.16.0.75:8080/GrogshopSystem/appDishes";
+    public static String BASE_NEWS_URL = "http://172.16.0.75:8080/GrogshopSystem/appNews";
+
+
+    public static String BASE_IMG_URL = "http://172.16.0.75:8080";
     //http://172.16.0.56:8080/GrogshopSystem/appShop/shop_dishes_index
     // .do?iDisplayStart=0&iDisplayLength=10
 
@@ -73,7 +83,7 @@ public class APIAddr
     /**
      * 菜品详情
      */
-    public static String dish_detail_url = BASE_URL +
+    public static String dish_detail_url = BASE_DISH_URL +
             "/dishes_Detail.do?dishes_id=";
     /**
      * 查看充值优惠:新版=>html5查看页面详情
@@ -87,6 +97,23 @@ public class APIAddr
     public static String shop_detail_url = BASE_URL +
             "/shop_info.do?org_id=";
 
+    /**
+     * 新闻列表详情
+     */
+    public static String news_detail_url = BASE_NEWS_URL +
+            "/appShowNews.do?news_id=";
+    /**
+     * 新闻列表
+     */
+    public static String news_list_url = BASE_NEWS_URL +
+            "/appListNews.do?iDisplayStart=0&iDisplayLength=10";
+
+
+    /**
+     * 订单列表
+     */
+    public static String order_list_url = BASE_PROJECT_URL +
+            "/appOrder/list_Order.do?user_id=USERID&order_status=STATES";
 
     /**
      * set org id

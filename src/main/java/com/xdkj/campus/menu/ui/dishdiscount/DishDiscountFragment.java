@@ -48,7 +48,7 @@ import okhttp3.ResponseBody;
  */
 public class DishDiscountFragment extends BaseFragment
 {
-    static String shop_id;
+    String shop_id;
 
     public DishDiscountFragment()
     {
@@ -56,11 +56,23 @@ public class DishDiscountFragment extends BaseFragment
 
     public static DishDiscountFragment newInstance(String shop_org_id)
     {
-        shop_id = shop_org_id;
+
         Bundle args = new Bundle();
+        args.putString("shop_id", shop_org_id);
         DishDiscountFragment fragment = new DishDiscountFragment();
         fragment.setArguments(args);
         return fragment;
+    }
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState)
+    {
+        super.onCreate(savedInstanceState);
+        Bundle args = getArguments();
+        if (args != null)
+        {
+            shop_id = args.getString("shop_id");
+        }
     }
 
     @Nullable
@@ -109,7 +121,7 @@ public class DishDiscountFragment extends BaseFragment
         Log.e("arilpan", "HotDishFragment 你调用咩?");
         if (RequestType.INDEX_DISH_DISCOUNT == event.reqType)
         {
-            Log.e("arilpan", "HotDishFragment equals?");
+            Log.e("arilpan", "HotDishFragment equals url=" + event.url + event.id);
             setData(getData(event.url + event.id));
         } else
         {
@@ -311,9 +323,21 @@ public class DishDiscountFragment extends BaseFragment
                                 public void onClick(View v)
                                 {
                                     int position = itemholder.getAdapterPosition();
-                                    EventBus.getDefault().post(
-                                            new StartBrotherEvent(DishDetailFragment.newInstance
-                                                    (1)));
+
+                                    if (itemDishes != null && position < itemDishes.size()  )
+                                    {
+                                        String dish_id = itemDishes.get(position).getDishes_id();
+                                        EventBus.getDefault().post(
+                                                new StartBrotherEvent(
+                                                        DishDetailFragment.newInstance(dish_id)));
+                                    }
+//                                   else
+//                                    {
+//                                        EventBus.getDefault().post(
+//                                                new StartBrotherEvent(DishDetailFragment
+// .newInstance
+//                                                        (APIAddr.dish_id)));
+//                                    }
                                 }
                             });
 

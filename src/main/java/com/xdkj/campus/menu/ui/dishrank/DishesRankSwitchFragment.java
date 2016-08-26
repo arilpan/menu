@@ -48,7 +48,6 @@ public class DishesRankSwitchFragment extends BaseBackFragment {
     }
 
     /**
-     * TODO: init
      * @param view
      */
     private void initView(View view) {

@@ -10,7 +10,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.xdkj.campus.menu.R;
-import com.xdkj.campus.menu.api.message.APIALL;
+import com.xdkj.campus.menu.api.message.APPALL;
 import com.xdkj.campus.menu.listener.OnItemClickListener;
 
 import java.util.ArrayList;
@@ -21,7 +21,7 @@ import java.util.List;
  */
 public class HotDishPagerAdapter extends RecyclerView.Adapter<HotDishPagerAdapter.MyViewHolder>
 {
-    private List<APIALL.ValueBean.DataBean> mItems = new ArrayList<>();
+    private List<APPALL.ValueBean.DataBean> mItems = new ArrayList<>();
     private LayoutInflater mInflater;
 
     private OnItemClickListener mClickListener;
@@ -32,7 +32,7 @@ public class HotDishPagerAdapter extends RecyclerView.Adapter<HotDishPagerAdapte
 
     }
 
-    public void setDatas(List<APIALL.ValueBean.DataBean> items)
+    public void setDatas(List<APPALL.ValueBean.DataBean> items)
     {
         mItems.clear();
         mItems.addAll(items);
@@ -66,15 +66,15 @@ public class HotDishPagerAdapter extends RecyclerView.Adapter<HotDishPagerAdapte
         if (mItems != null)
         {
             //APIALL.ValueBean.DataBean
-            APIALL.ValueBean.DataBean item = mItems.get(position);
+            APPALL.ValueBean.DataBean item = mItems.get(position);
             Log.e("arilpan", "position:" + position +
                     ", tostring:" + item.toString());
             holder.name.setText(item.getDishes_name());
             holder.desc.setText(item.getDishes_description());
-            holder.price.setText("￥"+item.getRack_rate());
+            holder.price.setText("￥" + item.getDishes_price());
 
             holder.sold_num.setText("已售:" + item.getPurchase_count());
-            holder.mall_price.setText(item.getDishes_price());
+            holder.mall_price.setText(item.getRack_rate());
 
         }
     }

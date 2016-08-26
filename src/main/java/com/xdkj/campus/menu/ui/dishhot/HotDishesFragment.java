@@ -16,7 +16,7 @@ import com.xdkj.campus.menu.MainActivity;
 import com.xdkj.campus.menu.R;
 import com.xdkj.campus.menu.adapter.child.HotDishPagerAdapter;
 import com.xdkj.campus.menu.api.APIAddr;
-import com.xdkj.campus.menu.api.message.APIALL;
+import com.xdkj.campus.menu.api.message.APPALL;
 import com.xdkj.campus.menu.base.BaseFragment;
 import com.xdkj.campus.menu.entity.RequestType;
 import com.xdkj.campus.menu.event.NetworkEvent;
@@ -114,15 +114,22 @@ public class HotDishesFragment extends BaseFragment implements SwipeRefreshLayou
 //                } else {
 //
 //                }
+                if (datas != null)
+                {
+                    String dish_id = datas.get(position).getDishes_id();
+                    EventBus.getDefault().post(
+                            new StartBrotherEvent(
+                                    DishDetailFragment.newInstance(dish_id)));
+                }
 
-                // 通知MainActivity跳转至CycleFragment
-                EventBus.getDefault().post(
-                        new StartBrotherEvent(DishDetailFragment.newInstance(1)));
+                // 通知MainActivity跳转
+//                EventBus.getDefault().post(
+//                        new StartBrotherEvent(DishDetailFragment.newInstance(1)));
             }
         });
 
 //        // Init Datas
-        List<APIALL.ValueBean.DataBean> items = new ArrayList<>();
+        List<APPALL.ValueBean.DataBean> items = new ArrayList<>();
         mAdapter.setDatas(items);
 
         EventBus.getDefault().post(new NetworkEvent(RequestType.INDEX_DISH_HOT,
@@ -134,7 +141,7 @@ public class HotDishesFragment extends BaseFragment implements SwipeRefreshLayou
     {
         EventBus.getDefault().post(new NetworkEvent(RequestType.INDEX_DISH_HOT,
                 "36dbde58-5ab5-41b5-915c-66048e63a5df"));
-        Log.e("arilpan","HotDishesFragment onRefresh  ");
+        Log.e("arilpan", "HotDishesFragment onRefresh  ");
         mRefreshLayout.postDelayed(new Runnable()
         {
             @Override
@@ -178,13 +185,13 @@ public class HotDishesFragment extends BaseFragment implements SwipeRefreshLayou
         }
     }
 
-    public List<APIALL.ValueBean.DataBean> getData(String url)
+    public List<APPALL.ValueBean.DataBean> getData(String url)
     {
         try
         {
-            final JsonAdapter<APIALL>
+            final JsonAdapter<APPALL>
                     COM_JSON_ADAPTER = MainActivity.MOSHI.adapter(
-                    Types.newParameterizedType(APIALL.class));
+                    Types.newParameterizedType(APPALL.class));
             OkHttpClient client = new OkHttpClient();
             Request request = new Request.Builder()
                     .url(url)
@@ -192,12 +199,11 @@ public class HotDishesFragment extends BaseFragment implements SwipeRefreshLayou
             Response response = client.newCall(request).execute();
             ResponseBody body = response.body();
 
-            APIALL datas_arry =
+            APPALL datas_arry =
                     COM_JSON_ADAPTER.fromJson(body.source());
             body.close();
-            List<APIALL.ValueBean.DataBean> datas
-                    = datas_arry.getValue().getData();
-            for (APIALL.ValueBean.DataBean data : datas)
+            datas = datas_arry.getValue().getData();
+            for (APPALL.ValueBean.DataBean data : datas)
             {
                 Log.e("arilpan", data.getDiscount_type() +
                         ",code :" + data.getDishes_price());
@@ -210,7 +216,9 @@ public class HotDishesFragment extends BaseFragment implements SwipeRefreshLayou
         return null;
     }
 
-    public void setData(final List<APIALL.ValueBean.DataBean> items)
+    List<APPALL.ValueBean.DataBean> datas;
+
+    public void setData(final List<APPALL.ValueBean.DataBean> items)
     {
         try
         {

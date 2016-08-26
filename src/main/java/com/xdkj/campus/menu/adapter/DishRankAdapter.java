@@ -9,7 +9,10 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.squareup.picasso.Picasso;
 import com.xdkj.campus.menu.R;
+import com.xdkj.campus.menu.api.APIAddr;
+import com.xdkj.campus.menu.api.message.APPRank;
 import com.xdkj.campus.menu.entity.Dish;
 import com.xdkj.campus.menu.listener.OnItemClickListener;
 
@@ -21,7 +24,7 @@ import java.util.List;
  */
 public class DishRankAdapter extends RecyclerView.Adapter<DishRankAdapter.MyViewHolder>
 {
-    private List<Dish> mItems = new ArrayList<>();
+    private List<APPRank.ValueBean.DataBean> mItems = new ArrayList<>();
     private LayoutInflater mInflater;
 
     private OnItemClickListener mClickListener;
@@ -32,7 +35,7 @@ public class DishRankAdapter extends RecyclerView.Adapter<DishRankAdapter.MyView
 
     }
 
-    public void setDatas(List<Dish> items)
+    public void setDatas(List<APPRank.ValueBean.DataBean> items)
     {
         mItems.clear();
         mItems.addAll(items);
@@ -64,13 +67,18 @@ public class DishRankAdapter extends RecyclerView.Adapter<DishRankAdapter.MyView
     @Override
     public void onBindViewHolder(MyViewHolder holder, int position)
     {
-        Dish item = mItems.get(position);
-        holder.name.setText(item.getName());
-        holder.desc.setText(item.getDesc());
-        holder.price.setText(item.getPrice());
-        holder.soldNum.setText("  " + item.getNum() + "2688人购买");
+        APPRank.ValueBean.DataBean item = mItems.get(position);
+        holder.name.setText(item.getDishes_name());
+        holder.desc.setText(item.getDishes_description());
+        holder.price.setText("￥"+item.getDishes_price());
+        holder.soldNum.setText("  " + item.getPurchase_count() + "人购买");
 //        holder.soldNum.setText(item.getNum() + "人购买");
-        //todo : load image
+        //todo : load default image
+        Picasso.with(mInflater.getContext()) //
+                .load(APIAddr.BASE_IMG_URL + item.getUpload_url()) //
+//                .resizeDimen(R.dimen.notification_icon_width_height,
+//                        R.dimen.notification_icon_width_height) //
+                .error(R.drawable.cai_img_defult).into(holder.image);
 //     holder.image.setImageResource(R.drawable.index_dishes_image_default);
     }
 

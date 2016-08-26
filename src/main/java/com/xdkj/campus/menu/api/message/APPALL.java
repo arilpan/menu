@@ -5,10 +5,8 @@ import java.util.List;
 /**
  * Created by aril_pan@qq.com on 16-8-25.
  */
-public class APIALL
+public class APPALL
 {
-
-
     /**
      * success : true
      * message : null

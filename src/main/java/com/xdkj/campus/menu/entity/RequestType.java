@@ -52,7 +52,7 @@ public class RequestType
     public final static int DISCOUNT_DETAIL = 52;
 
     //action
-    public final static int ORDER = 91;
+    public final static int ORDER_LIST = 91;
     public final static int ORDER_CANCEL = 92;
     public final static int ORDER_COMMENT = 93;
 

@@ -17,7 +17,8 @@ import com.squareup.moshi.Types;
 import com.xdkj.campus.menu.MainActivity;
 import com.xdkj.campus.menu.R;
 import com.xdkj.campus.menu.adapter.child.HotDishPagerAdapter;
-import com.xdkj.campus.menu.api.message.APIALL;
+import com.xdkj.campus.menu.api.APIAddr;
+import com.xdkj.campus.menu.api.message.APPALL;
 import com.xdkj.campus.menu.base.BaseLazyMainFragment;
 import com.xdkj.campus.menu.entity.RequestType;
 import com.xdkj.campus.menu.event.NetworkEvent;
@@ -26,7 +27,7 @@ import com.xdkj.campus.menu.listener.OnItemClickListener;
 import com.xdkj.campus.menu.ui.dishdiscount.DishesDishcountSwitchFragment;
 import com.xdkj.campus.menu.ui.dishhot.HotDishesFragment;
 import com.xdkj.campus.menu.ui.dishrank.DishesRankSwitchFragment;
-import com.xdkj.campus.menu.ui.good_dishes.DishesSwitchFragment;
+import com.xdkj.campus.menu.ui.dishesnew.DishesSwitchFragment;
 import com.xdkj.campus.menu.ui.index.DishDetailFragment;
 import com.xdkj.campus.menu.ui.news.NewsListFragment;
 import com.xdkj.campus.menu.ui.order.SelectPlaceFragment;
@@ -107,7 +108,6 @@ public class IndexFragment extends BaseLazyMainFragment
             public void onClick(View v)
             {
                 EventBus.getDefault().post(new StartBrotherEvent(
-                        //TODO:1
                         DishesSwitchFragment.newInstance("精品套餐")));
             }
         });
@@ -187,9 +187,14 @@ public class IndexFragment extends BaseLazyMainFragment
             public void onItemClick(int position, View view,
                                     RecyclerView.ViewHolder holder)
             {
-                EventBus.getDefault().post(
-                        new StartBrotherEvent(
-                                DishDetailFragment.newInstance(1)));
+                if (datas != null)
+                {
+                    String dish_id = datas.get(position).getDishes_id();
+                    EventBus.getDefault().post(
+                            new StartBrotherEvent(
+                                    DishDetailFragment.newInstance(dish_id)));
+                }
+
             }
         });
 
@@ -197,51 +202,6 @@ public class IndexFragment extends BaseLazyMainFragment
 
     private void updateData()
     {
-//        List<Dish> items = new ArrayList<>();
-//        for (int i = 0; i < 20; i++)
-//        {
-//            if (i == 0)
-//            {
-//                Dish item = new Dish("粉蒸肉L" + i, "这是五个字加上五个字共是十五字", "￥22");
-//                items.add(item);
-//            } else if (i == 1)
-//            {
-//                Dish item = new Dish("粉蒸肉L" + i, "这是五个字加上五个字共是", "￥16");
-//                items.add(item);
-//            } else if (i == 2)
-//            {
-//                Dish item = new Dish("粉蒸肉L" + i, "这是五个字加上五个字共是十四", "￥32");
-//                items.add(item);
-//            } else if (i == 3)
-//            {
-//                Dish item = new Dish("粉蒸肉L" + i, "这是五个字", "￥17");
-//                items.add(item);
-//            } else if (i == 5)
-//            {
-//                Dish item = new Dish("粉蒸肉L" + i, "这是五个字这是五个字这是五个字这是五个字五五二十五", "￥32");
-//                items.add(item);
-//            } else if (i == 6)
-//            {
-//                Dish item = new Dish("粉蒸肉L" + i, "这是五个字这是五个字这是五个字这是五个字五五二十五再加五个字", "￥32");
-//                items.add(item);
-//            } else if (i == 7)
-//            {
-//                Dish item = new Dish("粉蒸肉L" + i, "这是五个字这是五个字这是五个字这是五个字五五二十五再加五个字再加五个字", "￥32");
-//                items.add(item);
-//            } else if (i == 8)
-//            {
-//                Dish item = new Dish("粉蒸肉L" + i, "这是五个字这是五个字这是五个字这是五个字五五二十五再加五个字再加五个字再加五个字",
-// "￥32");
-//                items.add(item);
-//            } else
-//            {
-//                Dish item = new Dish("粉蒸肉L" + i, "这是五个字加上五个字共是十五字", "￥86");
-//                items.add(item);
-//            }
-//
-//        }
-//        mAdapter.setDatas(items);
-//        Log.e("arilpan", "set data of  index_list hot dishes");
     }
 
     private void initView(View view)
@@ -308,6 +268,9 @@ public class IndexFragment extends BaseLazyMainFragment
             }
         });
 
+        List<APPALL.ValueBean.DataBean> items = new ArrayList<>();
+        mAdapter.setDatas(items);
+
         EventBus.getDefault().post(new NetworkEvent(RequestType.INDEX_ALL));
     }
 
@@ -344,13 +307,13 @@ public class IndexFragment extends BaseLazyMainFragment
 
     }
 
-    public List<APIALL.ValueBean.DataBean> getData(NetworkEvent event)
+    public List<APPALL.ValueBean.DataBean> getData(NetworkEvent event)
     {
         try
         {
-            final JsonAdapter<APIALL>
+            final JsonAdapter<APPALL>
                     COM_JSON_ADAPTER = MainActivity.MOSHI.adapter(
-                    Types.newParameterizedType(APIALL.class));
+                    Types.newParameterizedType(APPALL.class));
             OkHttpClient client = new OkHttpClient();
             Request request = new Request.Builder()
                     .url(event.url)
@@ -358,16 +321,23 @@ public class IndexFragment extends BaseLazyMainFragment
             Response response = client.newCall(request).execute();
             ResponseBody body = response.body();
 
-            APIALL datas_arry =
-                    COM_JSON_ADAPTER.fromJson(body.source());
+            APPALL datas_arry = COM_JSON_ADAPTER.fromJson(body.source());
             body.close();
-            List<APIALL.ValueBean.DataBean> datas
-                    = datas_arry.getValue().getData();
-            for (APIALL.ValueBean.DataBean data : datas)
+            datas = datas_arry.getValue().getData();
+            for (APPALL.ValueBean.DataBean data : datas)
             {
                 Log.e("arilpan", data.getDiscount_type() +
                         ",code :" + data.getDishes_price());
             }
+            if (APIAddr.shop_one_id.isEmpty())
+            {
+                APIAddr.shop_one_id = datas_arry.getMessageList().get(0).getOrg_id();
+                APIAddr.shop_two_id = datas_arry.getMessageList().get(1).getOrg_id();
+
+                APIAddr.shop_one_name= datas_arry.getMessageList().get(0).getOrg_name();
+                APIAddr.shop_two_name= datas_arry.getMessageList().get(1).getOrg_name();
+            }
+
 //            Collections.sort(contributors, new Comparator<APIDish>()
 //            {
 //                @Override
@@ -384,15 +354,26 @@ public class IndexFragment extends BaseLazyMainFragment
         return null;
     }
 
-    public void setData(List<APIALL.ValueBean.DataBean> items)
+    List<APPALL.ValueBean.DataBean> datas;
+
+    public void setData(final List<APPALL.ValueBean.DataBean> items)
     {
         try
         {
-            mAdapter.setDatas(items);
+            _mActivity.runOnUiThread(new Runnable()
+            {
+                @Override
+                public void run()
+                {
+                    mAdapter.setDatas(items);
+                    //stuff that updates ui
+                }
+            });
         } catch (Exception e)
         {
             e.printStackTrace();
         }
+
     }
 
     private BGABanner index_banner;

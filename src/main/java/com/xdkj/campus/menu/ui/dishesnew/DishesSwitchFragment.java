@@ -1,4 +1,4 @@
-package com.xdkj.campus.menu.ui.good_dishes;
+package com.xdkj.campus.menu.ui.dishesnew;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -12,9 +12,6 @@ import android.widget.TextView;
 import com.xdkj.campus.menu.R;
 import com.xdkj.campus.menu.adapter.DishesSwitchFragmentAdapter;
 import com.xdkj.campus.menu.base.BaseBackFragment;
-import com.xdkj.campus.menu.event.StartBrotherEvent;
-import org.greenrobot.eventbus.EventBus;
-import org.greenrobot.eventbus.Subscribe;
 
 /**
  * Created by aril_pan@qq.com on 16/8.
@@ -51,11 +48,8 @@ public class DishesSwitchFragment extends BaseBackFragment {
                 _mActivity.onBackPressed();
             }
         });
-//        mToolbar = (Toolbar) view.findViewById(R.id.toolbar);
         mTab = (TabLayout) view.findViewById(R.id.tab);
         mViewPager = (ViewPager) view.findViewById(R.id.viewPager);
-//        mToolbar.setTitle("联系人");
-//        initToolbarMenu(mToolbar);
 
         mTab.addTab(mTab.newTab().setText("全部"));
         mTab.addTab(mTab.newTab().setText("陌生人"));

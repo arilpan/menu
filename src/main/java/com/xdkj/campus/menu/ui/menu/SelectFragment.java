@@ -10,6 +10,8 @@ import android.view.ViewGroup;
 import android.widget.*;
 
 import com.xdkj.campus.menu.R;
+import com.xdkj.campus.menu.api.APIAddr;
+import com.xdkj.campus.menu.event.StartBrotherEvent;
 import com.xdkj.campus.menu.fragment.ShopFragment;
 import com.xdkj.campus.menu.base.BaseFragment;
 import com.xdkj.campus.menu.entity.Dish;
@@ -235,7 +237,9 @@ public class SelectFragment extends BaseFragment
                         sf.pop();
                         Log.e("arilpan", "findFragment 已经pop");
                     }
-                    EventBus.getDefault().post(DishDetailFragment.newInstance(position));
+                    EventBus.getDefault().post(
+                            new StartBrotherEvent(DishDetailFragment.
+                                    newInstance(APIAddr.dish_id)));
 //                    start(DishDetailFragment.newInstance(1));
                     //  Toast.makeText(context, good.getGoodProvider(),
                     //  Toast.LENGTH_LONG).show();

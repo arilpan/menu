@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import com.xdkj.campus.menu.R;
 import com.xdkj.campus.menu.adapter.WaterFallPagerAdapter;
+import com.xdkj.campus.menu.api.APIAddr;
 import com.xdkj.campus.menu.base.BaseFragment;
 import com.xdkj.campus.menu.entity.Dish;
 import com.xdkj.campus.menu.event.StartBrotherEvent;
@@ -168,31 +169,10 @@ public class WaterfallDishes extends BaseFragment implements SwipeRefreshLayout.
             public void onItemClick(int position, View view, RecyclerView.ViewHolder holder) {
                 // 通知MainActivity跳转至CycleFragment
                 EventBus.getDefault().post(new StartBrotherEvent(
-                        DishDetailFragment.newInstance(1)));
+                        DishDetailFragment.newInstance(APIAddr.dish_id)));
             }
         });
 
-        // Init Datas
-        List<Dish> items = new ArrayList<>();
-        for (int i = 0; i < 20; i++) {
-            if (i == 0) {
-                Dish item = new Dish("粉蒸肉L" + i, "这是五个字加上五个字共是十五字", "￥22");
-                items.add(item);
-            }
-            if (i == 1) {
-                Dish item = new Dish("粉蒸肉L" + i, "这是五个字加上五个字共是", "￥22");
-                items.add(item);
-            }
-            if (i == 2) {
-                Dish item = new Dish("粉蒸肉L" + i, "这是五个字加上五个字共是十四", "￥22");
-                items.add(item);
-            } else {
-                Dish item = new Dish("粉蒸肉L" + i, "这是五个字加上五个字共是十五字", "￥22");
-                items.add(item);
-            }
-
-        }
-        mAdapter.setDatas(items);
 
 //        initRight(view);
     }

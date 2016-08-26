@@ -8,9 +8,10 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.squareup.picasso.Picasso;
 import com.xdkj.campus.menu.R;
-import com.xdkj.campus.menu.entity.Dish;
-import com.xdkj.campus.menu.entity.News;
+import com.xdkj.campus.menu.api.APIAddr;
+import com.xdkj.campus.menu.api.message.APPNewsList;
 import com.xdkj.campus.menu.listener.OnItemClickListener;
 
 import java.util.ArrayList;
@@ -21,7 +22,7 @@ import java.util.List;
  */
 public class NewsListAdapter extends RecyclerView.Adapter<NewsListAdapter.MyViewHolder>
 {
-    private List<News> mItems = new ArrayList<>();
+    private List<APPNewsList.ValueBean.ListBean.DataBean> mItems = new ArrayList<>();
     private LayoutInflater mInflater;
 
     private OnItemClickListener mClickListener;
@@ -32,7 +33,7 @@ public class NewsListAdapter extends RecyclerView.Adapter<NewsListAdapter.MyView
 
     }
 
-    public void setDatas(List<News> items)
+    public void setDatas(List<APPNewsList.ValueBean.ListBean.DataBean> items)
     {
         mItems.clear();
         mItems.addAll(items);
@@ -44,7 +45,8 @@ public class NewsListAdapter extends RecyclerView.Adapter<NewsListAdapter.MyView
     public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType)
     {
 
-        View view = mInflater.inflate(R.layout.fragment_dish_news_list_item, parent, false);
+        View view = mInflater.inflate(
+                R.layout.fragment_dish_news_list_item, parent, false);
         final MyViewHolder holder = new MyViewHolder(view);
         holder.itemView.setOnClickListener(new View.OnClickListener()
         {
@@ -64,11 +66,17 @@ public class NewsListAdapter extends RecyclerView.Adapter<NewsListAdapter.MyView
     @Override
     public void onBindViewHolder(MyViewHolder holder, int position)
     {
-        News item = mItems.get(position);
-        holder.title.setText(item.getTitle());
-        holder.content.setText(item.getContent());
-        //todo : load image
-        holder.image.setImageResource(R.drawable.index_dishes_image_default);
+        APPNewsList.ValueBean.ListBean.DataBean item = mItems.get(position);
+        holder.title.setText(item.getNews_title());
+        holder.content.setText(item.getNews_content());
+
+        //todo :load defalut img
+        Picasso.with(mInflater.getContext()) //
+                .load(APIAddr.BASE_IMG_URL + item.getNews_url()) //
+//                .resizeDimen(R.dimen.notification_icon_width_height,
+//                        R.dimen.notification_icon_width_height) //
+                .error(R.drawable.cai_img_defult).into(holder.image);
+//                .into(holder.image, R.id.photo, NOTIFICATION_ID, notification);
     }
 
     @Override

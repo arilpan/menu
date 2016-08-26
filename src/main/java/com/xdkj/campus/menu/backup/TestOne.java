@@ -21,7 +21,6 @@ import com.xdkj.campus.menu.base.BaseFragment;
 // * create an instance of this fragment.
 // */
 public class TestOne extends BaseFragment {
-    // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
 
 
