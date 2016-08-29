@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.xdkj.campus.menu.R;
+import com.xdkj.campus.menu.api.APIAddr;
 import com.xdkj.campus.menu.fragment.ShopFragment;
 
 import me.yokeyword.fragmentation.SupportFragment;
@@ -67,7 +68,7 @@ public class SelectPlaceFragment extends SupportFragment
             public void onClick(View v)
             {
 //                start(CycleFragment.newInstance(mNumber + 1));
-                start(ShopFragment.newInstance());
+                start(ShopFragment.newInstance(APIAddr.shop_one_id));
             }
         });
         mall_2.setOnClickListener(new View.OnClickListener()
@@ -75,7 +76,7 @@ public class SelectPlaceFragment extends SupportFragment
             @Override
             public void onClick(View v)
             {
-                start(ShopFragment.newInstance());
+                start(ShopFragment.newInstance(APIAddr.shop_two_id));
 //                startWithPop(CycleFragment.newInstance(mNumber + 1));
             }
         });

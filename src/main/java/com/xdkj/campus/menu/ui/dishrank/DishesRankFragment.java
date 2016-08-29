@@ -9,6 +9,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.squareup.moshi.JsonAdapter;
 import com.squareup.moshi.Types;
@@ -160,15 +161,15 @@ public class DishesRankFragment extends BaseFragment implements SwipeRefreshLayo
     @Subscribe(threadMode = ThreadMode.ASYNC)
     public void onNetWork(NetworkEvent event)
     {
-        Log.e("arilpan", "HotDishFragment 你调用咩?");
+        Log.e("arilpan", "dish rank 你调用咩?");
         if (RequestType.INDEX_DISH_RANK == event.reqType)
         {
-            Log.e("arilpan", "HotDishFragment equals url="
+            Log.e("arilpan", "dish rank equals url="
                     + event.url + event.id);
             setData(getData(event.url + event.id));
         } else
         {
-            Log.e("arilpan", "HotDishFragment what happend?");
+            Log.e("arilpan", "dish rank what happend?");
         }
     }
 
@@ -209,11 +210,17 @@ public class DishesRankFragment extends BaseFragment implements SwipeRefreshLayo
     {
         try
         {
+
             _mActivity.runOnUiThread(new Runnable()
             {
                 @Override
                 public void run()
                 {
+                    if (items == null)
+                    {
+                        Toast.makeText(getContext(), "请刷新列表", Toast.LENGTH_SHORT).show();
+                        return;
+                    }
                     mAdapter.setDatas(items);
                     //stuff that updates ui
                 }

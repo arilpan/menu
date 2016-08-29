@@ -34,6 +34,8 @@ public class HotDishPagerAdapter extends RecyclerView.Adapter<HotDishPagerAdapte
 
     public void setDatas(List<APPALL.ValueBean.DataBean> items)
     {
+        if (items == null)
+            return;
         mItems.clear();
         mItems.addAll(items);
         notifyDataSetChanged();

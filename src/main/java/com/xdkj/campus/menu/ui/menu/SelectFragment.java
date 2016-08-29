@@ -138,7 +138,7 @@ public class SelectFragment extends BaseFragment
                 dish.setNum(dish.getNum() + 1);
                 DishList.getlist().remove(dish);
                 DishList.getlist().add(dish);
-                EventBus.getDefault().post(new ShopEvent(ShopFragment.newInstance()));
+                EventBus.getDefault().post(new ShopEvent(ShopFragment.newInstance(ShopFragment.shop_id)));
 //               switchDishListFragment(DishListFragment.newInstance(null, null));
                 ((ShopFragment) getParentFragment()).switchDishListFragment();
             }

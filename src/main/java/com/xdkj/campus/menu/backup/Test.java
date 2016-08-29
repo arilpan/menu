@@ -55,13 +55,13 @@ public class Test extends SupportFragment {
             @Override
             public void onClick(View v) {
 //                start(CycleFragment.newInstance(mNumber + 1));
-                start(ShopFragment.newInstance());
+                start(ShopFragment.newInstance(ShopFragment.shop_id));
             }
         });
         mall_2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                start(ShopFragment.newInstance());
+                start(ShopFragment.newInstance(ShopFragment.shop_id));
 //                startWithPop(CycleFragment.newInstance(mNumber + 1));
             }
         });

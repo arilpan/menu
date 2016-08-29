@@ -10,10 +10,14 @@ public class APIAddr
     public static String shop_one_id = "";
     public static String shop_two_id = "";
 
-    public static String user_id ="059a286f-f743-421a-8fa6-5123c9367574";
+    public static String user_id = "059a286f-f743-421a-8fa6-5123c9367574";
     public static String shop_one_name = "";
     public static String shop_two_name = "";
     public static String dish_id = "23dbde58-5ab5-41b5-915c-66048e63a5df2324";
+
+    public static int ORDER_CANCLE = 2;
+    public static int ORDER_COMPLETE = 1;
+    public static int ORDER_UNCOMPLETE = 0;
 
     public static String BASE_PROJECT_URL = "http://172.16.0.75:8080/GrogshopSystem";
     public static String BASE_URL = "http://172.16.0.75:8080/GrogshopSystem/appShop";
@@ -71,8 +75,7 @@ public class APIAddr
      */
     public static String dish_new_to_taste_url = BASE_URL +
             "/shop_dishes_info" +
-            ".do?" +
-            "label_type=新品尝鲜" +
+            ".do?label_type=新品尝鲜" +
             "&iDisplayStart=0&iDisplayLength=10&org_id=";
 
     /**

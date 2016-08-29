@@ -58,7 +58,7 @@ public class CommentFragment extends BaseFragment
             public void onClick(View v)
             {
                 //提交后退出
-                start(ShopFragment.newInstance());
+                start(ShopFragment.newInstance(ShopFragment.shop_id));
             }
         });
     }

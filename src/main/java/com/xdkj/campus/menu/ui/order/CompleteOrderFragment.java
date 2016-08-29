@@ -12,17 +12,29 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.squareup.moshi.JsonAdapter;
+import com.squareup.moshi.Types;
+import com.xdkj.campus.menu.MainActivity;
 import com.xdkj.campus.menu.R;
-import com.xdkj.campus.menu.adapter.PagerAdapter;
+import com.xdkj.campus.menu.api.APIAddr;
+import com.xdkj.campus.menu.api.message.APPDishDiscount;
+import com.xdkj.campus.menu.api.message.APPOrder;
 import com.xdkj.campus.menu.base.BaseFragment;
-import com.xdkj.campus.menu.entity.Dish;
-import com.xdkj.campus.menu.entity.Order;
+import com.xdkj.campus.menu.entity.RequestType;
+import com.xdkj.campus.menu.event.NetworkEvent;
 import com.xdkj.campus.menu.event.StartBrotherEvent;
 
 import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
+import okhttp3.ResponseBody;
 
 /***
  * 已完成订单
@@ -39,7 +51,10 @@ public class CompleteOrderFragment extends BaseFragment
     {
         Bundle args = new Bundle();
         CompleteOrderFragment fragment = new CompleteOrderFragment();
+
         fragment.setArguments(args);
+
+
         return fragment;
     }
 
@@ -55,92 +70,17 @@ public class CompleteOrderFragment extends BaseFragment
 
     RecyclerView order_recyview;
     private HomeAdapter mAdapter;
-    private List<Order> mDatas;
 
     private void initView(View view)
     {
-
+        EventBus.getDefault().register(this);
+        datas = new ArrayList<>();
         order_recyview = (RecyclerView) view.findViewById(R.id.order_recyview);
         order_recyview.setLayoutManager(new LinearLayoutManager(view.getContext(),
                 LinearLayoutManager.VERTICAL, false));
 
-        mDatas = new ArrayList<Order>();
-        for (int i = 1; i < 6; i++)
-        {
-            List mData = new ArrayList<Dish>();
-            Order order = new Order();
-            Dish dish = new Dish("酸菜鱼", "开始大家案例疯狂啦的你们呢就服务空气节目额", "$32");
-            switch (i)
-            {
-                case 1:
-                    dish = new Dish("酸菜鱼", "开始大家案例疯狂啦的你们呢就服务空气节目额", "$11");
-                    mData.add(dish);
-                    order.setTotalPrice("20$");
-                    order.setPre_order_time("2017-06-04");
-                    break;
-                case 2:
-                    order.setPre_order_time("2017-06-11");
-                    order.setTotalPrice("40$");
-                    dish = new Dish("酸菜鱼", "开始大家案例疯狂啦的你们呢就服务空气节目额", "$22");
-                    mData.add(dish);
-                    dish = new Dish("酸菜鱼", "开始大家案例疯狂啦的你们呢就服务空气节目额", "$22");
-                    mData.add(dish);
-                    break;
-                case 3:
-                    order.setPre_order_time("2017-07-03");
-                    order.setTotalPrice("60$");
-
-                    dish = new Dish("酸菜鱼", "开始大家案例疯狂啦的你们呢就服务空气节目额", "$33");
-                    mData.add(dish);
-                    dish = new Dish("酸菜鱼", "开始大家案例疯狂啦的你们呢就服务空气节目额", "$33");
-                    mData.add(dish);
-                    break;
-                case 4:
-                    order.setPre_order_time("2017-08-12");
-                    order.setTotalPrice("80$");
-                    dish = new Dish("酸菜鱼", "开始大家案例疯狂啦的你们呢就服务空气节目额", "$44");
-                    mData.add(dish);
-                    dish = new Dish("酸菜鱼", "开始大家案例疯狂啦的你们呢就服务空气节目额", "$44");
-                    mData.add(dish);
-                    dish = new Dish("酸菜鱼", "开始大家案例疯狂啦的你们呢就服务空气节目额", "$44");
-                    mData.add(dish);
-                    break;
-                case 5:
-                    order.setTotalPrice("100$");
-                    order.setPre_order_time("2017-08-15");
-                    dish = new Dish("酸菜鱼", "开始大家案例疯狂啦的你们呢就服务空气节目额", "$55");
-                    mData.add(dish);
-                    dish = new Dish("酸菜鱼", "开始大家案例疯狂啦的你们呢就服务空气节目额", "$55");
-                    mData.add(dish);
-                    dish = new Dish("酸菜鱼", "开始大家案例疯狂啦的你们呢就服务空气节目额", "$55");
-                    mData.add(dish);
-                    dish = new Dish("酸菜鱼", "开始大家案例疯狂啦的你们呢就服务空气节目额", "$55");
-                    mData.add(dish);
-                    break;
-                case 6:
-                    order.setTotalPrice("120$");
-                    dish = new Dish("酸菜鱼", "开始大家案例疯狂啦的你们呢就服务空气节目额", "$66");
-                    mData.add(dish);
-                    dish = new Dish("酸菜鱼", "开始大家案例疯狂啦的你们呢就服务空气节目额", "$66");
-                    mData.add(dish);
-                    dish = new Dish("酸菜鱼", "开始大家案例疯狂啦的你们呢就服务空气节目额", "$66");
-                    mData.add(dish);
-                    dish = new Dish("酸菜鱼", "开始大家案例疯狂啦的你们呢就服务空气节目额", "$66");
-                    mData.add(dish);
-                    dish = new Dish("酸菜鱼", "开始大家案例疯狂啦的你们呢就服务空气节目额", "$66");
-                    mData.add(dish);
-                    break;
-                default:
-                    break;
-            }
-            order.setShopName("8号参观");
-            order.setDishes(mData);
-            mDatas.add(order);
-        }
         order_recyview.setAdapter(mAdapter = new HomeAdapter());
-//        basicParamInit();
-//        initData();
-//        initRecyclerView();
+        EventBus.getDefault().post(new NetworkEvent(RequestType.ORDER_LIST));
     }
 
 
@@ -155,11 +95,12 @@ public class CompleteOrderFragment extends BaseFragment
     /****************************************************************************/
     class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.MyViewHolder>
     {
-        List<Dish> itemDishes;
+        List<APPOrder.ValueBean.OrderDishesListBean> itemDishes;
 
         @Override
         public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType)
         {
+
             MyViewHolder holder = new MyViewHolder(LayoutInflater.from(
                     parent.getContext()).inflate(
                     R.layout.fragment_order_cancel_order_item,
@@ -186,10 +127,11 @@ public class CompleteOrderFragment extends BaseFragment
         public void onBindViewHolder(MyViewHolder holder, int position)
         {
             holder.order_item_recyview.setMinimumHeight(35);
-            Order order = mDatas.get(position);
-            holder.order_item_mall_name.setText(order.getShopName());
-            holder.order_item_order_time.setText(order.getPre_order_time());
-            holder.order_item_total_price.setText(order.getTotalPrice());
+            APPOrder.ValueBean order = datas.get(position);
+
+            holder.order_item_mall_name.setText(order.getShop_name());
+            holder.order_item_order_time.setText(order.getHave_meals_time());
+            holder.order_item_total_price.setText(order.getSum_price());
 
             holder.order_item_recyview.setAdapter(
                     new RecyclerView.Adapter()
@@ -217,11 +159,12 @@ public class CompleteOrderFragment extends BaseFragment
                             Log.e("arilpan", "该item data的大小" + itemDishes.size());
                             if (position < itemDishes.size())
                             {
-                                Dish dish = itemDishes.get(position);
-                                name = dish.getName();
-                                newholder.dish_name.setText(dish.getName());
-                                newholder.dish_price.setText(dish.getPrice());
-                                newholder.dish_desc.setText(dish.getDesc());
+                                APPOrder.ValueBean.OrderDishesListBean dish = itemDishes.get
+                                        (position);
+                                name = dish.getDishes_name();
+                                newholder.dish_name.setText(dish.getDishes_name());
+                                newholder.dish_price.setText(dish.getDishes_price());
+                                newholder.dish_desc.setText(dish.getDishes_description());
                             } else
                             {
                                 Log.e("arilpan",
@@ -274,7 +217,6 @@ public class CompleteOrderFragment extends BaseFragment
                             {
                                 super(view);
                                 view.setMinimumHeight(35);
-
                                 dish_icon = (ImageView) view.findViewById(R.id
                                         .dish_icon);
                                 dish_name = (TextView) view.findViewById(R.id
@@ -295,11 +237,16 @@ public class CompleteOrderFragment extends BaseFragment
         @Override
         public int getItemViewType(int position)
         {
-            Order order = mDatas.get(position);
-            itemDishes = order.getDishes();
-            if (itemDishes != null)
+            APPOrder.ValueBean order = datas.get(position);
+//            Order order = mDatas.get(position);
+            if (order != null)
             {
-                return itemDishes.size();
+                itemDishes = new ArrayList<>();
+                itemDishes = order.getOrderDishesList();
+                if (itemDishes != null)
+                {
+                    return itemDishes.size();
+                }
             }
             return 0;
         }
@@ -307,7 +254,7 @@ public class CompleteOrderFragment extends BaseFragment
         @Override
         public int getItemCount()
         {
-            return mDatas.size();
+            return datas.size();
         }
 
         class MyViewHolder extends RecyclerView.ViewHolder
@@ -328,4 +275,61 @@ public class CompleteOrderFragment extends BaseFragment
             }
         }
     }
+
+    @Subscribe(threadMode = ThreadMode.ASYNC)
+    public void onNetWork(NetworkEvent event)
+    {
+        if (APIAddr.order_list_url.equals(event.url))
+        {
+            Log.e("arilpan", "HotDishFragment equals?");
+            setData(getData(event.url + event.id));
+        } else
+        {
+            Log.e("arilpan", "HotDishFragment what happend?");
+        }
+    }
+
+    public void setData(List<APPOrder.ValueBean> datas)
+    {
+        _mActivity.runOnUiThread(new Runnable()
+        {
+            @Override
+            public void run()
+            {
+                order_recyview.setAdapter(mAdapter = new HomeAdapter());
+                //stuff that updates ui
+            }
+        });
+    }
+
+    public List<APPOrder.ValueBean> getData(String url)
+    {
+        String realUrl = url.replace("USERID", "test");
+        realUrl = realUrl.replace("STATES",
+                String.valueOf(APIAddr.ORDER_COMPLETE));
+        Log.e("arilpan", "完成订单link:" + realUrl);
+        try
+        {
+            final JsonAdapter<APPOrder>
+                    COM_JSON_ADAPTER = MainActivity.MOSHI.adapter(
+                    Types.newParameterizedType(APPOrder.class));
+            OkHttpClient client = new OkHttpClient();
+            Request request = new Request.Builder()
+                    .url(url)
+                    .build();
+            Response response = client.newCall(request).execute();
+            ResponseBody body = response.body();
+
+            APPOrder datas_arry = COM_JSON_ADAPTER.fromJson(body.source());
+            body.close();
+            datas = datas_arry.getValue();
+            return datas;
+        } catch (Exception e)
+        {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    List<APPOrder.ValueBean> datas;
 }

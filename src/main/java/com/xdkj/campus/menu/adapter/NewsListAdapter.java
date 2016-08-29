@@ -75,7 +75,7 @@ public class NewsListAdapter extends RecyclerView.Adapter<NewsListAdapter.MyView
                 .load(APIAddr.BASE_IMG_URL + item.getNews_url()) //
 //                .resizeDimen(R.dimen.notification_icon_width_height,
 //                        R.dimen.notification_icon_width_height) //
-                .error(R.drawable.cai_img_defult).into(holder.image);
+                .error(R.drawable.zixun_pic).into(holder.image);
 //                .into(holder.image, R.id.photo, NOTIFICATION_ID, notification);
     }
 

@@ -55,6 +55,7 @@ public class WaterFallDishesFragment extends BaseFragment implements SwipeRefres
 
     public static WaterFallDishesFragment newInstance(String shop_org_id)
     {
+        Log.e("arilpan","1233");
         Bundle args = new Bundle();
         args.putString("shop_id", shop_org_id);
         WaterFallDishesFragment fragment = new WaterFallDishesFragment();
@@ -85,7 +86,8 @@ public class WaterFallDishesFragment extends BaseFragment implements SwipeRefres
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable
     Bundle savedInstanceState)
     {
-        View view = inflater.inflate(R.layout.fragment_dish_switch_layout, container, false);
+        View view = inflater.inflate(R.layout.fragment_dish_switch_layout,
+                container, false);
         initView(view);
         return view;
     }
@@ -95,15 +97,17 @@ public class WaterFallDishesFragment extends BaseFragment implements SwipeRefres
     /****************************************************************/
     private void initView(View view)
     {
-//        EventBus.getDefault().register(this);
+        EventBus.getDefault().register(this);
+        datas = new ArrayList<>();
 
         mRecy = (RecyclerView) view.findViewById(R.id.switch_recv_left);
         mRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.refresh_layout_left);
         mRefreshLayout.setOnRefreshListener(this);
         mAdapter = new WaterFallPagerAdapter(_mActivity);
         mRecy.setHasFixedSize(true);
-        mRecy.setLayoutManager(new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager
-                .VERTICAL));
+        mRecy.setLayoutManager(new StaggeredGridLayoutManager(2,
+                StaggeredGridLayoutManager
+                        .VERTICAL));
         mRecy.setAdapter(mAdapter);
 
         //滑动事件
@@ -151,15 +155,18 @@ public class WaterFallDishesFragment extends BaseFragment implements SwipeRefres
     @Subscribe(threadMode = ThreadMode.ASYNC)
     public void onNetWork(NetworkEvent event)
     {
-        Log.e("arilpan", "HotDishFragment 你调用咩?");
+        Log.e("arilpan", "WaterFall 你调用咩?");
         if (RequestType.INDEX_DISH_NEW == event.reqType)
         {
-            Log.e("arilpan", "HotDishFragment equals url="
+            Log.e("arilpan", "WaterFall equals url="
                     + event.url + event.id);
+//           String url="http://172.16.0.75:8080/GrogshopSystem/appShop/shop_dishes_info" +
+//                    ".do?iDisplayStart=0&iDisplayLength=10&org_id=ba262eba-05da-4886-947c" +
+//                    "-5a557c954af5";
             setData(getData(event.url + event.id));
         } else
         {
-            Log.e("arilpan", "HotDishFragment what happend?");
+            Log.e("arilpan", "WaterFall what happend?");
         }
     }
 
@@ -171,6 +178,7 @@ public class WaterFallDishesFragment extends BaseFragment implements SwipeRefres
                     COM_JSON_ADAPTER = MainActivity.MOSHI.adapter(
                     Types.newParameterizedType(APPNew.class));
             OkHttpClient client = new OkHttpClient();
+
             Request request = new Request.Builder()
                     .url(url)
                     .build();
@@ -236,6 +244,7 @@ public class WaterFallDishesFragment extends BaseFragment implements SwipeRefres
     @Subscribe
     public void onTabSelectedEvent(TabSelectedEvent event)
     {
+        Log.e("arilpan","invock in water fall dish fragment ");
         if (event.position != SECOND)
             return;
         if (mInAtTop)
@@ -246,12 +255,6 @@ public class WaterFallDishesFragment extends BaseFragment implements SwipeRefres
         {
             scrollToTop();
         }
-    }
-
-    @Subscribe
-    public void start(StartBrotherEvent event)
-    {
-        start(event.targetFragment);
     }
 
     private void scrollToTop()
@@ -271,6 +274,5 @@ public class WaterFallDishesFragment extends BaseFragment implements SwipeRefres
     {
         super.onDestroyView();
         mRecy.setAdapter(null);
-//        EventBus.getDefault().unregister(this);
     }
 }

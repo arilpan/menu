@@ -23,14 +23,16 @@ import org.greenrobot.eventbus.Subscribe;
 /**
  * Created by aril_pan@qq.com on 16/8.
  */
-public class DishesRankSwitchFragment extends BaseBackFragment {
+public class DishesRankSwitchFragment extends BaseBackFragment
+{
     private TabLayout mTab;
     //    private Toolbar mToolbar;
     private ViewPager mViewPager;
 
     private static String title;
 
-    public static DishesRankSwitchFragment newInstance(String string) {
+    public static DishesRankSwitchFragment newInstance(String string)
+    {
         title = string;
         Bundle args = new Bundle();
 
@@ -41,33 +43,37 @@ public class DishesRankSwitchFragment extends BaseBackFragment {
 
     @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable
+    Bundle savedInstanceState)
+    {
         View view = inflater.inflate(R.layout.wechat_fragment_tab_second, container, false);
         initView(view);
-        return attachToSwipeBack(view);
+        return view;
+//        return attachToSwipeBack(view);
     }
 
     /**
      * @param view
      */
-    private void initView(View view) {
+    private void initView(View view)
+    {
         ((TextView) view.findViewById(R.id.title_middle)).setText(title);
-        ((LinearLayout) view.findViewById(R.id.title_ll_left)).setOnClickListener(new View.OnClickListener() {
+        view.findViewById(R.id.title_ll_left).setOnClickListener(new View
+                .OnClickListener()
+        {
             @Override
-            public void onClick(View v) {
+            public void onClick(View v)
+            {
                 _mActivity.onBackPressed();
             }
         });
-//        mToolbar = (Toolbar) view.findViewById(R.id.toolbar);
         mTab = (TabLayout) view.findViewById(R.id.tab);
         mViewPager = (ViewPager) view.findViewById(R.id.viewPager);
-//        mToolbar.setTitle("联系人");
-//        initToolbarMenu(mToolbar);
 
-        mTab.addTab(mTab.newTab().setText("全部"));
-        mTab.addTab(mTab.newTab().setText("陌生人"));
+        mTab.addTab(mTab.newTab().setText("餐厅1"));
+        mTab.addTab(mTab.newTab().setText("餐厅2"));
 
-        mViewPager.setAdapter(new DishesRankSwitchFragmentAdapter(getChildFragmentManager()));
+        mViewPager.setAdapter(new DishesRankSwitchFragmentAdapter(getFragmentManager()));
         mTab.setupWithViewPager(mViewPager);
     }
 
@@ -79,15 +85,17 @@ public class DishesRankSwitchFragment extends BaseBackFragment {
 
 
     //    @Override
-//    public boolean onBackPressedSupport() {
-//        // 这里实际项目中推荐使用 EventBus接耦
-////        ((TestOne) getParentFragment()).onBackToFirstFragment();
-//        Log.e("arilpan","DishesSwitchFragment on back press");
-//        return false;
-////        return true;
-//    }
+    public boolean onBackPressedSupport()
+    {
+//        ((TestOne) getParentFragment()).onBackToFirstFragment();
+        Log.e("arilpan", "DishesSwitchFragment on back press");
+        return false;
+//        return true;
+    }
+
     @Override
-    public void onDestroyView() {
+    public void onDestroyView()
+    {
         super.onDestroyView();
     }
 }

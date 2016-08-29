@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.xdkj.campus.menu.R;
+import com.xdkj.campus.menu.api.message.APPSelectLeft;
 import com.xdkj.campus.menu.fragment.ShopFragment;
 import com.xdkj.campus.menu.adapter.MenuAdapter;
 import com.xdkj.campus.menu.base.BaseFragment;
@@ -18,16 +19,18 @@ import me.yokeyword.fragmentation.anim.DefaultNoAnimator;
 import me.yokeyword.fragmentation.anim.FragmentAnimator;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * 左侧选择菜品门类的listview
- *
+ * <p/>
  * Created by aril_pan@qq.com on 16/8.
  */
 public class MenuListFragment extends BaseFragment
 {
     private static final String ARG_MENUS = "arg_menus";
     private static final String ARG_ADDMENUS = "arg_addmenus";
+    private static final String ARG_TAGS = "arg_tags";
     private static boolean SHOW = false;
 
     private static final String SAVE_STATE_POSITION = "save_state_position";
@@ -41,11 +44,22 @@ public class MenuListFragment extends BaseFragment
     private int mCurrentPosition = -1;
 
     public static MenuListFragment newInstance(
-            ArrayList<String> menus, ArrayList<String> addmenus)
+
+            List<APPSelectLeft.ValueBean> menus,
+            ArrayList<String> addmenus)
     {
         Bundle args = new Bundle();
-        args.putStringArrayList(ARG_MENUS, menus);
+        ArrayList<String> tags = new ArrayList<>();
+        ArrayList<String> names = new ArrayList<>();
+
+        for (APPSelectLeft.ValueBean menu : menus)
+        {
+            tags.add(menu.getTagID());
+            names.add(menu.getType());
+        }
+        args.putStringArrayList(ARG_MENUS, names);
         args.putStringArrayList(ARG_ADDMENUS, addmenus);
+        args.putStringArrayList(ARG_TAGS, tags);
         MenuListFragment fragment = new MenuListFragment();
         fragment.setArguments(args);
         return fragment;

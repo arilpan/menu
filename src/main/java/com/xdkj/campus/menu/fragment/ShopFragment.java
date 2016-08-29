@@ -15,20 +15,34 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.squareup.moshi.JsonAdapter;
+import com.squareup.moshi.Types;
+import com.xdkj.campus.menu.MainActivity;
 import com.xdkj.campus.menu.R;
+import com.xdkj.campus.menu.api.APIAddr;
+import com.xdkj.campus.menu.api.message.APPALL;
+import com.xdkj.campus.menu.api.message.APPSelectLeft;
 import com.xdkj.campus.menu.backup.ContentFragment;
 import com.xdkj.campus.menu.base.BaseFragment;
+import com.xdkj.campus.menu.entity.RequestType;
+import com.xdkj.campus.menu.event.NetworkEvent;
 import com.xdkj.campus.menu.event.StartBrotherEvent;
 import com.xdkj.campus.menu.ui.menu.*;
 import com.xdkj.campus.menu.event.ShopEvent;
 import com.xdkj.campus.menu.ui.place.SelectPlaceDetailFragment;
 
 import me.yokeyword.fragmentation.SupportFragment;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
+import okhttp3.ResponseBody;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by YoKeyword on 16/2/4.
@@ -40,16 +54,28 @@ public class ShopFragment extends BaseFragment
     public static final String TAG = ShopFragment.class.getSimpleName();
     FrameLayout fl_child_list_content_container;
     private Toolbar mToolbar;
+    public static String shop_id;
 
-    public static ShopFragment newInstance()
+    public static ShopFragment newInstance(String shop_id)
     {
         Bundle args = new Bundle();
+        args.putString("shop_id", shop_id);
         ShopFragment fragment = new ShopFragment();
         fragment.setArguments(args);
 
         return fragment;
     }
 
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState)
+    {
+        super.onCreate(savedInstanceState);
+        Bundle args = getArguments();
+        if (args != null)
+        {
+            shop_id = args.getString("shop_id");
+        }
+    }
 
     @Nullable
     @Override
@@ -74,7 +100,7 @@ public class ShopFragment extends BaseFragment
     public static TextView total_price;
     FragmentManager fManager;
     FragmentTransaction transaction;
-
+    public static List<APPSelectLeft.ValueBean> listMenus;
 
     public void setTotalPriceView()
     {
@@ -92,7 +118,7 @@ public class ShopFragment extends BaseFragment
         mToolbar = (Toolbar) view.findViewById(R.id.toolbar);
         fl_child_list_content_container = (FrameLayout) view.findViewById(R.id
                 .fl_child_list_content_container);
-        order_now_btn = (Button)view.findViewById(R.id.order_now_btn);
+        order_now_btn = (Button) view.findViewById(R.id.order_now_btn);
         order_now_btn.setOnClickListener(new View.OnClickListener()
         {
             @Override
@@ -109,31 +135,29 @@ public class ShopFragment extends BaseFragment
         initToolbarMenu(mToolbar);
         total_price = (TextView) view.findViewById(R.id.total_price);
         setTotalPriceView();
+        //获取一次,保存在下left
         if (savedInstanceState == null)
         {
-            ArrayList<String> listMenus = new ArrayList<>();
-            listMenus.add("热门推荐");
-            listMenus.add("新品尝鲜");
-            listMenus.add("精品套餐");
-            listMenus.add("分类选择");
-            ArrayList<String> hidenMenu = new ArrayList<>();
-            hidenMenu.add("煲类");
-            hidenMenu.add("汤");
-            hidenMenu.add("小菜");
-            hidenMenu.add("酒水饮料");
-            hidenMenu.add("盖浇饭类");
-            hidenMenu.add("炒面类");
-            hidenMenu.add("拉面类");
-            hidenMenu.add("盖浇面类");
-            hidenMenu.add("特色菜");
-            hidenMenu.add("加料");
-            hidenMenu.add("馄饨类");
-            hidenMenu.add("其他");
-
-            MenuListFragment menuListFragment = MenuListFragment.newInstance(listMenus, hidenMenu);
-            loadRootFragment(R.id.fl_list_container, menuListFragment);
-            replaceLoadRootFragment(R.id.fl_content_container,
-                    SelectFragment.newInstance("热门推荐", "1"), false);
+            EventBus.getDefault().post(new NetworkEvent(
+                    RequestType.INDEX_DISH_SELECT_LEFT, shop_id));
+//            ArrayList<String> listMenus = new ArrayList<>();
+//            listMenus.add("热门推荐");
+//            listMenus.add("新品尝鲜");
+//            listMenus.add("精品套餐");
+//            listMenus.add("分类选择");
+//            ArrayList<String> hidenMenu = new ArrayList<>();
+//            hidenMenu.add("煲类");
+//            hidenMenu.add("汤");
+//            hidenMenu.add("小菜");
+//            hidenMenu.add("酒水饮料");
+//            hidenMenu.add("盖浇饭类");
+//            hidenMenu.add("炒面类");
+//            hidenMenu.add("拉面类");
+//            hidenMenu.add("盖浇面类");
+//            hidenMenu.add("特色菜");
+//            hidenMenu.add("加料");
+//            hidenMenu.add("馄饨类");
+//            hidenMenu.add("其他");
 
             ((RelativeLayout) view.findViewById(R.id.menu_selected)).setOnClickListener(
                     new View.OnClickListener()
@@ -199,6 +223,81 @@ public class ShopFragment extends BaseFragment
         {
             selectFragment.replaceFragment(fragment, false);
         }
+    }
+
+    @Subscribe(threadMode = ThreadMode.ASYNC)
+    public void onNetWork(NetworkEvent event)
+    {
+        Log.e("arilpan", "IndexFragment哥 你调用咩?");
+        if (RequestType.INDEX_ALL == event.reqType)
+        {
+            setData(getData(event));
+        }
+
+    }
+
+    public List<APPSelectLeft.ValueBean> getData(NetworkEvent event)
+    {
+        try
+        {
+            final JsonAdapter<APPSelectLeft>
+                    COM_JSON_ADAPTER = MainActivity.MOSHI.adapter(
+                    Types.newParameterizedType(APPSelectLeft.class));
+            OkHttpClient client = new OkHttpClient();
+            Request request = new Request.Builder()
+                    .url(event.url)
+                    .build();
+            Response response = client.newCall(request).execute();
+            ResponseBody body = response.body();
+
+            APPSelectLeft datas_arry = COM_JSON_ADAPTER.fromJson(body.source());
+            body.close();
+            listMenus = datas_arry.getValue();
+
+
+//            Collections.sort(contributors, new Comparator<APIDish>()
+//            {
+//                @Override
+//                public int compare(APIDish c1, APIDish c2)
+//                {
+//                    return c2.getDishes_id() - c1.getDishes_id();
+//                }
+//            });
+            return listMenus;
+        } catch (Exception e)
+        {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public void setData(final List<APPSelectLeft.ValueBean> items)
+    {
+        try
+        {
+            _mActivity.runOnUiThread(new Runnable()
+            {
+                @Override
+                public void run()
+                {
+//                    mAdapter.setDatas(items);
+                    //stuff that updates ui
+
+                    ArrayList<String> hidenMenu = new ArrayList<>();
+                    MenuListFragment menuListFragment =
+                            MenuListFragment.newInstance(listMenus, hidenMenu);
+                    loadRootFragment(R.id.fl_list_container, menuListFragment);
+                    replaceLoadRootFragment(R.id.fl_content_container,
+                            SelectFragment.newInstance("热门推荐", "1"), false);
+
+
+                }
+            });
+        } catch (Exception e)
+        {
+            e.printStackTrace();
+        }
+
     }
 
     @Subscribe

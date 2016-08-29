@@ -47,6 +47,7 @@ import okhttp3.ResponseBody;
  * Created by aril_pan@qq.com on 16/8.
  */
 public class DishDiscountFragment extends BaseFragment
+
 {
     String shop_id;
 
