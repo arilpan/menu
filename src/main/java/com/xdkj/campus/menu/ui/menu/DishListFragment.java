@@ -95,6 +95,11 @@ public class DishListFragment extends BaseFragment
             {
                 TextView nums = (TextView)
                         adapterView.findViewById(R.id.item_middle);
+                View v;
+                int count = adapterView.getChildCount();
+                v =adapterView.getChildAt(i);
+                
+
                 if (view.getId() == R.id.item_left)
                 {
                     Log.e("arilpan","left item is clicked");

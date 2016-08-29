@@ -37,7 +37,8 @@ public class APIAddrFactory
                 return APIAddr.news_detail_url;
             case RequestType.ORDER_LIST:
                 return APIAddr.order_list_url;
-
+            case RequestType.ORDER_CANCEL:
+                return APIAddr.order_cancel_url;
 //            case RequestType.INDEX_ALL:
 //                return  APIAddr.shop_detail_url;
 //                break;

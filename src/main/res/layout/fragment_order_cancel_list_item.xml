@@ -29,7 +29,16 @@
             android:text="烤鳕鱼"
             android:textColor="#333"
             android:textSize="16sp"/>
-
+        <TextView
+            android:id="@+id/dish_num"
+            android:layout_width="86dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="8dp"
+            android:layout_marginTop="18dp"
+            android:layout_toRightOf="@id/dish_name"
+            android:text="1份"
+            android:textColor="#333"
+            android:textSize="13sp"/>
         <TextView
             android:id="@+id/dish_price"
             android:layout_width="wrap_content"

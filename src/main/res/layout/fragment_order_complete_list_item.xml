@@ -30,6 +30,8 @@
             android:textColor="#333"
             android:textSize="16sp"/>
 
+
+
         <TextView
             android:id="@+id/dish_price"
             android:layout_width="wrap_content"
@@ -40,7 +42,16 @@
             android:text="￥28"
             android:textColor="#ff6666"
             android:textSize="18sp"/>
-
+        <TextView
+            android:id="@+id/dish_num"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:layout_marginTop="20dp"
+            android:layout_toRightOf="@id/dish_price"
+            android:text="1份"
+            android:textColor="#333"
+            android:textSize="13sp"/>
         <TextView
             android:id="@+id/dish_desc"
             android:layout_width="wrap_content"
@@ -51,9 +62,9 @@
             android:layout_marginRight="8dp"
             android:layout_marginTop="12dp"
             android:layout_toRightOf="@id/dish_icon"
+            android:maxLines="1"
             android:text="鳕鱼低脂肪，高蛋白，刺少鳕鱼低脂肪，高蛋白，刺少"
             android:textColor="#666"
-            android:maxLines="1"
             android:textSize="13sp"/>
 
         <Button

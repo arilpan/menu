@@ -14,6 +14,7 @@ import android.widget.TextView;
 
 import com.squareup.moshi.JsonAdapter;
 import com.squareup.moshi.Types;
+import com.squareup.picasso.Picasso;
 import com.xdkj.campus.menu.MainActivity;
 import com.xdkj.campus.menu.R;
 import com.xdkj.campus.menu.api.APIAddr;
@@ -80,7 +81,8 @@ public class CompleteOrderFragment extends BaseFragment
                 LinearLayoutManager.VERTICAL, false));
 
         order_recyview.setAdapter(mAdapter = new HomeAdapter());
-        EventBus.getDefault().post(new NetworkEvent(RequestType.ORDER_LIST));
+        EventBus.getDefault().post(new NetworkEvent(RequestType.ORDER_LIST,
+                String.valueOf(APIAddr.ORDER_COMPLETE)));
     }
 
 
@@ -131,7 +133,7 @@ public class CompleteOrderFragment extends BaseFragment
 
             holder.order_item_mall_name.setText(order.getShop_name());
             holder.order_item_order_time.setText(order.getHave_meals_time());
-            holder.order_item_total_price.setText(order.getSum_price());
+            holder.order_item_total_price.setText("￥" +order.getSum_price());
 
             holder.order_item_recyview.setAdapter(
                     new RecyclerView.Adapter()
@@ -163,8 +165,14 @@ public class CompleteOrderFragment extends BaseFragment
                                         (position);
                                 name = dish.getDishes_name();
                                 newholder.dish_name.setText(dish.getDishes_name());
-                                newholder.dish_price.setText(dish.getDishes_price());
+                                newholder.dish_price.setText("￥" + dish.getDishes_price());
                                 newholder.dish_desc.setText(dish.getDishes_description());
+								newholder.dish_num.setText(dish.getDishes_count() + "份");
+                                Picasso.with(
+                                        getContext()) //
+                                        .load(APIAddr.BASE_IMG_URL + dish.getUpload_url()) //
+                                        .error(R.drawable.cai_img_defult).
+                                        into(newholder.dish_icon);
                             } else
                             {
                                 Log.e("arilpan",
@@ -211,6 +219,8 @@ public class CompleteOrderFragment extends BaseFragment
                             TextView dish_name;
                             TextView dish_price;
                             TextView dish_desc;
+                            TextView dish_num;
+
                             Button dish_comment;
 
                             public MyItemViewHolder(View view)
@@ -225,6 +235,8 @@ public class CompleteOrderFragment extends BaseFragment
                                         .dish_price);
                                 dish_desc = (TextView) view.findViewById(R.id
                                         .dish_desc);
+
+                                dish_num = (TextView) view.findViewById(R.id.dish_num);
 
                                 dish_comment = (Button) view.findViewById(R.id
                                         .dish_comment);
@@ -279,9 +291,10 @@ public class CompleteOrderFragment extends BaseFragment
     @Subscribe(threadMode = ThreadMode.ASYNC)
     public void onNetWork(NetworkEvent event)
     {
-        if (APIAddr.order_list_url.equals(event.url))
+        if (APIAddr.order_list_url.equals(event.url) &&
+                (String.valueOf(APIAddr.ORDER_COMPLETE).equals(event.id)))
         {
-            Log.e("arilpan", "HotDishFragment equals?");
+            Log.e("arilpan", "order equals?");
             setData(getData(event.url + event.id));
         } else
         {
@@ -304,9 +317,7 @@ public class CompleteOrderFragment extends BaseFragment
 
     public List<APPOrder.ValueBean> getData(String url)
     {
-        String realUrl = url.replace("USERID", "test");
-        realUrl = realUrl.replace("STATES",
-                String.valueOf(APIAddr.ORDER_COMPLETE));
+        String realUrl = url.replace("USERID", APIAddr.user_id);
         Log.e("arilpan", "完成订单link:" + realUrl);
         try
         {
@@ -315,7 +326,7 @@ public class CompleteOrderFragment extends BaseFragment
                     Types.newParameterizedType(APPOrder.class));
             OkHttpClient client = new OkHttpClient();
             Request request = new Request.Builder()
-                    .url(url)
+                    .url(realUrl)
                     .build();
             Response response = client.newCall(request).execute();
             ResponseBody body = response.body();
@@ -323,6 +334,10 @@ public class CompleteOrderFragment extends BaseFragment
             APPOrder datas_arry = COM_JSON_ADAPTER.fromJson(body.source());
             body.close();
             datas = datas_arry.getValue();
+            for (APPOrder.ValueBean data : datas)
+            {
+                Log.e("arilpan", " --" + data.getShop_name() + data.getSum_price());
+            }
             return datas;
         } catch (Exception e)
         {

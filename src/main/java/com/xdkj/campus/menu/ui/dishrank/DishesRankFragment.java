@@ -161,15 +161,11 @@ public class DishesRankFragment extends BaseFragment implements SwipeRefreshLayo
     @Subscribe(threadMode = ThreadMode.ASYNC)
     public void onNetWork(NetworkEvent event)
     {
-        Log.e("arilpan", "dish rank 你调用咩?");
         if (RequestType.INDEX_DISH_RANK == event.reqType)
         {
             Log.e("arilpan", "dish rank equals url="
                     + event.url + event.id);
             setData(getData(event.url + event.id));
-        } else
-        {
-            Log.e("arilpan", "dish rank what happend?");
         }
     }
 

@@ -228,9 +228,10 @@ public class ShopFragment extends BaseFragment
     @Subscribe(threadMode = ThreadMode.ASYNC)
     public void onNetWork(NetworkEvent event)
     {
-        Log.e("arilpan", "IndexFragment哥 你调用咩?");
-        if (RequestType.INDEX_ALL == event.reqType)
+
+        if (RequestType.INDEX_DISH_SELECT_LEFT == event.reqType)
         {
+            Log.e("arilpan", "ShopFragment 填充数据");
             setData(getData(event));
         }
 

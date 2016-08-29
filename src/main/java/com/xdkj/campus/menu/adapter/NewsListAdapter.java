@@ -30,7 +30,6 @@ public class NewsListAdapter extends RecyclerView.Adapter<NewsListAdapter.MyView
     public NewsListAdapter(Context context)
     {
         this.mInflater = LayoutInflater.from(context);
-
     }
 
     public void setDatas(List<APPNewsList.ValueBean.ListBean.DataBean> items)

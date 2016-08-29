@@ -8,6 +8,7 @@
     <include layout="@layout/common_title_back_grey_color"/>
 
     <LinearLayout
+        android:id="@+id/ll_update"
         android:layout_width="match_parent"
         android:layout_height="45dp"
         android:layout_marginTop="10dp"
@@ -35,7 +36,7 @@
         android:layout_height="1dp"/>
 
     <LinearLayout
-
+        android:id="@+id/ll_clear_data"
         android:layout_width="match_parent"
         android:layout_height="45dp"
         android:background="#fff"
@@ -62,6 +63,7 @@
         android:layout_height="1dp"/>
 
     <LinearLayout
+        android:id="@+id/ll_about"
         android:layout_width="match_parent"
         android:layout_height="45dp"
         android:background="#fff"
@@ -88,6 +90,7 @@
         android:layout_height="1dp"/>
 
     <LinearLayout
+        android:id="@+id/ll_repswd"
         android:layout_width="match_parent"
         android:layout_height="45dp"
         android:layout_marginTop="10dp"

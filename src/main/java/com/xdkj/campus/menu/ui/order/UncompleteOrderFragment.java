@@ -21,14 +21,35 @@ import com.avast.android.dialogs.iface.IListDialogListener;
 import com.avast.android.dialogs.iface.IMultiChoiceListDialogListener;
 import com.avast.android.dialogs.iface.ISimpleDialogCancelListener;
 import com.avast.android.dialogs.iface.ISimpleDialogListener;
+import com.squareup.moshi.JsonAdapter;
+import com.squareup.moshi.Types;
+import com.squareup.picasso.Picasso;
+import com.xdkj.campus.menu.MainActivity;
 import com.xdkj.campus.menu.R;
+import com.xdkj.campus.menu.api.APIAddr;
+import com.xdkj.campus.menu.api.message.APPOrder;
 import com.xdkj.campus.menu.base.BaseFragment;
 import com.xdkj.campus.menu.entity.Dish;
 import com.xdkj.campus.menu.entity.Order;
+import com.xdkj.campus.menu.entity.RequestType;
+import com.xdkj.campus.menu.event.NetworkEvent;
 
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.RequestBody;
+import okhttp3.Response;
+import okhttp3.ResponseBody;
 
 /***
  * 未完成订单
@@ -39,15 +60,20 @@ public class UncompleteOrderFragment extends BaseFragment
         implements ISimpleDialogListener
 {
     int REQUEST_SIMPLE_DIALOG = 42;
+    String order_id = "90f67d5b-b3f5-46f9-92a1-80f90751acd";
     Context c = getContext();
 
     @Override
     public void onPositiveButtonClicked(int requestCode)
     {
+
         if (requestCode == REQUEST_SIMPLE_DIALOG)
         {
             Log.e("arilpan", "UncompleteOrderFragment Positive button clicked");
-            Toast.makeText(getContext(), "Positive button clicked", Toast.LENGTH_SHORT).show();
+//            Toast.makeText(getContext(), "Positive button clicked", Toast.LENGTH_SHORT).show();
+            EventBus.getDefault().post(new NetworkEvent(RequestType.ORDER_CANCEL,
+                    order_id));
+
         } else
         {
             Log.e("arilpan", "UncompleteOrderFragment Positive button clicked");
@@ -64,6 +90,7 @@ public class UncompleteOrderFragment extends BaseFragment
     @Override
     public void onNegativeButtonClicked(int requestCode)
     {
+        String tag = getTag();
         if (requestCode == REQUEST_SIMPLE_DIALOG)
         {
             Log.e("arilpan", "UncompleteOrderFragment Negative button clicked");
@@ -112,92 +139,19 @@ public class UncompleteOrderFragment extends BaseFragment
 
     RecyclerView order_recyview;
     private HomeAdapter mAdapter;
-    private List<Order> mDatas;
 
     private void initView(View view)
     {
-
+        EventBus.getDefault().register(this);
+        datas = new ArrayList<>();
         order_recyview = (RecyclerView) view.findViewById(R.id.order_recyview);
         order_recyview.setLayoutManager(new LinearLayoutManager(view.getContext(),
                 LinearLayoutManager.VERTICAL, false));
 
-        mDatas = new ArrayList<Order>();
-        for (int i = 1; i < 6; i++)
-        {
-            List mData = new ArrayList<Dish>();
-            Order order = new Order();
-            Dish dish = new Dish("酸菜鱼", "开始大家案例疯狂啦的你们呢就服务空气节目额", "$32");
-            switch (i)
-            {
-                case 1:
-                    dish = new Dish("酸菜鱼", "开始大家案例疯狂啦的你们呢就服务空气节目额", "$11");
-                    mData.add(dish);
-                    order.setTotalPrice("20$");
-                    order.setPre_order_time("2017-06-04");
-                    break;
-                case 2:
-                    order.setPre_order_time("2017-06-11");
-                    order.setTotalPrice("40$");
-                    dish = new Dish("酸菜鱼", "开始大家案例疯狂啦的你们呢就服务空气节目额", "$22");
-                    mData.add(dish);
-                    dish = new Dish("酸菜鱼", "开始大家案例疯狂啦的你们呢就服务空气节目额", "$22");
-                    mData.add(dish);
-                    break;
-                case 3:
-                    order.setPre_order_time("2017-07-03");
-                    order.setTotalPrice("60$");
 
-                    dish = new Dish("酸菜鱼", "开始大家案例疯狂啦的你们呢就服务空气节目额", "$33");
-                    mData.add(dish);
-                    dish = new Dish("酸菜鱼", "开始大家案例疯狂啦的你们呢就服务空气节目额", "$33");
-                    mData.add(dish);
-                    break;
-                case 4:
-                    order.setPre_order_time("2017-08-12");
-                    order.setTotalPrice("80$");
-                    dish = new Dish("酸菜鱼", "开始大家案例疯狂啦的你们呢就服务空气节目额", "$44");
-                    mData.add(dish);
-                    dish = new Dish("酸菜鱼", "开始大家案例疯狂啦的你们呢就服务空气节目额", "$44");
-                    mData.add(dish);
-                    dish = new Dish("酸菜鱼", "开始大家案例疯狂啦的你们呢就服务空气节目额", "$44");
-                    mData.add(dish);
-                    break;
-                case 5:
-                    order.setTotalPrice("100$");
-                    order.setPre_order_time("2017-08-15");
-                    dish = new Dish("酸菜鱼", "开始大家案例疯狂啦的你们呢就服务空气节目额", "$55");
-                    mData.add(dish);
-                    dish = new Dish("酸菜鱼", "开始大家案例疯狂啦的你们呢就服务空气节目额", "$55");
-                    mData.add(dish);
-                    dish = new Dish("酸菜鱼", "开始大家案例疯狂啦的你们呢就服务空气节目额", "$55");
-                    mData.add(dish);
-                    dish = new Dish("酸菜鱼", "开始大家案例疯狂啦的你们呢就服务空气节目额", "$55");
-                    mData.add(dish);
-                    break;
-                case 6:
-                    order.setTotalPrice("120$");
-                    dish = new Dish("酸菜鱼", "开始大家案例疯狂啦的你们呢就服务空气节目额", "$66");
-                    mData.add(dish);
-                    dish = new Dish("酸菜鱼", "开始大家案例疯狂啦的你们呢就服务空气节目额", "$66");
-                    mData.add(dish);
-                    dish = new Dish("酸菜鱼", "开始大家案例疯狂啦的你们呢就服务空气节目额", "$66");
-                    mData.add(dish);
-                    dish = new Dish("酸菜鱼", "开始大家案例疯狂啦的你们呢就服务空气节目额", "$66");
-                    mData.add(dish);
-                    dish = new Dish("酸菜鱼", "开始大家案例疯狂啦的你们呢就服务空气节目额", "$66");
-                    mData.add(dish);
-                    break;
-                default:
-                    break;
-            }
-            order.setShopName("8号参观");
-            order.setDishes(mData);
-            mDatas.add(order);
-        }
         order_recyview.setAdapter(mAdapter = new HomeAdapter());
-//        basicParamInit();
-//        initData();
-//        initRecyclerView();
+        EventBus.getDefault().post(new NetworkEvent(RequestType.ORDER_LIST,
+                String.valueOf(APIAddr.ORDER_UNCOMPLETE)));
     }
 
 
@@ -214,9 +168,8 @@ public class UncompleteOrderFragment extends BaseFragment
 
     /****************************************************************************/
     class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.MyViewHolder>
-            implements ISimpleDialogListener
     {
-        List<Dish> itemDishes;
+        List<APPOrder.ValueBean.OrderDishesListBean> itemDishes;
 
         @Override
         public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType)
@@ -248,48 +201,10 @@ public class UncompleteOrderFragment extends BaseFragment
         Context c = getContext();
 //        getContext();
 
-        @Override
-        public void onPositiveButtonClicked(int requestCode)
-        {
-            if (requestCode == REQUEST_SIMPLE_DIALOG)
-            {
-                Log.e("arilpan", "Positive button clicked");
-                Toast.makeText(c, "Positive button clicked", Toast.LENGTH_SHORT).show();
-            } else
-            {
-                Log.e("arilpan", "Positive button clicked else");
-            }
-        }
-
-        @Override
-        public void onNegativeButtonClicked(int requestCode)
-        {
-            if (requestCode == REQUEST_SIMPLE_DIALOG)
-            {
-                Log.e("arilpan", "Negative button clicked");
-                Toast.makeText(c, "Negative button clicked", Toast.LENGTH_SHORT).show();
-            } else
-            {
-                Log.e("arilpan", "Negative button clicked else");
-            }
-        }
-
-        @Override
-        public void onNeutralButtonClicked(int requestCode)
-        {
-            if (requestCode == REQUEST_SIMPLE_DIALOG)
-            {
-                Log.e("arilpan", "Neutral button clicked");
-                Toast.makeText(c, "Neutral button clicked", Toast.LENGTH_SHORT).show();
-            } else
-            {
-                Log.e("arilpan", "Neutral button clicked else");
-            }
-        }
-
         public void cancelOrder(int pos)
         {
             Log.e("arilpan", "電價了位置+" + pos);
+            order_id = datas.get(pos).getOrder_id();
             SimpleDialogFragment.createBuilder(getContext(),
                     getFragmentManager())
                     .setTitle(" 是否取消订单?")
@@ -299,6 +214,7 @@ public class UncompleteOrderFragment extends BaseFragment
                     .setMessage("提示: 点击右侧\"取消\"取消订单.")
                     .setPositiveButtonText("取消")
                     .setNegativeButtonText("不取消")
+//                    .setTag(String.valueOf(pos))
                     .setNeutralButtonText("再想想?")
 //                    .setRequestCode(REQUEST_SIMPLE_DIALOG)
                     .show();
@@ -309,11 +225,11 @@ public class UncompleteOrderFragment extends BaseFragment
         {
 //          holder.tv.setText(mDatas.get(position));
             holder.order_item_recyview.setMinimumHeight(35);
+            APPOrder.ValueBean order = datas.get(position);
 
-            Order order = mDatas.get(position);
-            holder.order_item_mall_name.setText(order.getShopName());
-            holder.order_item_order_time.setText(order.getPre_order_time());
-            holder.order_item_total_price.setText(order.getTotalPrice());
+            holder.order_item_mall_name.setText(order.getShop_name());
+            holder.order_item_order_time.setText(order.getHave_meals_time());
+            holder.order_item_total_price.setText("￥" + order.getSum_price());
 
             final int pos = position;
             holder.order_item_cancel_button.setOnClickListener(new View.OnClickListener()
@@ -348,10 +264,16 @@ public class UncompleteOrderFragment extends BaseFragment
                             Log.e("arilpan", "该item data的大小" + itemDishes.size());
                             if (position < itemDishes.size())
                             {
-                                Dish dish = itemDishes.get(position);
-                                newholder.dish_name.setText(dish.getName());
-                                newholder.dish_price.setText(dish.getPrice());
-                                newholder.dish_desc.setText(dish.getDesc());
+                                APPOrder.ValueBean.OrderDishesListBean dish = itemDishes.get
+                                        (position);
+                                newholder.dish_name.setText(dish.getDishes_name());
+                                newholder.dish_price.setText("￥" + dish.getDishes_price());
+                                newholder.dish_desc.setText(dish.getDishes_description());
+                                Picasso.with(
+                                        getContext()) //
+                                        .load(APIAddr.BASE_IMG_URL + dish.getUpload_url()) //
+                                        .error(R.drawable.cai_img_defult).
+                                        into(newholder.dish_icon);
                             } else
                             {
                                 Log.e("arilpan", " will throw java.lang.IndexOutOfBoundsException");
@@ -405,19 +327,25 @@ public class UncompleteOrderFragment extends BaseFragment
         @Override
         public int getItemViewType(int position)
         {
-            Order order = mDatas.get(position);
-            itemDishes = order.getDishes();
-            if (itemDishes != null)
+            APPOrder.ValueBean order = datas.get(position);
+
+            if (order != null)
             {
-                return itemDishes.size();
+                itemDishes = new ArrayList<>();
+                itemDishes = order.getOrderDishesList();
+                if (itemDishes != null)
+                {
+                    return itemDishes.size();
+                }
             }
+
             return 0;
         }
 
         @Override
         public int getItemCount()
         {
-            return mDatas.size();
+            return datas.size();
         }
 
 
@@ -444,4 +372,113 @@ public class UncompleteOrderFragment extends BaseFragment
             }
         }
     }
+
+    @Subscribe(threadMode = ThreadMode.ASYNC)
+    public void onNetWork(NetworkEvent event)
+    {
+        if (APIAddr.order_list_url.equals(event.url) &&
+                (String.valueOf(APIAddr.ORDER_UNCOMPLETE).equals(event.id)))
+        {
+            Log.e("arilpan", "order equals?");
+            setData(getData(event.url + event.id));
+        } else if (APIAddr.order_cancel_url.equals(event.url))
+        {
+            String res = getCancelOrderResult(event.url + event.id);
+            try
+            {
+                JSONObject jsonObject = new JSONObject(res);
+                boolean isSuccess = jsonObject.getBoolean("success");
+                if (isSuccess)
+                {
+                    Toast.makeText(getContext(),
+                            "取消订单成功", Toast.LENGTH_SHORT)
+                            .show();
+                    return;
+                }
+            } catch (JSONException e)
+            {
+                e.printStackTrace();
+            }
+            Toast.makeText(getContext(),
+                    "取消订单失败", Toast.LENGTH_SHORT)
+                    .show();
+            /*  {"success":true,"message":"取消订单成功!!","messageList":null,"messageList1":null,
+            "messageList2":null,"messageList3":null,"messageList4":null,"messageList5":null,
+            "messageList6":null,"messageList7":null,"messageList8":null,"code":0,"value":null,
+            "value1":null,"errcode":null,"errmsg":null,"datas":null,"pageNo":0,"pages":0}
+             http://172.16.0.75:8080/GrogshopSystem/appOrder/cancelOrders
+             .do?order_id=90f67d5b-b3f5-46f9-92a1-80f90751acd8
+             */
+        } else
+        {
+            Log.e("arilpan", "HotDishFragment what happend?");
+        }
+    }
+
+    public String getCancelOrderResult(String url)
+    {
+        OkHttpClient client = new OkHttpClient();
+        Request request = new Request.Builder()
+                .url(url)
+                .build();
+        Response response = null;
+        try
+        {
+            response = client.newCall(request).execute();
+            String result = response.body().string();
+            Log.e("arilpan", url + "取消订单结果" + result);
+            return result;
+        } catch (IOException e)
+        {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public void setData(List<APPOrder.ValueBean> datas)
+    {
+        _mActivity.runOnUiThread(new Runnable()
+        {
+            @Override
+            public void run()
+            {
+                order_recyview.setAdapter(mAdapter = new HomeAdapter());
+                //stuff that updates ui
+            }
+        });
+    }
+
+    public List<APPOrder.ValueBean> getData(String url)
+    {
+        String realUrl = url.replace("USERID", APIAddr.user_id);
+        Log.e("arilpan", "完成订单link:" + realUrl);
+        try
+        {
+            final JsonAdapter<APPOrder>
+                    COM_JSON_ADAPTER = MainActivity.MOSHI.adapter(
+                    Types.newParameterizedType(APPOrder.class));
+            OkHttpClient client = new OkHttpClient();
+            Request request = new Request.Builder()
+                    .url(realUrl)
+                    .build();
+            Response response = client.newCall(request).execute();
+            ResponseBody body = response.body();
+
+            APPOrder datas_arry = COM_JSON_ADAPTER.fromJson(body.source());
+            body.close();
+            datas = datas_arry.getValue();
+            for (APPOrder.ValueBean data : datas)
+            {
+                Log.e("arilpan", " --" + data.getOrder_id() + data.getShop_name() + data
+                        .getSum_price());
+            }
+            return datas;
+        } catch (Exception e)
+        {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    List<APPOrder.ValueBean> datas;
 }

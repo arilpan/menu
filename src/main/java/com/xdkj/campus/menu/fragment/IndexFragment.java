@@ -305,9 +305,10 @@ public class IndexFragment extends BaseLazyMainFragment
     @Subscribe(threadMode = ThreadMode.ASYNC)
     public void onNetWork(NetworkEvent event)
     {
-        Log.e("arilpan", "IndexFragment哥 你调用咩?");
+
         if (RequestType.INDEX_ALL == event.reqType)
         {
+            Log.e("arilpan", "Indexfragment 填充數據");
             setData(getData(event));
         }
 
