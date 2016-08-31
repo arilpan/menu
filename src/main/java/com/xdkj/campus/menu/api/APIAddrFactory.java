@@ -43,6 +43,8 @@ public class APIAddrFactory
                 return APIAddr.dish_comment_url;
             case RequestType.INDEX_SHOP_ENV:
                 return APIAddr.index_shop_env_url;
+            case RequestType.DISCOUNT_CARD_LIST:
+                return APIAddr.recharge_discount_new_url;
 //            case RequestType.INDEX_ALL:
 //                return  APIAddr.shop_detail_url;
 //                break;

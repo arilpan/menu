@@ -28,8 +28,10 @@ import com.xdkj.campus.menu.ui.dishdiscount.DishesDishcountSwitchFragment;
 import com.xdkj.campus.menu.ui.dishhot.HotDishesFragment;
 import com.xdkj.campus.menu.ui.dishrank.DishesRankSwitchFragment;
 import com.xdkj.campus.menu.ui.dishesnew.DishesSwitchFragment;
+import com.xdkj.campus.menu.ui.index.DiscountDishesFragment;
 import com.xdkj.campus.menu.ui.index.DishDetailFragment;
 import com.xdkj.campus.menu.ui.index.NewDishesFragment;
+import com.xdkj.campus.menu.ui.index.RankDishesFragment;
 import com.xdkj.campus.menu.ui.index.ShopEnviromentFragment;
 import com.xdkj.campus.menu.ui.news.NewsListFragment;
 import com.xdkj.campus.menu.ui.order.SelectPlaceFragment;
@@ -121,7 +123,7 @@ public class IndexFragment extends BaseLazyMainFragment
             public void onClick(View v)
             {
                 EventBus.getDefault().post(new StartBrotherEvent(
-                        DiscountFragment.newInstance()));
+                        DiscountFragment.newInstance(APIAddr.shop_one_id)));
             }
         });
 
@@ -132,7 +134,7 @@ public class IndexFragment extends BaseLazyMainFragment
             public void onClick(View v)
             {
                 EventBus.getDefault().post(new StartBrotherEvent(
-                        DishesRankSwitchFragment.newInstance("美食排行")));
+                        RankDishesFragment.newInstance(APIAddr.shop_one_id)));
             }
         });
         view.findViewById(R.id.discount_dish_rl).setOnClickListener(new View
@@ -142,7 +144,7 @@ public class IndexFragment extends BaseLazyMainFragment
             public void onClick(View v)
             {
                 EventBus.getDefault().post(new StartBrotherEvent(
-                        DishesDishcountSwitchFragment.newInstance("超值折扣菜")));
+                        DiscountDishesFragment.newInstance(APIAddr.shop_one_id)));
             }
         });
         view.findViewById(R.id.recharge_rl).setOnClickListener(new View
@@ -152,7 +154,7 @@ public class IndexFragment extends BaseLazyMainFragment
             public void onClick(View v)
             {
                 EventBus.getDefault().post(new StartBrotherEvent(
-                        DiscountFragment.newInstance()));
+                        DiscountFragment.newInstance(APIAddr.shop_one_id)));
             }
         });
         view.findViewById(R.id.dayly_welfare_rl).setOnClickListener(new View
@@ -271,7 +273,7 @@ public class IndexFragment extends BaseLazyMainFragment
 //                        (new StartBrotherEvent(DishesSwitchFragment.newInstance()));
                 EventBus.getDefault().post(new StartBrotherEvent(
                         NewDishesFragment.newInstance
-                        ("新品尝鲜")));
+                                (APIAddr.shop_one_id)));
 
             }
         });

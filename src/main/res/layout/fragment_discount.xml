@@ -6,7 +6,7 @@
               android:layout_width="match_parent"
               android:layout_height="match_parent">
     <include layout="@layout/common_title_back_grey_color"/>
-    <ListView
+    <android.support.v7.widget.RecyclerView
             android:clickable="false"
             android:layout_marginLeft="7dp"
             android:layout_marginRight="7dp"

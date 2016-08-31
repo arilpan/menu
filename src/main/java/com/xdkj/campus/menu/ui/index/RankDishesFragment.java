@@ -1,6 +1,5 @@
 package com.xdkj.campus.menu.ui.index;
 
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -11,14 +10,15 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.squareup.moshi.JsonAdapter;
 import com.squareup.moshi.Types;
 import com.xdkj.campus.menu.MainActivity;
 import com.xdkj.campus.menu.R;
-import com.xdkj.campus.menu.adapter.WaterFallPagerAdapter;
+import com.xdkj.campus.menu.adapter.DishRankAdapter;
 import com.xdkj.campus.menu.api.APIAddr;
-import com.xdkj.campus.menu.api.message.APPNew;
+import com.xdkj.campus.menu.api.message.APPRank;
 import com.xdkj.campus.menu.base.BaseFragment;
 import com.xdkj.campus.menu.entity.RequestType;
 import com.xdkj.campus.menu.event.NetworkEvent;
@@ -41,7 +41,7 @@ import okhttp3.ResponseBody;
 /**
  * Created by aril_pan@qq.com on 16/8.
  */
-public class NewDishesFragment extends BaseFragment implements SwipeRefreshLayout
+public class RankDishesFragment extends BaseFragment implements SwipeRefreshLayout
         .OnRefreshListener
 {
     int SECOND = 1;
@@ -51,14 +51,13 @@ public class NewDishesFragment extends BaseFragment implements SwipeRefreshLayou
     private int mScrollTotal;
     private SwipeRefreshLayout mRefreshLayout;
     private RecyclerView mRecy;
-    private WaterFallPagerAdapter mAdapter;
+    private DishRankAdapter mAdapter;
 
-    public static NewDishesFragment newInstance(String shop_org_id)
+    public static RankDishesFragment newInstance(String shop_org_id)
     {
-        Log.e("arilpan", "1233");
         Bundle args = new Bundle();
         args.putString("shop_id", shop_org_id);
-        NewDishesFragment fragment = new NewDishesFragment();
+        RankDishesFragment fragment = new RankDishesFragment();
         fragment.setArguments(args);
         return fragment;
     }
@@ -86,8 +85,7 @@ public class NewDishesFragment extends BaseFragment implements SwipeRefreshLayou
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable
     Bundle savedInstanceState)
     {
-        View view = inflater.inflate(R.layout.fragment_dish_switch_layout,
-                container, false);
+        View view = inflater.inflate(R.layout.fragment_dish_switch_layout, container, false);
         initView(view);
         return view;
     }
@@ -98,10 +96,8 @@ public class NewDishesFragment extends BaseFragment implements SwipeRefreshLayou
     private void initView(View view)
     {
         EventBus.getDefault().register(this);
-        datas = new ArrayList<>();
 
-
-        ((TextView) view.findViewById(R.id.title_middle)).setText("新品尝鲜");
+        ((TextView) view.findViewById(R.id.title_middle)).setText("美食排行");
         view.findViewById(R.id.title_ll_left).setOnClickListener(new View
                 .OnClickListener()
         {
@@ -111,12 +107,9 @@ public class NewDishesFragment extends BaseFragment implements SwipeRefreshLayou
                 _mActivity.onBackPressed();
             }
         });
-        final TextView tab1 = (TextView) view.findViewById(R.id.tab1);
-        tab1.setTextColor(Color.rgb(172, 66, 66));
 
-        final TextView tab2 = (TextView) view.findViewById(R.id.tab2);
-        tab2.setTextColor(Color.rgb(66,66,66));
-
+        TextView tab1 = (TextView) view.findViewById(R.id.tab1);
+        TextView tab2 = (TextView) view.findViewById(R.id.tab2);
         tab1.setText(APIAddr.shop_one_name);
         tab2.setText(APIAddr.shop_two_name);
         tab1.setOnClickListener(new View.OnClickListener()
@@ -125,11 +118,9 @@ public class NewDishesFragment extends BaseFragment implements SwipeRefreshLayou
             public void onClick(View view)
             {
                 EventBus.getDefault().post(new NetworkEvent(
-                        RequestType.INDEX_DISH_NEW,
-                        APIAddr.shop_one_id));
+                        RequestType.INDEX_DISH_RANK,
+                        shop_id));
                 shop_id = APIAddr.shop_one_id;
-                tab1.setTextColor(Color.rgb(172, 66, 66));
-                tab2.setTextColor(Color.rgb(66,66,66));
             }
         });
         tab2.setOnClickListener(new View.OnClickListener()
@@ -138,23 +129,21 @@ public class NewDishesFragment extends BaseFragment implements SwipeRefreshLayou
             public void onClick(View view)
             {
                 EventBus.getDefault().post(new NetworkEvent(
-                        RequestType.INDEX_DISH_NEW,
-                        APIAddr.shop_two_id));
+                        RequestType.INDEX_DISH_RANK,
+                        shop_id));
                 shop_id = APIAddr.shop_two_id;
-                tab2.setTextColor(Color.rgb(172, 66, 66));
-                tab1.setTextColor(Color.rgb(66,66,66));
             }
         });
-
 
         mRecy = (RecyclerView) view.findViewById(R.id.switch_recv_left);
         mRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.refresh_layout_left);
         mRefreshLayout.setOnRefreshListener(this);
-        mAdapter = new WaterFallPagerAdapter(_mActivity);
+        mAdapter = new DishRankAdapter(_mActivity);
         mRecy.setHasFixedSize(true);
-        mRecy.setLayoutManager(new StaggeredGridLayoutManager(2,
+        mRecy.setLayoutManager(new StaggeredGridLayoutManager(1,
                 StaggeredGridLayoutManager
                         .VERTICAL));
+
         mRecy.setAdapter(mAdapter);
 
         //滑动事件
@@ -179,8 +168,7 @@ public class NewDishesFragment extends BaseFragment implements SwipeRefreshLayou
         mAdapter.setOnItemClickListener(new OnItemClickListener()
         {
             @Override
-            public void onItemClick(int position, View view,
-                                    RecyclerView.ViewHolder holder)
+            public void onItemClick(int position, View view, RecyclerView.ViewHolder holder)
             {
                 if (datas != null)
                 {
@@ -190,41 +178,38 @@ public class NewDishesFragment extends BaseFragment implements SwipeRefreshLayou
                                     DishDetailFragment.newInstance(dish_id)));
                 }
                 // 通知MainActivity跳转
-
+//                EventBus.getDefault().post(
+//                        new StartBrotherEvent(DishDetailFragment.newInstance(1)));
             }
         });
 
+        // Init Datas
+        List<APPRank.ValueBean.DataBean> items = new ArrayList<>();
+        mAdapter.setDatas(items);
+
         EventBus.getDefault().post(new NetworkEvent(
-                RequestType.INDEX_DISH_NEW,
+                RequestType.INDEX_DISH_RANK,
                 shop_id));
     }
 
     @Subscribe(threadMode = ThreadMode.ASYNC)
     public void onNetWork(NetworkEvent event)
     {
-        Log.e("arilpan", "WaterFall 你调用咩?");
-        if (RequestType.INDEX_DISH_NEW == event.reqType)
+        if (RequestType.INDEX_DISH_RANK == event.reqType)
         {
-            Log.e("arilpan", "WaterFall equals url="
+            Log.e("arilpan", "dish rank equals url="
                     + event.url + event.id);
-//           String url="http://172.16.0.75:8080/GrogshopSystem/appShop/shop_dishes_info" +
-//                    ".do?iDisplayStart=0&iDisplayLength=10&org_id=ba262eba-05da-4886-947c" +
-//                    "-5a557c954af5";
             setData(getData(event.url + event.id));
-        } else
-        {
-            Log.e("arilpan", "WaterFall what happend?");
         }
     }
 
-    public List<APPNew.ValueBean.DataBean> getData(String url)
+    public List<APPRank.ValueBean.DataBean> getData(String url)
     {
         try
         {
-            final JsonAdapter<APPNew>
+            final JsonAdapter<APPRank>
                     COM_JSON_ADAPTER = MainActivity.MOSHI.adapter(
-                    Types.newParameterizedType(APPNew.class));
-
+                    Types.newParameterizedType(APPRank.class));
             OkHttpClient client = new OkHttpClient();
             Request request = new Request.Builder()
                     .url(url)
@@ -232,10 +217,11 @@ public class NewDishesFragment extends BaseFragment implements SwipeRefreshLayou
             Response response = client.newCall(request).execute();
             ResponseBody body = response.body();
 
-            APPNew datas_arry = COM_JSON_ADAPTER.fromJson(body.source());
+            APPRank datas_arry =
+                    COM_JSON_ADAPTER.fromJson(body.source());
             body.close();
             datas = datas_arry.getValue().getData();
-            for (APPNew.ValueBean.DataBean data : datas)
+            for (APPRank.ValueBean.DataBean data : datas)
             {
                 Log.e("arilpan", data.getDiscount_type() +
                         ",code :" + data.getDishes_price());
@@ -248,17 +234,23 @@ public class NewDishesFragment extends BaseFragment implements SwipeRefreshLayou
         return null;
     }
 
-    List<APPNew.ValueBean.DataBean> datas;
+    List<APPRank.ValueBean.DataBean> datas;
 
-    public void setData(final List<APPNew.ValueBean.DataBean> items)
+    public void setData(final List<APPRank.ValueBean.DataBean> items)
     {
         try
         {
+
             _mActivity.runOnUiThread(new Runnable()
             {
                 @Override
                 public void run()
                 {
+                    if (items == null)
+                    {
+                        Toast.makeText(getContext(), "请刷新列表", Toast.LENGTH_SHORT).show();
+                        return;
+                    }
                     mAdapter.setDatas(items);
                     //stuff that updates ui
                 }
@@ -273,7 +265,7 @@ public class NewDishesFragment extends BaseFragment implements SwipeRefreshLayou
     public void onRefresh()
     {
         EventBus.getDefault().post(new NetworkEvent(
-                RequestType.INDEX_DISH_NEW,
+                RequestType.INDEX_DISH_RANK,
                 shop_id));
         mRefreshLayout.postDelayed(new Runnable()
         {
@@ -291,7 +283,6 @@ public class NewDishesFragment extends BaseFragment implements SwipeRefreshLayou
     @Subscribe
     public void onTabSelectedEvent(TabSelectedEvent event)
     {
-        Log.e("arilpan", "invock in water fall dish fragment ");
         if (event.position != SECOND)
             return;
         if (mInAtTop)

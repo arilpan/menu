@@ -136,54 +136,20 @@ public class MenuListFragment extends BaseFragment
         {
             return;
         }
-        if (position == 3)
+        LinearLayoutManager manager = new LinearLayoutManager(_mActivity);
+        mRecy.setLayoutManager(manager);
+        mAdapter = new MenuAdapter(_mActivity);
+        mRecy.setAdapter(mAdapter);
+        mAdapter.setDatas(mMenus);
+
+        mAdapter.setOnItemClickListener(new OnItemClickListener()
         {
-            if (SHOW)
+            @Override
+            public void onItemClick(int position, View view, RecyclerView.ViewHolder vh)
             {
-                for (String s : mAddMenus)
-                {
-                    mMenus.remove(s);
-                }
-                LinearLayoutManager manager = new LinearLayoutManager(_mActivity);
-                mRecy.setLayoutManager(manager);
-                mAdapter = new MenuAdapter(_mActivity);
-                mRecy.setAdapter(mAdapter);
-                mAdapter.setDatas(mMenus);
-
-                mAdapter.setOnItemClickListener(new OnItemClickListener()
-                {
-                    @Override
-                    public void onItemClick(int position, View view, RecyclerView.ViewHolder vh)
-                    {
-                        showContent(position);
-                    }
-                });
-                SHOW = false;
-            } else
-            {
-                for (String s : mAddMenus)
-                {
-                    mMenus.add(s);
-                }
-                LinearLayoutManager manager = new LinearLayoutManager(_mActivity);
-                mRecy.setLayoutManager(manager);
-                mAdapter = new MenuAdapter(_mActivity);
-                mRecy.setAdapter(mAdapter);
-                mAdapter.setDatas(mMenus);
-
-                mAdapter.setOnItemClickListener(new OnItemClickListener()
-                {
-                    @Override
-                    public void onItemClick(int position, View view, RecyclerView.ViewHolder vh)
-                    {
-                        showContent(position);
-                    }
-                });
-                SHOW = true;
+                showContent(position);
             }
-
-            return;
-        }
+        });
 
         mCurrentPosition = position;
         mAdapter.setItemChecked(position);
@@ -191,9 +157,11 @@ public class MenuListFragment extends BaseFragment
 //        ContentFragment fragment = ContentFragment.newInstance(mMenus.get(position));
 //        ((ShopFragment) getParentFragment()).switchContentFragment(fragment);
 
-
-        SelectFragment fragment1 = SelectFragment.newInstance(position < 3 ? mMenus.get(position) :
-                mAddMenus.get(position - 4), "");
+        //菜品种类
+        SelectFragment fragment1 = SelectFragment.newInstance(mMenus.get(position), "");
+//        SelectFragment fragment1 = SelectFragment.newInstance(position < 3 ? mMenus.get
+// (position) :
+//                mAddMenus.get(position - 4), "");
         ((ShopFragment) getParentFragment()).switchSelectFragment(fragment1);
 
     }

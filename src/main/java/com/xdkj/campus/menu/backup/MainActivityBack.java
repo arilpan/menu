@@ -3,6 +3,7 @@ package com.xdkj.campus.menu.backup;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 
+import com.xdkj.campus.menu.api.APIAddr;
 import com.xdkj.campus.menu.fragment.DiscountFragment;
 import com.xdkj.campus.menu.fragment.IndexFragment;
 import com.xdkj.campus.menu.fragment.MineFragment;
@@ -41,7 +42,7 @@ public class MainActivityBack extends SupportActivity
 
         if (savedInstanceState == null) {
             mFragments[FIRST] = IndexFragment.newInstance();
-            mFragments[SECOND] = DiscountFragment.newInstance();
+            mFragments[SECOND] = DiscountFragment.newInstance(APIAddr.shop_one_id);
             mFragments[THIRD] = ZhihuThirdFragment.newInstance();
             mFragments[FOURTH] = MineFragment.newInstance();
 

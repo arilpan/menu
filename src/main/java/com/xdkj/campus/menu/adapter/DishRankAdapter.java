@@ -70,16 +70,13 @@ public class DishRankAdapter extends RecyclerView.Adapter<DishRankAdapter.MyView
         APPRank.ValueBean.DataBean item = mItems.get(position);
         holder.name.setText(item.getDishes_name());
         holder.desc.setText(item.getDishes_description());
-        holder.price.setText("￥"+item.getDishes_price());
+        holder.price.setText("￥" + item.getDishes_price());
         holder.soldNum.setText("  " + item.getPurchase_count() + "人购买");
 //        holder.soldNum.setText(item.getNum() + "人购买");
-        //todo : load default image
         Picasso.with(mInflater.getContext()) //
                 .load(APIAddr.BASE_IMG_URL + item.getUpload_url()) //
-//                .resizeDimen(R.dimen.notification_icon_width_height,
-//                        R.dimen.notification_icon_width_height) //
-                .error(R.drawable.cai_img_defult).into(holder.image);
-//     holder.image.setImageResource(R.drawable.index_dishes_image_default);
+                .error(R.drawable.index_dishes_image_default)
+                .into(holder.image);
     }
 
     @Override

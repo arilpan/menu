@@ -39,16 +39,16 @@
     <cn.bingoogolapple.bgabanner.BGABanner
         android:id="@+id/index_child_banner"
         style="@style/MatchMatch"
-
         android:layout_weight="1"
         android:clickable="true"
         app:banner_pageChangeDuration="2000"
         app:paddingStart="5dp"
         app:paddingEnd="5dp"
         app:banner_tipTextSize="14sp"
+        app:banner_indicatorGravity="right"
         app:banner_pointAutoPlayAble="true"
         app:banner_pointContainerBackground="@android:color/transparent"
         app:banner_pointDrawable="@drawable/bga_banner_selector_point_hollow"
-        app:banner_pointTopBottomMargin="10dp"
+        app:banner_pointTopBottomMargin="5dp"
         app:banner_transitionEffect="fade"/>
 </LinearLayout>

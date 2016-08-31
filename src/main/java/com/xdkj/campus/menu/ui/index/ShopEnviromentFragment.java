@@ -108,10 +108,22 @@ public class ShopEnviromentFragment extends BaseFragment
     private void initView(View view)
     {
         EventBus.getDefault().register(this);
+        ((TextView) view.findViewById(R.id.title_middle)).setText("门店环境");
+        view.findViewById(R.id.title_ll_left).setOnClickListener(new View
+                .OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+                _mActivity.onBackPressed();
+            }
+        });
 
         index_child_banner = (BGABanner) view.findViewById(R.id.index_child_banner);
         tab1 = (TextView) view.findViewById(R.id.tab1);
         tab2 = (TextView) view.findViewById(R.id.tab2);
+        tab1.setText(APIAddr.shop_one_name);
+        tab2.setText(APIAddr.shop_two_name);
 
         index_child_banner.setAdapter(new BGABanner.Adapter()
         {

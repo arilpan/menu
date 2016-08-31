@@ -9,7 +9,9 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.squareup.picasso.Picasso;
 import com.xdkj.campus.menu.R;
+import com.xdkj.campus.menu.api.APIAddr;
 import com.xdkj.campus.menu.api.message.APPNew;
 import com.xdkj.campus.menu.entity.Dish;
 import com.xdkj.campus.menu.listener.OnItemClickListener;
@@ -97,9 +99,13 @@ public class WaterFallPagerAdapter extends RecyclerView.Adapter<WaterFallPagerAd
         APPNew.ValueBean.DataBean item = mItems.get(position);
         holder.name.setText(item.getDishes_name());
         holder.desc.setText(item.getDishes_description());
-        holder.price.setText("￥"+item.getDishes_price());
+        holder.price.setText("￥" + item.getDishes_price());
 
-//        holder.image.setImageResource(R.drawable.index_dishes_image_default);
+        Picasso.with(
+                mInflater.getContext()) //
+                .load(APIAddr.BASE_IMG_URL + item.getUpload_url()) //
+                .error(R.drawable.index_dishes_image_default).
+                into(holder.image);
     }
 
     @Override

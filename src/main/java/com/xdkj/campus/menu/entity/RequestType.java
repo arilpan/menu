@@ -50,6 +50,7 @@ public class RequestType
     public final static int NEWS_DETAIL = 42;
 
     //discount
+    public final static int DISCOUNT_CARD_LIST = 50;
     public final static int DISCOUNT_LIST = 51;
     public final static int DISCOUNT_DETAIL = 52;
 

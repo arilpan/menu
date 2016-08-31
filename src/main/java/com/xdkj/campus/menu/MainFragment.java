@@ -6,6 +6,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import com.xdkj.campus.menu.api.APIAddr;
 import com.xdkj.campus.menu.base.BaseFragment;
 import com.xdkj.campus.menu.event.StartBrotherEvent;
 import com.xdkj.campus.menu.event.TabSelectedEvent;
@@ -47,7 +49,7 @@ public class MainFragment extends BaseFragment {
         View view = inflater.inflate(R.layout.zhihu_activity_main, container, false);
         if (savedInstanceState == null) {
             mFragments[FIRST] = IndexFragment.newInstance();
-            mFragments[SECOND] = DiscountFragment.newInstance();
+            mFragments[SECOND] = DiscountFragment.newInstance(APIAddr.shop_one_id);
             mFragments[THIRD] = ZhihuThirdFragment.newInstance();
             mFragments[FOURTH] = MineFragment.newInstance();
 
