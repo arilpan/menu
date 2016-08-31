@@ -100,7 +100,7 @@ public class SettingFragment extends BaseFragment
             public void onClick(View view)
             {
                 EventBus.getDefault().post(new StartBrotherEvent(
-                        DishDetailFragment.newInstance("")));
+                        AboutFragment.newInstance(0)));
             }
         });
         ll_repswd.setOnClickListener(new View.OnClickListener()

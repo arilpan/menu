@@ -29,6 +29,8 @@ import com.xdkj.campus.menu.ui.dishhot.HotDishesFragment;
 import com.xdkj.campus.menu.ui.dishrank.DishesRankSwitchFragment;
 import com.xdkj.campus.menu.ui.dishesnew.DishesSwitchFragment;
 import com.xdkj.campus.menu.ui.index.DishDetailFragment;
+import com.xdkj.campus.menu.ui.index.NewDishesFragment;
+import com.xdkj.campus.menu.ui.index.ShopEnviromentFragment;
 import com.xdkj.campus.menu.ui.news.NewsListFragment;
 import com.xdkj.campus.menu.ui.order.SelectPlaceFragment;
 
@@ -109,7 +111,7 @@ public class IndexFragment extends BaseLazyMainFragment
             public void onClick(View v)
             {
                 EventBus.getDefault().post(new StartBrotherEvent(
-                        DishesSwitchFragment.newInstance("精品套餐")));
+                        ShopEnviromentFragment.newInstance(APIAddr.shop_one_id)));
             }
         });
         view.findViewById(R.id.recharge_layout).setOnClickListener(new View
@@ -268,7 +270,7 @@ public class IndexFragment extends BaseLazyMainFragment
 //                ((MainActivity) getParentFragment()).startBrother
 //                        (new StartBrotherEvent(DishesSwitchFragment.newInstance()));
                 EventBus.getDefault().post(new StartBrotherEvent(
-                        DishesSwitchFragment.newInstance
+                        NewDishesFragment.newInstance
                         ("新品尝鲜")));
 
             }

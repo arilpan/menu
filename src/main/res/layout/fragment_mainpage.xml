@@ -79,7 +79,7 @@
 
                     <TextView
                         style="@style/index_class_select_layout_text"
-                        android:text="@string/index_competitive_meal"
+                        android:text="@string/index_env_show"
                         />
                 </LinearLayout>
 

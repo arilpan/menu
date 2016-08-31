@@ -1,10 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical">
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:orientation="vertical">
 
     <include layout="@layout/common_title_back_grey_color"/>
 
@@ -20,14 +19,12 @@
             android:layout_weight="1"
             android:gravity="center"
             android:text="第一家餐馆"/>
-
         <TextView
             android:id="@+id/placeholder_line"
             android:layout_width="2dp"
             android:layout_height="match_parent"
             android:gravity="center"
             android:text="|"/>
-
         <TextView
             android:id="@+id/tab2"
             android:layout_width="match_parent"
@@ -39,26 +36,19 @@
 
     <View style="@style/line_divider_h"/>
 
-    <android.support.v4.widget.SwipeRefreshLayout
-        android:id="@+id/refresh_layout_left"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginBottom="10dp">
+    <cn.bingoogolapple.bgabanner.BGABanner
+        android:id="@+id/index_child_banner"
+        style="@style/MatchMatch"
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-            <android.support.v7.widget.RecyclerView
-                android:id="@+id/switch_recv_left"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:background="#F8F8F8">
-
-            </android.support.v7.widget.RecyclerView>
-
-        </LinearLayout>
-    </android.support.v4.widget.SwipeRefreshLayout>
-
+        android:layout_weight="1"
+        android:clickable="true"
+        app:banner_pageChangeDuration="2000"
+        app:paddingStart="5dp"
+        app:paddingEnd="5dp"
+        app:banner_tipTextSize="14sp"
+        app:banner_pointAutoPlayAble="true"
+        app:banner_pointContainerBackground="@android:color/transparent"
+        app:banner_pointDrawable="@drawable/bga_banner_selector_point_hollow"
+        app:banner_pointTopBottomMargin="10dp"
+        app:banner_transitionEffect="fade"/>
 </LinearLayout>

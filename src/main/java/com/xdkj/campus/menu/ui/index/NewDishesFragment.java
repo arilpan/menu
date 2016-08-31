@@ -1,4 +1,4 @@
-package com.xdkj.campus.menu.ui.dishesnew;
+package com.xdkj.campus.menu.ui.index;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -9,28 +9,27 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.squareup.moshi.JsonAdapter;
 import com.squareup.moshi.Types;
 import com.xdkj.campus.menu.MainActivity;
 import com.xdkj.campus.menu.R;
 import com.xdkj.campus.menu.adapter.WaterFallPagerAdapter;
+import com.xdkj.campus.menu.api.APIAddr;
 import com.xdkj.campus.menu.api.message.APPNew;
 import com.xdkj.campus.menu.base.BaseFragment;
-import com.xdkj.campus.menu.entity.Dish;
 import com.xdkj.campus.menu.entity.RequestType;
 import com.xdkj.campus.menu.event.NetworkEvent;
 import com.xdkj.campus.menu.event.StartBrotherEvent;
 import com.xdkj.campus.menu.event.TabSelectedEvent;
 import com.xdkj.campus.menu.listener.OnItemClickListener;
-import com.xdkj.campus.menu.ui.index.DishDetailFragment;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 import okhttp3.OkHttpClient;
@@ -41,7 +40,7 @@ import okhttp3.ResponseBody;
 /**
  * Created by aril_pan@qq.com on 16/8.
  */
-public class WaterFallDishesFragment extends BaseFragment implements SwipeRefreshLayout
+public class NewDishesFragment extends BaseFragment implements SwipeRefreshLayout
         .OnRefreshListener
 {
     int SECOND = 1;
@@ -53,12 +52,12 @@ public class WaterFallDishesFragment extends BaseFragment implements SwipeRefres
     private RecyclerView mRecy;
     private WaterFallPagerAdapter mAdapter;
 
-    public static WaterFallDishesFragment newInstance(String shop_org_id)
+    public static NewDishesFragment newInstance(String shop_org_id)
     {
         Log.e("arilpan","1233");
         Bundle args = new Bundle();
         args.putString("shop_id", shop_org_id);
-        WaterFallDishesFragment fragment = new WaterFallDishesFragment();
+        NewDishesFragment fragment = new NewDishesFragment();
         fragment.setArguments(args);
         return fragment;
     }
@@ -99,6 +98,42 @@ public class WaterFallDishesFragment extends BaseFragment implements SwipeRefres
     {
         EventBus.getDefault().register(this);
         datas = new ArrayList<>();
+
+
+        ((TextView) view.findViewById(R.id.title_middle)).setText("新品尝鲜");
+        view.findViewById(R.id.title_ll_left).setOnClickListener(new View
+                .OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+                _mActivity.onBackPressed();
+            }
+        });
+        TextView tab1 = (TextView)view.findViewById(R.id.tab1);
+        TextView tab2 = (TextView)view.findViewById(R.id.tab2);
+        tab1.setText(APIAddr.shop_one_name);
+        tab2.setText(APIAddr.shop_two_name);
+        tab1.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View view)
+            {
+                EventBus.getDefault().post(new NetworkEvent(
+                        RequestType.INDEX_DISH_NEW,
+                        APIAddr.shop_one_id));
+            }
+        });
+        tab2.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View view)
+            {
+                EventBus.getDefault().post(new NetworkEvent(
+                        RequestType.INDEX_DISH_NEW,
+                        APIAddr.shop_two_id));
+            }
+        });
 
         mRecy = (RecyclerView) view.findViewById(R.id.switch_recv_left);
         mRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.refresh_layout_left);

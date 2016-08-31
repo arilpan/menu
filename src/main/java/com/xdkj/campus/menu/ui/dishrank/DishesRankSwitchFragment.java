@@ -67,6 +67,7 @@ public class DishesRankSwitchFragment extends BaseBackFragment
                 _mActivity.onBackPressed();
             }
         });
+
         mTab = (TabLayout) view.findViewById(R.id.tab);
         mViewPager = (ViewPager) view.findViewById(R.id.viewPager);
 

@@ -34,6 +34,7 @@ public class RequestType
 
     //index-dish
     public final static int INDEX_ALL = 31;
+    public final static int INDEX_SHOP_ENV = 311;
     public final static int INDEX_DISH_NEW = 32;
     public final static int INDEX_DISH_RANK = 33;
     public final static int INDEX_DISH_DISCOUNT = 34;
@@ -42,6 +43,7 @@ public class RequestType
     public final static int INDEX_DISH_SELECT_LEFT = 37;
     public final static int INDEX_DISH_SELECT_RIGHT = 38;
     public final static int INDEX_DISH_SELECT_ROOM = 39;
+
 
     //news
     public final static int NEWS_LIST = 41;

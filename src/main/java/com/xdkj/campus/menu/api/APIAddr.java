@@ -36,7 +36,8 @@ public class APIAddr
      */
     public static String index_url = BASE_URL + "/shop_dishes_index" +
             ".do?iDisplayStart=0&iDisplayLength=10";
-
+    public static String index_shop_env_url = BASE_URL
+            + "/shop_Picture_info.do?shop_id=";
     /**
      * 选菜:菜品分类接口
      * 左侧:标签类型列表和菜品类型列表
@@ -119,6 +120,11 @@ public class APIAddr
             "/appOrder/list_Order.do?user_id=USERID&order_status=";
     public static String order_cancel_url = BASE_PROJECT_URL +
             "/appOrder/cancelOrders.do?order_id=";
+
+    public static String dish_comment_url = BASE_PROJECT_URL +
+            "appEvaluation/saveAddEvaluations.do?user_id=USERID" +
+            "&dishes_id=DISHID&content=CONTENT";
+
     /**
      * set org id
      *

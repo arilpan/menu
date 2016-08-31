@@ -27,7 +27,7 @@ import java.util.List;
 
 /**
  * 下测查看已经选择的菜品信息
- * <p/>
+ * <p>
  * Created by aril_pan@qq.com on 16/8.
  */
 public class DishListFragment extends BaseFragment
@@ -38,7 +38,6 @@ public class DishListFragment extends BaseFragment
 
     public DishListFragment()
     {
-        // Required empty public constructor
     }
 
     static DishListFragment fragment;
@@ -91,27 +90,28 @@ public class DishListFragment extends BaseFragment
         select_grid.setOnItemClickListener(new AdapterView.OnItemClickListener()
         {
             @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l)
+            public void onItemClick(AdapterView<?> adapterView,
+                                    View view, int i, long l)
             {
                 TextView nums = (TextView)
                         adapterView.findViewById(R.id.item_middle);
                 View v;
                 int count = adapterView.getChildCount();
-                v =adapterView.getChildAt(i);
-                
+                v = adapterView.getChildAt(i);
+
 
                 if (view.getId() == R.id.item_left)
                 {
-                    Log.e("arilpan","left item is clicked");
+                    Log.e("arilpan", "left item is clicked");
                     nums.setText("0");
 
                 } else if (view.getId() == R.id.item_right)
                 {
-                    Log.e("arilpan","right item is clicked");
+                    Log.e("arilpan", "right item is clicked");
                     nums.setText("2");
-                }else
+                } else
                 {
-                    Log.e("arilpan","other item is clicked");
+                    Log.e("arilpan", "other item is clicked");
                 }
             }
         });

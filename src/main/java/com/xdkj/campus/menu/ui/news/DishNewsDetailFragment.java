@@ -6,9 +6,12 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.WebView;
+import android.webkit.WebViewClient;
 import android.widget.TextView;
 
 import com.xdkj.campus.menu.R;
+import com.xdkj.campus.menu.api.APIAddr;
 import com.xdkj.campus.menu.api.message.APPNewsList;
 import com.xdkj.campus.menu.base.BaseFragment;
 
@@ -18,8 +21,8 @@ import com.xdkj.campus.menu.base.BaseFragment;
  */
 public class DishNewsDetailFragment extends BaseFragment
 {
-    public static int dish_id;
-
+//    public static int dish_id;
+    //news_detail_url
     APPNewsList.ValueBean.ListBean.DataBean dishnew;
     String news_id;
     private TextView title;
@@ -30,7 +33,7 @@ public class DishNewsDetailFragment extends BaseFragment
     {
     }
 
-    public static DishNewsDetailFragment newInstance( String  news_id)
+    public static DishNewsDetailFragment newInstance(String news_id)
     {
 
         Bundle args = new Bundle();
@@ -47,8 +50,9 @@ public class DishNewsDetailFragment extends BaseFragment
         super.onCreate(savedInstanceState);
         //news_id
         Bundle args = getArguments();
-        if (args != null) {
-            news_id =  args.getString("news_id");
+        if (args != null)
+        {
+            news_id = args.getString("news_id");
         }
     }
 
@@ -65,12 +69,13 @@ public class DishNewsDetailFragment extends BaseFragment
 
     private void initView(View view)
     {
-        title = (TextView) view.findViewById(R.id.title);
-        time = (TextView) view.findViewById(R.id.time);
-        content = (TextView) view.findViewById(R.id.content);
-//        title.setText(new.getTitle());
-//        time.setText(dishnew.getTime());
-//        content.setText(dishnew.getContent());
+        WebView webview = (WebView) view.findViewById(R.id.webview);
+
+
+        String url = APIAddr.news_detail_url+news_id;
+        //此方法可以在webview中打开链接而不会跳转到外部浏览器
+        webview.setWebViewClient(new WebViewClient());
+        webview.loadUrl(url);
     }
 
     @Override
