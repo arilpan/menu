@@ -20,8 +20,10 @@ import com.squareup.moshi.Types;
 import com.xdkj.campus.menu.MainActivity;
 import com.xdkj.campus.menu.R;
 import com.xdkj.campus.menu.api.APIAddr;
+import com.xdkj.campus.menu.api.APIAddrFactory;
 import com.xdkj.campus.menu.api.message.APPALL;
 import com.xdkj.campus.menu.api.message.APPSelectLeft;
+import com.xdkj.campus.menu.api.message.APPSelectRight;
 import com.xdkj.campus.menu.backup.ContentFragment;
 import com.xdkj.campus.menu.base.BaseFragment;
 import com.xdkj.campus.menu.entity.RequestType;
@@ -232,9 +234,51 @@ public class ShopFragment extends BaseFragment
         if (RequestType.INDEX_DISH_SELECT_LEFT == event.reqType)
         {
             Log.e("arilpan", "ShopFragment 填充数据");
+            getRightData(event);
             setData(getData(event));
+
         }
 
+    }
+
+    public static List<APPSelectRight.ValueBean> rightDatas;
+
+    public void getRightData(NetworkEvent event)
+    {
+        try
+        {
+            final JsonAdapter<APPSelectRight>
+                    COM_JSON_ADAPTER = MainActivity.MOSHI.adapter(
+                    Types.newParameterizedType(APPSelectRight.class));
+            OkHttpClient client = new OkHttpClient();
+            Request request = new Request.Builder()
+                    .url(APIAddrFactory.createURL(RequestType.INDEX_DISH_SELECT_RIGHT)
+                            + event.id)
+                    .build();
+            Response response = client.newCall(request).execute();
+            ResponseBody body = response.body();
+
+            APPSelectRight datas_arry =
+                    COM_JSON_ADAPTER.fromJson(body.source());
+            body.close();
+
+            rightDatas = datas_arry.getValue();
+            Log.e("arilpan", "dish num:" + rightDatas.size());
+
+//            Collections.sort(contributors, new Comparator<APIDish>()
+//            {
+//                @Override
+//                public int compare(APIDish c1, APIDish c2)
+//                {
+//                    return c2.getDishes_id() - c1.getDishes_id();
+//                }
+//            });
+//            return rightDatas;
+        } catch (Exception e)
+        {
+            e.printStackTrace();
+        }
+//        return null;
     }
 
     public List<APPSelectLeft.ValueBean> getData(NetworkEvent event)
@@ -246,7 +290,7 @@ public class ShopFragment extends BaseFragment
                     Types.newParameterizedType(APPSelectLeft.class));
             OkHttpClient client = new OkHttpClient();
             Request request = new Request.Builder()
-                    .url(event.url)
+                    .url(event.url + event.id)
                     .build();
             Response response = client.newCall(request).execute();
             ResponseBody body = response.body();
@@ -286,10 +330,13 @@ public class ShopFragment extends BaseFragment
 
                     ArrayList<String> hidenMenu = new ArrayList<>();
                     MenuListFragment menuListFragment =
-                            MenuListFragment.newInstance(listMenus, hidenMenu);
+                            MenuListFragment.newInstance(listMenus);
+//                            MenuListFragment.newInstance(listMenus, hidenMenu);
                     loadRootFragment(R.id.fl_list_container, menuListFragment);
                     replaceLoadRootFragment(R.id.fl_content_container,
-                            SelectFragment.newInstance("热门推荐", "1"), false);
+                            SelectFragment.newInstance(
+                                    (listMenus == null || listMenus.size() == 0) ? "1" :
+                                            listMenus.get(0).getTagID(), "热门推荐"), false);
 
 
                 }

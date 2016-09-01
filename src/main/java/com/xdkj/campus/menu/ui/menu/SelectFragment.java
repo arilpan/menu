@@ -9,8 +9,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.*;
 
+import com.squareup.picasso.Picasso;
 import com.xdkj.campus.menu.R;
 import com.xdkj.campus.menu.api.APIAddr;
+import com.xdkj.campus.menu.api.message.APPSelectRight;
 import com.xdkj.campus.menu.event.StartBrotherEvent;
 import com.xdkj.campus.menu.fragment.ShopFragment;
 import com.xdkj.campus.menu.base.BaseFragment;
@@ -34,9 +36,11 @@ import me.yokeyword.fragmentation.SupportFragment;
  */
 public class SelectFragment extends BaseFragment
 {
-    private static final String ARG_PARAM1 = "select_dish";
+    private static final String ARG_PARAM1 = "left_menu_id";
+    private static final String ARG_PARAM2 = "classname";
     GridView select_grid;
     String classname;
+    String menu_id;
 
     public SelectFragment()
     {
@@ -48,6 +52,7 @@ public class SelectFragment extends BaseFragment
         SelectFragment fragment = new SelectFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
+        args.putString(ARG_PARAM2, param2);
         fragment.setArguments(args);
         return fragment;
     }
@@ -58,7 +63,8 @@ public class SelectFragment extends BaseFragment
         super.onCreate(savedInstanceState);
         if (getArguments() != null)
         {
-            classname = getArguments().getString(ARG_PARAM1);
+            menu_id = getArguments().getString(ARG_PARAM1);
+            classname = getArguments().getString(ARG_PARAM2);
         }
     }
 
@@ -95,20 +101,43 @@ public class SelectFragment extends BaseFragment
                 R.drawable.index_dishes_image_default,
                 R.drawable.index_dishes_image_default};
 //        String[] name = {"某菜1", "某菜2", "某菜3", "某菜4"};
-        String[] name = {"土豆丝", "青菜", "小白菜", "茄子"};
-        String[] price = {"52", "48", "22", "92"};
+        //得到tag对应的id name price 信息
+        String[] name = new String[100];
+        String[] price = new String[100];
+        String[] ids = new String[100];
+        String[] imgs = new String[100];
+
+        int ii = 0;
+
+        for (APPSelectRight.ValueBean vb : ShopFragment.rightDatas)
+        {
+            if (vb.getTagID().equals(menu_id))
+            {
+                name[ii] = vb.getDishes_name();
+                price[ii] = vb.getDishes_price();
+                ids[ii] = vb.getDishes_id();
+                imgs[ii++] = vb.getUpload_url();
+                Log.e("arilpan","解析某瓶类菜:"+vb.getTagID()+","+vb.getDishes_name());
+            }
+        }
+
+//        String[] name = {"土豆丝", "青菜", "小白菜", "茄子"};
+//        String[] price = {"52", "48", "22", "92"};
         String pre_order = "预约";
         item = new ArrayList<Dish>();
-        for (int i = 0; i < resIds.length; i++)
+        for (int i = 0; i < ii; i++)
         {
-            HashMap<String, Object> map = new HashMap<String, Object>();
-            map.put("item_image", resIds[i]);
-            map.put("item_right", pre_order);
+//            HashMap<String, Object> map = new HashMap<String, Object>();
+//            map.put("item_image", resIds[i]);
+//            map.put("item_right", pre_order);
+
             Dish dish = new Dish();
+            dish.setDish_id(ids[i]);
             dish.setName(name[i]);
+//            dish.setMallprice();
             dish.setPrice(price[i]);
             dish.setPreOrder("预约");
-            dish.setImg(R.drawable.index_dishes_image_default);
+            dish.setImgurl(imgs[i]);
             item.add(dish);
         }
       /*  SimpleAdapter simpleAdapter = new SimpleAdapter(getContext(), item,
@@ -118,7 +147,8 @@ public class SelectFragment extends BaseFragment
                         R.id.item_right}) {
         };*/
         DishGridAdapter dga = new DishGridAdapter(
-                item, R.layout.fragment_select_dishes_grid_item, getContext());
+                item, R.layout.fragment_select_dishes_grid_item,
+                getContext());
         select_grid.setAdapter(dga);
 //        select_grid.setOnClickListener(new View.OnClickListener() {
 //            @Override
@@ -138,7 +168,8 @@ public class SelectFragment extends BaseFragment
                 dish.setNum(dish.getNum() + 1);
                 DishList.getlist().remove(dish);
                 DishList.getlist().add(dish);
-                EventBus.getDefault().post(new ShopEvent(ShopFragment.newInstance(ShopFragment.shop_id)));
+                EventBus.getDefault().post(new ShopEvent(ShopFragment.newInstance(ShopFragment
+                        .shop_id)));
 //               switchDishListFragment(DishListFragment.newInstance(null, null));
                 ((ShopFragment) getParentFragment()).switchDishListFragment();
             }
@@ -176,7 +207,8 @@ public class SelectFragment extends BaseFragment
             this.dishs = dishs;
             this.resource = resource;
             this.context = context.getApplicationContext();
-            inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            inflater = (LayoutInflater)
+                    context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         }
 
         @Override
@@ -210,12 +242,19 @@ public class SelectFragment extends BaseFragment
             TextView dish_desc = (TextView) convertView.findViewById(R.id.item_middle);
             TextView dish_order_btn = (TextView) convertView.findViewById(R.id.item_right);
 
-            Dish dish = dishs.get(position);
+            final Dish dish = dishs.get(position);
             dish_name.setText(dish.getName());
             dish_desc.setText(dish.getPrice());
             dish_order_btn.setText("预约");
 
-            dish_img.setImageResource(R.drawable.index_dishes_image_default);
+            Picasso.with(
+                    inflater.getContext()) //
+                    .load(APIAddr.BASE_IMG_URL + dish.getImgurl()) //
+                    .error(R.drawable.index_dishes_image_default).
+                    into(dish_img);
+
+//            dish_img.setImageResource(
+//                    R.drawable.index_dishes_image_default);
 
             dish_img.setOnClickListener(new View.OnClickListener()
             {
@@ -239,7 +278,7 @@ public class SelectFragment extends BaseFragment
                     }
                     EventBus.getDefault().post(
                             new StartBrotherEvent(DishDetailFragment.
-                                    newInstance(APIAddr.dish_id)));
+                                    newInstance(dish.getDish_id())));
 //                    start(DishDetailFragment.newInstance(1));
                     //  Toast.makeText(context, good.getGoodProvider(),
                     //  Toast.LENGTH_LONG).show();

@@ -39,14 +39,14 @@ public class MenuListFragment extends BaseFragment
     private MenuAdapter mAdapter;
 
     private ArrayList<String> mMenus;
-
-    private ArrayList<String> mAddMenus;
+    private ArrayList<String> mMenusTag;
+    //    private ArrayList<String> mAddMenus;
     private int mCurrentPosition = -1;
 
     public static MenuListFragment newInstance(
 
-            List<APPSelectLeft.ValueBean> menus,
-            ArrayList<String> addmenus)
+            List<APPSelectLeft.ValueBean> menus)
+//            , ArrayList<String> addmenus)
     {
         Bundle args = new Bundle();
         ArrayList<String> tags = new ArrayList<>();
@@ -58,7 +58,7 @@ public class MenuListFragment extends BaseFragment
             names.add(menu.getType());
         }
         args.putStringArrayList(ARG_MENUS, names);
-        args.putStringArrayList(ARG_ADDMENUS, addmenus);
+//        args.putStringArrayList(ARG_ADDMENUS, addmenus);
         args.putStringArrayList(ARG_TAGS, tags);
         MenuListFragment fragment = new MenuListFragment();
         fragment.setArguments(args);
@@ -74,7 +74,7 @@ public class MenuListFragment extends BaseFragment
         if (args != null)
         {
             mMenus = args.getStringArrayList(ARG_MENUS);
-            mAddMenus = args.getStringArrayList(ARG_ADDMENUS);
+            mMenusTag = args.getStringArrayList(ARG_TAGS);
         }
     }
 
@@ -158,7 +158,8 @@ public class MenuListFragment extends BaseFragment
 //        ((ShopFragment) getParentFragment()).switchContentFragment(fragment);
 
         //菜品种类
-        SelectFragment fragment1 = SelectFragment.newInstance(mMenus.get(position), "");
+        SelectFragment fragment1 = SelectFragment.newInstance(mMenusTag.get(position),
+                mMenus.get(position));
 //        SelectFragment fragment1 = SelectFragment.newInstance(position < 3 ? mMenus.get
 // (position) :
 //                mAddMenus.get(position - 4), "");

@@ -6,6 +6,7 @@ package com.xdkj.campus.menu.entity;
 public class Dish
 {
     private int id;
+    private String dish_id;
     private String name;
     private int img;
     private String imgurl;
@@ -44,6 +45,16 @@ public class Dish
     public void setId(int id)
     {
         this.id = id;
+    }
+
+    public String getDish_id()
+    {
+        return dish_id;
+    }
+
+    public void setDish_id(String dish_id)
+    {
+        this.dish_id = dish_id;
     }
 
     public String getMallprice()

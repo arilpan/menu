@@ -24,13 +24,13 @@ public class DishList
         return dishes;
     }
 
-    public static int getTotalPrice()
+    public static double getTotalPrice()
     {
-        int total = 0;
+        double total = 0;
         dishes = getlist();
         for (Dish dish : dishes)
         {
-            total = total + (dish.getNum() * Integer.parseInt(dish.getPrice()));
+            total = total + (dish.getNum() * Double.parseDouble(dish.getPrice()));
         }
         Log.e("arilpan", "调用已选菜品计算总额方法:" + total);
         return total;
