@@ -9,6 +9,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.squareup.moshi.JsonAdapter;
 import com.squareup.moshi.Types;
@@ -70,6 +71,16 @@ public class NewsListFragment extends BaseFragment implements SwipeRefreshLayout
     /****************************************************************/
     private void initView(View view)
     {
+        ((TextView) view.findViewById(R.id.title_middle)).setText("新闻资讯");
+        view.findViewById(R.id.title_ll_left).setOnClickListener(new View
+                .OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+                _mActivity.onBackPressed();
+            }
+        });
         EventBus.getDefault().register(this);
 
         mRecy = (RecyclerView) view.findViewById(R.id.news_recyview);

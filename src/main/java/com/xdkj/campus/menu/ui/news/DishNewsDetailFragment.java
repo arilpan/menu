@@ -69,6 +69,16 @@ public class DishNewsDetailFragment extends BaseFragment
 
     private void initView(View view)
     {
+        ((TextView) view.findViewById(R.id.title_middle)).setText("资讯详情");
+        view.findViewById(R.id.title_ll_left).setOnClickListener(new View
+                .OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+                _mActivity.onBackPressed();
+            }
+        });
         WebView webview = (WebView) view.findViewById(R.id.webview);
 
 

@@ -74,6 +74,7 @@ public class CompleteOrderFragment extends BaseFragment
 
     private void initView(View view)
     {
+        setTitle(view,"已完成订单");
         EventBus.getDefault().register(this);
         datas = new ArrayList<>();
         order_recyview = (RecyclerView) view.findViewById(R.id.order_recyview);

@@ -15,7 +15,7 @@ public class DishList
 {
     public static List<Dish> dishes;
 
-    public static List getlist()
+    public static List<Dish> getlist()
     {
         if (dishes == null)
         {

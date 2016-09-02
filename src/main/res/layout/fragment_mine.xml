@@ -24,7 +24,7 @@
                 android:textColor="@color/white"
                 android:textSize="18sp"
                 android:layout_marginTop="16dp"
-                android:text="mine "/>
+                android:text="用户名"/>
 
     </LinearLayout>
 

@@ -111,7 +111,8 @@ public class ShopFragment extends BaseFragment
 
     public void gotoSelectDetail()
     {
-        EventBus.getDefault().post(new StartBrotherEvent(SelectPlaceDetailFragment.newInstance(1)));
+        EventBus.getDefault().post(
+                new StartBrotherEvent(SelectPlaceDetailFragment.newInstance(shop_id)));
     }
 
     private void initView(View view, Bundle savedInstanceState)
@@ -133,8 +134,11 @@ public class ShopFragment extends BaseFragment
         fManager = getFragmentManager();
         transaction = fManager.beginTransaction();
 
-        mToolbar.setTitle("商店");
-        initToolbarMenu(mToolbar);
+        mToolbar.setTitle("选菜");
+
+
+//        initToolbarMenu(mToolbar);
+
         total_price = (TextView) view.findViewById(R.id.total_price);
         setTotalPriceView();
         //获取一次,保存在下left
@@ -265,15 +269,6 @@ public class ShopFragment extends BaseFragment
             rightDatas = datas_arry.getValue();
             Log.e("arilpan", "dish num:" + rightDatas.size());
 
-//            Collections.sort(contributors, new Comparator<APIDish>()
-//            {
-//                @Override
-//                public int compare(APIDish c1, APIDish c2)
-//                {
-//                    return c2.getDishes_id() - c1.getDishes_id();
-//                }
-//            });
-//            return rightDatas;
         } catch (Exception e)
         {
             e.printStackTrace();
@@ -300,14 +295,6 @@ public class ShopFragment extends BaseFragment
             listMenus = datas_arry.getValue();
 
 
-//            Collections.sort(contributors, new Comparator<APIDish>()
-//            {
-//                @Override
-//                public int compare(APIDish c1, APIDish c2)
-//                {
-//                    return c2.getDishes_id() - c1.getDishes_id();
-//                }
-//            });
             return listMenus;
         } catch (Exception e)
         {
@@ -351,7 +338,6 @@ public class ShopFragment extends BaseFragment
     @Subscribe
     public void setPrice(ShopEvent event)
     {
-        Log.e("arilpan", "以前能收到 现在收到通知无法设置总额了");
         setTotalPriceView();
     }
 
@@ -377,7 +363,7 @@ public class ShopFragment extends BaseFragment
             dishListFragment.pop();
         } else
         {
-            Log.e("arilpan", "dishListFragment == null ");
+            Log.e("arilpan", "dishListFragment == null 不需要弹出,直接覆盖即可");
         }
     }
 

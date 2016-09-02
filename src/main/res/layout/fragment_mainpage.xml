@@ -75,7 +75,7 @@
 
                     <ImageView
                         style="@style/index_class_select_layout_image"
-                        android:src="@drawable/index_boutique_package"/>
+                        android:src="@drawable/huanjingzhanshi"/>
 
                     <TextView
                         style="@style/index_class_select_layout_text"
@@ -131,7 +131,7 @@
                     <ImageView
 
                         style="@style/index_activity_select_layout_image"
-                        android:src="@drawable/index_acitivity_dishes_rank"/>
+                        android:src="@drawable/meishipaihangbang"/>
                 </RelativeLayout>
 
                 <View
@@ -164,7 +164,7 @@
                     <ImageView
 
                         style="@style/index_activity_select_layout_image"
-                        android:src="@drawable/index_activity_discount_dishes"/>
+                        android:src="@drawable/zhekou"/>
                 </RelativeLayout>
             </LinearLayout>
 
@@ -202,7 +202,7 @@
                     <ImageView
 
                         style="@style/index_activity_select_layout_image"
-                        android:src="@drawable/index_activity_recharge"/>
+                        android:src="@drawable/chongzhizhongxin"/>
                 </RelativeLayout>
 
                 <View
@@ -234,7 +234,7 @@
                     <ImageView
 
                         style="@style/index_activity_select_layout_image"
-                        android:src="@drawable/index_activity_day_discount"/>
+                        android:src="@drawable/meishizixun"/>
                 </RelativeLayout>
             </LinearLayout>
 

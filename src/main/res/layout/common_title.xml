@@ -19,6 +19,7 @@
                 android:src="@drawable/btn_back"/>
     </LinearLayout>
     <TextView
+        android:id="@+id/title_ll_middle"
             android:text="我是标题"
             android:textColor="#333"
             android:textSize="17sp"

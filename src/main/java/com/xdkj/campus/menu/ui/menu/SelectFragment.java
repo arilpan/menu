@@ -44,7 +44,6 @@ public class SelectFragment extends BaseFragment
 
     public SelectFragment()
     {
-        // Required empty public constructor
     }
 
     public static SelectFragment newInstance(String param1, String param2)
@@ -72,7 +71,6 @@ public class SelectFragment extends BaseFragment
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState)
     {
-        // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_select, container, false);
         initView(view);
         return view;
@@ -100,7 +98,6 @@ public class SelectFragment extends BaseFragment
                 R.drawable.index_dishes_image_default,
                 R.drawable.index_dishes_image_default,
                 R.drawable.index_dishes_image_default};
-//        String[] name = {"某菜1", "某菜2", "某菜3", "某菜4"};
         //得到tag对应的id name price 信息
         String[] name = new String[100];
         String[] price = new String[100];
@@ -121,19 +118,14 @@ public class SelectFragment extends BaseFragment
             }
         }
 
-//        String[] name = {"土豆丝", "青菜", "小白菜", "茄子"};
-//        String[] price = {"52", "48", "22", "92"};
         String pre_order = "预约";
         item = new ArrayList<Dish>();
         for (int i = 0; i < ii; i++)
         {
-//            HashMap<String, Object> map = new HashMap<String, Object>();
-//            map.put("item_image", resIds[i]);
-//            map.put("item_right", pre_order);
-
             Dish dish = new Dish();
             dish.setDish_id(ids[i]);
             dish.setName(name[i]);
+
 //            dish.setMallprice();
             dish.setPrice(price[i]);
             dish.setPreOrder("预约");
@@ -230,7 +222,8 @@ public class SelectFragment extends BaseFragment
         }
 
         @Override
-        public View getView(final int position, View convertView, ViewGroup parent)
+        public View getView(
+                final int position, View convertView, ViewGroup parent)
         {
             if (convertView == null)
             {
@@ -252,9 +245,6 @@ public class SelectFragment extends BaseFragment
                     .load(APIAddr.BASE_IMG_URL + dish.getImgurl()) //
                     .error(R.drawable.index_dishes_image_default).
                     into(dish_img);
-
-//            dish_img.setImageResource(
-//                    R.drawable.index_dishes_image_default);
 
             dish_img.setOnClickListener(new View.OnClickListener()
             {
@@ -279,6 +269,7 @@ public class SelectFragment extends BaseFragment
                     EventBus.getDefault().post(
                             new StartBrotherEvent(DishDetailFragment.
                                     newInstance(dish.getDish_id())));
+
 //                    start(DishDetailFragment.newInstance(1));
                     //  Toast.makeText(context, good.getGoodProvider(),
                     //  Toast.LENGTH_LONG).show();

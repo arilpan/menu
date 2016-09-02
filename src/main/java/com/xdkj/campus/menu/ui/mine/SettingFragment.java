@@ -63,6 +63,8 @@ public class SettingFragment extends BaseFragment
 
     private void initView(View view)
     {
+        setTitle(view,"设置");
+
         ll_update = (LinearLayout) view.findViewById(R.id.ll_update);
         ll_clear_data = (LinearLayout) view.findViewById(R.id.ll_clear_data);
         ll_about = (LinearLayout) view.findViewById(R.id.ll_about);

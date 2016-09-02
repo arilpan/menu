@@ -142,6 +142,7 @@ public class UncompleteOrderFragment extends BaseFragment
 
     private void initView(View view)
     {
+        setTitle(view,"未完成订单");
         EventBus.getDefault().register(this);
         datas = new ArrayList<>();
         order_recyview = (RecyclerView) view.findViewById(R.id.order_recyview);

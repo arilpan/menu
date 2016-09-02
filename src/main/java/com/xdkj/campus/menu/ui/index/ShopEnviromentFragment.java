@@ -1,5 +1,6 @@
 package com.xdkj.campus.menu.ui.index;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.util.Log;
@@ -105,6 +106,19 @@ public class ShopEnviromentFragment extends BaseFragment
     TextView tab1;
     TextView tab2;
 
+    public void setTabColor(boolean isTab1Select)
+    {
+        if(isTab1Select)
+        {
+            tab1.setTextColor(Color.rgb(172, 66, 66));
+            tab2.setTextColor(Color.rgb(66,66,66));
+        }else
+        {
+            tab2.setTextColor(Color.rgb(172, 66, 66));
+            tab1.setTextColor(Color.rgb(66,66,66));
+        }
+
+    }
     private void initView(View view)
     {
         EventBus.getDefault().register(this);
@@ -125,6 +139,7 @@ public class ShopEnviromentFragment extends BaseFragment
         tab1.setText(APIAddr.shop_one_name);
         tab2.setText(APIAddr.shop_two_name);
 
+        setTabColor(true);
         index_child_banner.setAdapter(new BGABanner.Adapter()
         {
             @Override
@@ -158,6 +173,7 @@ public class ShopEnviromentFragment extends BaseFragment
                 EventBus.getDefault().post(new NetworkEvent(
                         RequestType.INDEX_SHOP_ENV,
                         APIAddr.shop_one_id));
+                setTabColor(true);
             }
         });
         tab2.setOnClickListener(new View.OnClickListener()
@@ -168,6 +184,7 @@ public class ShopEnviromentFragment extends BaseFragment
                 EventBus.getDefault().post(new NetworkEvent(
                         RequestType.INDEX_SHOP_ENV,
                         APIAddr.shop_two_id));
+                setTabColor(false);
             }
         });
         EventBus.getDefault().post(new NetworkEvent(

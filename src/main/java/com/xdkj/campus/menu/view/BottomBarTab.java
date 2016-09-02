@@ -13,33 +13,41 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+
 import com.xdkj.campus.menu.R;
 
 /**
  * Created by YoKeyword on 16/6/3.
  */
-public class BottomBarTab extends FrameLayout {
+public class BottomBarTab extends FrameLayout
+{
     private ImageView mIcon;
     private TextView mTvTitle;
     private Context mContext;
     private int mTabPosition = -1;
 
-    public BottomBarTab(Context context, @DrawableRes int icon, CharSequence title) {
+    public BottomBarTab(Context context, @DrawableRes int icon, CharSequence title)
+    {
         this(context, null, icon, title);
     }
 
-    public BottomBarTab(Context context, AttributeSet attrs, int icon, CharSequence title) {
+    public BottomBarTab(Context context, AttributeSet attrs, int icon, CharSequence title)
+    {
         this(context, attrs, 0, icon, title);
     }
 
-    public BottomBarTab(Context context, AttributeSet attrs, int defStyleAttr, int icon, CharSequence title) {
+    public BottomBarTab(Context context, AttributeSet attrs, int defStyleAttr, int icon,
+                        CharSequence title)
+    {
         super(context, attrs, defStyleAttr);
         init(context, icon, title);
     }
 
-    private void init(Context context, int icon, CharSequence title) {
+    private void init(Context context, int icon, CharSequence title)
+    {
         mContext = context;
-        TypedArray typedArray = context.obtainStyledAttributes(new int[]{R.attr.selectableItemBackgroundBorderless});
+        TypedArray typedArray = context.obtainStyledAttributes(new int[]{R.attr
+                .selectableItemBackgroundBorderless});
         Drawable drawable = typedArray.getDrawable(0);
         setBackgroundDrawable(drawable);
         typedArray.recycle();
@@ -47,12 +55,14 @@ public class BottomBarTab extends FrameLayout {
         LinearLayout lLContainer = new LinearLayout(context);
         lLContainer.setOrientation(LinearLayout.VERTICAL);
         lLContainer.setGravity(Gravity.CENTER);
-        LayoutParams paramsContainer = new LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        LayoutParams paramsContainer = new LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT,
+                ViewGroup.LayoutParams.WRAP_CONTENT);
         paramsContainer.gravity = Gravity.CENTER;
         lLContainer.setLayoutParams(paramsContainer);
 
         mIcon = new ImageView(context);
-        int size = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 27, getResources().getDisplayMetrics());
+        int size = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 27, getResources
+                ().getDisplayMetrics());
         LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(size, size);
         mIcon.setImageResource(icon);
         mIcon.setLayoutParams(params);
@@ -61,8 +71,10 @@ public class BottomBarTab extends FrameLayout {
 
         mTvTitle = new TextView(context);
         mTvTitle.setText(title);
-        LinearLayout.LayoutParams paramsTv = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-        paramsTv.topMargin =  (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 2, getResources().getDisplayMetrics());
+        LinearLayout.LayoutParams paramsTv = new LinearLayout.LayoutParams(ViewGroup.LayoutParams
+                .WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        paramsTv.topMargin = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 2,
+                getResources().getDisplayMetrics());
         mTvTitle.setTextSize(10);
         mTvTitle.setTextColor(ContextCompat.getColor(context, R.color.tab_unselect));
         mTvTitle.setLayoutParams(paramsTv);
@@ -72,25 +84,31 @@ public class BottomBarTab extends FrameLayout {
     }
 
     @Override
-    public void setSelected(boolean selected) {
+    public void setSelected(boolean selected)
+    {
         super.setSelected(selected);
-        if (selected) {
+        if (selected)
+        {
             mIcon.setColorFilter(ContextCompat.getColor(mContext, R.color.colorPrimary));
             mTvTitle.setTextColor(ContextCompat.getColor(mContext, R.color.colorPrimary));
-        } else {
+        } else
+        {
             mIcon.setColorFilter(ContextCompat.getColor(mContext, R.color.tab_unselect));
             mTvTitle.setTextColor(ContextCompat.getColor(mContext, R.color.tab_unselect));
         }
     }
 
-    public void setTabPosition(int position) {
+    public void setTabPosition(int position)
+    {
         mTabPosition = position;
-        if (position == 0) {
+        if (position == 0)
+        {
             setSelected(true);
         }
     }
 
-    public int getTabPosition() {
+    public int getTabPosition()
+    {
         return mTabPosition;
     }
 }

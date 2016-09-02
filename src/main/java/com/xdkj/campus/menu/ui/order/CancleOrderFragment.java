@@ -76,6 +76,7 @@ public class CancleOrderFragment extends BaseFragment
 
     private void initView(View view)
     {
+        setTitle(view,"已取消订单");
         EventBus.getDefault().register(this);
         datas = new ArrayList<>();
 

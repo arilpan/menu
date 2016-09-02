@@ -108,6 +108,16 @@ public class DishDetailFragment extends BaseFragment
 
     private void initView(View view)
     {
+        setTitle(view,"菜品详情");
+        view.findViewById(R.id.title_ll_left).setOnClickListener(new View
+                .OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+                _mActivity.onBackPressed();
+            }
+        });
         EventBus.getDefault().register(this);
 
         dish_name = (TextView) view.findViewById(R.id.dish_name);

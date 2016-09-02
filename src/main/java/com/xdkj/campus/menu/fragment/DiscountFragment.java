@@ -101,6 +101,16 @@ public class DiscountFragment extends BaseFragment
     {
         EventBus.getDefault().register(this);
         ((TextView) view.findViewById(R.id.title_middle)).setText("优惠");
+        view.findViewById(R.id.title_ll_left).setOnClickListener(new View
+                .OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+                _mActivity.onBackPressed();
+            }
+        });
+
         listview = (RecyclerView) view.findViewById(R.id.listview);
 
         shop_id = "ba262eba-05da-4886-947c-5a557c954af5";

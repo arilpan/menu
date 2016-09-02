@@ -49,8 +49,20 @@ public class SelectPlaceFragment extends BaseFragment
 
     private void initView(View view)
     {
+        ((TextView) view.findViewById(R.id.title_ll_middle)).setText("预约用餐");
+        view.findViewById(R.id.title_ll_left).setOnClickListener(new View
+                .OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+                _mActivity.onBackPressed();
+            }
+        });
         mall_1 = (TextView) view.findViewById(R.id.mall_1);
         mall_2 = (TextView) view.findViewById(R.id.mall_2);
+        mall_1.setText(APIAddr.shop_one_name);
+        mall_2.setText(APIAddr.shop_two_name);
 
         mall_1.setOnClickListener(new View.OnClickListener()
         {

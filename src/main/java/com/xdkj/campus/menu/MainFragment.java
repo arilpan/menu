@@ -85,10 +85,14 @@ public class MainFragment extends BaseFragment {
         EventBus.getDefault().register(this);
         mBottomBar = (BottomBar) view.findViewById(R.id.bottomBar);
 
-        mBottomBar.addItem(new BottomBarTab(_mActivity, R.drawable.ic_home_white_24dp, "首页"))
-                .addItem(new BottomBarTab(_mActivity, R.drawable.ic_discover_white_24dp, "优惠"))
-                .addItem(new BottomBarTab(_mActivity, R.drawable.ic_message_white_24dp, "留言-点餐"))
-                .addItem(new BottomBarTab(_mActivity, R.drawable.ic_account_circle_white_24dp, "我的"));
+        mBottomBar.addItem(new BottomBarTab(_mActivity,
+                R.drawable.ic_home_icon1, "首页"))
+                .addItem(new BottomBarTab(_mActivity,
+                        R.drawable.ic_home_icon2, "优惠"))
+                .addItem(new BottomBarTab(_mActivity,
+                        R.drawable.ic_home_icon3, "留言"))
+                .addItem(new BottomBarTab(_mActivity,
+                        R.drawable.ic_home_icon4, "我的"));
 
         mBottomBar.setOnTabSelectedListener(new BottomBar.OnTabSelectedListener() {
 

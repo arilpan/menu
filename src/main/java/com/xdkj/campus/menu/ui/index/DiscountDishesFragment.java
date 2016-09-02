@@ -1,5 +1,6 @@
 package com.xdkj.campus.menu.ui.index;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
@@ -108,8 +109,12 @@ public class DiscountDishesFragment extends BaseFragment
                 _mActivity.onBackPressed();
             }
         });
-        TextView tab1 = (TextView) view.findViewById(R.id.tab1);
-        TextView tab2 = (TextView) view.findViewById(R.id.tab2);
+        final TextView tab1 = (TextView) view.findViewById(R.id.tab1);
+        final TextView tab2 = (TextView) view.findViewById(R.id.tab2);
+
+        tab1.setTextColor(Color.rgb(172, 66, 66));
+        tab2.setTextColor(Color.rgb(66,66,66));
+
         tab1.setText(APIAddr.shop_one_name);
         tab2.setText(APIAddr.shop_two_name);
         tab1.setOnClickListener(new View.OnClickListener()
@@ -121,6 +126,8 @@ public class DiscountDishesFragment extends BaseFragment
                         RequestType.INDEX_DISH_DISCOUNT,
                         APIAddr.shop_one_id));
                 shop_id = APIAddr.shop_one_id;
+                tab1.setTextColor(Color.rgb(172, 66, 66));
+                tab2.setTextColor(Color.rgb(66,66,66));
             }
         });
         tab2.setOnClickListener(new View.OnClickListener()
@@ -132,6 +139,8 @@ public class DiscountDishesFragment extends BaseFragment
                         RequestType.INDEX_DISH_DISCOUNT,
                         APIAddr.shop_two_id));
                 shop_id = APIAddr.shop_two_id;
+                tab2.setTextColor(Color.rgb(172, 66, 66));
+                tab1.setTextColor(Color.rgb(66,66,66));
             }
         });
 
