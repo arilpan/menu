@@ -69,6 +69,7 @@ public class SelectPlaceFragment extends BaseFragment
             @Override
             public void onClick(View v)
             {
+                APIAddr.select_mall = APIAddr.ONE;
                 start(ShopFragment.newInstance(APIAddr.shop_one_id));
             }
         });
@@ -77,6 +78,7 @@ public class SelectPlaceFragment extends BaseFragment
             @Override
             public void onClick(View v)
             {
+                APIAddr.select_mall = APIAddr.TWO;
                 start(ShopFragment.newInstance(APIAddr.shop_two_id));
             }
         });

@@ -124,6 +124,20 @@ public class SelectPlaceDetailFragment extends SupportFragment
             }
         });
 
+        if (APIAddr.select_mall == APIAddr.ONE)
+        {
+            ((TextView) view.findViewById(R.id.shop_name)).setText(APIAddr.shop_one_name);
+            ((TextView) view.findViewById(R.id.shop_addr)).setText(APIAddr.shop_one_addr);
+            ((TextView) view.findViewById(R.id.shop_work_time)).setText(APIAddr.shop_one_work_time);
+            //todo:phone : tel action
+//            ((TextView)view.findViewById(R.id.shop_addr)).setText(APIAddr.shop_one_phone);
+        } else if (APIAddr.select_mall == APIAddr.TWO)
+        {
+            ((TextView) view.findViewById(R.id.shop_name)).setText(APIAddr.shop_two_name);
+            ((TextView) view.findViewById(R.id.shop_addr)).setText(APIAddr.shop_two_addr);
+            ((TextView) view.findViewById(R.id.shop_work_time)).setText(APIAddr.shop_two_work_time);
+//            ((TextView)view.findViewById(R.id.shop_addr)).setText(APIAddr.shop_two_phone);
+        }
         orderPersonNumRl = (RelativeLayout) view.findViewById(R.id.order_person_num);
         orderTimeRl = (RelativeLayout) view.findViewById(R.id.order_time);
         orderRoomRl = (RelativeLayout) view.findViewById(R.id.order_room);
@@ -413,7 +427,6 @@ public class SelectPlaceDetailFragment extends SupportFragment
         {
             Log.e("arilpan", "ShopFragment 填充数据");
             setData(getData(event));
-
         }
 
     }

@@ -42,6 +42,7 @@
                     />
 
                 <TextView
+                    android:id="@+id/shop_name"
                     style="@style/pre_order_list_head_desc_text"
                     android:layout_toRightOf="@id/icon_mall"
                     android:text="@string/eight_mall"/>
@@ -64,6 +65,7 @@
                     android:text="@string/mall_location"/>
 
                 <TextView
+                    android:id="@+id/shop_addr"
                     style="@style/pre_order_list_desc"
                     android:layout_toRightOf="@id/text_location"
                     android:text="@string/mall_location_detail"
@@ -87,6 +89,7 @@
                     android:text="@string/mall_work_time"/>
 
                 <TextView
+                    android:id="@+id/shop_work_time"
                     style="@style/pre_order_list_desc"
                     android:layout_toRightOf="@id/text_time"
                     android:text="@string/mall_work_time_detail"

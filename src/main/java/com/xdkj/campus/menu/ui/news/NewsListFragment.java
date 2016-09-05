@@ -9,13 +9,16 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.squareup.moshi.JsonAdapter;
 import com.squareup.moshi.Types;
+import com.squareup.picasso.Picasso;
 import com.xdkj.campus.menu.MainActivity;
 import com.xdkj.campus.menu.R;
 import com.xdkj.campus.menu.adapter.NewsListAdapter;
+import com.xdkj.campus.menu.api.APIAddr;
 import com.xdkj.campus.menu.api.message.APPNewsList;
 import com.xdkj.campus.menu.base.BaseFragment;
 import com.xdkj.campus.menu.entity.RequestType;
@@ -27,8 +30,10 @@ import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
+import java.util.ArrayList;
 import java.util.List;
 
+import cn.bingoogolapple.bgabanner.BGABanner;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
@@ -41,6 +46,10 @@ public class NewsListFragment extends BaseFragment implements SwipeRefreshLayout
         .OnRefreshListener
 {
     int SECOND = 1;
+
+    private BGABanner news_banner;
+    List<String> imgs;
+
 
     private boolean mInAtTop = true;
     private int mScrollTotal;
@@ -68,6 +77,7 @@ public class NewsListFragment extends BaseFragment implements SwipeRefreshLayout
 
     /****************************************************************/
 
+
     /****************************************************************/
     private void initView(View view)
     {
@@ -82,6 +92,24 @@ public class NewsListFragment extends BaseFragment implements SwipeRefreshLayout
             }
         });
         EventBus.getDefault().register(this);
+
+        news_banner = (BGABanner)view.findViewById(R.id.news_banner);
+        news_banner.setAdapter(new BGABanner.Adapter()
+        {
+            @Override
+            public void fillBannerItem(BGABanner banner,
+                                       View view,
+                                       Object model,
+                                       int position)
+            {
+                Log.e("arilpan", "model to string " + model.toString());
+                Picasso.with(view.getContext())
+                        .load(APIAddr.BASE_IMG_URL + model.toString())
+                        .error(R.drawable.index_dishes_image_default)
+                        .into((ImageView) view);
+            }
+        });
+
 
         mRecy = (RecyclerView) view.findViewById(R.id.news_recyview);
         mRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.refresh_layout);
@@ -120,7 +148,9 @@ public class NewsListFragment extends BaseFragment implements SwipeRefreshLayout
 //                News item = new News(1,
 //                        "习近平：让“一带一路”建设造福沿线各国人民",
 //                        "2016-01-01 09:00:00",
-//                        "中共中央总书记、国家主席、中央军委主席习近平17日在北京人民大会堂出席推进“一带一路”建设工作座谈会并发表重要讲话强调，总结经验、坚定信心、扎实推进，聚焦政策沟通、设施联通、贸易畅通、资金融通、民心相通，聚焦构建互利合作网络、新型合作模式、多元合作平台，聚焦携手打造绿色丝绸之路、健康丝绸之路、智力丝绸之路、和平丝绸之路，以钉钉子精神抓下去，一步一步把“一带一路”建设推向前进，让“一带一路”建设造福沿线各国人民。中共中央政治局常委、国务院副总理、推进“一带一路”建设工作领导小组组长张高丽主持座谈会。 ");
+//
+// "中共中央总书记、国家主席、中央军委主席习近平17
+// 日在北京人民大会堂出席推进“一带一路”建设工作座谈会并发表重要讲话强调，总结经验、坚定信心、扎实推进，聚焦政策沟通、设施联通、贸易畅通、资金融通、民心相通，聚焦构建互利合作网络、新型合作模式、多元合作平台，聚焦携手打造绿色丝绸之路、健康丝绸之路、智力丝绸之路、和平丝绸之路，以钉钉子精神抓下去，一步一步把“一带一路”建设推向前进，让“一带一路”建设造福沿线各国人民。中共中央政治局常委、国务院副总理、推进“一带一路”建设工作领导小组组长张高丽主持座谈会。 ");
 //                items.add(item);
 //            }
 //
@@ -157,6 +187,7 @@ public class NewsListFragment extends BaseFragment implements SwipeRefreshLayout
             }
         }, 1500);
     }
+
     @Subscribe(threadMode = ThreadMode.ASYNC)
     public void onNetWork(NetworkEvent event)
     {
@@ -185,6 +216,12 @@ public class NewsListFragment extends BaseFragment implements SwipeRefreshLayout
             APPNewsList datas_arry = COM_JSON_ADAPTER.fromJson(body.source());
             body.close();
             datas = datas_arry.getValue().getList().getData();
+
+            imgs = new ArrayList<>();
+            imgs.add(datas_arry.getValue().getUrl1());
+            imgs.add(datas_arry.getValue().getUrl2());
+            imgs.add(datas_arry.getValue().getUrl3());
+
             return datas;
         } catch (Exception e)
         {
@@ -204,7 +241,11 @@ public class NewsListFragment extends BaseFragment implements SwipeRefreshLayout
                 @Override
                 public void run()
                 {
-                    mAdapter.setDatas(items);
+                    if (items != null)
+                    {
+                        mAdapter.setDatas(items);
+                        news_banner.setData(imgs,null);
+                    }
                     //stuff that updates ui
                 }
             });
@@ -213,6 +254,7 @@ public class NewsListFragment extends BaseFragment implements SwipeRefreshLayout
             e.printStackTrace();
         }
     }
+
     /**
      * Reselected Tab
      */

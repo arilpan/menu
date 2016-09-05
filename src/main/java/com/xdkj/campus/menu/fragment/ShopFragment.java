@@ -127,6 +127,7 @@ public class ShopFragment extends BaseFragment
             @Override
             public void onClick(View view)
             {
+
                 gotoSelectDetail();
             }
         });
@@ -216,8 +217,13 @@ public class ShopFragment extends BaseFragment
     @Override
     public boolean onBackPressedSupport()
     {
-        // ContentFragment是ShopFragment的栈顶子Fragment,会先调用ContentFragment的onBackPressedSupport方法
-        Toast.makeText(_mActivity, "onBackPressedSupport-->返回false,交给上层处理!",
+        // ContentFragment是ShopFragment的栈顶子Fragment,
+        // 会先调用ContentFragment的onBackPressedSupport方法
+//        Toast.makeText(_mActivity, "onBackPressedSupport-->" +
+//                "返回false,交给上层处理!",
+//                Toast.LENGTH_SHORT).show();
+
+        Toast.makeText(_mActivity, "返回!",
                 Toast.LENGTH_SHORT).show();
         return false;
     }
@@ -371,6 +377,7 @@ public class ShopFragment extends BaseFragment
     public void onDestroyView()
     {
         EventBus.getDefault().unregister(this);
+        DishList.getlist().clear();
         super.onDestroyView();
     }
 }

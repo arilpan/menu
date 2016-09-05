@@ -347,6 +347,18 @@ public class IndexFragment extends BaseLazyMainFragment
 
                 APIAddr.shop_one_name = datas_arry.getMessageList().get(0).getOrg_name();
                 APIAddr.shop_two_name = datas_arry.getMessageList().get(1).getOrg_name();
+
+                APIAddr.shop_one_work_time =datas_arry.getMessageList().get(0).getShop_work_time();
+                APIAddr.shop_two_work_time =datas_arry.getMessageList().get(1).getShop_work_time();
+
+                APIAddr.shop_one_addr =datas_arry.getMessageList().get(0).getAddress();
+                APIAddr.shop_two_addr =datas_arry.getMessageList().get(1).getAddress();
+
+                APIAddr.shop_one_icon =datas_arry.getMessageList().get(0).getIcon();
+                APIAddr.shop_one_icon =datas_arry.getMessageList().get(1).getIcon();
+
+                APIAddr.shop_one_phone =datas_arry.getMessageList().get(0).getPhone();
+                APIAddr.shop_one_phone =datas_arry.getMessageList().get(1).getPhone();
             }
 
 //            Collections.sort(contributors, new Comparator<APIDish>()
