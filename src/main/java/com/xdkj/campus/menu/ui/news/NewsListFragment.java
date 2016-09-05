@@ -194,6 +194,7 @@ public class NewsListFragment extends BaseFragment implements SwipeRefreshLayout
         Log.e("arilpan", "NewsListFragment哥 你调用咩?");
         if (RequestType.NEWS_LIST == event.reqType)
         {
+            Log.e("arilpan","新闻列表url:"+event.url);
             setData(getData(event));
         }
 

@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
@@ -111,6 +112,7 @@ public class MainActivity extends InstrumentedActivity
                 String rid = JPushInterface.getRegistrationID(getApplicationContext());
                 if (!rid.isEmpty())
                 {
+                    Log.e("arilpan", "regid:" + rid);
                     mRegId.setText("RegId:" + rid);
                 } else
                 {
@@ -155,7 +157,7 @@ public class MainActivity extends InstrumentedActivity
     //for receive customer msg from jpush server
     private MessageReceiver mMessageReceiver;
     public static final String MESSAGE_RECEIVED_ACTION = "com.example.jpushdemo" +
-			".MESSAGE_RECEIVED_ACTION";
+            ".MESSAGE_RECEIVED_ACTION";
     public static final String KEY_TITLE = "title";
     public static final String KEY_MESSAGE = "message";
     public static final String KEY_EXTRAS = "extras";

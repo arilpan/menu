@@ -20,6 +20,8 @@ import java.util.List;
 
 import cn.bingoogolapple.bgabanner.BGABanner;
 import cn.bingoogolapple.bgabanner.BGABannerUtil;
+import cn.jpush.android.api.JPushInterface;
+
 /**
  * 首页 入口
  * Created by aril_pan@qq.com on 16/8.
@@ -36,6 +38,7 @@ public class SplashActivity extends AppCompatActivity implements View.OnClickLis
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
+
         if (!SystemInfo.isFirstLoad(getApplicationContext()))
         {
             toMain();

@@ -1,5 +1,6 @@
 package com.xdkj.campus.menu.ui.index;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -33,6 +34,7 @@ import org.greenrobot.eventbus.ThreadMode;
 import java.util.ArrayList;
 import java.util.List;
 
+import cn.jpush.android.api.JPushInterface;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
@@ -72,6 +74,7 @@ public class NewDishesFragment extends BaseFragment implements SwipeRefreshLayou
         {
             shop_id = args.getString("shop_id");
         }
+
     }
 
     @Override

@@ -10,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.squareup.moshi.JsonAdapter;
@@ -113,7 +114,7 @@ public class DiscountDishesFragment extends BaseFragment
         final TextView tab2 = (TextView) view.findViewById(R.id.tab2);
 
         tab1.setTextColor(Color.rgb(172, 66, 66));
-        tab2.setTextColor(Color.rgb(66,66,66));
+        tab2.setTextColor(Color.rgb(66, 66, 66));
 
         tab1.setText(APIAddr.shop_one_name);
         tab2.setText(APIAddr.shop_two_name);
@@ -127,7 +128,7 @@ public class DiscountDishesFragment extends BaseFragment
                         APIAddr.shop_one_id));
                 shop_id = APIAddr.shop_one_id;
                 tab1.setTextColor(Color.rgb(172, 66, 66));
-                tab2.setTextColor(Color.rgb(66,66,66));
+                tab2.setTextColor(Color.rgb(66, 66, 66));
             }
         });
         tab2.setOnClickListener(new View.OnClickListener()
@@ -140,7 +141,7 @@ public class DiscountDishesFragment extends BaseFragment
                         APIAddr.shop_two_id));
                 shop_id = APIAddr.shop_two_id;
                 tab2.setTextColor(Color.rgb(172, 66, 66));
-                tab1.setTextColor(Color.rgb(66,66,66));
+                tab1.setTextColor(Color.rgb(66, 66, 66));
             }
         });
 
@@ -208,8 +209,8 @@ public class DiscountDishesFragment extends BaseFragment
     }
 
     //List<APPDishDiscount.ValueBean.DataBean> types;
-    HashMap<Integer, ArrayList<String>> discountDishesMap;
-    List<Integer> discountDishesMapKey;
+    HashMap<Integer, ArrayList<String>> discountDishesMap;//折扣数-折扣菜集合
+    List<Integer> discountDishesMapKey;//折扣数集合
 
     public void setData(final List<APPDishDiscount.ValueBean.DataBean> items)
     {
@@ -258,11 +259,8 @@ public class DiscountDishesFragment extends BaseFragment
     @Override
     public boolean onBackPressedSupport()
     {
-        // 这里实际项目中推荐使用 EventBus接耦
-//        ((TestOne) getParentFragment()).onBackToFirstFragment();
         Log.e("arilpan", "on back press");
         return false;
-//        return true;
     }
 
     /****************************************************************************/
@@ -374,18 +372,18 @@ public class DiscountDishesFragment extends BaseFragment
                         public void onBindViewHolder(RecyclerView.ViewHolder holder, int position)
                         {
                             final MyItemViewHolder newholder = (MyItemViewHolder) holder;
+                            final String dish_id = itemDishes.get(position).getDishes_id();
 
-                            newholder.itemView.setOnClickListener(new View.OnClickListener()
+                            Log.e("arilpan", "position1 dish_id:" + dish_id);
+                            newholder.dish_rlayout.setOnClickListener(new View.OnClickListener()
                             {
                                 @Override
                                 public void onClick(View v)
                                 {
-
-                                    int position = newholder.getAdapterPosition();
-
-                                    if (itemDishes != null && position < itemDishes.size()  )
+//                                    int position = newholder.getAdapterPosition();
+                                    if (itemDishes != null)
                                     {
-                                        String dish_id = itemDishes.get(position).getDishes_id();
+                                        Log.e("arilpan", "position1 dish_id:" + dish_id);
                                         EventBus.getDefault().post(
                                                 new StartBrotherEvent(
                                                         DishDetailFragment.newInstance(dish_id)));
@@ -400,6 +398,8 @@ public class DiscountDishesFragment extends BaseFragment
                                 newholder.dish_price.setText("￥" + dish.getDishes_price());
                                 newholder.dish_old_price.setText(dish.getRack_rate());
                                 newholder.dish_desc.setText(dish.getDishes_description());
+
+                                Log.e("arilpan", "position2 dish_id:" + dish.getDishes_id());
                             } else
                             {
                                 Log.e("arilpan", " will throw java.lang.IndexOutOfBoundsException");
@@ -423,6 +423,7 @@ public class DiscountDishesFragment extends BaseFragment
 
                         class MyItemViewHolder extends RecyclerView.ViewHolder
                         {
+                            RelativeLayout dish_rlayout;
                             ImageView dish_icon;
                             TextView dish_name;
                             TextView dish_price;
@@ -433,6 +434,8 @@ public class DiscountDishesFragment extends BaseFragment
                             {
                                 super(view);
                                 view.setMinimumHeight(35);
+                                dish_rlayout = (RelativeLayout) view.findViewById(R.id
+                                        .dish_rlayout);
                                 dish_icon = (ImageView) view.findViewById(R.id
                                         .dish_image);
                                 dish_name = (TextView) view.findViewById(R.id

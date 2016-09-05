@@ -75,6 +75,16 @@ public class CompleteOrderFragment extends BaseFragment
     private void initView(View view)
     {
         setTitle(view,"已完成订单");
+        view.findViewById(R.id.title_ll_left).setOnClickListener(new View
+                .OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+                _mActivity.onBackPressed();
+            }
+        });
+
         EventBus.getDefault().register(this);
         datas = new ArrayList<>();
         order_recyview = (RecyclerView) view.findViewById(R.id.order_recyview);

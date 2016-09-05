@@ -64,6 +64,15 @@ public class SettingFragment extends BaseFragment
     private void initView(View view)
     {
         setTitle(view,"设置");
+        view.findViewById(R.id.title_ll_left).setOnClickListener(new View
+                .OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+                _mActivity.onBackPressed();
+            }
+        });
 
         ll_update = (LinearLayout) view.findViewById(R.id.ll_update);
         ll_clear_data = (LinearLayout) view.findViewById(R.id.ll_clear_data);

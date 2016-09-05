@@ -23,6 +23,7 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.Objects;
 
+import cn.jpush.android.api.JPushInterface;
 import me.yokeyword.fragmentation.SupportActivity;
 import me.yokeyword.fragmentation.anim.DefaultHorizontalAnimator;
 import me.yokeyword.fragmentation.anim.FragmentAnimator;
@@ -44,6 +45,10 @@ public class MainActivity extends SupportActivity implements BaseLazyMainFragmen
     protected void onCreate(@Nullable Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
+        //init jpush
+        JPushInterface.init(this);
+        JPushInterface.setDebugMode(true);
+
         setContentView(R.layout.wechat_activity_main);
         EventBus.getDefault().register(MainActivity.this);
 

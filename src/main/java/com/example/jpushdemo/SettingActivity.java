@@ -20,6 +20,9 @@ import cn.jpush.android.api.InstrumentedActivity;
 import cn.jpush.android.api.JPushInterface;
  import  com.xdkj.campus.menu.R;
 
+/**
+ * 设置接受日期
+ */
 public class SettingActivity extends InstrumentedActivity implements OnClickListener {
 	TimePicker startTime;
 	TimePicker endTime;

@@ -15,6 +15,11 @@ android {
             {
                 javaMaxHeapSize "3g"
             }
+    sourceSets {
+        main {
+            jniLibs.srcDirs = ['libs']
+        }
+    }
     buildTypes {
         release {
             minifyEnabled false

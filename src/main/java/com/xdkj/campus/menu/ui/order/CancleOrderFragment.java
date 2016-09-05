@@ -77,6 +77,17 @@ public class CancleOrderFragment extends BaseFragment
     private void initView(View view)
     {
         setTitle(view,"已取消订单");
+        view.findViewById(R.id.title_ll_left).setOnClickListener(new View
+                .OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+                _mActivity.onBackPressed();
+            }
+        });
+
+
         EventBus.getDefault().register(this);
         datas = new ArrayList<>();
 

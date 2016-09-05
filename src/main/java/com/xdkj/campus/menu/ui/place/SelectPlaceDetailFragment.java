@@ -404,11 +404,11 @@ public class SelectPlaceDetailFragment extends SupportFragment
         switch (requestCode)
         {
             case SELECT_TIME:
-                Toast.makeText(getContext(), "Dialog cancelled", Toast.LENGTH_SHORT).show();
+//                Toast.makeText(getContext(), "Dialog cancelled", Toast.LENGTH_SHORT).show();
                 break;
             case SELECT_ROOM:
             case SELECT_PERSON_NUM:
-                Toast.makeText(getContext(), "Nothing selected", Toast.LENGTH_SHORT).show();
+//                Toast.makeText(getContext(), "Nothing selected", Toast.LENGTH_SHORT).show();
                 break;
 //            case REQUEST_DATE_PICKER:
 //                Toast.makeText(c, "Date picker cancelled", Toast.LENGTH_SHORT).show();

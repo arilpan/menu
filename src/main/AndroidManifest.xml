@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
           package="com.xdkj.campus.menu">
+    <permission
+        android:name="com.xdkj.campus.menu.permission.JPUSH_MESSAGE"
+        android:protectionLevel="signature" />
+
 
     <uses-permission android:name="android.permission.GET_ACCOUNTS"/>
     <uses-permission android:name="android.permission.READ_PROFILE"/>
@@ -75,10 +79,6 @@
         <activity
             android:name="com.example.jpushdemo.MainActivity"
             android:label="JPUSH" >
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
         <!-- For test only 测试高级功能 -->
         <activity
