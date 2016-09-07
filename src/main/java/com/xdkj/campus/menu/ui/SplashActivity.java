@@ -10,6 +10,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.fan.eightrestaurant.ui.LoginActivity;
 import com.xdkj.campus.menu.MainActivity;
 import com.xdkj.campus.menu.R;
 import com.xdkj.campus.menu.helper.SystemInfo;
@@ -128,7 +129,7 @@ public class SplashActivity extends AppCompatActivity implements View.OnClickLis
     public void toMain()
     {
         SystemInfo.setFirstLoad(getApplicationContext());
-        startActivity(new Intent(SplashActivity.this, MainActivity.class));
+        startActivity(new Intent(SplashActivity.this, LoginActivity.class));
         finish();
     }
 

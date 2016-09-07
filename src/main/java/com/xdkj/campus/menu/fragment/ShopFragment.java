@@ -304,6 +304,7 @@ public class ShopFragment extends BaseFragment
             return listMenus;
         } catch (Exception e)
         {
+
             e.printStackTrace();
         }
         return null;

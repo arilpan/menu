@@ -35,6 +35,7 @@ import com.xdkj.campus.menu.ui.menu.SelectFragment;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -109,6 +110,89 @@ public class SelectPlaceDetailFragment extends SupportFragment
     TextView select_person_num;
     Button order;
 
+    /**
+     * 提交订单
+     */
+    public void submitOrder()
+    {
+
+        String user_id = APIAddr.user_id;
+        String have_meals_persons = select_person_num.getText().toString();
+        String have_meals_time = select_time.getText().toString();
+        String remarks = select_person_num.getText().toString();
+        //shop_id;
+        String shop_name = ((shop_id == APIAddr.shop_one_id) ? APIAddr.shop_one_name :
+                APIAddr.shop_two_name);
+        String room = select_room.getText().toString();
+        double sum_price = DishList.getTotalPrice();
+
+        /**
+         * 1.如果时间太近,不可
+         * 2.如果那个参数没选,不可
+         *
+         */
+        //1. str :上面8个参数toJson=>后来告诉我其实是普通get方式
+        // ,7000字符容量还够用= =!!!多亏了谷歌内核
+
+        GetParamConstructor getParamConstructor = new GetParamConstructor();
+        getParamConstructor.add("user_id", user_id);
+        getParamConstructor.add("have_meals_persons", have_meals_persons);
+        getParamConstructor.add("have_meals_time", have_meals_time);
+        getParamConstructor.add("remarks", remarks);
+        getParamConstructor.add("shop_id", shop_id);
+        getParamConstructor.add("shop_name", shop_name);
+        getParamConstructor.add("room", room);
+        getParamConstructor.add("sum_price", String.valueOf(sum_price));
+
+        String parmas1 = getParamConstructor.getString();
+        Log.e("arilpan","第一部分参数"+parmas1);
+
+        //第二部分
+        JSONObject jsonObj = new JSONObject();
+        try
+        {
+            jsonObj.put("str", getParamConstructor);
+        } catch (JSONException e)
+        {
+            e.printStackTrace();
+        }
+        Log.e("arilpan", "-------------" + jsonObj.toString());
+
+        //2.jsonStr
+        List<TempDish> dishes = new ArrayList<>();
+        for (Dish dish : DishList.getlist())
+        {
+            String dishes_name = dish.getName();
+            String dishes_price = dish.getPrice();
+            int dishes_count = dish.getNum();
+            String dish_id = dish.getDish_id();
+            String url = dish.getImgurl();
+            dishes.add(new TempDish(dishes_name, dishes_price, dishes_count, url, dish_id));
+        }
+        jsonStr tds = new jsonStr(dishes);
+//                TempDish blackjackHand = new TempDish(
+//                        new TempDish('6', SPADES),
+//                        Arrays.asList(new Dish('4', CLUBS), new Dish('A', HEARTS)));
+        Moshi moshi = new Moshi.Builder().build();
+        JsonAdapter<jsonStr> jsonAdapter = moshi.adapter(jsonStr.class);
+        String json = jsonAdapter.toJson(tds);
+        Log.e("arilpan", "-------------" + json.toString());
+
+        getParamConstructor.add("jsonStr", json.toString());
+        String parmas2 = getParamConstructor.getString();
+        Log.e("arilpan","第二部分参数"+parmas2);
+//        try
+//        {
+//            jsonObj.put("jsonStr", dishes);
+//        } catch (JSONException e)
+//        {
+//            e.printStackTrace();
+//        }
+        Log.e("arilpan", "after:-------------" + parmas2.toString());
+
+    }
+
+
     private void initView(View view)
     {
         EventBus.getDefault().register(this);
@@ -162,77 +246,7 @@ public class SelectPlaceDetailFragment extends SupportFragment
             @Override
             public void onClick(View view)
             {
-                /**
-                 * 手机端传来相应的用户唯一标识user_id(手机端用户注册时的手机号信息)，这个用户唯一标识user_id和手机端添加的
-                 订单信息（用餐人数have_meals_persons、用餐时间have_meals_time、备注remarks、shop_id订单所属店铺主键，
-                 shop_name店铺名称、room包间名称、sum_price所选菜品总价格），shop_id、shop_name是用户进入相应店铺时，web后台
-                 返回给手机端的departManag这个对象中，从这个对象中取出shop_id、shop_name连同添加的用餐人数等信息封装在str这个对象中，
-                 然后将str返回给web后台。
-                 用户选择的菜品信息列表（菜品的名称dishes_name、菜品的价格dishes_price、菜品的数量dishes_count）封装在jsonStr这个对象中，
-                 然后将jsonStr返回给web后台
-                 手机端访问:
-                 http://172.16.0.56:8080/GrogshopSystem/appOrder/saveAddOrder.do
-                 */
-                String user_id = APIAddr.user_id;
-                String have_meals_persons = select_person_num.getText().toString();
-                String have_meals_time = select_person_num.getText().toString();
-                String remarks = select_person_num.getText().toString();
-                //shop_id;
-                String shop_name = ((shop_id == APIAddr.shop_one_id) ? APIAddr.shop_one_name :
-                        APIAddr.shop_two_name);
-                String room = select_room.getText().toString();
-                double sum_price = DishList.getTotalPrice();
-                //1. str :上面8个参数toJson=>后来告诉我其实是普通get方式
-                // ,7000字符容量还够用= =!!!多亏了谷歌内核
-
-                GetParamConstructor getParamConstructor = new GetParamConstructor();
-                getParamConstructor.add("user_id", user_id);
-                getParamConstructor.add("have_meals_persons", have_meals_persons);
-                getParamConstructor.add("have_meals_time", have_meals_time);
-                getParamConstructor.add("remarks", remarks);
-                getParamConstructor.add("shop_id", shop_id);
-                getParamConstructor.add("shop_name", shop_name);
-                getParamConstructor.add("room", room);
-                getParamConstructor.add("sum_price", String.valueOf(sum_price));
-
-                JSONObject jsonObj = new JSONObject();
-                try
-                {
-                    jsonObj.put("str", getParamConstructor);
-                } catch (JSONException e)
-                {
-                    e.printStackTrace();
-                }
-                Log.e("arilpan", "-------------" + jsonObj.toString());
-
-                //2.jsonStr
-                List<TempDish> dishes = new ArrayList<>();
-                for (Dish dish : DishList.getlist())
-                {
-                    String dishes_name = dish.getName();
-                    String dishes_price = dish.getPrice();
-                    int dishes_count = dish.getNum();
-
-                    dishes.add(new TempDish(dishes_name, dishes_price, dishes_count));
-
-                }
-                jsonStr tds = new jsonStr(dishes);
-//                TempDish blackjackHand = new TempDish(
-//                        new TempDish('6', SPADES),
-//                        Arrays.asList(new Dish('4', CLUBS), new Dish('A', HEARTS)));
-                Moshi moshi = new Moshi.Builder().build();
-                JsonAdapter<jsonStr> jsonAdapter = moshi.adapter(jsonStr.class);
-                String json = jsonAdapter.toJson(tds);
-                Log.e("arilpan", "-------------" + json.toString());
-                getParamConstructor.add("jsonStr", json.toString());
-                try
-                {
-                    jsonObj.put("jsonStr", dishes);
-                } catch (JSONException e)
-                {
-                    e.printStackTrace();
-                }
-                Log.e("arilpan", "after:-------------" + jsonObj.toString());
+                submitOrder();
 
             }
         });
@@ -270,11 +284,18 @@ public class SelectPlaceDetailFragment extends SupportFragment
                 ListDialogFragment
                         .createBuilder(getContext(), getFragmentManager())
                         .setTitle("选择用餐人数:")
-                        .setItems(new String[]{"1", "2", "3",
-                                "4", "5", "6", "7", "8", "9",
+                        .setItems(new String[]{
+                                "1", "2", "3", "4", "5", "6", "7", "8", "9",
                                 "10", "11", "12", "13", "14", "15", "16", "17", "18", "19",
                                 "20", "21", "22", "23", "24", "25", "26", "27", "28", "29",
-                                "30", "31", "32", "33", "34", "35", "36", "37", "38", "39"
+                                "30", "31", "32", "33", "34", "35", "36", "37", "38", "39",
+                                "40", "41", "42", "43", "44", "45", "46", "47", "48", "49",
+                                "50", "51", "52", "53", "54", "55", "56", "57", "58", "59",
+                                "60", "61", "62", "63", "64", "65", "66", "67", "68", "69",
+                                "70", "71", "72", "73", "74", "75", "76", "77", "78", "79",
+                                "80", "81", "82", "83", "84", "85", "86", "87", "88", "89",
+                                "90", "91", "92", "93", "94", "95", "96", "97", "98", "99",
+                                "100"
                         })
                         .setTargetFragment(SelectPlaceDetailFragment.this, SELECT_PERSON_NUM)
                         .show();

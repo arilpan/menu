@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:fresco="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:gravity="center_horizontal"
+    tools:context="com.fan.eightrestaurant.ui.UpLoadActivity">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#51CA65"
+        android:padding="30dp" >
+        <TextView
+            android:text="编辑头像"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+        <com.facebook.drawee.view.SimpleDraweeView
+            android:id="@+id/activity_up_load_show_image"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            fresco:actualImageScaleType="centerInside"
+            fresco:roundAsCircle="true"
+            android:layout_centerInParent="true"
+            fresco:roundingBorderColor="@color/white"
+            fresco:roundingBorderWidth="1dp"/>
+    </RelativeLayout>
+    <TextView
+        android:id="@+id/activity_up_load_name"
+        android:layout_marginTop="60dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="20sp"
+        android:text="昵称"
+        android:clickable="true">
+    </TextView>
+
+
+    <Button
+        android:id="@+id/activity_eixt_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="退出登录"
+        android:textSize="20sp"
+        android:layout_marginTop="50dp"/>
+</LinearLayout>

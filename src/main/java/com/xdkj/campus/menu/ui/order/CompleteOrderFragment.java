@@ -1,5 +1,6 @@
 package com.xdkj.campus.menu.ui.order;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
@@ -11,7 +12,9 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.fan.eightrestaurant.ui.LoginActivity;
 import com.squareup.moshi.JsonAdapter;
 import com.squareup.moshi.Types;
 import com.squareup.picasso.Picasso;
@@ -24,6 +27,7 @@ import com.xdkj.campus.menu.base.BaseFragment;
 import com.xdkj.campus.menu.entity.RequestType;
 import com.xdkj.campus.menu.event.NetworkEvent;
 import com.xdkj.campus.menu.event.StartBrotherEvent;
+import com.xdkj.campus.menu.helper.UrlHelper;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -74,7 +78,7 @@ public class CompleteOrderFragment extends BaseFragment
 
     private void initView(View view)
     {
-        setTitle(view,"已完成订单");
+        setTitle(view, "已完成订单");
         view.findViewById(R.id.title_ll_left).setOnClickListener(new View
                 .OnClickListener()
         {
@@ -144,7 +148,7 @@ public class CompleteOrderFragment extends BaseFragment
 
             holder.order_item_mall_name.setText(order.getShop_name());
             holder.order_item_order_time.setText(order.getHave_meals_time());
-            holder.order_item_total_price.setText("￥" +order.getSum_price());
+            holder.order_item_total_price.setText("￥" + order.getSum_price());
 
             holder.order_item_recyview.setAdapter(
                     new RecyclerView.Adapter()
@@ -178,11 +182,11 @@ public class CompleteOrderFragment extends BaseFragment
                                 newholder.dish_name.setText(dish.getDishes_name());
                                 newholder.dish_price.setText("￥" + dish.getDishes_price());
                                 newholder.dish_desc.setText(dish.getDishes_description());
-								newholder.dish_num.setText(dish.getDishes_count() + "份");
+                                newholder.dish_num.setText(dish.getDishes_count() + "份");
                                 Picasso.with(
                                         getContext()) //
                                         .load(APIAddr.BASE_IMG_URL + dish.getUpload_url()) //
-                                        .error(R.drawable.cai_img_defult).
+                                        .error(R.drawable.preferential_list_item_zanwutupian).
                                         into(newholder.dish_icon);
                             } else
                             {
@@ -329,7 +333,9 @@ public class CompleteOrderFragment extends BaseFragment
     public List<APPOrder.ValueBean> getData(String url)
     {
         String realUrl = url.replace("USERID", APIAddr.user_id);
+        realUrl = UrlHelper.addToken(getContext(), realUrl);
         Log.e("arilpan", "完成订单link:" + realUrl);
+
         try
         {
             final JsonAdapter<APPOrder>
@@ -337,7 +343,7 @@ public class CompleteOrderFragment extends BaseFragment
                     Types.newParameterizedType(APPOrder.class));
             OkHttpClient client = new OkHttpClient();
             Request request = new Request.Builder()
-                    .url(realUrl)
+                    .url((UrlHelper.addToken(getContext(), realUrl)))
                     .build();
             Response response = client.newCall(request).execute();
             ResponseBody body = response.body();
@@ -353,6 +359,12 @@ public class CompleteOrderFragment extends BaseFragment
         } catch (Exception e)
         {
             e.printStackTrace();
+            Log.e("arilpan", "login error");
+            Toast.makeText(getContext(), "登录异常", Toast.LENGTH_SHORT).show();
+            Intent intent = new Intent(getActivity(), LoginActivity
+                    .class);
+            startActivity(intent);
+            _mActivity.finish();
         }
         return null;
     }

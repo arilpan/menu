@@ -180,4 +180,31 @@
     <!--订单相关-->
     <string name="order_cancel_order_time">预约时间</string>
     <string name="order_cancel_total_price">总计:</string>
+
+
+    <string name="activity_leave_message_myleavebutton">我的留言本</string>
+    <string name="activity_leave_message_problem">常见问题</string>
+    <string name="leave_message_item_text1">问：</string>
+    <string name="leave_message_item_text2">答：</string>
+
+    <string name="title">8号餐馆</string>
+    <string name="login_userphone">请输入手机号码</string>
+    <string name="login_userpassword">请输入密码</string>
+    <string name="login_button">登\t\t\t录</string>
+    <string name="login_forgetpwd">忘记密码</string>
+    <string name="login_registered">没有账号？点击注册</string>
+
+    <string name="activity_my_message_eight">8号菜馆</string>
+    <string name="activity_my_message_beijingduck">北京烤鸭馆</string>
+
+    <string name="register_verification_code">获取验证码</string>
+    <string name="register_usercode">请输入验证码</string>
+    <string name="register_button">注册</string>
+
+    <string name="retrieve_userphone">请输入注册时的手机号码</string>
+    <string name="retrieve_userpassword">请输入6-16个字符的新密码</string>
+    <string name="retrieve_button">确定</string>
+
+    <string name="fragment_duck_edittext">请输入您的留言信息</string>
+    <string name="fragment_duck_sendbtn">发送</string>
 </resources>

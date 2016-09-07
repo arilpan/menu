@@ -8,10 +8,12 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextClock;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.squareup.moshi.JsonAdapter;
 import com.squareup.moshi.Types;
@@ -25,21 +27,28 @@ import com.xdkj.campus.menu.entity.Dish;
 import com.xdkj.campus.menu.entity.Order;
 import com.xdkj.campus.menu.entity.RequestType;
 import com.xdkj.campus.menu.event.NetworkEvent;
+import com.xdkj.campus.menu.helper.UrlHelper;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
+import org.json.JSONObject;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import okhttp3.FormBody;
+import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
+import okhttp3.RequestBody;
 import okhttp3.Response;
 import okhttp3.ResponseBody;
+import okio.BufferedSink;
 
 /***
  * don't delete notes
@@ -76,7 +85,7 @@ public class CancleOrderFragment extends BaseFragment
 
     private void initView(View view)
     {
-        setTitle(view,"已取消订单");
+        setTitle(view, "已取消订单");
         view.findViewById(R.id.title_ll_left).setOnClickListener(new View
                 .OnClickListener()
         {
@@ -116,11 +125,19 @@ public class CancleOrderFragment extends BaseFragment
 //        return true;
     }
 
+    String order_id;
 
     /****************************************************************************/
     class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.MyViewHolder>
     {
         List<APPOrder.ValueBean.OrderDishesListBean> itemDishes;
+
+        public void deleteOrder(int pos)
+        {
+            order_id = datas.get(pos).getOrder_id();
+            EventBus.getDefault().post(new NetworkEvent(RequestType.ORDER_DELETE,
+                    order_id));
+        }
 
         @Override
         public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType)
@@ -143,6 +160,8 @@ public class CancleOrderFragment extends BaseFragment
             holder.order_item_recyview.setLayoutParams(layoutParams);
 //            holder.order_item_recyview.setLayoutManager(
 //                    new LinearLayoutManager(_mActivity.getApplicationContext()));
+
+
 /****************************************************************************/
             return holder;
         }
@@ -157,6 +176,16 @@ public class CancleOrderFragment extends BaseFragment
             holder.order_item_mall_name.setText(order.getShop_name());
             holder.order_item_order_time.setText(order.getHave_meals_time());
             holder.order_item_total_price.setText("￥" + order.getSum_price());
+
+            final int pos = position;
+            holder.order_item_delete_button.setOnClickListener(new View.OnClickListener()
+            {
+                @Override
+                public void onClick(View view)
+                {
+                    deleteOrder(pos);
+                }
+            });
 
             holder.order_item_recyview.setAdapter(
                     new RecyclerView.Adapter()
@@ -190,7 +219,7 @@ public class CancleOrderFragment extends BaseFragment
                                 Picasso.with(
                                         getContext()) //
                                         .load(APIAddr.BASE_IMG_URL + dish.getUpload_url()) //
-                                        .error(R.drawable.cai_img_defult).
+                                        .error(R.drawable.preferential_list_item_zanwutupian).
                                         into(newholder.dish_icon);
                             } else
                             {
@@ -285,6 +314,7 @@ public class CancleOrderFragment extends BaseFragment
             TextView order_item_total_price;
             TextView order_item_order_time;
             TextView order_item_mall_name;
+            Button order_item_delete_button;
 
             public MyViewHolder(View view)
             {
@@ -294,6 +324,8 @@ public class CancleOrderFragment extends BaseFragment
                 order_item_total_price = (TextView) view.findViewById(R.id.order_item_total_price);
                 order_item_order_time = (TextView) view.findViewById(R.id.order_item_order_time);
                 order_item_mall_name = (TextView) view.findViewById(R.id.order_item_mall_name);
+                order_item_delete_button = (Button) view.findViewById(R.id
+                        .order_item_delete_button);
 
             }
         }
@@ -307,9 +339,65 @@ public class CancleOrderFragment extends BaseFragment
         {
             Log.e("arilpan", "order equals?");
             setData(getData(event.url + event.id));
-        } else
+        } else if (APIAddr.order_delete.equals(event.url))
         {
+            deleteData(event.url + event.id);
             Log.e("arilpan", "HotDishFragment what happend?");
+        }
+    }
+
+    public void deleteData(String url)
+    {
+        try
+        {
+            String realUrl = UrlHelper.addToken(getContext(), url);
+            Log.e("arilpan", "删除订单link:" + realUrl);
+            OkHttpClient client = new OkHttpClient();
+
+
+            FormBody fromBody = new FormBody.Builder()
+                    .add("order_id", order_id)
+                    .build();
+            Request request = new Request.Builder()
+                    .url(realUrl)
+                    .post(fromBody)
+                    .build();
+            Response response = client.newCall(request).execute();
+            ResponseBody body = response.body();
+            String result = body.string();
+            JSONObject jsonObject = new JSONObject(result);
+            String msg = jsonObject.getString("message");
+            body.close();
+            if ("true".equals(msg))
+            {
+                _mActivity.runOnUiThread(new Runnable()
+                {
+                    @Override
+                    public void run()
+                    {
+                        Toast.makeText(getContext(), "删除成功 刷新数据", Toast.LENGTH_SHORT);
+                    }
+                });
+            } else
+            {
+                _mActivity.runOnUiThread(new Runnable()
+                {
+                    @Override
+                    public void run()
+                    {
+                        Toast.makeText(getContext(), "删除失败 刷新数据", Toast.LENGTH_SHORT);
+                    }
+                });
+                Log.e("arilpan", " 刷新数据");
+                EventBus.getDefault().post(
+                        new NetworkEvent(RequestType.ORDER_LIST,
+                                String.valueOf(APIAddr.ORDER_CANCLE))
+                );
+
+            }
+        } catch (Exception e)
+        {
+            e.printStackTrace();
         }
     }
 
@@ -329,9 +417,12 @@ public class CancleOrderFragment extends BaseFragment
     public List<APPOrder.ValueBean> getData(String url)
     {
         String realUrl = url.replace("USERID", APIAddr.user_id);
-        Log.e("arilpan", "完成订单link:" + realUrl);
         try
         {
+            realUrl = UrlHelper.addToken(getContext(), realUrl);
+            Log.e("arilpan", "完成订单link:" + realUrl);
+
+            realUrl = UrlHelper.addToken(getContext(), realUrl);
             final JsonAdapter<APPOrder>
                     COM_JSON_ADAPTER = MainActivity.MOSHI.adapter(
                     Types.newParameterizedType(APPOrder.class));

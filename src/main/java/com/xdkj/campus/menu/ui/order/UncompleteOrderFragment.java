@@ -33,6 +33,7 @@ import com.xdkj.campus.menu.entity.Dish;
 import com.xdkj.campus.menu.entity.Order;
 import com.xdkj.campus.menu.entity.RequestType;
 import com.xdkj.campus.menu.event.NetworkEvent;
+import com.xdkj.campus.menu.helper.UrlHelper;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -283,7 +284,7 @@ public class UncompleteOrderFragment extends BaseFragment
                                 Picasso.with(
                                         getContext()) //
                                         .load(APIAddr.BASE_IMG_URL + dish.getUpload_url()) //
-                                        .error(R.drawable.cai_img_defult).
+                                        .error(R.drawable.preferential_list_item_zanwutupian).
                                         into(newholder.dish_icon);
                             } else
                             {
@@ -428,9 +429,10 @@ public class UncompleteOrderFragment extends BaseFragment
 
     public String getCancelOrderResult(String url)
     {
+        url = UrlHelper.addToken(getContext(), url);
         OkHttpClient client = new OkHttpClient();
         Request request = new Request.Builder()
-                .url(url)
+                .url(UrlHelper.addToken(getContext(), url))
                 .build();
         Response response = null;
         try
@@ -462,6 +464,7 @@ public class UncompleteOrderFragment extends BaseFragment
     public List<APPOrder.ValueBean> getData(String url)
     {
         String realUrl = url.replace("USERID", APIAddr.user_id);
+        realUrl = UrlHelper.addToken(getContext(), realUrl);
         Log.e("arilpan", "完成订单link:" + realUrl);
         try
         {
@@ -470,7 +473,7 @@ public class UncompleteOrderFragment extends BaseFragment
                     Types.newParameterizedType(APPOrder.class));
             OkHttpClient client = new OkHttpClient();
             Request request = new Request.Builder()
-                    .url(realUrl)
+                    .url((UrlHelper.addToken(getContext(), realUrl)))
                     .build();
             Response response = client.newCall(request).execute();
             ResponseBody body = response.body();

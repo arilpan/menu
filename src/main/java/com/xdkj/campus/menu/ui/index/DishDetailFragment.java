@@ -7,12 +7,15 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.squareup.moshi.JsonAdapter;
 import com.squareup.moshi.Types;
+import com.squareup.picasso.Picasso;
 import com.xdkj.campus.menu.MainActivity;
 import com.xdkj.campus.menu.R;
+import com.xdkj.campus.menu.api.APIAddr;
 import com.xdkj.campus.menu.api.message.APPDishDetail;
 import com.xdkj.campus.menu.api.message.APPDishDiscount;
 import com.xdkj.campus.menu.api.message.APPNew;
@@ -106,9 +109,11 @@ public class DishDetailFragment extends BaseFragment
     TextView dish_mall_addr;
     TextView dish_mall_work_time;
 
+    ImageView dish_img;
+
     private void initView(View view)
     {
-        setTitle(view,"菜品详情");
+        setTitle(view, "菜品详情");
         view.findViewById(R.id.title_ll_left).setOnClickListener(new View
                 .OnClickListener()
         {
@@ -120,6 +125,7 @@ public class DishDetailFragment extends BaseFragment
         });
         EventBus.getDefault().register(this);
 
+        dish_img = (ImageView) view.findViewById(R.id.dish_img);
         dish_name = (TextView) view.findViewById(R.id.dish_name);
         dish_price = (TextView) view.findViewById(R.id.dish_price);
         dish_old_price = (TextView) view.findViewById(R.id.dish_old_price);
@@ -207,13 +213,20 @@ public class DishDetailFragment extends BaseFragment
                         APPDishDetail.ValueBean item = items.getValue();
                         APPDishDetail.Value1Bean shop = items.getValue1();
                         dish_name.setText(item.getDishes_name());
-                        dish_price.setText("￥" +item.getDishes_price());
-                        dish_old_price.setText("￥" +item.getRack_rate());
+                        dish_price.setText("￥" + item.getDishes_price());
+                        dish_old_price.setText("￥" + item.getRack_rate());
                         dish_desc.setText(item.getDishes_description());
                         dish_pre_order_must_know.setText(item.getAppointment_notice());
                         dish_mall_name.setText(item.getStore_name());
                         dish_mall_addr.setText(shop.getAddress());
                         dish_mall_work_time.setText(shop.getShop_work_time());
+                        Picasso.with(
+                                getContext()) //
+                                .load(APIAddr.BASE_IMG_URL + item.getUpload_url()) //
+                                .error(R.drawable.preferential_list_item_zanwutupian).
+                                into(dish_img);
+
+                        //dish_img
                         //stuff that updates ui
                     }
                 }

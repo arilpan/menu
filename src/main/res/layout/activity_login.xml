@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center"
+    android:background="@drawable/denglu_beijing"
+    tools:context=".ui.LoginActivity">
+
+    <TextView
+        android:id="@+id/title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/title"
+        android:textSize="25sp"
+        android:textColor="@color/white"
+        android:layout_above="@+id/login_userphone"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="50dp" />
+    <EditText
+        android:id="@+id/login_userphone"
+        android:drawableLeft="@drawable/shouji"
+        android:hint="@string/login_userphone"
+        style="@style/login_style"
+        android:phoneNumber="true"
+        android:layout_alignBottom="@+id/login_line1"
+        android:layout_marginBottom="20dp"/>
+    <View
+        android:id="@+id/login_line1"
+        style="@style/login_line_style"
+        android:layout_above="@+id/login_userpassword"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="20dp" />
+    <EditText
+        android:id="@+id/login_userpassword"
+        android:drawableLeft="@drawable/mima"
+        android:hint="@string/login_userpassword"
+        style="@style/login_style"
+        android:maxLength="16"
+        android:layout_alignBottom="@+id/login_line2"
+        android:layout_marginBottom="20dp"
+        android:inputType="textPassword"/>
+    <View
+        android:id="@+id/login_line2"
+        android:layout_centerInParent="true"
+        style="@style/login_line_style" />
+    <Button
+        android:id="@+id/login_button"
+        android:layout_below="@+id/login_line2"
+        android:text="@string/login_button"
+        style="@style/login_button_style" />
+    <TextView
+        android:id="@+id/login_forgetpwd"
+        android:text="@string/login_forgetpwd"
+        style="@style/login_textview_style"
+        />
+    <TextView
+        android:id="@+id/login_registered"
+        style="@style/login_textview_style"
+        android:text="@string/login_registered"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="20dp"/>
+</RelativeLayout>

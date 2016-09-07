@@ -9,11 +9,13 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
 import com.squareup.moshi.JsonAdapter;
 import com.squareup.moshi.Types;
+import com.squareup.picasso.Picasso;
 import com.xdkj.campus.menu.MainActivity;
 import com.xdkj.campus.menu.R;
 import com.xdkj.campus.menu.adapter.child.HotDishPagerAdapter;
@@ -23,6 +25,7 @@ import com.xdkj.campus.menu.base.BaseLazyMainFragment;
 import com.xdkj.campus.menu.entity.RequestType;
 import com.xdkj.campus.menu.event.NetworkEvent;
 import com.xdkj.campus.menu.event.StartBrotherEvent;
+import com.xdkj.campus.menu.helper.KVHelper;
 import com.xdkj.campus.menu.listener.OnItemClickListener;
 import com.xdkj.campus.menu.ui.dishdiscount.DishesDishcountSwitchFragment;
 import com.xdkj.campus.menu.ui.dishhot.HotDishesFragment;
@@ -213,46 +216,32 @@ public class IndexFragment extends BaseLazyMainFragment
     {
     }
 
+    BGABanner index_banner;
+
     private void initView(View view)
     {
         EventBus.getDefault().register(this);
 
         index_list = (RecyclerView) view.findViewById(R.id.index_list);
         index_list.setFocusable(false);
-        BGABanner index_banner = (BGABanner) view.findViewById(R.id.index_banner);
-        List<View> views = new ArrayList<>();
-        views.add(BGABannerUtil.getItemImageView(getContext(),
-                R.drawable.index_banner_default));
-        views.add(BGABannerUtil.getItemImageView(getContext(),
-                R.drawable.index_banner_default));
-        views.add(BGABannerUtil.getItemImageView(getContext(),
-                R.drawable.index_banner_default));
-        views.add(BGABannerUtil.getItemImageView(getContext(),
-                R.drawable.index_banner_default));
-        index_banner.setData(views);
-        index_banner.setOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener()
+        index_banner = (BGABanner) view.findViewById(R.id.index_banner);
+        index_banner.setAdapter(new BGABanner.Adapter()
         {
             @Override
-            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels)
+            public void fillBannerItem(BGABanner banner,
+                                       View view,
+                                       Object model,
+                                       int position)
             {
-                Log.i("arilpan",
-                        "onPageScrolled  点击了第" + (position + 1) + "个banner");
+                Log.e("arilpan", "model to string " + model.toString());
+                Picasso.with(view.getContext())
+                        .load(APIAddr.BASE_IMG_URL + model.toString())
+                        .error(R.drawable.index_banner_default)
+                        .into((ImageView) view);
             }
         });
-        index_banner.setOnItemClickListener(
-                new BGABanner.OnItemClickListener()
-                {
-                    @Override
-                    public void onBannerItemClick(BGABanner banner,
-                                                  View view,
-                                                  Object model,
-                                                  int position)
-                    {
-                        Log.i("arilpan",
-                                "点击了第" + (position + 1) + "个banner");
-                    }
-                });
-        index_banner.setVerticalScrollbarPosition(10);
+
+
         dishList();
 
         addBtn(view);
@@ -348,17 +337,19 @@ public class IndexFragment extends BaseLazyMainFragment
                 APIAddr.shop_one_name = datas_arry.getMessageList().get(0).getOrg_name();
                 APIAddr.shop_two_name = datas_arry.getMessageList().get(1).getOrg_name();
 
-                APIAddr.shop_one_work_time =datas_arry.getMessageList().get(0).getShop_work_time();
-                APIAddr.shop_two_work_time =datas_arry.getMessageList().get(1).getShop_work_time();
+                APIAddr.shop_one_work_time = datas_arry.getMessageList().get(0).getShop_work_time();
+                APIAddr.shop_two_work_time = datas_arry.getMessageList().get(1).getShop_work_time();
 
-                APIAddr.shop_one_addr =datas_arry.getMessageList().get(0).getAddress();
-                APIAddr.shop_two_addr =datas_arry.getMessageList().get(1).getAddress();
+                APIAddr.shop_one_addr = datas_arry.getMessageList().get(0).getAddress();
+                APIAddr.shop_two_addr = datas_arry.getMessageList().get(1).getAddress();
 
-                APIAddr.shop_one_icon =datas_arry.getMessageList().get(0).getIcon();
-                APIAddr.shop_one_icon =datas_arry.getMessageList().get(1).getIcon();
+                APIAddr.shop_one_icon = datas_arry.getMessageList().get(0).getIcon();
+                APIAddr.shop_two_icon = datas_arry.getMessageList().get(1).getIcon();
 
-                APIAddr.shop_one_phone =datas_arry.getMessageList().get(0).getPhone();
-                APIAddr.shop_one_phone =datas_arry.getMessageList().get(1).getPhone();
+                APIAddr.shop_one_phone = datas_arry.getMessageList().get(0).getPhone();
+                APIAddr.shop_two_phone = datas_arry.getMessageList().get(1).getPhone();
+
+                APIAddr.user_id = KVHelper.getUserInfo(getContext(),"user_id","");
             }
 
 //            Collections.sort(contributors, new Comparator<APIDish>()
@@ -390,6 +381,10 @@ public class IndexFragment extends BaseLazyMainFragment
                 {
                     mAdapter.setDatas(items);
                     //stuff that updates ui
+                    List<String> imgs = new ArrayList<String>();
+                    imgs.add(APIAddr.shop_one_icon);
+                    imgs.add(APIAddr.shop_two_icon);
+                    index_banner.setData(imgs,null);
                 }
             });
         } catch (Exception e)

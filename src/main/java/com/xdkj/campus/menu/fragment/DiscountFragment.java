@@ -1,6 +1,7 @@
 package com.xdkj.campus.menu.fragment;
 
 import android.graphics.Bitmap;
+import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
@@ -111,102 +112,48 @@ public class DiscountFragment extends BaseFragment
             }
         });
 
+        final TextView tab1 = (TextView) view.findViewById(R.id.tab1);
+        final TextView tab2 = (TextView) view.findViewById(R.id.tab2);
+
+        tab1.setTextColor(Color.rgb(172, 66, 66));
+        tab2.setTextColor(Color.rgb(66, 66, 66));
+
+        tab1.setText(APIAddr.shop_one_name);
+        tab2.setText(APIAddr.shop_two_name);
+        tab1.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View view)
+            {
+                EventBus.getDefault().post(new NetworkEvent(
+                        RequestType.DISCOUNT_CARD_LIST,
+                        APIAddr.shop_one_id));
+                shop_id = APIAddr.shop_one_id;
+                tab1.setTextColor(Color.rgb(172, 66, 66));
+                tab2.setTextColor(Color.rgb(66, 66, 66));
+            }
+        });
+        tab2.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View view)
+            {
+                EventBus.getDefault().post(new NetworkEvent(
+                        RequestType.DISCOUNT_CARD_LIST,
+                        APIAddr.shop_two_id));
+                shop_id = APIAddr.shop_two_id;
+                tab2.setTextColor(Color.rgb(172, 66, 66));
+                tab1.setTextColor(Color.rgb(66, 66, 66));
+            }
+        });
+
+
+
         listview = (RecyclerView) view.findViewById(R.id.listview);
 
-        shop_id = "ba262eba-05da-4886-947c-5a557c954af5";
         Log.e("arilpan","优惠:"+shop_id);
 
 
-//        ArrayList<HashMap<String, Object>> item = new ArrayList<HashMap<String, Object>>();
-//
-//        Recharge recharge = new Recharge(1,
-//                R.drawable.chongzhi_dianpu,
-//                "8号餐馆", "丽人卡", "充2000元送500元",
-//                "2016-07-09--2016-08-09");
-//        recharge.setBackgoundRes(R.drawable.chongzhi_lirenkabj);
-//        HashMap<String, Object> map = new HashMap<String, Object>();
-//        map.put("item_bg", recharge.getBackgoundRes());
-//        map.put("item_image", recharge.getMallRes());
-//        map.put("item_mall_name", recharge.getMall_name());
-//        map.put("item_card_name", recharge.getCard_name());
-//        map.put("item_desc", recharge.getDesc());
-//        map.put("item_time", recharge.getTime());
-//        item.add(map);
-//        recharge = new Recharge(1,
-//                R.drawable.chongzhi_dianpu,
-//                "8号餐馆", "黄金卡", "充1000元送200元",
-//                "2016-07-09--2016-08-09");
-//        recharge.setBackgoundRes(R.drawable.chongzhi_jinkabj);
-//        map = new HashMap<String, Object>();
-//        map.put("item_bg", recharge.getBackgoundRes());
-//        map.put("item_image", recharge.getMallRes());
-//        map.put("item_mall_name", recharge.getMall_name());
-//        map.put("item_card_name", recharge.getCard_name());
-//        map.put("item_desc", recharge.getDesc());
-//        map.put("item_time", recharge.getTime());
-//        item.add(map);
-//        recharge = new Recharge(1,
-//                R.drawable.chongzhi_dianpu,
-//                "8号餐馆", "银卡", "充500元送50元",
-//                "2016-07-09--2016-08-09");
-//        recharge.setBackgoundRes(R.drawable.chongzhi_yinkabj);
-//        map = new HashMap<String, Object>();
-//        map.put("item_bg", recharge.getBackgoundRes());
-//        map.put("item_image", recharge.getMallRes());
-//        map.put("item_mall_name", recharge.getMall_name());
-//        map.put("item_card_name", recharge.getCard_name());
-//        map.put("item_desc", recharge.getDesc());
-//        map.put("item_time", recharge.getTime());
-//        item.add(map);
-//
-//        simpleAdapter = new SimpleAdapter(
-//                getContext(), item,
-//                R.layout.fragment_discount_list_item, new String[]
-//                {
-//                        "item_bg",
-//                        "item_image",
-//                        "item_mall_name",
-//                        "item_card_name",
-//                        "item_desc",
-//                        "item_time"
-//                },
-//                new int[]{
-//                        R.id.item_bg,
-//                        R.id.item_image,
-//                        R.id.item_mall_name,
-//                        R.id.item_card_name,
-//                        R.id.item_desc,
-//                        R.id.item_time}
-//        );
-//
-//        simpleAdapter.setViewBinder(new SimpleAdapter.ViewBinder()
-//        {
-//            public boolean setViewValue(View view, Object data,
-//                                        String textRepresentation)
-//            {
-//                //判断是否为我们要处理的对象
-//                if (view instanceof ImageView && data instanceof Integer)
-//                {
-//                    ImageView iv = (ImageView) view;
-//                    iv.setImageResource(Integer.parseInt(data.toString()));
-//                    return true;
-//                } else if (view instanceof ImageView && data instanceof Bitmap)
-//                {
-//                    ImageView iv = (ImageView) view;
-//                    iv.setImageBitmap((Bitmap) data);
-//                    return true;
-//                } else if (view instanceof LinearLayout && data instanceof Integer)
-//                {
-//                    LinearLayout ll = (LinearLayout) view;
-//                    ll.setBackgroundResource(Integer.parseInt(data.toString()));
-//                    return true;
-//                } else
-//                {
-//                    return false;
-//                }
-//            }
-//        });
-//        listview.setAdapter(simpleAdapter);
         listview.setHasFixedSize(true);
         listview.setLayoutManager(new StaggeredGridLayoutManager(1,
                 StaggeredGridLayoutManager

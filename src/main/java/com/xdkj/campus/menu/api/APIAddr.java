@@ -13,7 +13,7 @@ public class APIAddr
     public static String shop_one_id = "";
     public static String shop_two_id = "";
 
-    public static String user_id = "test";
+    public static String user_id = "";
     public static String shop_one_name = "";
     public static String shop_two_name = "";
     public static String shop_one_addr = "";
@@ -68,6 +68,13 @@ public class APIAddr
             "/shop_ClassificatedDishes_info.do?" +
             "org_id=";
 
+    /**
+     * 订单:创建\删除
+     */
+    public static String order_create = BASE_PROJECT_URL +
+            "/appOrder/saveAddOrder.do";
+    public static String order_delete = BASE_PROJECT_URL +
+            "/appOrder/deleteOrders.do?order_id=";
     /**
      * 排行
      */

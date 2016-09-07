@@ -15,6 +15,7 @@ import com.xdkj.campus.menu.entity.RequestType;
 import com.xdkj.campus.menu.event.NetworkEvent;
 import com.xdkj.campus.menu.fragment.ShopFragment;
 import com.xdkj.campus.menu.base.BaseFragment;
+import com.xdkj.campus.menu.helper.UrlHelper;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -129,7 +130,7 @@ public class CommentFragment extends BaseFragment
             //network
             OkHttpClient client = new OkHttpClient();
             Request request = new Request.Builder()
-                    .url(url)
+                    .url(UrlHelper.addToken(getContext(), url))
                     .build();
             Response response = client.newCall(request).execute();
             ResponseBody body = response.body();

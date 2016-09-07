@@ -105,5 +105,16 @@
             android:text="$112"
             android:textColor="#ff6666"
             android:textSize="16sp"/>
+
+        <Button
+            android:id="@+id/order_item_delete_button"
+            android:text="删除订单"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="8dp"
+            android:layout_alignParentRight="true"
+            android:textColor="#ff6666"
+            android:textSize="16sp"/>
     </RelativeLayout>
 </LinearLayout>

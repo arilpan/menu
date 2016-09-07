@@ -10,7 +10,7 @@
         android:layout_height="wrap_content">
     <ImageView
             android:id="@+id/switch_dish_image"
-            android:src="@drawable/cai_img_defult"
+            android:src="@drawable/preferential_list_item_zanwutupian"
             android:layout_width="160dp"
             android:layout_height="110dp"/>
     <TextView android:layout_marginLeft="10dp"

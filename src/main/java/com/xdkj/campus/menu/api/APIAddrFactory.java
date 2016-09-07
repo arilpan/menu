@@ -45,6 +45,8 @@ public class APIAddrFactory
                 return APIAddr.index_shop_env_url;
             case RequestType.DISCOUNT_CARD_LIST:
                 return APIAddr.recharge_discount_new_url;
+            case RequestType.ORDER_DELETE:
+                return APIAddr.order_delete;
 //            case RequestType.INDEX_ALL:
 //                return  APIAddr.shop_detail_url;
 //                break;

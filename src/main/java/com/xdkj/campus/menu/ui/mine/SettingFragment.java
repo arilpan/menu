@@ -1,6 +1,9 @@
 package com.xdkj.campus.menu.ui.mine;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.util.Log;
@@ -13,14 +16,26 @@ import android.widget.Toast;
 
 import com.avast.android.dialogs.fragment.SimpleDialogFragment;
 import com.avast.android.dialogs.iface.ISimpleDialogListener;
+import com.fan.eightrestaurant.ui.LoginActivity;
+import com.fan.eightrestaurant.ui.ResetPasswordActivity;
+import com.fan.eightrestaurant.ui.UpLoadActivity;
+import com.fan.eightrestaurant.utils.PathUtils;
 import com.xdkj.campus.menu.R;
 import com.xdkj.campus.menu.base.BaseFragment;
 import com.xdkj.campus.menu.event.StartBrotherEvent;
+import com.xdkj.campus.menu.helper.KVHelper;
 import com.xdkj.campus.menu.ui.index.DishDetailFragment;
+import com.xdkj.campus.menu.ui.menu.MenuListFragment;
+import com.zhy.http.okhttp.OkHttpUtils;
+import com.zhy.http.okhttp.callback.StringCallback;
 
 import org.greenrobot.eventbus.EventBus;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.File;
+
+import okhttp3.Call;
 
 
 /**
@@ -45,6 +60,76 @@ public class SettingFragment extends BaseFragment
         return fragment;
     }
 
+    public void exit()
+    {
+        String token = KVHelper.getUserInfo(getContext(), "token", "");
+        String secretkey = KVHelper.getUserInfo(getContext(), "secretkey", "");
+        OkHttpUtils.post().url(PathUtils.postLoginOutUrl())
+                .addParams("token", token)
+                .addParams("secretkey", secretkey)
+                .build()
+                .execute(new StringCallback()
+                {
+                    @Override
+                    public void onError(Call call, Exception e)
+                    {
+                        Log.e("AAA", "网络数据下载失败 ");
+                    }
+
+                    @Override
+                    public void onResponse(String response)
+                    {
+                        Log.e("AAA", "网络数据下载成功 " + response);
+                        try
+                        {
+                            JSONObject jb = new JSONObject(response);
+                            String message = jb.getString("message");
+                            if (message.equals("TokenError"))
+                            {
+                                AlertDialog.Builder builder = new AlertDialog.Builder(getActivity
+                                        ());
+                                builder.setTitle("提示");
+                                builder.setMessage("登录异常，请重新登录");
+                                builder.setNegativeButton("确定", new DialogInterface
+                                        .OnClickListener()
+                                {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which)
+                                    {
+                                        KVHelper.clearUserInfo(getContext());
+                                        Intent intent = new Intent(getActivity(), LoginActivity
+                                                .class);
+                                        startActivity(intent);
+
+                                    }
+                                });
+                                builder.create().show();
+                            } else
+                            {
+                                if (message.equals("ok"))
+                                {
+
+                                } else if (message.equals("error"))
+                                {
+                                    Toast.makeText(getContext(), "用户注销登录失败",
+                                            Toast.LENGTH_SHORT).show();
+                                }
+                                Intent intent = new Intent(getActivity(), LoginActivity.class);
+                                startActivity(intent);
+                                _mActivity.finish();
+                            }
+                        } catch (JSONException e)
+                        {
+                            e.printStackTrace();
+                        }
+                        finally
+                        {
+                            KVHelper.clearUserInfo(getContext());
+                        }
+                    }
+                });
+    }
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable
@@ -63,7 +148,7 @@ public class SettingFragment extends BaseFragment
 
     private void initView(View view)
     {
-        setTitle(view,"设置");
+        setTitle(view, "设置");
         view.findViewById(R.id.title_ll_left).setOnClickListener(new View
                 .OnClickListener()
         {
@@ -89,6 +174,14 @@ public class SettingFragment extends BaseFragment
                         .setMessage("暂无新版本")
                         .show();
 
+            }
+        });
+        view.findViewById(R.id.exit).setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View view)
+            {
+                exit();
             }
         });
         ll_clear_data.setOnClickListener(new View.OnClickListener()
@@ -119,8 +212,11 @@ public class SettingFragment extends BaseFragment
             @Override
             public void onClick(View view)
             {
-                EventBus.getDefault().post(new StartBrotherEvent(
-                        DishDetailFragment.newInstance("")));
+//                EventBus.getDefault().post(new StartBrotherEvent(
+//                        DishDetailFragment.newInstance("")));
+                Intent intent = new Intent();
+                intent.setClass(getActivity(), ResetPasswordActivity.class);
+                startActivity(intent);
             }
         });
 
