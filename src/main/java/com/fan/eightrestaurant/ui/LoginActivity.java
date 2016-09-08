@@ -116,6 +116,7 @@ public class LoginActivity extends Activity implements View.OnClickListener
                     login.setEnabled(true);
                 } else
                 {
+                    final String user_phone=userPhone.getText().toString().trim();
                     OkHttpUtils
                             .post()
                             .url(PathUtils.postUserLoginUrl())
@@ -168,7 +169,7 @@ public class LoginActivity extends Activity implements View.OnClickListener
                                             String nickname = data.getString("nickname");
                                             token = data.getString("token");
                                             secretkey = data.getString("secretkey");
-                                            saveUserInfo(user_id, username, imagePath, nickname,
+                                            saveUserInfo(user_id, user_phone, imagePath, nickname,
                                                     token, secretkey);
                                             Intent intent2 = new Intent(LoginActivity.this,
                                                     com.xdkj.campus.menu.MainActivity.class);

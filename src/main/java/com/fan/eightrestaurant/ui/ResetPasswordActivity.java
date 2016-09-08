@@ -50,6 +50,20 @@ public class ResetPasswordActivity extends AppCompatActivity implements View.OnC
      * 初始化控件
      */
     private void initView() {
+
+        ((TextView) findViewById(R.id.title_middle)).setText("重置密码");
+        findViewById(R.id.title_ll_left).setOnClickListener(new View
+                .OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+                finish();
+            }
+        });
+
+
+
         userPwd = (EditText) findViewById(R.id.activity_reset_pwd_userpassword);
         usePassWord = (EditText) findViewById(R.id.activity_reset_pwd_userpwd);
         register_button = (Button) findViewById(R.id.activity_reset_pwd_button);

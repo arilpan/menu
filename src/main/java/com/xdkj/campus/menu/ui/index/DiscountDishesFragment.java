@@ -15,6 +15,7 @@ import android.widget.TextView;
 
 import com.squareup.moshi.JsonAdapter;
 import com.squareup.moshi.Types;
+import com.squareup.picasso.Picasso;
 import com.xdkj.campus.menu.MainActivity;
 import com.xdkj.campus.menu.R;
 import com.xdkj.campus.menu.api.APIAddr;
@@ -398,7 +399,11 @@ public class DiscountDishesFragment extends BaseFragment
                                 newholder.dish_price.setText("￥" + dish.getDishes_price());
                                 newholder.dish_old_price.setText(dish.getRack_rate());
                                 newholder.dish_desc.setText(dish.getDishes_description());
-
+                                Picasso.with(
+                                        cdgetContext()) //
+                                        .load(APIAddr.BASE_IMG_URL + dish.getUpload_url()) //
+                                        .error(R.drawable.preferential_list_item_zanwutupian).
+                                        into(newholder.dish_icon);
                                 Log.e("arilpan", "position2 dish_id:" + dish.getDishes_id());
                             } else
                             {

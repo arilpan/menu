@@ -223,8 +223,8 @@ public class ShopFragment extends BaseFragment
 //                "返回false,交给上层处理!",
 //                Toast.LENGTH_SHORT).show();
 
-        Toast.makeText(_mActivity, "返回!",
-                Toast.LENGTH_SHORT).show();
+//        Toast.makeText(_mActivity, "返回!",
+//                Toast.LENGTH_SHORT).show();
         return false;
     }
 

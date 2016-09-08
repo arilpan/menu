@@ -1,5 +1,6 @@
 package com.xdkj.campus.menu.ui.order;
 
+import android.media.Image;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.util.Log;
@@ -7,14 +8,19 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.squareup.picasso.Picasso;
 import com.xdkj.campus.menu.R;
+import com.xdkj.campus.menu.api.APIAddr;
 import com.xdkj.campus.menu.entity.RequestType;
 import com.xdkj.campus.menu.event.NetworkEvent;
+import com.xdkj.campus.menu.fragment.IndexFragment;
 import com.xdkj.campus.menu.fragment.ShopFragment;
 import com.xdkj.campus.menu.base.BaseFragment;
+import com.xdkj.campus.menu.helper.KVHelper;
 import com.xdkj.campus.menu.helper.UrlHelper;
 
 import org.greenrobot.eventbus.EventBus;
@@ -22,6 +28,7 @@ import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.w3c.dom.Text;
 
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
@@ -42,11 +49,19 @@ public class CommentFragment extends BaseFragment
         // Required empty public constructor
     }
 
-    public static CommentFragment newInstance()
+    public static CommentFragment newInstance(String order_id, String dish_id, String name,
+                                              String url,
+                                              String desc)
+    //dish.getDishes_id(),    name, dish.getUpload_url(),dish.getDishes_description()
     {
 
         Bundle args = new Bundle();
         CommentFragment fragment = new CommentFragment();
+        args.putString("dish_id", dish_id);
+        args.putString("order_id", order_id);
+        args.putString("dish_name", name);
+        args.putString("dish_desc", desc);
+        args.putString("dish_url", url);
         fragment.setArguments(args);
         return fragment;
     }
@@ -69,24 +84,49 @@ public class CommentFragment extends BaseFragment
         if (args != null)
         {
             dishes_id = args.getString("dish_id");
-            user_id = args.getString("user_id");
-            content = args.getString("content");
+            user_id = KVHelper.getUserInfo(getContext(), "username", "");
+            dish_name = args.getString("dish_name");
+            url = args.getString("dish_url");
+            dish_desc = args.getString("dish_desc");
+            order_id = args.getString("order_id");
         }
     }
 
     private void initView(View view)
     {
+        setTitle(view, "评价");
+        view.findViewById(R.id.title_ll_left).setOnClickListener(new View
+                .OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+                _mActivity.onBackPressed();
+            }
+        });
+
         EventBus.getDefault().register(this);
         comment = (TextView) view.findViewById(R.id.comment);
         comment_button = (Button) view.findViewById(R.id.comment_button);
+
+
+        (((TextView) view.findViewById(R.id.dish_name))).setText(dish_name);
+        (((TextView) view.findViewById(R.id.dish_desc))).setText(dish_desc);
+
+        Picasso.with(
+                getContext()) //
+                .load(APIAddr.BASE_IMG_URL + url) //
+                .error(R.drawable.preferential_list_item_zanwutupian).
+                into(((ImageView) view.findViewById(R.id.dish_icon)));
+
 
         comment_button.setOnClickListener(new View.OnClickListener()
         {
             @Override
             public void onClick(View v)
             {
+                content = comment.getText().toString();
                 //提交后退出
-                start(ShopFragment.newInstance(ShopFragment.shop_id));
                 EventBus.getDefault().post(
                         new NetworkEvent(RequestType.ORDER_COMMENT));
             }
@@ -99,8 +139,7 @@ public class CommentFragment extends BaseFragment
         Log.e("arilpan", "WaterFall 你调用咩?");
         if (RequestType.ORDER_COMMENT == event.reqType)
         {
-            Log.e("arilpan", "WaterFall equals url="
-                    + event.url + event.id);
+
             /**
              *
              public static String dish_comment_url = BASE_PROJECT_URL +
@@ -111,11 +150,19 @@ public class CommentFragment extends BaseFragment
 //           String url="http://172.16.0.75:8080/GrogshopSystem/appShop/shop_dishes_info" +
 //                    ".do?iDisplayStart=0&iDisplayLength=10&org_id=ba262eba-05da-4886-947c" +
 //                    "-5a557c954af5";
+
             String url = event.url.replace("USERID", user_id).replace("DISHID", dishes_id)
                     .replace("CONTENT", content);
+            url = UrlHelper.addToken(getContext(), url);
+            url = url + "&order_id=" + order_id;
+            Log.e("arilpan", " comment url=" + url);
+
             if (getData(url))
             {
                 setData();
+            } else
+            {
+
             }
         } else
         {
@@ -139,11 +186,19 @@ public class CommentFragment extends BaseFragment
             //result parse
             JSONObject jsonObject = new JSONObject(res);
             boolean isSuccess = jsonObject.getBoolean("success");
-            if (isSuccess)
+//            if (isSuccess)
             {
-                Toast.makeText(getContext(),
-                        "评价成功", Toast.LENGTH_SHORT)
-                        .show();
+                _mActivity.runOnUiThread(new Thread()
+                {
+                    @Override
+                    public void run()
+                    {
+                        Toast.makeText(getContext(),
+                                "评价成功", Toast.LENGTH_SHORT)
+                                .show();
+                    }
+                });
+
                 return true;
             }
         } catch (JSONException e)
@@ -153,9 +208,16 @@ public class CommentFragment extends BaseFragment
         {
             e.printStackTrace();
         }
-        Toast.makeText(getContext(),
-                "评价失败", Toast.LENGTH_SHORT)
-                .show();
+        _mActivity.runOnUiThread(new Thread()
+        {
+            @Override
+            public void run()
+            {
+                Toast.makeText(getContext(),
+                        "评价失败", Toast.LENGTH_SHORT)
+                        .show();
+            }
+        });
         return false;
     }
 
@@ -166,7 +228,7 @@ public class CommentFragment extends BaseFragment
             @Override
             public void run()
             {
-                findChildFragment(CommentFragment.class).pop();
+                pop();
                 //stuff that updates ui
             }
         });
@@ -188,6 +250,11 @@ public class CommentFragment extends BaseFragment
         super.onDestroy();
         EventBus.getDefault().unregister(this);
     }
+
+    String dish_name;
+    String dish_desc;
+    String url;
+    String order_id;
 
     String user_id;
     String dishes_id;

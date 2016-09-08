@@ -61,23 +61,37 @@
 
         <!--start fan-->
         <!--user-->
-        <activity android:name="com.fan.eightrestaurant.ui.LoginActivity">
+        <activity
+            android:theme="@style/AppTheme.NoActionBar.SwipeBack"
+            android:name="com.fan.eightrestaurant.ui.LoginActivity">
         </activity>
-        <activity android:name="com.fan.eightrestaurant.ui.RegisterActivity"/>
-        <activity android:name="com.fan.eightrestaurant.ui.RetrievePwdActivity"/>
+        <activity
+            android:theme="@style/AppTheme.NoActionBar.SwipeBack"
+            android:name="com.fan.eightrestaurant.ui.RegisterActivity"/>
+        <activity
+            android:theme="@style/AppTheme.NoActionBar.SwipeBack"
+            android:name="com.fan.eightrestaurant.ui.RetrievePwdActivity"/>
 
-        <activity android:name="com.fan.eightrestaurant.ui.ResetPasswordActivity"/>
-        <activity android:name="com.fan.eightrestaurant.ui.UpLoadActivity"/>
+        <activity
+            android:theme="@style/AppTheme.NoActionBar.SwipeBack"
+            android:name="com.fan.eightrestaurant.ui.ResetPasswordActivity"/>
+        <activity
+            android:theme="@style/AppTheme.NoActionBar.SwipeBack"
+            android:name="com.fan.eightrestaurant.ui.UpLoadActivity"/>
         <!--留言-->
         <activity android:name="com.fan.eightrestaurant.ui.LeaveMessageActivity"></activity>
         <activity
             android:name="com.fan.eightrestaurant.ui.MyMessageActivity"
             android:windowSoftInputMode="adjustPan"/>
         <!--优惠列表-->
-        <activity android:name="com.fan.eightrestaurant.DiscountFragment">
+        <activity
+            android:theme="@style/AppTheme.NoActionBar.SwipeBack"
+            android:name="com.fan.eightrestaurant.DiscountFragment">
         </activity>
         <!--优惠详情-->
-        <activity android:name="com.fan.eightrestaurant.ui.PreferentialDetailsActivity"/>
+        <activity
+            android:theme="@style/AppTheme.NoActionBar.SwipeBack"
+            android:name="com.fan.eightrestaurant.ui.PreferentialDetailsActivity"/>
         <!--end fan-->
 
         <!--test start-->
@@ -89,7 +103,10 @@
         <activity
             android:name=".DemoActivity"
             android:label="Test Dialog">
-
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
+                <category android:name="android.intent.category.LAUNCHER"/>
+            </intent-filter>
         </activity>
         <!--test end -->
 

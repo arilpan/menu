@@ -10,7 +10,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="3.5"
+        android:layout_weight="2.8"
         android:orientation="vertical">
 
         <ImageView
@@ -18,7 +18,7 @@
             android:layout_height="80dp"
             android:layout_gravity="center"
             android:layout_marginTop="100dp"
-            android:src="@drawable/pre_order_icon_info"/>
+            android:src="@mipmap/icon"/>
 
         <TextView
             android:layout_width="wrap_content"
@@ -54,7 +54,7 @@
             android:layout_gravity="left|center"
             android:paddingLeft="18dp"
             android:paddingRight="18dp"
-            android:text="公司是干啥的,8号是干啥的...dengdeng\n地址:南京路\n 客服电话:1234-1234-1234\n"
+            android:text="8号餐饮是由8号餐饮推出南京需但信息科技研发的手机客户端。客户端打破传统用餐模式，此案用手机预约点餐方式，为顾客第一时间提供店铺最新的优惠信息。给客户带来极大的方便和优惠。\n地址:南京路\n客服电话:1234-1234-1234\n"
             />
     </LinearLayout>
 

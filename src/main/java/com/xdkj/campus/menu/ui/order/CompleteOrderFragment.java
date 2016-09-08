@@ -24,6 +24,7 @@ import com.xdkj.campus.menu.api.APIAddr;
 import com.xdkj.campus.menu.api.message.APPDishDiscount;
 import com.xdkj.campus.menu.api.message.APPOrder;
 import com.xdkj.campus.menu.base.BaseFragment;
+import com.xdkj.campus.menu.entity.Dish;
 import com.xdkj.campus.menu.entity.RequestType;
 import com.xdkj.campus.menu.event.NetworkEvent;
 import com.xdkj.campus.menu.event.StartBrotherEvent;
@@ -120,7 +121,7 @@ public class CompleteOrderFragment extends BaseFragment
 
             MyViewHolder holder = new MyViewHolder(LayoutInflater.from(
                     parent.getContext()).inflate(
-                    R.layout.fragment_order_cancel_order_item,
+                    R.layout.fragment_order_complete_order_item,
                     parent,
                     false));
 /****************************************************************************/
@@ -150,6 +151,7 @@ public class CompleteOrderFragment extends BaseFragment
             holder.order_item_order_time.setText(order.getHave_meals_time());
             holder.order_item_total_price.setText("￥" + order.getSum_price());
 
+            final String order_id =order.getOrder_id();
             holder.order_item_recyview.setAdapter(
                     new RecyclerView.Adapter()
                     {
@@ -176,7 +178,9 @@ public class CompleteOrderFragment extends BaseFragment
                             Log.e("arilpan", "该item data的大小" + itemDishes.size());
                             if (position < itemDishes.size())
                             {
-                                APPOrder.ValueBean.OrderDishesListBean dish = itemDishes.get
+                                final String child_order_id =order_id;
+
+                                final APPOrder.ValueBean.OrderDishesListBean dish = itemDishes.get
                                         (position);
                                 name = dish.getDishes_name();
                                 newholder.dish_name.setText(dish.getDishes_name());
@@ -188,6 +192,16 @@ public class CompleteOrderFragment extends BaseFragment
                                         .load(APIAddr.BASE_IMG_URL + dish.getUpload_url()) //
                                         .error(R.drawable.preferential_list_item_zanwutupian).
                                         into(newholder.dish_icon);
+//                                final int pos = position;
+                                final String dish_name = name;
+                                newholder.dish_comment.setOnClickListener(new View.OnClickListener()
+                                {
+                                    @Override
+                                    public void onClick(View view)
+                                    {
+                                        goToComment(child_order_id,dish_name, dish);
+                                    }
+                                });
                             } else
                             {
                                 Log.e("arilpan",
@@ -196,24 +210,23 @@ public class CompleteOrderFragment extends BaseFragment
                             Log.e("arilpan", "item onBindViewHolder position: "
                                     + position + " ," +
                                     "size : " + itemDishes.size());
-                            final int pos = position;
-                            final String dish_name = name;
-                            newholder.dish_comment.setOnClickListener(new View.OnClickListener()
-                            {
-                                @Override
-                                public void onClick(View view)
-                                {
-                                    goToComment(dish_name, pos);
-                                }
-                            });
+
                         }
 
-                        public void goToComment(String name, int pos)
+                        public void goToComment(String order_id,
+                                final String name, APPOrder.ValueBean.OrderDishesListBean dish)
                         {
+                            String dish_name;
+                            String dish_icon;
+                            String dish_desc;
                             //跳轉到評價頁面
-                            Log.e("arilpan", "電價了評價位置 name :" + name + ",pos :" + pos);
+                            Log.e("arilpan", "電價了評價位置 name :" + name);
                             EventBus.getDefault().post(
-                                    new StartBrotherEvent(CommentFragment.newInstance()));
+                                    new StartBrotherEvent(CommentFragment.newInstance(
+                                            order_id,
+                                            dish.getDishes_id(),
+                                            name, dish.getUpload_url(), dish
+                                                    .getDishes_description())));
                         }
 
                         @Override

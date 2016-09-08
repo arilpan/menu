@@ -96,6 +96,7 @@ public class DishDetailFragment extends BaseFragment
 
     public void gotoSubscribe()
     {
+        //todo:直接跳转到shopFragment,并且将dish_id对应的dish放入列表中
         EventBus.getDefault().post(
                 new StartBrotherEvent(SelectPlaceFragment.newInstance(dish_id)));
     }

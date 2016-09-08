@@ -108,6 +108,7 @@ public class SelectPlaceDetailFragment extends SupportFragment
     TextView select_room;
     TextView select_time;
     TextView select_person_num;
+    TextView remarksTextView;
     Button order;
 
     /**
@@ -119,7 +120,7 @@ public class SelectPlaceDetailFragment extends SupportFragment
         String user_id = APIAddr.user_id;
         String have_meals_persons = select_person_num.getText().toString();
         String have_meals_time = select_time.getText().toString();
-        String remarks = select_person_num.getText().toString();
+        String remarks = remarksTextView.getText().toString();
         //shop_id;
         String shop_name = ((shop_id == APIAddr.shop_one_id) ? APIAddr.shop_one_name :
                 APIAddr.shop_two_name);
@@ -145,7 +146,7 @@ public class SelectPlaceDetailFragment extends SupportFragment
         getParamConstructor.add("sum_price", String.valueOf(sum_price));
 
         String parmas1 = getParamConstructor.getString();
-        Log.e("arilpan","第一部分参数"+parmas1);
+        Log.e("arilpan", "第一部分参数" + parmas1);
 
         //第二部分
         JSONObject jsonObj = new JSONObject();
@@ -180,7 +181,7 @@ public class SelectPlaceDetailFragment extends SupportFragment
 
         getParamConstructor.add("jsonStr", json.toString());
         String parmas2 = getParamConstructor.getString();
-        Log.e("arilpan","第二部分参数"+parmas2);
+        Log.e("arilpan", "第二部分参数" + parmas2);
 //        try
 //        {
 //            jsonObj.put("jsonStr", dishes);
@@ -227,6 +228,7 @@ public class SelectPlaceDetailFragment extends SupportFragment
         orderRoomRl = (RelativeLayout) view.findViewById(R.id.order_room);
         orderSelectDishRl = (RelativeLayout) view.findViewById(R.id.order_dishes);
 
+        remarksTextView = (TextView) view.findViewById(R.id.remarks);
         select_room = (TextView) view.findViewById(R.id.select_room);
         select_person_num = (TextView) view.findViewById(R.id.select_num);
         select_time = (TextView) view.findViewById(R.id.select_time);
@@ -411,7 +413,7 @@ public class SelectPlaceDetailFragment extends SupportFragment
     {
         if (requestCode == SELECT_ROOM)
         {
-            select_room.setText(value + "-" + String.valueOf(number));
+            select_room.setText(value);
         }
         if (requestCode == SELECT_PERSON_NUM)
         {

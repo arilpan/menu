@@ -193,8 +193,9 @@
                 android:orientation="horizontal">
 
                 <TextView
+                    android:id="@+id/remarks"
                     style="@style/pre_order_list_desc"
-                    android:text="@string/pre_order_food_menu"/>
+                    android:text="备注"/>
 
                 <ImageView
                     style="@style/pre_order_list_img_right"

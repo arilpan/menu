@@ -5,6 +5,7 @@ import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.xdkj.campus.menu.R;
 import com.xdkj.campus.menu.base.BaseBackFragment;
@@ -49,5 +50,16 @@ public class AboutFragment extends BaseBackFragment
 
     private void initView(View view)
     {
+        ((TextView) view.findViewById(R.id.title_middle)).setText("关于我们");
+        view.findViewById(R.id.title_ll_left).setOnClickListener(new View
+                .OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+                _mActivity.onBackPressed();
+            }
+        });
+
     }
 }
