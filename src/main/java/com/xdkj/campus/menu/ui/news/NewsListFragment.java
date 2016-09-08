@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.squareup.moshi.JsonAdapter;
 import com.squareup.moshi.Types;
 import com.squareup.picasso.Picasso;
@@ -103,7 +104,7 @@ public class NewsListFragment extends BaseFragment implements SwipeRefreshLayout
                                        int position)
             {
                 Log.e("arilpan", "model to string " + model.toString());
-                Picasso.with(view.getContext())
+                Glide.with(view.getContext())
                         .load(APIAddr.BASE_IMG_URL + model.toString())
                         .error(R.drawable.index_dishes_image_default)
                         .into((ImageView) view);

@@ -13,6 +13,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
+import com.bumptech.glide.Glide;
 import com.squareup.moshi.JsonAdapter;
 import com.squareup.moshi.Types;
 import com.squareup.picasso.Picasso;
@@ -234,7 +235,7 @@ public class IndexFragment extends BaseLazyMainFragment
                                        int position)
             {
                 Log.e("arilpan", "model to string " + model.toString());
-                Picasso.with(view.getContext())
+                Glide.with(view.getContext())
                         .load(APIAddr.BASE_IMG_URL + model.toString())
                         .error(R.drawable.index_banner_default)
                         .into((ImageView) view);

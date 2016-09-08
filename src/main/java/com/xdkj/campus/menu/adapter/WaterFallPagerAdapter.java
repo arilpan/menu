@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.squareup.picasso.Picasso;
 import com.xdkj.campus.menu.R;
 import com.xdkj.campus.menu.api.APIAddr;
@@ -101,11 +102,11 @@ public class WaterFallPagerAdapter extends RecyclerView.Adapter<WaterFallPagerAd
         holder.desc.setText(item.getDishes_description());
         holder.price.setText("￥" + item.getDishes_price());
 
-        Picasso.with(
-                mInflater.getContext()) //
-                .load(APIAddr.BASE_IMG_URL + item.getUpload_url()) //
-                .error(R.drawable.index_dishes_image_default).
-                into(holder.image);
+
+        Glide.with( mInflater.getContext())
+                .load(APIAddr.BASE_IMG_URL + item.getUpload_url())
+                .placeholder(R.drawable.preferential_list_item_zanwutupian)
+                .into(holder.image);
     }
 
     @Override

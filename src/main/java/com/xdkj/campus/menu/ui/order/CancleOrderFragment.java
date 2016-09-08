@@ -15,6 +15,7 @@ import android.widget.TextClock;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.squareup.moshi.JsonAdapter;
 import com.squareup.moshi.Types;
 import com.squareup.picasso.Picasso;
@@ -216,11 +217,10 @@ public class CancleOrderFragment extends BaseFragment
                                 newholder.dish_price.setText("￥" + dish.getDishes_price());
                                 newholder.dish_desc.setText(dish.getDishes_description());
                                 newholder.dish_num.setText(dish.getDishes_count() + "份");
-                                Picasso.with(
-                                        getContext()) //
-                                        .load(APIAddr.BASE_IMG_URL + dish.getUpload_url()) //
-                                        .error(R.drawable.preferential_list_item_zanwutupian).
-                                        into(newholder.dish_icon);
+                                Glide.with( CancleOrderFragment.this)
+                                        .load(APIAddr.BASE_IMG_URL + dish.getUpload_url())
+                                        .placeholder(R.drawable.preferential_list_item_zanwutupian)
+                                        .into(newholder.dish_icon);
                             } else
                             {
                                 Log.e("arilpan", " will throw java.lang.IndexOutOfBoundsException");

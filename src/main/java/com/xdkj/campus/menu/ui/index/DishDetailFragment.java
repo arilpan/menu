@@ -10,6 +10,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.squareup.moshi.JsonAdapter;
 import com.squareup.moshi.Types;
 import com.squareup.picasso.Picasso;
@@ -221,11 +222,11 @@ public class DishDetailFragment extends BaseFragment
                         dish_mall_name.setText(item.getStore_name());
                         dish_mall_addr.setText(shop.getAddress());
                         dish_mall_work_time.setText(shop.getShop_work_time());
-                        Picasso.with(
-                                getContext()) //
+                        Glide.with(DishDetailFragment.this) //
                                 .load(APIAddr.BASE_IMG_URL + item.getUpload_url()) //
                                 .error(R.drawable.preferential_list_item_zanwutupian).
                                 into(dish_img);
+
 
                         //dish_img
                         //stuff that updates ui

@@ -21,6 +21,7 @@ import com.avast.android.dialogs.iface.IListDialogListener;
 import com.avast.android.dialogs.iface.IMultiChoiceListDialogListener;
 import com.avast.android.dialogs.iface.ISimpleDialogCancelListener;
 import com.avast.android.dialogs.iface.ISimpleDialogListener;
+import com.bumptech.glide.Glide;
 import com.squareup.moshi.JsonAdapter;
 import com.squareup.moshi.Types;
 import com.squareup.picasso.Picasso;
@@ -281,11 +282,10 @@ public class UncompleteOrderFragment extends BaseFragment
                                 newholder.dish_name.setText(dish.getDishes_name());
                                 newholder.dish_price.setText("￥" + dish.getDishes_price());
                                 newholder.dish_desc.setText(dish.getDishes_description());
-                                Picasso.with(
-                                        getContext()) //
-                                        .load(APIAddr.BASE_IMG_URL + dish.getUpload_url()) //
-                                        .error(R.drawable.preferential_list_item_zanwutupian).
-                                        into(newholder.dish_icon);
+                                Glide.with( UncompleteOrderFragment.this)
+                                        .load(APIAddr.BASE_IMG_URL + dish.getUpload_url())
+                                        .placeholder(R.drawable.preferential_list_item_zanwutupian)
+                                        .into(newholder.dish_icon);
                             } else
                             {
                                 Log.e("arilpan", " will throw java.lang.IndexOutOfBoundsException");

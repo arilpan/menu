@@ -12,6 +12,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.squareup.picasso.Picasso;
 import com.xdkj.campus.menu.R;
 import com.xdkj.campus.menu.api.APIAddr;
@@ -113,11 +114,11 @@ public class CommentFragment extends BaseFragment
         (((TextView) view.findViewById(R.id.dish_name))).setText(dish_name);
         (((TextView) view.findViewById(R.id.dish_desc))).setText(dish_desc);
 
-        Picasso.with(
-                getContext()) //
-                .load(APIAddr.BASE_IMG_URL + url) //
-                .error(R.drawable.preferential_list_item_zanwutupian).
-                into(((ImageView) view.findViewById(R.id.dish_icon)));
+
+        Glide.with( CommentFragment.this)
+                .load(APIAddr.BASE_IMG_URL + url)
+                .error(R.drawable.preferential_list_item_zanwutupian)
+                .into(((ImageView) view.findViewById(R.id.dish_icon)));
 
 
         comment_button.setOnClickListener(new View.OnClickListener()

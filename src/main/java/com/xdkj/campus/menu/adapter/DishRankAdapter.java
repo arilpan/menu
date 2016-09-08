@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.squareup.picasso.Picasso;
 import com.xdkj.campus.menu.R;
 import com.xdkj.campus.menu.api.APIAddr;
@@ -73,7 +74,7 @@ public class DishRankAdapter extends RecyclerView.Adapter<DishRankAdapter.MyView
         holder.price.setText("￥" + item.getDishes_price());
         holder.soldNum.setText("  " + item.getPurchase_count() + "人购买");
 //        holder.soldNum.setText(item.getNum() + "人购买");
-        Picasso.with(mInflater.getContext()) //
+        Glide.with(mInflater.getContext()) //
                 .load(APIAddr.BASE_IMG_URL + item.getUpload_url()) //
                 .error(R.drawable.index_dishes_image_default)
                 .into(holder.image);

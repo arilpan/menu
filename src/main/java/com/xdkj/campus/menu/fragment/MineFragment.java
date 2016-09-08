@@ -14,6 +14,7 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.fan.eightrestaurant.ui.UpLoadActivity;
 import com.squareup.picasso.Picasso;
 import com.xdkj.campus.menu.R;
@@ -91,7 +92,7 @@ public class MineFragment extends BaseFragment implements View.OnClickListener
         }
         if (!TextUtils.isEmpty(user_head_img))
         {
-            Picasso.with(getContext())
+            Glide.with(MineFragment.this)
                     .load( user_head_img)
                     .into(userhead);
         }

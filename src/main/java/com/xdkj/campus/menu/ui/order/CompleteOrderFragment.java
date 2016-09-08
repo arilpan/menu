@@ -14,6 +14,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.fan.eightrestaurant.ui.LoginActivity;
 import com.squareup.moshi.JsonAdapter;
 import com.squareup.moshi.Types;
@@ -187,11 +188,12 @@ public class CompleteOrderFragment extends BaseFragment
                                 newholder.dish_price.setText("￥" + dish.getDishes_price());
                                 newholder.dish_desc.setText(dish.getDishes_description());
                                 newholder.dish_num.setText(dish.getDishes_count() + "份");
-                                Picasso.with(
-                                        getContext()) //
-                                        .load(APIAddr.BASE_IMG_URL + dish.getUpload_url()) //
-                                        .error(R.drawable.preferential_list_item_zanwutupian).
-                                        into(newholder.dish_icon);
+
+                                Glide.with( CompleteOrderFragment.this)
+                                        .load(APIAddr.BASE_IMG_URL + dish.getUpload_url())
+                                        .placeholder(R.drawable.preferential_list_item_zanwutupian)
+                                        .into(newholder.dish_icon);
+
 //                                final int pos = position;
                                 final String dish_name = name;
                                 newholder.dish_comment.setOnClickListener(new View.OnClickListener()

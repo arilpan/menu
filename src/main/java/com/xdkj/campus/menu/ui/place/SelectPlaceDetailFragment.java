@@ -365,6 +365,7 @@ public class SelectPlaceDetailFragment extends SupportFragment
             {
 //                        tvTime.setText(getTime(date));
                 Log.e("arilpan", getTime(date));
+                //2016-09-08 16:38
                 select_time.setText(getTime(date));
             }
         });
@@ -372,7 +373,7 @@ public class SelectPlaceDetailFragment extends SupportFragment
 
     public static String getTime(Date date)
     {
-        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+        SimpleDateFormat format = new SimpleDateFormat("yyyy*MM!dd@HH$mm");//年月日时分
         return format.format(date);
     }
 

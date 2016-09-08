@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.*;
 
+import com.bumptech.glide.Glide;
 import com.squareup.picasso.Picasso;
 import com.xdkj.campus.menu.R;
 import com.xdkj.campus.menu.api.APIAddr;
@@ -240,11 +241,15 @@ public class SelectFragment extends BaseFragment
             dish_desc.setText(dish.getPrice());
             dish_order_btn.setText("预约");
 
-            Picasso.with(
-                    inflater.getContext()) //
-                    .load(APIAddr.BASE_IMG_URL + dish.getImgurl()) //
-                    .error(R.drawable.index_dishes_image_default).
-                    into(dish_img);
+            Glide.with(SelectFragment.this)
+                    .load(APIAddr.BASE_IMG_URL + dish.getImgurl())
+                    .placeholder(R.drawable.preferential_list_item_zanwutupian)
+                    .into(dish_img);
+//            Picasso.with(
+//                    inflater.getContext()) //
+//                    .load(APIAddr.BASE_IMG_URL + dish.getImgurl()) //
+//                    .error(R.drawable.index_dishes_image_default).
+//                    into(dish_img);
 
             dish_img.setOnClickListener(new View.OnClickListener()
             {

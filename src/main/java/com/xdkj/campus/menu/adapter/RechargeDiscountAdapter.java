@@ -12,6 +12,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.squareup.picasso.Picasso;
 import com.squareup.picasso.Target;
 import com.xdkj.campus.menu.R;
@@ -79,7 +80,7 @@ public class RechargeDiscountAdapter extends RecyclerView.Adapter<RechargeDiscou
         holder.item_time.setText(item.getActivity_start_time() + "--"
                 + item.getActivity_end_time());
 //        holder.soldNum.setText(item.getNum() + "人购买");
-        Picasso.with(mInflater.getContext()) //
+        Glide.with(mInflater.getContext()) //
                 .load(APIAddr.BASE_IMG_URL + item.getShop_pic()) //
                 .error(R.drawable.chongzhi_dianpu)
                 .into(holder.item_image);

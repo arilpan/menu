@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.squareup.picasso.Picasso;
 import com.xdkj.campus.menu.R;
 import com.xdkj.campus.menu.api.APIAddr;
@@ -70,7 +71,7 @@ public class NewsListAdapter extends RecyclerView.Adapter<NewsListAdapter.MyView
         holder.content.setText(item.getNews_content());
 
         //todo :load defalut img
-        Picasso.with(mInflater.getContext()) //
+        Glide.with(mInflater.getContext()) //
                 .load(APIAddr.BASE_IMG_URL + item.getNews_url()) //
 //                .resizeDimen(R.dimen.notification_icon_width_height,
 //                        R.dimen.notification_icon_width_height) //

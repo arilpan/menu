@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.squareup.picasso.Picasso;
 import com.xdkj.campus.menu.R;
 import com.xdkj.campus.menu.api.APIAddr;
@@ -79,7 +80,7 @@ public class HotDishPagerAdapter extends RecyclerView.Adapter<HotDishPagerAdapte
 
             holder.sold_num.setText("已售:" + item.getPurchase_count());
             holder.mall_price.setText(item.getRack_rate());
-            Picasso.with(
+            Glide.with(
                     mInflater.getContext()) //
                     .load(APIAddr.BASE_IMG_URL + item.getUpload_url()) //
                     .error(R.drawable.index_dishes_image_default).
