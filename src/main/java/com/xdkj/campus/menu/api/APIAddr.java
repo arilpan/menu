@@ -72,7 +72,7 @@ public class APIAddr
      * 订单:创建\删除
      */
     public static String order_create = BASE_PROJECT_URL +
-            "/appOrder/saveAddOrder.do";
+            "/appOrder/addAndroidOrder.do?";
     public static String order_delete = BASE_PROJECT_URL +
             "/appOrder/deleteOrders.do?order_id=";
     /**
@@ -146,7 +146,9 @@ public class APIAddr
     public static String dish_comment_url = BASE_PROJECT_URL +
             "/appEvaluation/saveAddEvaluations.do?user_id=USERID" +
             "&dishes_id=DISHID&content=CONTENT";
-
+    public static String dish_list_comment_url = BASE_PROJECT_URL +
+            "/appEvaluation/list_Evaluations.do?user_id=USERID" +
+            "&dishes_id=DISHID";
     /**
      * set org id
      *

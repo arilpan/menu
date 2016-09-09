@@ -144,7 +144,7 @@ public class UncompleteOrderFragment extends BaseFragment
 
     private void initView(View view)
     {
-        setTitle(view,"未完成订单");
+        setTitle(view, "未完成订单");
         view.findViewById(R.id.title_ll_left).setOnClickListener(new View
                 .OnClickListener()
         {
@@ -282,7 +282,7 @@ public class UncompleteOrderFragment extends BaseFragment
                                 newholder.dish_name.setText(dish.getDishes_name());
                                 newholder.dish_price.setText("￥" + dish.getDishes_price());
                                 newholder.dish_desc.setText(dish.getDishes_description());
-                                Glide.with( UncompleteOrderFragment.this)
+                                Glide.with(UncompleteOrderFragment.this)
                                         .load(APIAddr.BASE_IMG_URL + dish.getUpload_url())
                                         .placeholder(R.drawable.preferential_list_item_zanwutupian)
                                         .into(newholder.dish_icon);
@@ -466,6 +466,7 @@ public class UncompleteOrderFragment extends BaseFragment
         String realUrl = url.replace("USERID", APIAddr.user_id);
         realUrl = UrlHelper.addToken(getContext(), realUrl);
         Log.e("arilpan", "完成订单link:" + realUrl);
+        ResponseBody body = null;
         try
         {
             final JsonAdapter<APPOrder>
@@ -476,10 +477,9 @@ public class UncompleteOrderFragment extends BaseFragment
                     .url((UrlHelper.addToken(getContext(), realUrl)))
                     .build();
             Response response = client.newCall(request).execute();
-            ResponseBody body = response.body();
+            body = response.body();
 
             APPOrder datas_arry = COM_JSON_ADAPTER.fromJson(body.source());
-            body.close();
             datas = datas_arry.getValue();
             for (APPOrder.ValueBean data : datas)
             {
@@ -490,6 +490,9 @@ public class UncompleteOrderFragment extends BaseFragment
         } catch (Exception e)
         {
             e.printStackTrace();
+        } finally
+        {
+            body.close();
         }
         return null;
     }

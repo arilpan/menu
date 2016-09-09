@@ -1,7 +1,5 @@
 package com.fan.eightrestaurant.utils;
 
-import com.xdkj.campus.menu.api.APIAddr;
-
 /**
  * Created by xdkj on 2016/8/8.
  * 接口类
@@ -10,7 +8,7 @@ public class PathUtils {
 
 
 
-    private static String path= APIAddr.BASE_IMG_URL;
+    private static String path="http://172.16.0.75:8080";
     /**
      * 用户注册、修改密码短信接口
      */

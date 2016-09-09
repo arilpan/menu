@@ -2,6 +2,7 @@ package com.xdkj.campus.menu.ui.place;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -28,6 +29,8 @@ import com.xdkj.campus.menu.entity.Dish;
 import com.xdkj.campus.menu.entity.RequestType;
 import com.xdkj.campus.menu.event.NetworkEvent;
 import com.xdkj.campus.menu.helper.GetParamConstructor;
+import com.xdkj.campus.menu.helper.KVHelper;
+import com.xdkj.campus.menu.helper.UrlHelper;
 import com.xdkj.campus.menu.ui.menu.DishList;
 import com.xdkj.campus.menu.ui.menu.MenuListFragment;
 import com.xdkj.campus.menu.ui.menu.SelectFragment;
@@ -116,8 +119,8 @@ public class SelectPlaceDetailFragment extends SupportFragment
      */
     public void submitOrder()
     {
-
-        String user_id = APIAddr.user_id;
+//        String user_id = APIAddr.user_id;
+        String user_id = KVHelper.getUserInfo(getContext(), "username", "");
         String have_meals_persons = select_person_num.getText().toString();
         String have_meals_time = select_time.getText().toString();
         String remarks = remarksTextView.getText().toString();
@@ -126,6 +129,22 @@ public class SelectPlaceDetailFragment extends SupportFragment
                 APIAddr.shop_two_name);
         String room = select_room.getText().toString();
         double sum_price = DishList.getTotalPrice();
+
+        if (TextUtils.isEmpty(room))
+        {
+            Toast.makeText(getContext(), "选择用餐房间", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        if (TextUtils.isEmpty(have_meals_persons))
+        {
+            Toast.makeText(getContext(), "选择用餐人数", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        if (TextUtils.isEmpty(have_meals_time))
+        {
+            Toast.makeText(getContext(), "选择用餐时间", Toast.LENGTH_SHORT).show();
+            return;
+        }
 
         /**
          * 1.如果时间太近,不可
@@ -182,15 +201,11 @@ public class SelectPlaceDetailFragment extends SupportFragment
         getParamConstructor.add("jsonStr", json.toString());
         String parmas2 = getParamConstructor.getString();
         Log.e("arilpan", "第二部分参数" + parmas2);
-//        try
-//        {
-//            jsonObj.put("jsonStr", dishes);
-//        } catch (JSONException e)
-//        {
-//            e.printStackTrace();
-//        }
         Log.e("arilpan", "after:-------------" + parmas2.toString());
+        String getData = parmas2.toString();
 
+        EventBus.getDefault().post(new NetworkEvent(
+                RequestType.ORDER_UPLOAD, getData));
     }
 
 
@@ -363,17 +378,22 @@ public class SelectPlaceDetailFragment extends SupportFragment
             @Override
             public void onTimeSelect(Date date)
             {
-//                        tvTime.setText(getTime(date));
-                Log.e("arilpan", getTime(date));
                 //2016-09-08 16:38
-                select_time.setText(getTime(date));
+                String time = getTime(date);
+//                time.replaceFirst("-", "年");
+//                time.replace("-", "月");
+//                time.replace(" ", "日");
+//                time.replace(":", "时");
+//                time = time + "分";
+                Log.e("arilpan", "click time select" + getTime(date) + "-->" + time);
+                select_time.setText(time);
             }
         });
     }
 
     public static String getTime(Date date)
     {
-        SimpleDateFormat format = new SimpleDateFormat("yyyy*MM!dd@HH$mm");//年月日时分
+        SimpleDateFormat format = new SimpleDateFormat("yyyy年MM月dd日HH时mm分");//年月日时分
         return format.format(date);
     }
 
@@ -451,9 +471,82 @@ public class SelectPlaceDetailFragment extends SupportFragment
         {
             Log.e("arilpan", "ShopFragment 填充数据");
             setData(getData(event));
+        } else if (RequestType.ORDER_UPLOAD == event.reqType)
+        {
+            uploadData(event.url + event.id);
         }
 
     }
+
+    public void uploadData(String url)
+    {
+        ResponseBody body = null;
+        try
+        {
+            url = UrlHelper.addToken(getContext(), url);
+            OkHttpClient client = new OkHttpClient();
+            Request request = new Request.Builder()
+                    .url(url)
+                    .build();
+
+            Response response = client.newCall(request).execute();
+            body = response.body();
+            String result = body.string();
+            Log.e("arilpan", "url:" + url + ",result:" + result);
+            JSONObject jsonObject = new JSONObject(result);
+            String msg = jsonObject.getString("message");
+            Log.e("arilpan", " create order res:" + msg + ",result:" + result);
+            if ("TokenError".equals(msg))
+            {
+                _mActivity.runOnUiThread(new Runnable()
+                {
+                    @Override
+                    public void run()
+                    {
+                        Toast.makeText(getContext(), "don't have access", Toast.LENGTH_SHORT);
+                        Log.e("arilpan", " create order success");
+                    }
+                });
+            } else if ("true".equals(jsonObject.getString("success")))
+            {
+                _mActivity.runOnUiThread(new Runnable()
+                {
+                    @Override
+                    public void run()
+                    {
+                        Toast.makeText(getContext(), "create order success", Toast.LENGTH_SHORT);
+                        Log.e("arilpan", " create order success");
+                        pop();
+                    }
+                });
+            } else
+            {
+                _mActivity.runOnUiThread(new Runnable()
+                {
+                    @Override
+                    public void run()
+                    {
+                        Toast.makeText(getContext(),
+                                "create order fail", Toast.LENGTH_SHORT).show();
+                    }
+                });
+                Log.e("arilpan", " create order fail");
+//                EventBus.getDefault().post(
+//                        new NetworkEvent(RequestType.ORDER_LIST,
+//                                String.valueOf(APIAddr.ORDER_CANCLE))
+//                );
+
+            }
+        } catch (Exception e)
+        {
+            e.printStackTrace();
+        } finally
+        {
+            body.close();
+        }
+
+    }
+
 
     public void setData(final List<APPRoomInfo.ValueBean> datas)
     {
@@ -507,6 +600,7 @@ public class SelectPlaceDetailFragment extends SupportFragment
 
     public List<APPRoomInfo.ValueBean> getData(NetworkEvent event)
     {
+        ResponseBody body = null;
         try
         {
             final JsonAdapter<APPRoomInfo>
@@ -520,16 +614,18 @@ public class SelectPlaceDetailFragment extends SupportFragment
                     .build();
 
             Response response = client.newCall(request).execute();
-            ResponseBody body = response.body();
+            body = response.body();
 
             APPRoomInfo datas_arry =
                     COM_JSON_ADAPTER.fromJson(body.source());
-            body.close();
             Log.e("arilpan", "room num:" + datas_arry.getValue().size());
             return datas_arry.getValue();
         } catch (Exception e)
         {
             e.printStackTrace();
+        } finally
+        {
+            body.close();
         }
         return null;
     }

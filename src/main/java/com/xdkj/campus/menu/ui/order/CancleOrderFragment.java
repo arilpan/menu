@@ -217,7 +217,7 @@ public class CancleOrderFragment extends BaseFragment
                                 newholder.dish_price.setText("￥" + dish.getDishes_price());
                                 newholder.dish_desc.setText(dish.getDishes_description());
                                 newholder.dish_num.setText(dish.getDishes_count() + "份");
-                                Glide.with( CancleOrderFragment.this)
+                                Glide.with(CancleOrderFragment.this)
                                         .load(APIAddr.BASE_IMG_URL + dish.getUpload_url())
                                         .placeholder(R.drawable.preferential_list_item_zanwutupian)
                                         .into(newholder.dish_icon);
@@ -348,6 +348,7 @@ public class CancleOrderFragment extends BaseFragment
 
     public void deleteData(String url)
     {
+        ResponseBody body = null;
         try
         {
             String realUrl = UrlHelper.addToken(getContext(), url);
@@ -363,11 +364,10 @@ public class CancleOrderFragment extends BaseFragment
                     .post(fromBody)
                     .build();
             Response response = client.newCall(request).execute();
-            ResponseBody body = response.body();
+            body = response.body();
             String result = body.string();
             JSONObject jsonObject = new JSONObject(result);
             String msg = jsonObject.getString("message");
-            body.close();
             if ("true".equals(msg))
             {
                 _mActivity.runOnUiThread(new Runnable()
@@ -398,6 +398,9 @@ public class CancleOrderFragment extends BaseFragment
         } catch (Exception e)
         {
             e.printStackTrace();
+        } finally
+        {
+            body.close();
         }
     }
 
@@ -416,6 +419,7 @@ public class CancleOrderFragment extends BaseFragment
 
     public List<APPOrder.ValueBean> getData(String url)
     {
+        ResponseBody body = null;
         String realUrl = url.replace("USERID", APIAddr.user_id);
         try
         {
@@ -431,10 +435,9 @@ public class CancleOrderFragment extends BaseFragment
                     .url(realUrl)
                     .build();
             Response response = client.newCall(request).execute();
-            ResponseBody body = response.body();
+            body = response.body();
 
             APPOrder datas_arry = COM_JSON_ADAPTER.fromJson(body.source());
-            body.close();
             datas = datas_arry.getValue();
             for (APPOrder.ValueBean data : datas)
             {
@@ -444,6 +447,10 @@ public class CancleOrderFragment extends BaseFragment
         } catch (Exception e)
         {
             e.printStackTrace();
+        } finally
+        {
+
+            body.close();
         }
         return null;
     }

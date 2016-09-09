@@ -30,83 +30,100 @@ import okhttp3.Call;
 /**
  * 留言——常见问题查询界面
  */
-public class LeaveMessageActivity extends AppCompatActivity {
+public class LeaveMessageActivity extends AppCompatActivity
+{
 
     private ListView listView;
-    private List<LeaveMessage> list;
+
     private LeaveMessageAdapter adapter;
     private Button myLeaveButton;
-    private String token,secretkey;
+    private String token, secretkey;
     private SharedPreferences getInfo;
 
 
-
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState)
+    {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_leave_message);
         initView();
     }
 
-    private void initView() {
+    private void initView()
+    {
         listView = (ListView) findViewById(R.id.activity_leave_message_listview);
         myLeaveButton = (Button) findViewById(R.id.activity_leave_message_myleavebutton);
 
         getInfo = getSharedPreferences("saveSelfInfo", Context.MODE_PRIVATE);
-        token = getInfo.getString("token",token);
-        secretkey = getInfo.getString("secretkey",secretkey);
+        token = getInfo.getString("token", token);
+        secretkey = getInfo.getString("secretkey", secretkey);
 
         initData(PathUtils.getAppListMessageUrl());
-        list = new ArrayList<>();
-        adapter = new LeaveMessageAdapter(getBaseContext(),list);
+
+        adapter = new LeaveMessageAdapter(getBaseContext());
         listView.setAdapter(adapter);
     }
 
-    private void initData(String path) {
+    private void initData(String path)
+    {
         OkHttpUtils
                 .get()
                 .addParams("secretkey", secretkey)
                 .addParams("token", token)
                 .url(path)
                 .build()
-                .execute(new StringCallback() {
+                .execute(new StringCallback()
+                {
                     @Override
-                    public void onError(Call call, Exception e) {
+                    public void onError(Call call, Exception e)
+                    {
 
                     }
+
                     @Override
-                    public void onResponse(String response) {
-                        try {
+                    public void onResponse(String response)
+                    {
+                        try
+                        {
                             JSONObject object = new JSONObject(response);
                             String message = object.getString("message");
-                            if(message.equals("TokenError")) {
-                                AlertDialog.Builder builder = new AlertDialog.Builder(LeaveMessageActivity.this);
+                            if (message.equals("TokenError"))
+                            {
+                                AlertDialog.Builder builder = new AlertDialog.Builder
+                                        (LeaveMessageActivity.this);
                                 builder.setTitle("提示");
                                 builder.setMessage("登录异常，请重新登录");
-                                builder.setNegativeButton("确定", new DialogInterface.OnClickListener() {
+                                builder.setNegativeButton("确定", new DialogInterface
+                                        .OnClickListener()
+                                {
                                     @Override
-                                    public void onClick(DialogInterface dialog, int which) {
-                                        Intent intent = new Intent(LeaveMessageActivity.this, LoginActivity.class);
+                                    public void onClick(DialogInterface dialog, int which)
+                                    {
+                                        Intent intent = new Intent(LeaveMessageActivity.this,
+                                                LoginActivity.class);
                                         startActivity(intent);
                                         finish();
                                     }
                                 });
                                 builder.create().show();
                             }
-                        } catch (JSONException e) {
+                        } catch (JSONException e)
+                        {
                             e.printStackTrace();
                         }
                         List<LeaveMessage> result = JSONUtils.getMessageJson(response);
 
-                        list.addAll(result);
-                        myLeaveButton.setOnClickListener(new View.OnClickListener() {
+                        adapter.setList(result);
+                        myLeaveButton.setOnClickListener(new View.OnClickListener()
+                        {
                             @Override
-                            public void onClick(View v) {
-                                Intent intent = new Intent(LeaveMessageActivity.this,MyMessageActivity.class);
+                            public void onClick(View v)
+                            {
+                                Intent intent = new Intent(LeaveMessageActivity.this, MyMessageActivity.class);
                                 startActivity(intent);
                             }
                         });
-                  }
-        });
+                    }
+                });
     }
 }

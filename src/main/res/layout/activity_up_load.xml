@@ -1,47 +1,152 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    xmlns:fresco="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical"
-    android:gravity="center_horizontal"
-    tools:context="com.fan.eightrestaurant.ui.UpLoadActivity">
+              xmlns:fresco="http://schemas.android.com/apk/res-auto"
+              xmlns:tools="http://schemas.android.com/tools"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:background="@color/screen_background"
+              android:gravity="center_horizontal"
+              android:orientation="vertical"
+              tools:context="com.fan.eightrestaurant.ui.UpLoadActivity">
+
+    <include layout="@layout/common_title_back_grey_color"/>
+
     <RelativeLayout
+        android:id="@+id/userhead"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="#51CA65"
-        android:padding="30dp" >
+        android:layout_height="60dp"
+        android:layout_marginTop="10dp"
+        android:background="@color/white">
+
         <TextView
-            android:text="编辑头像"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:paddingLeft="20dp"
+            android:text="头像"
+            android:textColor="@color/brown"
+            android:textSize="16sp"/>
+
         <com.facebook.drawee.view.SimpleDraweeView
-            android:id="@+id/activity_up_load_show_image"
-            android:layout_width="80dp"
-            android:layout_height="80dp"
-            fresco:actualImageScaleType="centerInside"
+            android:id="@+id/activity_up_load_show_headimage"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="10dp"
+            android:layout_toLeftOf="@+id/activity_up_load_show_image"
+            android:layout_toStartOf="@+id/activity_up_load_show_image"
+            fresco:actualImageScaleType="focusCrop"
             fresco:roundAsCircle="true"
-            android:layout_centerInParent="true"
-            fresco:roundingBorderColor="@color/white"
-            fresco:roundingBorderWidth="1dp"/>
+            fresco:roundingBorderColor="@color/white"/>
+
+        <TextView
+            android:id="@+id/activity_up_load_show_image"
+            style="@style/activity_up_load_todo_text"/>
     </RelativeLayout>
-    <TextView
-        android:id="@+id/activity_up_load_name"
-        android:layout_marginTop="60dp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textSize="20sp"
-        android:text="昵称"
-        android:clickable="true">
-    </TextView>
 
 
-    <Button
-        android:id="@+id/activity_eixt_button"
+    <RelativeLayout
+        android:id="@+id/nickname"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="退出登录"
-        android:textSize="20sp"
-        android:layout_marginTop="50dp"/>
+        android:layout_height="50dp"
+        android:layout_marginTop="10dp"
+        android:background="@color/white">
+
+        <TextView
+            style="@style/activity_up_load_text"
+            android:text="@string/activity_up_load_nickname"/>
+
+        <TextView
+            android:id="@+id/activity_up_load_name"
+            style="@style/activity_up_load_todo_text"/>
+        <TextView
+            android:id="@+id/activity_up_load_show_name"
+            style="@style/activity_up_load_shoe_text"
+            android:layout_toLeftOf="@id/activity_up_load_name"
+            android:layout_toStartOf="@+id/activity_up_load_name"
+            android:text="隐居沙漠的鱼"/>
+
+    </RelativeLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:background="@color/lightWhite"/>
+
+    <RelativeLayout
+        android:id="@+id/realname"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@color/white">
+
+        <TextView
+            style="@style/activity_up_load_text"
+            android:text="@string/activity_up_load_realname"/>
+
+        <TextView
+            android:id="@+id/activity_up_load_realname"
+            style="@style/activity_up_load_todo_text"/>
+
+        <TextView
+            android:id="@+id/activity_up_load_show_realname"
+            style="@style/activity_up_load_shoe_text"
+            android:layout_toLeftOf="@id/activity_up_load_realname"
+            android:layout_toStartOf="@+id/activity_up_load_realname"
+            android:text="隐居沙漠的鱼"/>
+    </RelativeLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:background="@color/lightWhite"/>
+
+    <RelativeLayout
+        android:id="@+id/birthday"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@color/white">
+
+        <TextView
+            style="@style/activity_up_load_text"
+            android:text="@string/activity_up_load_birthday"/>
+
+        <TextView
+            android:id="@+id/activity_up_load_birthday"
+            style="@style/activity_up_load_todo_text"/>
+
+        <TextView
+            android:id="@+id/activity_up_load_show_birthday"
+            style="@style/activity_up_load_shoe_text"
+            android:layout_toLeftOf="@id/activity_up_load_birthday"
+            android:layout_toStartOf="@+id/activity_up_load_birthday"
+            android:text="1994-07-09"/>
+    </RelativeLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:background="@color/lightWhite"/>
+
+    <RelativeLayout
+        android:id="@+id/email"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@color/white">
+
+        <TextView
+            style="@style/activity_up_load_text"
+            android:text="@string/activity_up_load_email"/>
+
+        <TextView
+            android:id="@+id/activity_up_load_email"
+            style="@style/activity_up_load_todo_text"/>
+
+        <TextView
+            android:id="@+id/activity_up_load_show_email"
+            style="@style/activity_up_load_shoe_text"
+            android:layout_toLeftOf="@id/activity_up_load_email"
+            android:layout_toStartOf="@+id/activity_up_load_email"
+            android:text="99evgrewg23ry@qq.com"/>
+
+    </RelativeLayout>
 </LinearLayout>

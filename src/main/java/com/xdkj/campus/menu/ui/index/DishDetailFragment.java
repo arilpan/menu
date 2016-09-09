@@ -2,6 +2,8 @@ package com.xdkj.campus.menu.ui.index;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,7 +18,10 @@ import com.squareup.moshi.Types;
 import com.squareup.picasso.Picasso;
 import com.xdkj.campus.menu.MainActivity;
 import com.xdkj.campus.menu.R;
+import com.xdkj.campus.menu.adapter.CommentsAdapter;
 import com.xdkj.campus.menu.api.APIAddr;
+import com.xdkj.campus.menu.api.APIAddrFactory;
+import com.xdkj.campus.menu.api.message.APPComments;
 import com.xdkj.campus.menu.api.message.APPDishDetail;
 import com.xdkj.campus.menu.api.message.APPDishDiscount;
 import com.xdkj.campus.menu.api.message.APPNew;
@@ -24,7 +29,9 @@ import com.xdkj.campus.menu.base.BaseFragment;
 import com.xdkj.campus.menu.entity.RequestType;
 import com.xdkj.campus.menu.event.NetworkEvent;
 import com.xdkj.campus.menu.event.StartBrotherEvent;
-import com.xdkj.campus.menu.ui.place.SelectPlaceFragment;
+import com.xdkj.campus.menu.helper.KVHelper;
+import com.xdkj.campus.menu.helper.UrlHelper;
+import com.xdkj.campus.menu.ui.order.SelectPlaceFragment;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -99,9 +106,11 @@ public class DishDetailFragment extends BaseFragment
     {
         //todo:直接跳转到shopFragment,并且将dish_id对应的dish放入列表中
         EventBus.getDefault().post(
-                new StartBrotherEvent(SelectPlaceFragment.newInstance(dish_id)));
+//                new StartBrotherEvent(SelectPlaceFragment.newInstance(dish_id)));
+                new StartBrotherEvent(SelectPlaceFragment.newInstance()));
     }
 
+    RecyclerView comments;
     TextView dish_name;
     TextView dish_price;
     TextView dish_old_price;
@@ -112,9 +121,11 @@ public class DishDetailFragment extends BaseFragment
     TextView dish_mall_work_time;
 
     ImageView dish_img;
+    CommentsAdapter commentsAdapter;
 
     private void initView(View view)
     {
+
         setTitle(view, "菜品详情");
         view.findViewById(R.id.title_ll_left).setOnClickListener(new View
                 .OnClickListener()
@@ -136,6 +147,14 @@ public class DishDetailFragment extends BaseFragment
         dish_mall_name = (TextView) view.findViewById(R.id.dish_mall_name);
         dish_mall_addr = (TextView) view.findViewById(R.id.dish_mall_addr);
         dish_mall_work_time = (TextView) view.findViewById(R.id.dish_mall_work_time);
+
+        comments = (RecyclerView) view.findViewById(R.id.comments);
+        comments.setLayoutManager(new StaggeredGridLayoutManager(1,
+                StaggeredGridLayoutManager
+                        .VERTICAL));
+        commentsAdapter = new CommentsAdapter(getContext());
+        comments.setAdapter(commentsAdapter);
+
 
         Button btn_subscribe = (Button) view.findViewById(R.id.btn_subscribe);
 
@@ -161,11 +180,60 @@ public class DishDetailFragment extends BaseFragment
         {
             Log.e("arilpan", "DishDetail equals url="
                     + event.url + event.id);
-            setData(getData(event.url + event.id));
+            setData(getData(event.url + event.id), getComments());
+
         } else
         {
             Log.e("arilpan", "DishDetail what happend?");
         }
+    }
+
+    public List<APPComments.ValueBean> getComments()
+    {
+//http://172.16.0.75:8080/GrogshopSystem/app/appEvaluation/list_Evaluations
+// .do?user_id=15826666277&dishes_id=08d8a4b3-c063-4efa-95c5-b676c35d6e07&content=&token
+// =2028146C95B011946CB4BF48569E7D40&secretkey=D8EBC290AE59D98F36C7012DD27C6962&order_id=2d553a93
+// -ea7e-4e9a-95ed-d907abf5cfbb
+        List<APPComments.ValueBean> result = null;
+        ResponseBody body = null;
+        try
+        {
+            String url = APIAddrFactory.createURL(RequestType.ORDER_LIST_COMMENT);
+            String user_id = KVHelper.getUserInfo(getContext(), "username", "");
+            url = url.replace("USERID", user_id);
+            url = url.replace("DISHID", dish_id);
+            url = UrlHelper.addToken(getContext(), url);
+            final JsonAdapter<APPComments>
+                    COM_JSON_ADAPTER = MainActivity.MOSHI.adapter(
+                    Types.newParameterizedType(APPComments.class));
+            OkHttpClient client = new OkHttpClient();
+            Request request = new Request.Builder()
+                    .url(url)
+                    .build();
+            Response response = client.newCall(request).execute();
+            body = response.body();
+
+            APPComments datas_arry =
+                    COM_JSON_ADAPTER.fromJson(body.source());
+            result = datas_arry.getValue();
+
+
+        } catch (Exception e)
+        {
+            e.printStackTrace();
+        } finally
+        {
+            body.close();
+        }
+        Log.e("arilpan", "result not null ,but return null?");
+        if (result != null)
+        {
+            Log.e("arilpan", "result not null ");
+            return result;
+        }
+        Log.e("arilpan", "result   null ");
+        return null;
+
     }
 
     public APPDishDetail getData(String url)
@@ -192,7 +260,6 @@ public class DishDetailFragment extends BaseFragment
             body.close();
 //            APPDishDetail.ValueBean datas
 //                    = datas_arry.getValue();
-
             return datas_arry;
         } catch (Exception e)
         {
@@ -201,7 +268,8 @@ public class DishDetailFragment extends BaseFragment
         return null;
     }
 
-    public void setData(final APPDishDetail items)
+    public void setData(final APPDishDetail items,
+                        final List<APPComments.ValueBean> comments)
     {
         try
         {
@@ -212,6 +280,11 @@ public class DishDetailFragment extends BaseFragment
                 {
                     if (items != null)
                     {
+                        if (comments != null)
+                        {
+                            commentsAdapter.setDatas(comments);
+                        }
+
                         APPDishDetail.ValueBean item = items.getValue();
                         APPDishDetail.Value1Bean shop = items.getValue1();
                         dish_name.setText(item.getDishes_name());

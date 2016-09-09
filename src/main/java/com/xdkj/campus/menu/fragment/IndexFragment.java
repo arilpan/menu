@@ -91,10 +91,7 @@ public class IndexFragment extends BaseLazyMainFragment
 //            supportFragment = findFragment(IndexFragment.class);
 //            Log.e("arilpan", "MainFragment savedInstanceState != null ");
 //        }
-
         initView(view);
-
-
         return view;
     }
 
@@ -310,6 +307,7 @@ public class IndexFragment extends BaseLazyMainFragment
 
     public List<APPALL.ValueBean.DataBean> getData(NetworkEvent event)
     {
+        ResponseBody body = null;
         try
         {
             final JsonAdapter<APPALL>
@@ -320,10 +318,10 @@ public class IndexFragment extends BaseLazyMainFragment
                     .url(event.url)
                     .build();
             Response response = client.newCall(request).execute();
-            ResponseBody body = response.body();
+            body = response.body();
 
             APPALL datas_arry = COM_JSON_ADAPTER.fromJson(body.source());
-            body.close();
+
             datas = datas_arry.getValue().getData();
             for (APPALL.ValueBean.DataBean data : datas)
             {
@@ -350,7 +348,7 @@ public class IndexFragment extends BaseLazyMainFragment
                 APIAddr.shop_one_phone = datas_arry.getMessageList().get(0).getPhone();
                 APIAddr.shop_two_phone = datas_arry.getMessageList().get(1).getPhone();
 
-                APIAddr.user_id = KVHelper.getUserInfo(getContext(),"user_id","");
+                APIAddr.user_id = KVHelper.getUserInfo(getContext(), "user_id", "");
             }
 
 //            Collections.sort(contributors, new Comparator<APIDish>()
@@ -365,6 +363,9 @@ public class IndexFragment extends BaseLazyMainFragment
         } catch (Exception e)
         {
             e.printStackTrace();
+        } finally
+        {
+            body.close();
         }
         return null;
     }
@@ -385,7 +386,7 @@ public class IndexFragment extends BaseLazyMainFragment
                     List<String> imgs = new ArrayList<String>();
                     imgs.add(APIAddr.shop_one_icon);
                     imgs.add(APIAddr.shop_two_icon);
-                    index_banner.setData(imgs,null);
+                    index_banner.setData(imgs, null);
                 }
             });
         } catch (Exception e)

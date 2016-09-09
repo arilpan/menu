@@ -14,6 +14,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.fan.eightrestaurant.adapter.LeaveMessageAdapter;
 import com.fan.eightrestaurant.bean.LeaveMessage;
@@ -80,6 +81,17 @@ public class LeaveMessageFragment extends BaseFragment
 
     private void initView(View view)
     {
+        ((TextView) view.findViewById(R.id.title_middle)).setText("留言本");
+        view.findViewById(R.id.title_ll_left).setOnClickListener(new View
+                .OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+                pop();
+            }
+        });
+
         listView = (ListView) view.findViewById(R.id.activity_leave_message_listview);
         myLeaveButton = (Button) view.findViewById(R.id.activity_leave_message_myleavebutton);
 
@@ -89,7 +101,7 @@ public class LeaveMessageFragment extends BaseFragment
 
         initData(PathUtils.getAppListMessageUrl());
         list = new ArrayList<>();
-        adapter = new LeaveMessageAdapter(getContext(), list);
+        adapter = new LeaveMessageAdapter(getContext());
         listView.setAdapter(adapter);
     }
 
@@ -143,7 +155,7 @@ public class LeaveMessageFragment extends BaseFragment
                         }
                         List<LeaveMessage> result = JSONUtils.getMessageJson(response);
 
-                        list.addAll(result);
+                        adapter.setList(result);
                         myLeaveButton.setOnClickListener(new View.OnClickListener()
                         {
                             @Override

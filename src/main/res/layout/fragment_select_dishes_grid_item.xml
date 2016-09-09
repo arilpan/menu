@@ -12,7 +12,7 @@
         android:layout_centerHorizontal="true"
         android:layout_margin="10dp"
         android:layout_marginBottom="3dp"
-        android:src="@drawable/index_dishes_image_default">
+        >
     </ImageView>
 
     <TextView

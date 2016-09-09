@@ -116,7 +116,7 @@ public class LoginActivity extends Activity implements View.OnClickListener
                     login.setEnabled(true);
                 } else
                 {
-                    final String user_phone=userPhone.getText().toString().trim();
+                    final String user_phone = userPhone.getText().toString().trim();
                     OkHttpUtils
                             .post()
                             .url(PathUtils.postUserLoginUrl())
@@ -169,8 +169,14 @@ public class LoginActivity extends Activity implements View.OnClickListener
                                             String nickname = data.getString("nickname");
                                             token = data.getString("token");
                                             secretkey = data.getString("secretkey");
-                                            saveUserInfo(user_id, user_phone, imagePath, nickname,
-                                                    token, secretkey);
+                                            String realname = data.getString("realname");
+                                            String birthday = data.getString("birthday");
+                                            String email = data.getString("email");
+//                                            saveUserInfo(user_id, user_phone, imagePath, nickname,
+//                                                    token, secretkey);
+                                            saveUserInfo(user_id, user_phone, imagePath,
+                                                    nickname, token, secretkey, realname,
+                                                    birthday, email);
                                             Intent intent2 = new Intent(LoginActivity.this,
                                                     com.xdkj.campus.menu.MainActivity.class);
                                             startActivity(intent2);
@@ -206,7 +212,8 @@ public class LoginActivity extends Activity implements View.OnClickListener
      * @param nickname
      */
     private void saveUserInfo(String user_id, String username, String imagePath, String nickname,
-                              String token, String secretkey)
+                              String token, String secretkey,
+                              String realname, String birthday, String email)
     {
         saveSelfInfo = getSharedPreferences("saveSelfInfo", Context.MODE_PRIVATE);
         SharedPreferences.Editor editorSelfInfo = saveSelfInfo.edit();
@@ -216,7 +223,10 @@ public class LoginActivity extends Activity implements View.OnClickListener
         editorSelfInfo.putString("nickname", nickname);
         editorSelfInfo.putString("token", token);
         editorSelfInfo.putString("secretkey", secretkey);
-        Log.e("arilpan", "user_id" + user_id + ",username" + username + ",paht" + imagePath + ","
+        editorSelfInfo.putString("realname", realname);
+        editorSelfInfo.putString("birthday", birthday);
+        editorSelfInfo.putString("email", email);
+        Log.e("arilpan", "user_id" + user_id + ",username" + username + ",path" + imagePath + ","
                 + nickname);
         editorSelfInfo.commit();
     }

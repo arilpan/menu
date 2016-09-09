@@ -32,20 +32,36 @@ public class MyMessageActivity extends FragmentActivity implements View.OnClickL
     private ViewPager viewPager;
     private LinearLayout layout1,layout2;
     private PagerAdapter adapter;
-    private String userId,token,secretkey;
+    private String userId,token,secretkey,imagePath;
     private SharedPreferences getInfo;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my_message);
+
+        ((TextView) findViewById(R.id.title_middle)).setText("我的留言");
+        findViewById(R.id.title_ll_left).setOnClickListener(new View
+                .OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+                finish();
+            }
+        });
+
+
+
         getInfo = getSharedPreferences("saveSelfInfo", Context.MODE_PRIVATE);
         userId = getInfo.getString("user_id",userId);
         token = getInfo.getString("token",token);
         secretkey = getInfo.getString("secretkey",secretkey);
+ imagePath = getInfo.getString("imagePath",imagePath);
         getUserId();
         getToken();
         getSecretkey();
+ getImagePath();
 
         initTopTitle();
         initViewPager();
@@ -58,7 +74,10 @@ public class MyMessageActivity extends FragmentActivity implements View.OnClickL
     }
     public String getSecretkey() {
         return secretkey;
-    }
+		    }
+		 public String getImagePath() {
+		       return imagePath;
+			       }
     /**
      * 标题的设置
      */

@@ -255,6 +255,7 @@ public class ShopFragment extends BaseFragment
 
     public void getRightData(NetworkEvent event)
     {
+        ResponseBody body = null;
         try
         {
             final JsonAdapter<APPSelectRight>
@@ -266,11 +267,11 @@ public class ShopFragment extends BaseFragment
                             + event.id)
                     .build();
             Response response = client.newCall(request).execute();
-            ResponseBody body = response.body();
+            body = response.body();
 
             APPSelectRight datas_arry =
                     COM_JSON_ADAPTER.fromJson(body.source());
-            body.close();
+
 
             rightDatas = datas_arry.getValue();
             Log.e("arilpan", "dish num:" + rightDatas.size());
@@ -278,12 +279,17 @@ public class ShopFragment extends BaseFragment
         } catch (Exception e)
         {
             e.printStackTrace();
+        } finally
+        {
+            body.close();
+            body = null;
         }
 //        return null;
     }
 
     public List<APPSelectLeft.ValueBean> getData(NetworkEvent event)
     {
+        ResponseBody body = null;
         try
         {
             final JsonAdapter<APPSelectLeft>
@@ -294,18 +300,19 @@ public class ShopFragment extends BaseFragment
                     .url(event.url + event.id)
                     .build();
             Response response = client.newCall(request).execute();
-            ResponseBody body = response.body();
+            body = response.body();
 
             APPSelectLeft datas_arry = COM_JSON_ADAPTER.fromJson(body.source());
-            body.close();
             listMenus = datas_arry.getValue();
-
-
             return listMenus;
         } catch (Exception e)
         {
 
             e.printStackTrace();
+        } finally
+        {
+            body.close();
+            body = null;
         }
         return null;
     }

@@ -238,8 +238,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-
-                android:paddingBottom="5dp"
+                android:paddingBottom="10dp"
                 android:paddingTop="12dp">
 
                 <ImageView
@@ -259,19 +258,14 @@
                     android:layout_gravity="center_vertical"
                     android:layout_marginLeft="2dp"
                     android:text="用户评价:"/>
-            </LinearLayout>
 
-            <ListView
+            </LinearLayout>
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/comments"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="#fff"
-                android:paddingBottom="12dp"
-                android:paddingLeft="19dp"
-                android:paddingRight="20dp"
-                android:paddingTop="5dp"
-                android:text="预约请至少提前2个小时，成品已食物为准，图片仅供参考，用餐前2个小时可取消订单。"
-                android:textColor="#666"
-                />
+                android:layout_height="wrap_content">
+
+            </android.support.v7.widget.RecyclerView>
 
             <View style="@style/line_divider"/>
 

@@ -3,29 +3,36 @@ package com.xdkj.campus.menu.helper;
 /**
  * Created by aril_pan@qq.com on 16-8-23.
  */
+
 import com.squareup.moshi.JsonAdapter;
 import com.squareup.moshi.Moshi;
 import com.squareup.moshi.Types;
+
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
+
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
 import okhttp3.ResponseBody;
 
-public class OkHttpContributors {
-    private static final String ENDPOINT = "https://api.github.com/repos/square/okhttp/contributors";
+public class OkHttpContributors
+{
+    private static final String ENDPOINT = "https://api.github" +
+            ".com/repos/square/okhttp/contributors";
     private static final Moshi MOSHI = new Moshi.Builder().build();
     private static final JsonAdapter<List<Contributor>> CONTRIBUTORS_JSON_ADAPTER = MOSHI.adapter(
             Types.newParameterizedType(List.class, Contributor.class));
 
-    static class Contributor {
+    static class Contributor
+    {
         String login;
         int contributions;
     }
 
-    public static void main(String... args) throws Exception {
+    public static void main(String... args) throws Exception
+    {
         OkHttpClient client = new OkHttpClient();
 
         // Create request for remote resource.
@@ -39,22 +46,34 @@ public class OkHttpContributors {
         // Deserialize HTTP response to concrete type.
         ResponseBody body = response.body();
         List<Contributor> contributors = CONTRIBUTORS_JSON_ADAPTER.fromJson(body.source());
-        body.close();
+        try
+        {
+            body.close();
+        } finally
+        {
+            body = null;
+        }
+
 
         // Sort list by the most contributions.
-        Collections.sort(contributors, new Comparator<Contributor>() {
-            @Override public int compare(Contributor c1, Contributor c2) {
+        Collections.sort(contributors, new Comparator<Contributor>()
+        {
+            @Override
+            public int compare(Contributor c1, Contributor c2)
+            {
                 return c2.contributions - c1.contributions;
             }
         });
 
         // Output list of contributors.
-        for (Contributor contributor : contributors) {
+        for (Contributor contributor : contributors)
+        {
             System.out.println(contributor.login + ": " + contributor.contributions);
         }
     }
 
-    private OkHttpContributors() {
+    private OkHttpContributors()
+    {
         // No instances.
     }
 }

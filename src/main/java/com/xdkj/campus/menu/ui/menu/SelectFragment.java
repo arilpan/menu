@@ -95,10 +95,6 @@ public class SelectFragment extends BaseFragment
     {
         super.onActivityCreated(savedInstanceState);
 
-        int[] resIds = {R.drawable.index_dishes_image_default,
-                R.drawable.index_dishes_image_default,
-                R.drawable.index_dishes_image_default,
-                R.drawable.index_dishes_image_default};
         //得到tag对应的id name price 信息
         String[] name = new String[100];
         String[] price = new String[100];

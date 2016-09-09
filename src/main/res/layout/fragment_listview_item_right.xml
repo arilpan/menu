@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:fresco="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
     <TextView
@@ -16,11 +17,13 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/eight_list_item_totime">
-        <ImageView
+        <com.facebook.drawee.view.SimpleDraweeView
             android:id="@+id/eight_list_item_showimage"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@drawable/pingjia_touxiang"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            fresco:placeholderImage="@drawable/pingjia_touxiang"
+            fresco:actualImageScaleType="fitCenter"
+            fresco:roundAsCircle="true"
             android:layout_alignParentRight="true"
             android:layout_marginRight="20dp"
             android:layout_marginTop="16dp"

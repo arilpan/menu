@@ -43,6 +43,7 @@ import java.util.List;
 
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
+import okhttp3.RequestBody;
 import okhttp3.Response;
 import okhttp3.ResponseBody;
 
@@ -148,10 +149,9 @@ public class DiscountFragment extends BaseFragment
         });
 
 
-
         listview = (RecyclerView) view.findViewById(R.id.listview);
 
-        Log.e("arilpan","优惠:"+shop_id);
+        Log.e("arilpan", "优惠:" + shop_id);
 
 
         listview.setHasFixedSize(true);
@@ -170,7 +170,7 @@ public class DiscountFragment extends BaseFragment
     @Subscribe(threadMode = ThreadMode.ASYNC)
     public void onNetWork(NetworkEvent event)
     {
-        Log.e("arilpan","优惠: receive event");
+        Log.e("arilpan", "优惠: receive event");
         if (RequestType.DISCOUNT_CARD_LIST == event.reqType)
         {
             Log.e("arilpan", "discount card list equals url="
@@ -182,6 +182,7 @@ public class DiscountFragment extends BaseFragment
 
     public List<APPRechargeDiscount.ValueBean> getData(String url)
     {
+        ResponseBody body = null;
         try
         {
             final JsonAdapter<APPRechargeDiscount>
@@ -192,11 +193,11 @@ public class DiscountFragment extends BaseFragment
                     .url(url)
                     .build();
             Response response = client.newCall(request).execute();
-            ResponseBody body = response.body();
+            body = response.body();
 
             APPRechargeDiscount datas_arry =
                     COM_JSON_ADAPTER.fromJson(body.source());
-            body.close();
+
             datas = datas_arry.getValue();
             for (APPRechargeDiscount.ValueBean data : datas)
             {
@@ -207,6 +208,9 @@ public class DiscountFragment extends BaseFragment
         } catch (Exception e)
         {
             e.printStackTrace();
+        } finally
+        {
+            body.close();
         }
         return null;
     }

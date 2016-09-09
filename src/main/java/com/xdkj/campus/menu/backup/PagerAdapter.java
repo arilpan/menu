@@ -83,7 +83,7 @@ public class PagerAdapter extends RecyclerView.Adapter<PagerAdapter.MyViewHolder
         holder.desc.setText(item.getDesc());
         holder.price.setText(item.getPrice());
 
-        holder.image.setImageResource(R.drawable.index_dishes_image_default);
+        holder.image.setImageResource(R.drawable.preferential_list_item_zanwutupian);
     }
 
     @Override

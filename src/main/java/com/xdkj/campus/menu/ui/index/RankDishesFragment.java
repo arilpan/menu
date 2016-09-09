@@ -3,6 +3,7 @@ package com.xdkj.campus.menu.ui.index;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.BottomSheetDialog;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
@@ -115,7 +116,7 @@ public class RankDishesFragment extends BaseFragment implements SwipeRefreshLayo
         tab2.setText(APIAddr.shop_two_name);
 
         tab1.setTextColor(Color.rgb(172, 66, 66));
-        tab2.setTextColor(Color.rgb(66,66,66));
+        tab2.setTextColor(Color.rgb(66, 66, 66));
 
         tab1.setOnClickListener(new View.OnClickListener()
         {
@@ -127,7 +128,7 @@ public class RankDishesFragment extends BaseFragment implements SwipeRefreshLayo
                         shop_id));
                 shop_id = APIAddr.shop_one_id;
                 tab1.setTextColor(Color.rgb(172, 66, 66));
-                tab2.setTextColor(Color.rgb(66,66,66));
+                tab2.setTextColor(Color.rgb(66, 66, 66));
             }
         });
         tab2.setOnClickListener(new View.OnClickListener()
@@ -140,7 +141,7 @@ public class RankDishesFragment extends BaseFragment implements SwipeRefreshLayo
                         shop_id));
                 shop_id = APIAddr.shop_two_id;
                 tab2.setTextColor(Color.rgb(172, 66, 66));
-                tab1.setTextColor(Color.rgb(66,66,66));
+                tab1.setTextColor(Color.rgb(66, 66, 66));
             }
         });
 
@@ -214,6 +215,7 @@ public class RankDishesFragment extends BaseFragment implements SwipeRefreshLayo
 
     public List<APPRank.ValueBean.DataBean> getData(String url)
     {
+        ResponseBody body = null;
         try
         {
             final JsonAdapter<APPRank>
@@ -224,11 +226,10 @@ public class RankDishesFragment extends BaseFragment implements SwipeRefreshLayo
                     .url(url)
                     .build();
             Response response = client.newCall(request).execute();
-            ResponseBody body = response.body();
+            body = response.body();
 
             APPRank datas_arry =
                     COM_JSON_ADAPTER.fromJson(body.source());
-            body.close();
             datas = datas_arry.getValue().getData();
             for (APPRank.ValueBean.DataBean data : datas)
             {
@@ -239,6 +240,9 @@ public class RankDishesFragment extends BaseFragment implements SwipeRefreshLayo
         } catch (Exception e)
         {
             e.printStackTrace();
+        } finally
+        {
+            body.close();
         }
         return null;
     }

@@ -132,6 +132,7 @@ public class DishDiscountFragment extends BaseFragment
 
     public List<APPDishDiscount.ValueBean.DataBean> getData(String url)
     {
+        ResponseBody body = null;
         try
         {
             final JsonAdapter<APPDishDiscount>
@@ -142,11 +143,11 @@ public class DishDiscountFragment extends BaseFragment
                     .url(url)
                     .build();
             Response response = client.newCall(request).execute();
-            ResponseBody body = response.body();
+            body = response.body();
 
             APPDishDiscount datas_arry =
                     COM_JSON_ADAPTER.fromJson(body.source());
-            body.close();
+
             List<APPDishDiscount.ValueBean.DataBean> datas
                     = datas_arry.getValue().getData();
             for (APPDishDiscount.ValueBean.DataBean data : datas)
@@ -158,6 +159,9 @@ public class DishDiscountFragment extends BaseFragment
         } catch (Exception e)
         {
             e.printStackTrace();
+        } finally
+        {
+            body.close();
         }
         return null;
     }
@@ -325,7 +329,7 @@ public class DishDiscountFragment extends BaseFragment
                                 {
                                     int position = itemholder.getAdapterPosition();
 
-                                    if (itemDishes != null && position < itemDishes.size()  )
+                                    if (itemDishes != null && position < itemDishes.size())
                                     {
                                         String dish_id = itemDishes.get(position).getDishes_id();
                                         EventBus.getDefault().post(

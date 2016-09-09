@@ -7,12 +7,10 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
+import com.facebook.drawee.view.SimpleDraweeView;
 import com.xdkj.campus.menu.R;
 import com.fan.eightrestaurant.bean.SendInfo;
-
-import java.text.SimpleDateFormat;
 import java.util.List;
-import java.util.zip.Inflater;
 
 /**
  * Created by xdkj on 2016/8/12.
@@ -22,7 +20,13 @@ public class SendInfoAdapter extends BaseAdapter {
     private List<SendInfo> list;
     public final static int LEFT = 0;
     public final static int RIGHT = 1;
-    public SendInfoAdapter(Context context,List<SendInfo> list){
+    private SimpleDraweeView showImage;
+    private String url = null;
+    public void setUrl(String url) {
+        this.url = url;
+    }
+
+    public SendInfoAdapter(Context context, List<SendInfo> list){
         this.context = context;
         this.list = list;
     }
@@ -70,6 +74,9 @@ public class SendInfoAdapter extends BaseAdapter {
                     convertView= LayoutInflater.from(context).inflate(R.layout.fragment_listview_item_right,null);
                     viewHolder.showTime = (TextView) convertView.findViewById(R.id.eight_list_item_totime);
                     viewHolder.showContent = (TextView) convertView.findViewById(R.id.eight_list_item_totext);
+                    //获取图片
+                    showImage = (SimpleDraweeView) convertView.findViewById(R.id.eight_list_item_showimage);
+                    showImage.setImageURI(url);
                     break;
             }
             convertView.setTag(viewHolder);
@@ -78,9 +85,10 @@ public class SendInfoAdapter extends BaseAdapter {
         }
         viewHolder.showTime.setText(list.get(position).getCreatetime());
         viewHolder.showContent.setText(list.get(position).getBack_content());
+
         return convertView;
     }
     class ViewHolder{
-        TextView showTime,showContent,showRemind;
+        TextView showTime,showContent;
     }
 }

@@ -35,6 +35,7 @@ public class DishAPI
     public Objects getData()
     {
         String ENDPOINT = event.url;
+        ResponseBody body = null;
         JsonAdapter<List<Dish>> CONTRIBUTORS_JSON_ADAPTER = null;
         try
         {
@@ -44,12 +45,10 @@ public class DishAPI
                     .url(ENDPOINT)
                     .build();
             Response response = client.newCall(request).execute();
-            ResponseBody body = response.body();
-
+            body = response.body();
             //type convert
             List<Dish> datas =
                     CONTRIBUTORS_JSON_ADAPTER.fromJson(body.source());
-            body.close();
             //sort ,selectable
             Collections.sort(datas, new Comparator<Dish>()
             {
@@ -60,7 +59,6 @@ public class DishAPI
                 }
             });
 
-
             Log.e("arilpan", "res : " + body.source());
             for (Dish dish : datas)
             {
@@ -70,6 +68,9 @@ public class DishAPI
         } catch (Exception e)
         {
             e.printStackTrace();
+        } finally
+        {
+            body.close();
         }
         return null;
     }

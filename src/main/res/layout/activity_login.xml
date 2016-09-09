@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:gravity="center"
     android:background="@drawable/denglu_beijing"
-    tools:context=".ui.LoginActivity">
+    >
 
     <TextView
         android:id="@+id/title"
@@ -21,6 +21,7 @@
         android:id="@+id/login_userphone"
         android:drawableLeft="@drawable/shouji"
         android:hint="@string/login_userphone"
+        android:text="18361269799"
         style="@style/login_style"
         android:phoneNumber="true"
         android:layout_alignBottom="@+id/login_line1"
@@ -35,6 +36,7 @@
         android:id="@+id/login_userpassword"
         android:drawableLeft="@drawable/mima"
         android:hint="@string/login_userpassword"
+        android:text="123456"
         style="@style/login_style"
         android:maxLength="16"
         android:layout_alignBottom="@+id/login_line2"

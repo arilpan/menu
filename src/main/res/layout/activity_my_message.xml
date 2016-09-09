@@ -6,6 +6,10 @@
     android:orientation="vertical"
     android:background="@color/screen_background"
     tools:context="com.fan.eightrestaurant.ui.MyMessageActivity">
+    <include
+        android:id="@+id/title"
+        layout="@layout/common_title_back_grey_color"/>
+
     <LinearLayout
         android:id="@+id/activity_my_message_layout1"
         android:layout_width="match_parent"

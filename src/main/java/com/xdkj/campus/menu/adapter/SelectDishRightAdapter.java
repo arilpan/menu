@@ -83,7 +83,7 @@ public class SelectDishRightAdapter
 //        dish_desc.setText(dish.getPrice());
 //        dish_order_btn.setText("预约");
 //
-//        dish_img.setImageResource(R.drawable.index_dishes_image_default);
+//        dish_img.setImageResource(R.drawable.zanwu);
 //
 //        dish_img.setOnClickListener(new View.OnClickListener()
 //        {

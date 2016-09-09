@@ -19,7 +19,6 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.Toast;
 
-import com.xdkj.campus.menu.R;
 import com.fan.eightrestaurant.adapter.SendInfoAdapter;
 import com.fan.eightrestaurant.bean.SendInfo;
 import com.fan.eightrestaurant.ui.LoginActivity;
@@ -27,6 +26,7 @@ import com.fan.eightrestaurant.ui.MyMessageActivity;
 import com.fan.eightrestaurant.ui.ResetPasswordActivity;
 import com.fan.eightrestaurant.utils.JSONUtils;
 import com.fan.eightrestaurant.utils.PathUtils;
+import com.xdkj.campus.menu.R;
 import com.zhy.http.okhttp.OkHttpUtils;
 import com.zhy.http.okhttp.callback.StringCallback;
 
@@ -54,7 +54,7 @@ public class DuckFragment extends Fragment implements View.OnClickListener {
     private Button sendInfoBtn;
     private ImageView nullImage;
     private LinearLayout root;
-    private String userId,token,secretkey;
+    private String userId,token,secretkey,imagePath;
     private String hotelId = "ba262eba-05da-4886-947c-5a557c954af5";
 
     public View onCreateView(LayoutInflater inflater,ViewGroup container, Bundle savedInstanceState) {
@@ -65,13 +65,12 @@ public class DuckFragment extends Fragment implements View.OnClickListener {
         nullImage = (ImageView) ret.findViewById(R.id.fragment_duck_null_image);
         sendInfoBtn = (Button) ret.findViewById(R.id.fragment_duck_sendbtn);
         root = (LinearLayout) ret.findViewById(R.id.fragment_duck_root);
-        sendInfoBtn.setOnClickListener(this);
         controlKeyboardLayout(root, sendInfoBtn);
+        sendInfoBtn.setOnClickListener(this);
         initData();
         list = new ArrayList<>();
         return ret;
     }
-
     /**
      * 阻止软键盘遮盖输入框
      * @param root
@@ -96,7 +95,9 @@ public class DuckFragment extends Fragment implements View.OnClickListener {
                             scrollToView.getLocationInWindow(location);
                             // 计算root滚动高度，使scrollToView在可见区域的底部
                             int srollHeight = (location[1] + scrollToView.getHeight()) - rect.bottom;
-                            root.scrollTo(0, srollHeight);
+                            if(srollHeight != 0){
+                                root.scrollTo(0, srollHeight);
+                            }
                         } else {
                             // 软键盘没有弹出来的时候
                             root.scrollTo(0, 0);
@@ -111,6 +112,7 @@ public class DuckFragment extends Fragment implements View.OnClickListener {
         userId =((MyMessageActivity) activity).getUserId();
         token =((MyMessageActivity) activity).getToken();
         secretkey =((MyMessageActivity) activity).getSecretkey();
+        imagePath =((MyMessageActivity) activity).getImagePath();
     }
     private void initData() {
         OkHttpUtils
@@ -153,6 +155,7 @@ public class DuckFragment extends Fragment implements View.OnClickListener {
                             listView.setVisibility(View.GONE);
                         }
                         adapter = new SendInfoAdapter(getContext(),list);
+                        adapter.setUrl(imagePath);
                         listView.setAdapter(adapter);
                         listView.setSelection(list.size()-1);
                     }
@@ -216,6 +219,7 @@ public class DuckFragment extends Fragment implements View.OnClickListener {
                             adapter.notifyDataSetChanged();
                             listView.setSelection(list.size() - 1);
                             editText.setText("");
+                            controlKeyboardLayout(root, sendInfoBtn);
                         }
                     });
                 }

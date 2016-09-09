@@ -1,5 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="activity_up_load_nickname">昵称</string>
+    <string name="activity_up_load_realname">真实姓名</string>
+    <string name="activity_up_load_birthday">生日</string>
+    <string name="activity_up_load_email">邮箱</string>
+
+
     <!--关于登录界面的style-->
     <style name="login_style">
         <item name="android:layout_width">match_parent</item>
@@ -111,6 +117,35 @@
     </style>
 
 
+    <!--上传页面-->
 
+    <style name="activity_up_load_text">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:paddingLeft">20dp</item>
+        <item name="android:textColor">@color/brown</item>
+        <item name="android:layout_centerVertical">true</item>
+        <item name="android:clickable">true</item>
+    </style>
+
+    <style name="activity_up_load_shoe_text">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:layout_marginRight">10dp</item>
+        <item name="android:textColor">@color/gray_dark</item>
+        <item name="android:layout_centerVertical">true</item>
+    </style>
+
+    <style name="activity_up_load_todo_text">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:background">@drawable/iconfont_arrows</item>
+        <item name="android:layout_alignParentRight">true</item>
+        <item name="android:layout_marginRight">20dp</item>
+        <item name="android:clickable">true</item>
+        <item name="android:layout_centerVertical">true</item>
+    </style>
 
 </resources>

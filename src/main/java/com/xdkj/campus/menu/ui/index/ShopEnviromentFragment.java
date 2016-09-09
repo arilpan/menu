@@ -109,17 +109,18 @@ public class ShopEnviromentFragment extends BaseFragment
 
     public void setTabColor(boolean isTab1Select)
     {
-        if(isTab1Select)
+        if (isTab1Select)
         {
             tab1.setTextColor(Color.rgb(172, 66, 66));
-            tab2.setTextColor(Color.rgb(66,66,66));
-        }else
+            tab2.setTextColor(Color.rgb(66, 66, 66));
+        } else
         {
             tab2.setTextColor(Color.rgb(172, 66, 66));
-            tab1.setTextColor(Color.rgb(66,66,66));
+            tab1.setTextColor(Color.rgb(66, 66, 66));
         }
 
     }
+
     private void initView(View view)
     {
         EventBus.getDefault().register(this);
@@ -154,7 +155,7 @@ public class ShopEnviromentFragment extends BaseFragment
 
                 Glide.with(view.getContext())
                         .load(APIAddr.BASE_IMG_URL + model.toString())
-                        .error(R.drawable.index_dishes_image_default)
+                        .error(R.drawable.preferential_list_item_zanwutupian)
                         .into((ImageView) view);
 //                                Glide.with(banner.getContext()).
 //                                        load(model).placeholder
@@ -212,6 +213,7 @@ public class ShopEnviromentFragment extends BaseFragment
 
     public void getData(String url)
     {
+        ResponseBody body = null;
         imgs = new ArrayList<String>();
         tips = new ArrayList<String>();
         try
@@ -229,11 +231,10 @@ public class ShopEnviromentFragment extends BaseFragment
                     .url(url)
                     .build();
             Response response = client.newCall(request).execute();
-            ResponseBody body = response.body();
+            body = response.body();
 
             APPShopEnviroment datas =
                     COM_JSON_ADAPTER.fromJson(body.source());
-            body.close();
             List<APPShopEnviroment.ValueBean> values = datas.getValue();
             for (APPShopEnviroment.ValueBean vb : values)
             {
@@ -246,6 +247,9 @@ public class ShopEnviromentFragment extends BaseFragment
         } catch (Exception e)
         {
             e.printStackTrace();
+        } finally
+        {
+            body.close();
         }
     }
 

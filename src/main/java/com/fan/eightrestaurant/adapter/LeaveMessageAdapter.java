@@ -7,9 +7,10 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
-import com.xdkj.campus.menu.R;
 import com.fan.eightrestaurant.bean.LeaveMessage;
+import com.xdkj.campus.menu.R;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -18,12 +19,18 @@ import java.util.List;
 public class LeaveMessageAdapter extends BaseAdapter {
 
     private Context context;
-    private List<LeaveMessage> list;
+    private List<LeaveMessage> list =null;
 
-    public LeaveMessageAdapter(Context context, List<LeaveMessage> list){
+    public LeaveMessageAdapter(Context context) {
         this.context = context;
-        this.list = list;
+        list = new ArrayList<>();
     }
+
+    public void setList(List<LeaveMessage> list) {
+        this.list = list;
+        notifyDataSetChanged();
+    }
+
     @Override
     public int getCount() {
         return list.size();

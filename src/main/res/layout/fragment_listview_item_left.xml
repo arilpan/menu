@@ -17,7 +17,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/eight_list_item_fromtime">
         <ImageView
-            android:id="@+id/eight_list_item_showimage"
+            android:id="@+id/eight_list_item_showimage_left"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@drawable/iconfont_kefu"
@@ -33,7 +33,7 @@
             android:textColor="@color/brown"
             android:paddingTop="16dp"
             android:paddingRight="55dp"
-            android:layout_toRightOf="@id/eight_list_item_showimage"
+            android:layout_toRightOf="@id/eight_list_item_showimage_left"
             android:paddingLeft="15dp"
             android:paddingBottom="16dp"
             android:layout_centerVertical="true"

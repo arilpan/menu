@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.fan.eightrestaurant.adapter.PreferentialAdapter;
 import com.fan.eightrestaurant.bean.Preferential;
@@ -59,6 +60,17 @@ public class DiscountFragment extends BaseFragment
 
     public void initView(View view)
     {
+        ((TextView) view.findViewById(R.id.title_middle)).setText("优惠");
+        view.findViewById(R.id.title_ll_left).setOnClickListener(new View
+                .OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+                pop();
+            }
+        });
+
         listView = (ListView) view.findViewById(R.id.activity_preferential_listview);
         initData(PathUtils.getPreferentialUrl());
         list = new ArrayList<>();
@@ -67,22 +79,8 @@ public class DiscountFragment extends BaseFragment
                 inflate(R.layout.preferential_listview_head,
                         null);
         listView.addHeaderView(listViewHeader);
-        adapter = new PreferentialAdapter(getContext(), list);
+        adapter = new PreferentialAdapter(getContext());
         listView.setAdapter(adapter);
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener()
-        {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id)
-            {
-                Intent intent = new Intent(getActivity(),
-                        PreferentialDetailsActivity.class);
-                String discount_id = list.get((int) id).getDiscount_id();
-                String shop_id = list.get((int) id).getShop_id();
-                intent.putExtra("discount_id", discount_id);
-                intent.putExtra("shop_id", shop_id);
-                startActivity(intent);
-            }
-        });
     }
 
     /**
@@ -100,8 +98,22 @@ public class DiscountFragment extends BaseFragment
             @Override
             public void onResponse(String response)
             {
-                List<Preferential> result = JSONUtils.getPreferentialJson(response);
-                list.addAll(result);
+                final List<Preferential> result = JSONUtils.getPreferentialJson(response);
+                adapter.setList(result);
+
+                listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                        //todo:intent
+                        Intent intent = new Intent(getActivity(),
+                                PreferentialDetailsActivity.class);
+                        String discount_id = result.get((int) id).getDiscount_id();
+                        String shop_id = result.get((int) id).getShop_id();
+                        intent.putExtra("discount_id",discount_id);
+                        intent.putExtra("shop_id",shop_id);
+                        startActivity(intent);
+                    }
+                });
             }
         });
     }

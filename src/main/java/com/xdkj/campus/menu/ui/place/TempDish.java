@@ -8,8 +8,8 @@ public class TempDish
     String dishes_name;
     String dishes_price;
     int dishes_count;
-    String url;
-    String dish_id;
+    String upload_url;
+    String dishes_id;
 
 
     TempDish()
@@ -21,7 +21,7 @@ public class TempDish
         this.dishes_price = dishes_price;
         this.dishes_name = dishes_name;
         this.dishes_count = dishes_count;
-        this.url = url;
-        this.dish_id = dish_id;
+        this.upload_url = url;
+        this.dishes_id = dish_id;
     }
 }

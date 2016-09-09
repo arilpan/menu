@@ -171,6 +171,7 @@ public class DishesRankFragment extends BaseFragment implements SwipeRefreshLayo
 
     public List<APPRank.ValueBean.DataBean> getData(String url)
     {
+        ResponseBody body = null;
         try
         {
             final JsonAdapter<APPRank>
@@ -181,11 +182,10 @@ public class DishesRankFragment extends BaseFragment implements SwipeRefreshLayo
                     .url(url)
                     .build();
             Response response = client.newCall(request).execute();
-            ResponseBody body = response.body();
+              body = response.body();
 
             APPRank datas_arry =
                     COM_JSON_ADAPTER.fromJson(body.source());
-            body.close();
             datas = datas_arry.getValue().getData();
             for (APPRank.ValueBean.DataBean data : datas)
             {
@@ -196,6 +196,10 @@ public class DishesRankFragment extends BaseFragment implements SwipeRefreshLayo
         } catch (Exception e)
         {
             e.printStackTrace();
+        }
+        finally
+        {
+            body.close();
         }
         return null;
     }

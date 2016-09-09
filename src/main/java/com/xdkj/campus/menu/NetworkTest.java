@@ -122,8 +122,6 @@ public class NetworkTest extends Activity
         for (Contributor contributor : contributors)
         {
             Log.e("arilpan", contributor.login + ": " + contributor.contributions);
-//            System.out.println(
-//                    contributor.login + ": " + contributor.contributions);
         }
     }
 

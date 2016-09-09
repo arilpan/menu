@@ -118,7 +118,7 @@ public class NewDishesFragment extends BaseFragment implements SwipeRefreshLayou
         tab1.setTextColor(Color.rgb(172, 66, 66));
 
         final TextView tab2 = (TextView) view.findViewById(R.id.tab2);
-        tab2.setTextColor(Color.rgb(66,66,66));
+        tab2.setTextColor(Color.rgb(66, 66, 66));
 
         tab1.setText(APIAddr.shop_one_name);
         tab2.setText(APIAddr.shop_two_name);
@@ -132,7 +132,7 @@ public class NewDishesFragment extends BaseFragment implements SwipeRefreshLayou
                         APIAddr.shop_one_id));
                 shop_id = APIAddr.shop_one_id;
                 tab1.setTextColor(Color.rgb(172, 66, 66));
-                tab2.setTextColor(Color.rgb(66,66,66));
+                tab2.setTextColor(Color.rgb(66, 66, 66));
             }
         });
         tab2.setOnClickListener(new View.OnClickListener()
@@ -145,7 +145,7 @@ public class NewDishesFragment extends BaseFragment implements SwipeRefreshLayou
                         APIAddr.shop_two_id));
                 shop_id = APIAddr.shop_two_id;
                 tab2.setTextColor(Color.rgb(172, 66, 66));
-                tab1.setTextColor(Color.rgb(66,66,66));
+                tab1.setTextColor(Color.rgb(66, 66, 66));
             }
         });
 
@@ -222,6 +222,7 @@ public class NewDishesFragment extends BaseFragment implements SwipeRefreshLayou
 
     public List<APPNew.ValueBean.DataBean> getData(String url)
     {
+        ResponseBody body = null;
         try
         {
             final JsonAdapter<APPNew>
@@ -233,10 +234,10 @@ public class NewDishesFragment extends BaseFragment implements SwipeRefreshLayou
                     .url(url)
                     .build();
             Response response = client.newCall(request).execute();
-            ResponseBody body = response.body();
+            body = response.body();
 
             APPNew datas_arry = COM_JSON_ADAPTER.fromJson(body.source());
-            body.close();
+
             datas = datas_arry.getValue().getData();
             for (APPNew.ValueBean.DataBean data : datas)
             {
@@ -247,6 +248,9 @@ public class NewDishesFragment extends BaseFragment implements SwipeRefreshLayou
         } catch (Exception e)
         {
             e.printStackTrace();
+        } finally
+        {
+            body.close();
         }
         return null;
     }

@@ -43,7 +43,8 @@ import okhttp3.ResponseBody;
 /**
  * Created by aril_pan@qq.com on 16/8.
  */
-public class NewsListFragment extends BaseFragment implements SwipeRefreshLayout
+public class NewsListFragment extends BaseFragment
+        implements SwipeRefreshLayout
         .OnRefreshListener
 {
     int SECOND = 1;
@@ -94,7 +95,7 @@ public class NewsListFragment extends BaseFragment implements SwipeRefreshLayout
         });
         EventBus.getDefault().register(this);
 
-        news_banner = (BGABanner)view.findViewById(R.id.news_banner);
+        news_banner = (BGABanner) view.findViewById(R.id.news_banner);
         news_banner.setAdapter(new BGABanner.Adapter()
         {
             @Override
@@ -106,7 +107,7 @@ public class NewsListFragment extends BaseFragment implements SwipeRefreshLayout
                 Log.e("arilpan", "model to string " + model.toString());
                 Glide.with(view.getContext())
                         .load(APIAddr.BASE_IMG_URL + model.toString())
-                        .error(R.drawable.index_dishes_image_default)
+                        .error(R.drawable.preferential_list_item_zanwutupian)
                         .into((ImageView) view);
             }
         });
@@ -140,22 +141,6 @@ public class NewsListFragment extends BaseFragment implements SwipeRefreshLayout
                 }
             }
         });
-        // Init Datas
-//        final List<News> items = new ArrayList<>();
-//        for (int i = 0; i < 20; i++)
-//        {
-//            if (i == 0)
-//            {
-//                News item = new News(1,
-//                        "习近平：让“一带一路”建设造福沿线各国人民",
-//                        "2016-01-01 09:00:00",
-//
-// "中共中央总书记、国家主席、中央军委主席习近平17
-// 日在北京人民大会堂出席推进“一带一路”建设工作座谈会并发表重要讲话强调，总结经验、坚定信心、扎实推进，聚焦政策沟通、设施联通、贸易畅通、资金融通、民心相通，聚焦构建互利合作网络、新型合作模式、多元合作平台，聚焦携手打造绿色丝绸之路、健康丝绸之路、智力丝绸之路、和平丝绸之路，以钉钉子精神抓下去，一步一步把“一带一路”建设推向前进，让“一带一路”建设造福沿线各国人民。中共中央政治局常委、国务院副总理、推进“一带一路”建设工作领导小组组长张高丽主持座谈会。 ");
-//                items.add(item);
-//            }
-//
-//        } mAdapter.setDatas(items);
         //点击事件
         mAdapter.setOnItemClickListener(new OnItemClickListener()
         {
@@ -195,7 +180,7 @@ public class NewsListFragment extends BaseFragment implements SwipeRefreshLayout
         Log.e("arilpan", "NewsListFragment哥 你调用咩?");
         if (RequestType.NEWS_LIST == event.reqType)
         {
-            Log.e("arilpan","新闻列表url:"+event.url);
+            Log.e("arilpan", "新闻列表url:" + event.url);
             setData(getData(event));
         }
 
@@ -203,6 +188,7 @@ public class NewsListFragment extends BaseFragment implements SwipeRefreshLayout
 
     public List<APPNewsList.ValueBean.ListBean.DataBean> getData(NetworkEvent event)
     {
+        ResponseBody body = null;
         try
         {
             final JsonAdapter<APPNewsList>
@@ -213,7 +199,7 @@ public class NewsListFragment extends BaseFragment implements SwipeRefreshLayout
                     .url(event.url)
                     .build();
             Response response = client.newCall(request).execute();
-            ResponseBody body = response.body();
+            body = response.body();
 
             APPNewsList datas_arry = COM_JSON_ADAPTER.fromJson(body.source());
             body.close();
@@ -228,6 +214,9 @@ public class NewsListFragment extends BaseFragment implements SwipeRefreshLayout
         } catch (Exception e)
         {
             e.printStackTrace();
+        } finally
+        {
+            body.close();
         }
         return null;
     }
@@ -246,7 +235,7 @@ public class NewsListFragment extends BaseFragment implements SwipeRefreshLayout
                     if (items != null)
                     {
                         mAdapter.setDatas(items);
-                        news_banner.setData(imgs,null);
+                        news_banner.setData(imgs, null);
                     }
                     //stuff that updates ui
                 }

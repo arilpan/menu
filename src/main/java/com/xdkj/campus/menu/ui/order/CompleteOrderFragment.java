@@ -152,7 +152,7 @@ public class CompleteOrderFragment extends BaseFragment
             holder.order_item_order_time.setText(order.getHave_meals_time());
             holder.order_item_total_price.setText("￥" + order.getSum_price());
 
-            final String order_id =order.getOrder_id();
+            final String order_id = order.getOrder_id();
             holder.order_item_recyview.setAdapter(
                     new RecyclerView.Adapter()
                     {
@@ -179,7 +179,7 @@ public class CompleteOrderFragment extends BaseFragment
                             Log.e("arilpan", "该item data的大小" + itemDishes.size());
                             if (position < itemDishes.size())
                             {
-                                final String child_order_id =order_id;
+                                final String child_order_id = order_id;
 
                                 final APPOrder.ValueBean.OrderDishesListBean dish = itemDishes.get
                                         (position);
@@ -189,7 +189,7 @@ public class CompleteOrderFragment extends BaseFragment
                                 newholder.dish_desc.setText(dish.getDishes_description());
                                 newholder.dish_num.setText(dish.getDishes_count() + "份");
 
-                                Glide.with( CompleteOrderFragment.this)
+                                Glide.with(CompleteOrderFragment.this)
                                         .load(APIAddr.BASE_IMG_URL + dish.getUpload_url())
                                         .placeholder(R.drawable.preferential_list_item_zanwutupian)
                                         .into(newholder.dish_icon);
@@ -201,7 +201,7 @@ public class CompleteOrderFragment extends BaseFragment
                                     @Override
                                     public void onClick(View view)
                                     {
-                                        goToComment(child_order_id,dish_name, dish);
+                                        goToComment(child_order_id, dish_name, dish);
                                     }
                                 });
                             } else
@@ -216,7 +216,8 @@ public class CompleteOrderFragment extends BaseFragment
                         }
 
                         public void goToComment(String order_id,
-                                final String name, APPOrder.ValueBean.OrderDishesListBean dish)
+                                                final String name, APPOrder.ValueBean
+                                                        .OrderDishesListBean dish)
                         {
                             String dish_name;
                             String dish_icon;
@@ -350,6 +351,7 @@ public class CompleteOrderFragment extends BaseFragment
         String realUrl = url.replace("USERID", APIAddr.user_id);
         realUrl = UrlHelper.addToken(getContext(), realUrl);
         Log.e("arilpan", "完成订单link:" + realUrl);
+        ResponseBody body = null;
 
         try
         {
@@ -361,10 +363,9 @@ public class CompleteOrderFragment extends BaseFragment
                     .url((UrlHelper.addToken(getContext(), realUrl)))
                     .build();
             Response response = client.newCall(request).execute();
-            ResponseBody body = response.body();
+            body = response.body();
 
             APPOrder datas_arry = COM_JSON_ADAPTER.fromJson(body.source());
-            body.close();
             datas = datas_arry.getValue();
             for (APPOrder.ValueBean data : datas)
             {
@@ -380,6 +381,9 @@ public class CompleteOrderFragment extends BaseFragment
                     .class);
             startActivity(intent);
             _mActivity.finish();
+        } finally
+        {
+            body.close();
         }
         return null;
     }

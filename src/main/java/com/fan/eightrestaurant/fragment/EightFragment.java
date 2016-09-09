@@ -4,13 +4,17 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Rect;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -50,7 +54,7 @@ public class EightFragment extends Fragment implements View.OnClickListener {
     private List<SendInfo> list;
     private ImageView nullImage;
     private LinearLayout root;
-    private String userId,token,secretkey;
+    private String userId,token,secretkey,imagePath;
     private String hotelId = "36dbde58-5ab5-41b5-915c-66048e63a5df";
 
 
@@ -62,8 +66,8 @@ public class EightFragment extends Fragment implements View.OnClickListener {
         nullImage = (ImageView) ret.findViewById(R.id.fragment_eight_null_image);
         root = (LinearLayout) ret.findViewById(R.id.fragment_eight_root);
         editText = (EditText) ret.findViewById(R.id.fragment_eight_edittext);
-        sendInfo.setOnClickListener(this);
         controlKeyboardLayout(root, sendInfo);
+        sendInfo.setOnClickListener(this);
         initData();
         list = new ArrayList<>();
         return ret;
@@ -76,13 +80,13 @@ public class EightFragment extends Fragment implements View.OnClickListener {
      */
     private void controlKeyboardLayout(final View root, final View scrollToView) {
         // 注册一个回调函数，当在一个视图树中全局布局发生改变或者视图树中的某个视图的可视状态发生改变时调用这个回调函数。
-        root.getViewTreeObserver().addOnGlobalLayoutListener(
-                new ViewTreeObserver.OnGlobalLayoutListener() {
+        root.getViewTreeObserver().addOnGlobalLayoutListener( new ViewTreeObserver.OnGlobalLayoutListener() {
                     @Override
                     public void onGlobalLayout() {
                         Rect rect = new Rect();
                         // 获取root在窗体的可视区域
                         root.getWindowVisibleDisplayFrame(rect);
+//                        Log.e("AAA", "onGlobalLayout: --------获取可视区域-------" );
                         // 当前视图最外层的高度减去现在所看到的视图的最底部的y坐标
                         int rootInvisibleHeight = root.getRootView().getHeight() - rect.bottom;
                         // 若rootInvisibleHeight高度大于100，则说明当前视图上移了，说明软键盘弹出了
@@ -93,7 +97,10 @@ public class EightFragment extends Fragment implements View.OnClickListener {
                             scrollToView.getLocationInWindow(location);
                             // 计算root滚动高度，使scrollToView在可见区域的底部
                             int srollHeight = (location[1] + scrollToView.getHeight()) - rect.bottom;
-                            root.scrollTo(0, srollHeight);
+                            if(srollHeight != 0){
+                                root.scrollTo(0, srollHeight);
+                            }
+
                         } else {
                             // 软键盘没有弹出来的时候
                             root.scrollTo(0, 0);
@@ -108,6 +115,7 @@ public class EightFragment extends Fragment implements View.OnClickListener {
         userId =((MyMessageActivity) activity).getUserId();
         token =((MyMessageActivity) activity).getToken();
         secretkey =((MyMessageActivity) activity).getSecretkey();
+        imagePath =((MyMessageActivity) activity).getImagePath();
     }
     /**
      * 获取网络数据
@@ -154,6 +162,7 @@ public class EightFragment extends Fragment implements View.OnClickListener {
                     listView.setVisibility(View.GONE);
                 }
                 adapter = new SendInfoAdapter(getContext(),list);
+                adapter.setUrl(imagePath);
                 listView.setAdapter(adapter);
                 listView.setSelection(list.size()-1);
             }
@@ -161,6 +170,7 @@ public class EightFragment extends Fragment implements View.OnClickListener {
     }
     @Override
     public void onClick(View v) {
+
         if(editText.getText().toString().trim().equals("")){
             Toast.makeText(getActivity(),"发送的内容不能为空",Toast.LENGTH_SHORT).show();
         }else {
@@ -204,11 +214,11 @@ public class EightFragment extends Fragment implements View.OnClickListener {
                             SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
                             Date curDate = new Date(System.currentTimeMillis());
                             String str = sdf.format(curDate);
-                            SendInfo sendInfo = new SendInfo();
-                            sendInfo.setBack_content(editText.getText().toString().trim());
-                            sendInfo.setCreatetime(str);
-                            sendInfo.setBack_state(0);
-                            list.add(sendInfo);
+                            SendInfo sendInfo1 = new SendInfo();
+                            sendInfo1.setBack_content(editText.getText().toString().trim());
+                            sendInfo1.setCreatetime(str);
+                            sendInfo1.setBack_state(0);
+                            list.add(sendInfo1);
                             if(list.size() !=0){
                                 nullImage.setVisibility(View.GONE);
                                 listView.setVisibility(View.VISIBLE);
@@ -216,6 +226,7 @@ public class EightFragment extends Fragment implements View.OnClickListener {
                             adapter.notifyDataSetChanged();
                             listView.setSelection(list.size()-1);
                             editText.setText("");
+                            controlKeyboardLayout(root, sendInfo);
                         }
              });
         }

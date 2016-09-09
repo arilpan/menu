@@ -21,7 +21,6 @@ import com.xdkj.campus.menu.R;
  */
 public class DiscountFragment extends AppCompatActivity {
     private ListView listView;
-    private List<Preferential> list;
     private PreferentialAdapter adapter;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,22 +28,11 @@ public class DiscountFragment extends AppCompatActivity {
         setContentView(R.layout.activity_preferential);
         listView = (ListView) findViewById(R.id.activity_preferential_listview);
         initData(PathUtils.getPreferentialUrl());
-        list = new ArrayList<>();
         View listViewHeader = getLayoutInflater().inflate(R.layout.preferential_listview_head,null);
         listView.addHeaderView(listViewHeader);
-        adapter = new PreferentialAdapter(getBaseContext(),list);
+        adapter = new PreferentialAdapter(getBaseContext());
         listView.setAdapter(adapter);
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent intent = new Intent(DiscountFragment.this, PreferentialDetailsActivity.class);
-                    String discount_id = list.get((int) id).getDiscount_id();
-                    String shop_id = list.get((int) id).getShop_id();
-                    intent.putExtra("discount_id",discount_id);
-                    intent.putExtra("shop_id",shop_id);
-                    startActivity(intent);
-            }
-        });
+
     }
     /**
      * 获取网络数据
@@ -56,8 +44,22 @@ public class DiscountFragment extends AppCompatActivity {
             }
             @Override
             public void onResponse(String response) {
-                List<Preferential> result = JSONUtils.getPreferentialJson(response);
-                list.addAll(result);
+                final List<Preferential> result = JSONUtils.getPreferentialJson(response);
+                adapter.setList(result);
+
+                listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                        //todo:intent
+                        Intent intent = new Intent(DiscountFragment.this,
+                                PreferentialDetailsActivity.class);
+                        String discount_id = result.get((int) id).getDiscount_id();
+                        String shop_id = result.get((int) id).getShop_id();
+                        intent.putExtra("discount_id",discount_id);
+                        intent.putExtra("shop_id",shop_id);
+                        startActivity(intent);
+                    }
+                });
             }
         });
     }

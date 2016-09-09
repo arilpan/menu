@@ -76,7 +76,7 @@ public class DishRankAdapter extends RecyclerView.Adapter<DishRankAdapter.MyView
 //        holder.soldNum.setText(item.getNum() + "人购买");
         Glide.with(mInflater.getContext()) //
                 .load(APIAddr.BASE_IMG_URL + item.getUpload_url()) //
-                .error(R.drawable.index_dishes_image_default)
+                .error(R.drawable.preferential_list_item_zanwutupian)
                 .into(holder.image);
     }
 
