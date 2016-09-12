@@ -1,13 +1,16 @@
 package com.xdkj.campus.menu.ui.place;
 
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v7.app.AlertDialog;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -243,7 +246,7 @@ public class SelectPlaceDetailFragment extends SupportFragment
         orderRoomRl = (RelativeLayout) view.findViewById(R.id.order_room);
         orderSelectDishRl = (RelativeLayout) view.findViewById(R.id.order_dishes);
 
-        remarksTextView = (TextView) view.findViewById(R.id.remarks);
+        remarksTextView = (TextView) view.findViewById(R.id.remarks_text);
         select_room = (TextView) view.findViewById(R.id.select_room);
         select_person_num = (TextView) view.findViewById(R.id.select_num);
         select_time = (TextView) view.findViewById(R.id.select_time);
@@ -275,6 +278,17 @@ public class SelectPlaceDetailFragment extends SupportFragment
             public void onClick(View v)
             {
                 //调用选择菜品
+                final EditText inputServer = new EditText(getActivity());
+                AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+                builder.setTitle("备注").setIcon(android.R.drawable.ic_dialog_info).setView(inputServer)
+                        .setNegativeButton("取消", null);
+                builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
+
+                    public void onClick(DialogInterface dialog, int which) {
+                        remarksTextView.setText(inputServer.getText().toString());
+                    }
+                });
+                builder.show();
             }
         });
         orderRoomRl.setOnClickListener(new View.OnClickListener()
@@ -503,7 +517,7 @@ public class SelectPlaceDetailFragment extends SupportFragment
                     @Override
                     public void run()
                     {
-                        Toast.makeText(getContext(), "don't have access", Toast.LENGTH_SHORT);
+                        Toast.makeText(getContext(), "无权创建订单，请检查登录状态", Toast.LENGTH_SHORT).show();
                         Log.e("arilpan", " create order success");
                     }
                 });
@@ -514,7 +528,7 @@ public class SelectPlaceDetailFragment extends SupportFragment
                     @Override
                     public void run()
                     {
-                        Toast.makeText(getContext(), "create order success", Toast.LENGTH_SHORT);
+                        Toast.makeText(getContext(), "订单创建成功", Toast.LENGTH_SHORT).show();
                         Log.e("arilpan", " create order success");
                         pop();
                     }
@@ -527,7 +541,7 @@ public class SelectPlaceDetailFragment extends SupportFragment
                     public void run()
                     {
                         Toast.makeText(getContext(),
-                                "create order fail", Toast.LENGTH_SHORT).show();
+                                "订单创建失败", Toast.LENGTH_SHORT).show();
                     }
                 });
                 Log.e("arilpan", " create order fail");

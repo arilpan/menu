@@ -9,6 +9,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -180,7 +181,7 @@ public class DiscountDishesFragment extends BaseFragment
 
     public List<APPDishDiscount.ValueBean.DataBean> getData(String url)
     {
-        ResponseBody body =null;
+        ResponseBody body = null;
         try
         {
             final JsonAdapter<APPDishDiscount>
@@ -191,7 +192,7 @@ public class DiscountDishesFragment extends BaseFragment
                     .url(url)
                     .build();
             Response response = client.newCall(request).execute();
-              body = response.body();
+            body = response.body();
 
             APPDishDiscount datas_arry =
                     COM_JSON_ADAPTER.fromJson(body.source());
@@ -207,8 +208,7 @@ public class DiscountDishesFragment extends BaseFragment
         } catch (Exception e)
         {
             e.printStackTrace();
-        }
-        finally
+        } finally
         {
             body.close();
         }
@@ -277,7 +277,7 @@ public class DiscountDishesFragment extends BaseFragment
         private OnItemClickListener mClickListener;
 
         @Override
-        public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType)
+        public MyViewHolder onCreateViewHolder(final ViewGroup parent, int viewType)
         {
             MyViewHolder holder = new MyViewHolder(LayoutInflater.from(
                     parent.getContext()).inflate(R.layout.fragment_dish_discount_list_item, parent,
@@ -287,6 +287,18 @@ public class DiscountDishesFragment extends BaseFragment
                     holder.dish_discount_item_recyview.getLayoutParams();
             layoutParams.height = 35;
 
+            ViewTreeObserver vto = parent.getViewTreeObserver();
+            vto.addOnPreDrawListener(new ViewTreeObserver.OnPreDrawListener()
+            {
+                @Override
+                public boolean onPreDraw()
+                {
+                    int height = parent.getMeasuredHeight();
+                    int width = parent.getMeasuredWidth();
+                    Log.e("arilpan", "---cal height:" + height);
+                    return true;
+                }
+            });
             if (viewType > 0)
             {
                 layoutParams.height = 35 + viewType * 225;
@@ -304,7 +316,7 @@ public class DiscountDishesFragment extends BaseFragment
             }
             holder.dish_discount_item_recyview.setLayoutManager(new LinearLayoutManager
                     (_mActivity.getApplicationContext(), LinearLayoutManager.VERTICAL, true));
-            holder.dish_discount_item_recyview.setLayoutParams(layoutParams);
+//            holder.dish_discount_item_recyview.setLayoutParams(layoutParams);
 /****************************************************************************/
             return holder;
         }

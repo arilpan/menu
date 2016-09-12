@@ -13,6 +13,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -91,6 +92,8 @@ public class LeaveMessageFragment extends BaseFragment
                 pop();
             }
         });
+        ((ImageView) view.findViewById(R.id.btn_iv_back))
+                .setVisibility(View.GONE);
 
         listView = (ListView) view.findViewById(R.id.activity_leave_message_listview);
         myLeaveButton = (Button) view.findViewById(R.id.activity_leave_message_myleavebutton);

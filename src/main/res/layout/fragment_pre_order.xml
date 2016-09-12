@@ -196,7 +196,11 @@
                     android:id="@+id/remarks"
                     style="@style/pre_order_list_desc"
                     android:text="备注"/>
-
+                <TextView
+                    android:id="@+id/remarks_text"
+                    android:layout_centerHorizontal="true"
+                    style="@style/pre_order_list_desc"
+                    tools:text="remarks"/>
                 <ImageView
                     style="@style/pre_order_list_img_right"
                     android:src="@drawable/common_arrow_right"

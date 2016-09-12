@@ -3,6 +3,7 @@ package com.xdkj.campus.menu.ui.menu;
 import android.util.Log;
 
 import com.xdkj.campus.menu.entity.Dish;
+import com.xdkj.campus.menu.helper.ArithHelper;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,11 +27,18 @@ public class DishList
 
     public static double getTotalPrice()
     {
-        double total = 0;
+        double total = 0l;
         dishes = getlist();
         for (Dish dish : dishes)
         {
-            total = total + (dish.getNum() * Double.parseDouble(dish.getPrice()));
+            double temp = ArithHelper.mul(
+                    Double.parseDouble(String.valueOf(dish.getNum())),
+                    Double.parseDouble(dish.getPrice()));
+//            dish.getNum() *
+//                    Double.parseDouble(dish.getPrice();
+            total = ArithHelper.add(total, temp);
+//            total = total + (dish.getNum() *
+//                    Double.parseDouble(dish.getPrice()));
         }
         Log.e("arilpan", "调用已选菜品计算总额方法:" + total);
         return total;

@@ -29,6 +29,10 @@ import com.xdkj.campus.menu.ui.order.UncompleteOrderFragment;
 
 import org.greenrobot.eventbus.EventBus;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+
 /**
  * Created by aril_pan@qq.com on 16/8.
  */
@@ -44,6 +48,14 @@ public class MineFragment extends BaseFragment implements View.OnClickListener
         MineFragment fragment = new MineFragment();
         fragment.setArguments(args);
         return fragment;
+    }
+
+    @Override
+    public void onResume()
+    {
+        super.onResume();
+        Log.e("arilpan","mine fragment onresume");
+        setView();
     }
 
     @Nullable
@@ -62,6 +74,30 @@ public class MineFragment extends BaseFragment implements View.OnClickListener
 
     LinearLayout setting_layout;
 
+    private void setView()
+    {
+        String user_name = KVHelper.getUserInfo(getContext(), "nickname", "用戶昵称");
+        String user_head_img = KVHelper.getUserInfo(getContext(), "imagePath",
+                "");
+        if (!TextUtils.isEmpty(user_name))
+        {
+            username.setText(user_name);
+        } else if ("null".equals(user_name))
+        {
+            username.setText("请设置昵称");
+        }
+        if (!TextUtils.isEmpty(user_head_img))
+        {
+            Glide.with(MineFragment.this)
+                    .load(user_head_img)
+                    .into(userhead);
+        }
+
+    }
+
+    private ImageView userhead;
+    private TextView username;
+
     private void initView(View view)
     {
         cancel_layout = (RelativeLayout) view.findViewById(R.id.cancel_layout);
@@ -76,36 +112,25 @@ public class MineFragment extends BaseFragment implements View.OnClickListener
         setting_layout.setOnClickListener(this);
 
         ((TextView) view.findViewById(R.id.title_middle)).setText("我的");
+        ((ImageView) view.findViewById(R.id.btn_iv_back))
+                .setVisibility(View.GONE);
 
-        String user_name = KVHelper.getUserInfo(getContext(), "nickname", "用戶昵称");
-        String user_head_img = KVHelper.getUserInfo(getContext(), "imagePath",
-                "");
-        ImageView userhead = (ImageView) view.findViewById(R.id.userhead);
-        TextView username = (TextView) view.findViewById(R.id.username);
-        if (!TextUtils.isEmpty(user_name))
-        {
-            username.setText(user_name);
-        }
-        else if("null".equals(user_name))
-        {
-            username.setText("请设置昵称");
-        }
-        if (!TextUtils.isEmpty(user_head_img))
-        {
-            Glide.with(MineFragment.this)
-                    .load( user_head_img)
-                    .into(userhead);
-        }
+
+        userhead = (ImageView) view.findViewById(R.id.userhead);
+        username = (TextView) view.findViewById(R.id.username);
+
+
         userhead.setOnClickListener(new View.OnClickListener()
         {
             @Override
             public void onClick(View view)
             {
-                Intent intent =new Intent();
+                Intent intent = new Intent();
                 intent.setClass(getActivity(), UpLoadActivity.class);
                 startActivity(intent);
             }
         });
+        setView();
     }
 
     @Override

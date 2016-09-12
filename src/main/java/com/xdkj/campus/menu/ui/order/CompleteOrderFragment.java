@@ -29,6 +29,7 @@ import com.xdkj.campus.menu.entity.Dish;
 import com.xdkj.campus.menu.entity.RequestType;
 import com.xdkj.campus.menu.event.NetworkEvent;
 import com.xdkj.campus.menu.event.StartBrotherEvent;
+import com.xdkj.campus.menu.helper.KVHelper;
 import com.xdkj.campus.menu.helper.UrlHelper;
 
 import org.greenrobot.eventbus.EventBus;
@@ -349,6 +350,9 @@ public class CompleteOrderFragment extends BaseFragment
     public List<APPOrder.ValueBean> getData(String url)
     {
         String realUrl = url.replace("USERID", APIAddr.user_id);
+//        String userPhone = KVHelper.getUserInfo(getContext(), "username", "");
+//        String realUrl = url.replace("USERID", userPhone);
+
         realUrl = UrlHelper.addToken(getContext(), realUrl);
         Log.e("arilpan", "完成订单link:" + realUrl);
         ResponseBody body = null;

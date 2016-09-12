@@ -34,6 +34,7 @@ import com.xdkj.campus.menu.entity.Dish;
 import com.xdkj.campus.menu.entity.Order;
 import com.xdkj.campus.menu.entity.RequestType;
 import com.xdkj.campus.menu.event.NetworkEvent;
+import com.xdkj.campus.menu.helper.KVHelper;
 import com.xdkj.campus.menu.helper.UrlHelper;
 
 import org.greenrobot.eventbus.EventBus;
@@ -96,7 +97,7 @@ public class UncompleteOrderFragment extends BaseFragment
         if (requestCode == REQUEST_SIMPLE_DIALOG)
         {
             Log.e("arilpan", "UncompleteOrderFragment Negative button clicked");
-            Toast.makeText(c, "Negative button clicked", Toast.LENGTH_SHORT).show();
+//            Toast.makeText(c, "Negative button clicked", Toast.LENGTH_SHORT).show();
         } else
         {
             Log.e("arilpan", "UncompleteOrderFragment Negative button clicked");
@@ -109,7 +110,7 @@ public class UncompleteOrderFragment extends BaseFragment
         if (requestCode == REQUEST_SIMPLE_DIALOG)
         {
             Log.e("arilpan", "UncompleteOrderFragment Neutral button clicked");
-            Toast.makeText(c, "Neutral button clicked", Toast.LENGTH_SHORT).show();
+//            Toast.makeText(c, "Neutral button clicked", Toast.LENGTH_SHORT).show();
         } else
         {
             Log.e("arilpan", "UncompleteOrderFragment Neutral button clicked");
@@ -463,7 +464,9 @@ public class UncompleteOrderFragment extends BaseFragment
 
     public List<APPOrder.ValueBean> getData(String url)
     {
-        String realUrl = url.replace("USERID", APIAddr.user_id);
+        String userPhone = KVHelper.getUserInfo(getContext(), "username", "");
+        String realUrl = url.replace("USERID", userPhone);
+
         realUrl = UrlHelper.addToken(getContext(), realUrl);
         Log.e("arilpan", "完成订单link:" + realUrl);
         ResponseBody body = null;

@@ -68,7 +68,6 @@ public class ShopFragment extends BaseFragment
         return fragment;
     }
 
-    @Override
     public void onCreate(@Nullable Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);

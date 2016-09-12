@@ -8,7 +8,7 @@ public class PathUtils {
 
 
 
-    private static String path="http://172.16.0.75:8080";
+    public static String path="http://172.16.0.35:8080";
     /**
      * 用户注册、修改密码短信接口
      */

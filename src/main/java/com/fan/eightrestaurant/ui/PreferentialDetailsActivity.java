@@ -4,9 +4,11 @@ import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+import android.widget.TextView;
 
 import com.xdkj.campus.menu.R;
 import com.fan.eightrestaurant.utils.PathUtils;
@@ -22,6 +24,18 @@ public class PreferentialDetailsActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_preferential_details);
+        ((TextView) findViewById(R.id.title_middle)).setText("优惠详情");
+        findViewById(R.id.title_ll_left).setOnClickListener(new View
+                .OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+            finish();
+            }
+        });
+
+
         webView = (WebView) findViewById(R.id.activity_preferential_details_webview);
         Intent intent = getIntent();
         String discount_id = intent.getStringExtra("discount_id");

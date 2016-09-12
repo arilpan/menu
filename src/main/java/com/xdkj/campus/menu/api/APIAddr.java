@@ -34,13 +34,14 @@ public class APIAddr
     public static int ORDER_COMPLETE = 1;
     public static int ORDER_UNCOMPLETE = 0;
 
-    public static String BASE_PROJECT_URL = "http://172.16.0.75:8080/GrogshopSystem/app";
-    public static String BASE_URL = "http://172.16.0.75:8080/GrogshopSystem/app/appShop";
-    public static String BASE_DISH_URL = "http://172.16.0.75:8080/GrogshopSystem/app/appDishes";
-    public static String BASE_NEWS_URL = "http://172.16.0.75:8080/GrogshopSystem/app/News";
+    public static String IP_PORT="http://172.16.0.35:8080";
+    public static String BASE_PROJECT_URL =IP_PORT+ "/GrogshopSystem/app";
+    public static String BASE_URL = IP_PORT+ "/GrogshopSystem/app/appShop";
+    public static String BASE_DISH_URL = IP_PORT+ "/GrogshopSystem/app/appDishes";
+    public static String BASE_NEWS_URL = IP_PORT+ "/GrogshopSystem/app/News";
 
 
-    public static String BASE_IMG_URL = "http://172.16.0.75:8080";
+    public static String BASE_IMG_URL = IP_PORT;
     //http://172.16.0.56:8080/GrogshopSystem/appShop/shop_dishes_index
     // .do?iDisplayStart=0&iDisplayLength=10
 
