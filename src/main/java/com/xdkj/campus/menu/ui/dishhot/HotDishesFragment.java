@@ -75,6 +75,16 @@ public class HotDishesFragment extends BaseFragment implements SwipeRefreshLayou
     private void initView(View view)
     {
         setTitle(view,"热门菜品");
+        view.findViewById(R.id.title_ll_left).setOnClickListener(new View
+                .OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+                _mActivity.onBackPressed();
+            }
+        });
+
         EventBus.getDefault().register(this);
 
         mRecy = (RecyclerView) view.findViewById(R.id.switch_recv_left);

@@ -403,18 +403,38 @@ public class UncompleteOrderFragment extends BaseFragment
                 boolean isSuccess = jsonObject.getBoolean("success");
                 if (isSuccess)
                 {
-                    Toast.makeText(getContext(),
-                            "取消订单成功", Toast.LENGTH_SHORT)
-                            .show();
+                    _mActivity.runOnUiThread(new Runnable()
+                    {
+                        @Override
+                        public void run()
+                        {
+                            Toast.makeText(getContext(),
+                                    "取消订单成功", Toast.LENGTH_SHORT)
+                                    .show();
+                            EventBus.getDefault().post(new NetworkEvent(RequestType.ORDER_LIST,
+                                    String.valueOf(APIAddr.ORDER_UNCOMPLETE)));
+                        }
+                    });
+
                     return;
                 }
             } catch (JSONException e)
             {
                 e.printStackTrace();
             }
-            Toast.makeText(getContext(),
-                    "取消订单失败", Toast.LENGTH_SHORT)
-                    .show();
+            _mActivity.runOnUiThread(new Runnable()
+            {
+                @Override
+                public void run()
+                {
+                    Toast.makeText(getContext(),
+                            "取消订单失败", Toast.LENGTH_SHORT)
+                            .show();
+                    EventBus.getDefault().post(new NetworkEvent(RequestType.ORDER_LIST,
+                            String.valueOf(APIAddr.ORDER_UNCOMPLETE)));
+                }
+            });
+
             /*  {"success":true,"message":"取消订单成功!!","messageList":null,"messageList1":null,
             "messageList2":null,"messageList3":null,"messageList4":null,"messageList5":null,
             "messageList6":null,"messageList7":null,"messageList8":null,"code":0,"value":null,
@@ -422,6 +442,7 @@ public class UncompleteOrderFragment extends BaseFragment
              http://172.16.0.75:8080/GrogshopSystem/appOrder/cancelOrders
              .do?order_id=90f67d5b-b3f5-46f9-92a1-80f90751acd8
              */
+
         } else
         {
             Log.e("arilpan", "HotDishFragment what happend?");

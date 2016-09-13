@@ -349,9 +349,9 @@ public class CompleteOrderFragment extends BaseFragment
 
     public List<APPOrder.ValueBean> getData(String url)
     {
-        String realUrl = url.replace("USERID", APIAddr.user_id);
-//        String userPhone = KVHelper.getUserInfo(getContext(), "username", "");
-//        String realUrl = url.replace("USERID", userPhone);
+//        String realUrl = url.replace("USERID", APIAddr.user_id);
+        String userPhone = KVHelper.getUserInfo(getContext(), "username", "");
+        String realUrl = url.replace("USERID", userPhone);
 
         realUrl = UrlHelper.addToken(getContext(), realUrl);
         Log.e("arilpan", "完成订单link:" + realUrl);

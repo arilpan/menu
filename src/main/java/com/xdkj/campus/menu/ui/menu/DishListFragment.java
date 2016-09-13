@@ -3,29 +3,21 @@ package com.xdkj.campus.menu.ui.menu;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.annotation.StringDef;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
-import android.widget.ImageView;
 import android.widget.ListView;
-import android.widget.SimpleAdapter;
 import android.widget.TextView;
-
 import com.xdkj.campus.menu.R;
 import com.xdkj.campus.menu.base.BaseFragment;
 import com.xdkj.campus.menu.entity.Dish;
 import com.xdkj.campus.menu.event.ShopEvent;
 import com.xdkj.campus.menu.fragment.ShopFragment;
-
 import org.greenrobot.eventbus.EventBus;
-import org.w3c.dom.Text;
 
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -122,11 +114,16 @@ public class DishListFragment extends BaseFragment
 
     public void clearDish()
     {
+        for(Dish d :DishList.getlist())
+        {
+            d.setNum(0);
+        }
         if (items != null)
         {
             items.clear();
         }
         DishList.getlist().clear();
+
         EventBus.getDefault().post(new ShopEvent(ShopFragment.newInstance(ShopFragment.shop_id)));
         ((ShopFragment) getParentFragment()).switchDishListFragment();
     }

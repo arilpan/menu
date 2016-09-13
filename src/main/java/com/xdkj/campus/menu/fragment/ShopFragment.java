@@ -55,7 +55,7 @@ public class ShopFragment extends BaseFragment
 {
     public static final String TAG = ShopFragment.class.getSimpleName();
     FrameLayout fl_child_list_content_container;
-    private Toolbar mToolbar;
+//    private Toolbar mToolbar;
     public static String shop_id;
 
     public static ShopFragment newInstance(String shop_id)
@@ -117,7 +117,18 @@ public class ShopFragment extends BaseFragment
     private void initView(View view, Bundle savedInstanceState)
     {
         EventBus.getDefault().register(this);
-        mToolbar = (Toolbar) view.findViewById(R.id.toolbar);
+
+        setTitle(view,"选菜");
+        view.findViewById(R.id.title_ll_left).setOnClickListener(new View
+                .OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+                _mActivity.onBackPressed();
+            }
+        });
+//        mToolbar = (Toolbar) view.findViewById(R.id.toolbar);
         fl_child_list_content_container = (FrameLayout) view.findViewById(R.id
                 .fl_child_list_content_container);
         order_now_btn = (Button) view.findViewById(R.id.order_now_btn);
@@ -134,7 +145,7 @@ public class ShopFragment extends BaseFragment
         fManager = getFragmentManager();
         transaction = fManager.beginTransaction();
 
-        mToolbar.setTitle("选菜");
+//        mToolbar.setTitle("选菜");
 
 
 //        initToolbarMenu(mToolbar);

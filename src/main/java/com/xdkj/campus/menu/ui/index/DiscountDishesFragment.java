@@ -1,8 +1,13 @@
 package com.xdkj.campus.menu.ui.index;
 
+import android.content.Context;
+import android.content.res.TypedArray;
 import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -11,13 +16,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-
 import com.bumptech.glide.Glide;
 import com.squareup.moshi.JsonAdapter;
 import com.squareup.moshi.Types;
-import com.squareup.picasso.Picasso;
 import com.xdkj.campus.menu.MainActivity;
 import com.xdkj.campus.menu.R;
 import com.xdkj.campus.menu.api.APIAddr;
@@ -27,21 +31,15 @@ import com.xdkj.campus.menu.entity.RequestType;
 import com.xdkj.campus.menu.event.NetworkEvent;
 import com.xdkj.campus.menu.event.StartBrotherEvent;
 import com.xdkj.campus.menu.listener.OnItemClickListener;
-
-import org.greenrobot.eventbus.EventBus;
-import org.greenrobot.eventbus.Subscribe;
-import org.greenrobot.eventbus.ThreadMode;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Set;
-
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
 import okhttp3.ResponseBody;
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
+
+import java.util.*;
 
 /***
  * 折扣菜
@@ -52,12 +50,10 @@ public class DiscountDishesFragment extends BaseFragment
 {
     String shop_id;
 
-    public DiscountDishesFragment()
-    {
+    public DiscountDishesFragment() {
     }
 
-    public static DiscountDishesFragment newInstance(String shop_org_id)
-    {
+    public static DiscountDishesFragment newInstance(String shop_org_id) {
 
         Bundle args = new Bundle();
         args.putString("shop_id", shop_org_id);
@@ -67,12 +63,10 @@ public class DiscountDishesFragment extends BaseFragment
     }
 
     @Override
-    public void onCreate(@Nullable Bundle savedInstanceState)
-    {
+    public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Bundle args = getArguments();
-        if (args != null)
-        {
+        if (args != null) {
             shop_id = args.getString("shop_id");
         }
     }
@@ -80,8 +74,7 @@ public class DiscountDishesFragment extends BaseFragment
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable
-    Bundle savedInstanceState)
-    {
+            Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_dish_discount, container, false);
         initView(view);
         return view;
@@ -92,24 +85,20 @@ public class DiscountDishesFragment extends BaseFragment
     private List<APPDishDiscount.ValueBean.DataBean> mDatas;
 
     @Override
-    public void onDestroy()
-    {
+    public void onDestroy() {
         EventBus.getDefault().unregister(this);
         super.onDestroy();
     }
 
-    private void initView(View view)
-    {
+    private void initView(View view) {
         EventBus.getDefault().register(this);
 
         //"超值折扣菜"
         ((TextView) view.findViewById(R.id.title_middle)).setText("超值折扣菜");
         view.findViewById(R.id.title_ll_left).setOnClickListener(new View
-                .OnClickListener()
-        {
+                .OnClickListener() {
             @Override
-            public void onClick(View v)
-            {
+            public void onClick(View v) {
                 _mActivity.onBackPressed();
             }
         });
@@ -121,11 +110,9 @@ public class DiscountDishesFragment extends BaseFragment
 
         tab1.setText(APIAddr.shop_one_name);
         tab2.setText(APIAddr.shop_two_name);
-        tab1.setOnClickListener(new View.OnClickListener()
-        {
+        tab1.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view)
-            {
+            public void onClick(View view) {
                 EventBus.getDefault().post(new NetworkEvent(
                         RequestType.INDEX_DISH_DISCOUNT,
                         APIAddr.shop_one_id));
@@ -134,11 +121,9 @@ public class DiscountDishesFragment extends BaseFragment
                 tab2.setTextColor(Color.rgb(66, 66, 66));
             }
         });
-        tab2.setOnClickListener(new View.OnClickListener()
-        {
+        tab2.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view)
-            {
+            public void onClick(View view) {
                 EventBus.getDefault().post(new NetworkEvent(
                         RequestType.INDEX_DISH_DISCOUNT,
                         APIAddr.shop_two_id));
@@ -166,24 +151,19 @@ public class DiscountDishesFragment extends BaseFragment
     }
 
     @Subscribe(threadMode = ThreadMode.ASYNC)
-    public void onNetWork(NetworkEvent event)
-    {
+    public void onNetWork(NetworkEvent event) {
         Log.e("arilpan", "HotDishFragment 你调用咩?");
-        if (RequestType.INDEX_DISH_DISCOUNT == event.reqType)
-        {
+        if (RequestType.INDEX_DISH_DISCOUNT == event.reqType) {
             Log.e("arilpan", "HotDishFragment equals url=" + event.url + event.id);
             setData(getData(event.url + event.id));
-        } else
-        {
+        } else {
             Log.e("arilpan", "HotDishFragment what happend?");
         }
     }
 
-    public List<APPDishDiscount.ValueBean.DataBean> getData(String url)
-    {
+    public List<APPDishDiscount.ValueBean.DataBean> getData(String url) {
         ResponseBody body = null;
-        try
-        {
+        try {
             final JsonAdapter<APPDishDiscount>
                     COM_JSON_ADAPTER = MainActivity.MOSHI.adapter(
                     Types.newParameterizedType(APPDishDiscount.class));
@@ -199,17 +179,14 @@ public class DiscountDishesFragment extends BaseFragment
 
             List<APPDishDiscount.ValueBean.DataBean> datas
                     = datas_arry.getValue().getData();
-            for (APPDishDiscount.ValueBean.DataBean data : datas)
-            {
+            for (APPDishDiscount.ValueBean.DataBean data : datas) {
                 Log.e("arilpan", data.getDiscount_type() +
                         ",code :" + data.getDishes_price());
             }
             return datas;
-        } catch (Exception e)
-        {
+        } catch (Exception e) {
             e.printStackTrace();
-        } finally
-        {
+        } finally {
             body.close();
         }
         return null;
@@ -219,27 +196,21 @@ public class DiscountDishesFragment extends BaseFragment
     HashMap<Integer, ArrayList<String>> discountDishesMap;//折扣数-折扣菜集合
     List<Integer> discountDishesMapKey;//折扣数集合
 
-    public void setData(final List<APPDishDiscount.ValueBean.DataBean> items)
-    {
-        try
-        {
-            _mActivity.runOnUiThread(new Runnable()
-            {
+    public void setData(final List<APPDishDiscount.ValueBean.DataBean> items) {
+        try {
+            _mActivity.runOnUiThread(new Runnable() {
                 @Override
-                public void run()
-                {
+                public void run() {
                     mDatas = items;
 
                     mAdapter.notifyDataSetChanged();
 
                     discountDishesMap = new HashMap<Integer, ArrayList<String>>();
                     if (mDatas != null)
-                        for (APPDishDiscount.ValueBean.DataBean oneData : mDatas)
-                        {
+                        for (APPDishDiscount.ValueBean.DataBean oneData : mDatas) {
                             int type = Integer.parseInt(oneData.getDiscount_type());
                             ArrayList<String> ids = discountDishesMap.get(type);
-                            if (ids == null)
-                            {
+                            if (ids == null) {
                                 ids = new ArrayList<String>();
                             }
                             ids.add(oneData.getDishes_id());
@@ -248,8 +219,7 @@ public class DiscountDishesFragment extends BaseFragment
                     discountDishesMapKey = new ArrayList<Integer>();
                     Set<Integer> mapSet = discountDishesMap.keySet();    //获取所有的key值 为set的集合
                     Iterator<Integer> itor = mapSet.iterator();//获取key的Iterator便利
-                    while (itor.hasNext())
-                    {
+                    while (itor.hasNext()) {
                         Integer key = itor.next();//当前key值
                         discountDishesMapKey.add(key);
                     }
@@ -257,28 +227,93 @@ public class DiscountDishesFragment extends BaseFragment
                     //stuff that updates ui
                 }
             });
-        } catch (Exception e)
-        {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
     @Override
-    public boolean onBackPressedSupport()
-    {
+    public boolean onBackPressedSupport() {
         Log.e("arilpan", "on back press");
         return false;
     }
 
+    class MyLayoutManager extends LinearLayoutManager {
+
+        public MyLayoutManager(Context context) {
+            super(context);
+            // TODO Auto-generated constructor stub
+        }
+
+
+        @Override
+        public void onMeasure(RecyclerView.Recycler recycler, RecyclerView.State state,
+                              int widthSpec,
+                              int heightSpec) {
+            View view = recycler.getViewForPosition(0);
+            if (view != null) {
+                measureChild(view, widthSpec, heightSpec);
+                int measuredWidth = View.MeasureSpec.getSize(widthSpec);
+                int measuredHeight = view.getMeasuredHeight();
+                setMeasuredDimension(measuredWidth, measuredHeight);
+            }
+        }
+    }
+
+    class ItemGridLayoutManager extends GridLayoutManager {
+        HomeAdapter adapter;
+        TypedArray a;
+        Drawable mDivider;
+        ViewTreeObserver obs;
+
+        /**
+         * @param context      上下文
+         * @param spanCount    列数
+         * @param adapter      数据适配器
+         * @param recyclerView 当前的RecyclerView
+         */
+        public ItemGridLayoutManager(Context context, int spanCount, HomeAdapter adapter, final RecyclerView recyclerView) {
+            super(context, spanCount);
+            this.adapter = adapter;
+            a = context.obtainStyledAttributes(new int[]{android.R.attr.listDivider});
+            mDivider = a.getDrawable(0);
+            obs = recyclerView.getViewTreeObserver();
+            obs.addOnPreDrawListener(new ViewTreeObserver.OnPreDrawListener() {
+                @Override
+                public boolean onPreDraw() {
+                    calculeRecyclerViewFullHeight(recyclerView);
+//                    if (obs != null)
+//                        obs.removeOnPreDrawListener(this);
+                    return true;
+                }
+            });
+        }
+
+        /**
+         * 刷新高度，使RecyclerView得高度为wrap_content
+         */
+        private void calculeRecyclerViewFullHeight(RecyclerView recyclerView) {
+            int height = 0;
+            height = recyclerView.getChildAt(0).getHeight();
+            int line = adapter.getItemCount() / getSpanCount();
+            if (adapter.getItemCount() % getSpanCount() > 0) {
+                line++;
+            }
+            SwipeRefreshLayout.LayoutParams params = recyclerView.getLayoutParams();
+            params.height = height * line + (line - 1) * mDivider.getIntrinsicWidth();
+            recyclerView.setLayoutParams(params);
+
+        }
+
+    }
+
     /****************************************************************************/
-    class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.MyViewHolder>
-    {
+    class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.MyViewHolder> {
         List<APPDishDiscount.ValueBean.DataBean> itemDishes;
         private OnItemClickListener mClickListener;
 
         @Override
-        public MyViewHolder onCreateViewHolder(final ViewGroup parent, int viewType)
-        {
+        public MyViewHolder onCreateViewHolder(final ViewGroup parent, int viewType) {
             MyViewHolder holder = new MyViewHolder(LayoutInflater.from(
                     parent.getContext()).inflate(R.layout.fragment_dish_discount_list_item, parent,
                     false));
@@ -287,50 +322,44 @@ public class DiscountDishesFragment extends BaseFragment
                     holder.dish_discount_item_recyview.getLayoutParams();
             layoutParams.height = 35;
 
-            ViewTreeObserver vto = parent.getViewTreeObserver();
-            vto.addOnPreDrawListener(new ViewTreeObserver.OnPreDrawListener()
-            {
-                @Override
-                public boolean onPreDraw()
-                {
-                    int height = parent.getMeasuredHeight();
-                    int width = parent.getMeasuredWidth();
-                    Log.e("arilpan", "---cal height:" + height);
-                    return true;
-                }
-            });
-            if (viewType > 0)
-            {
-                layoutParams.height = 35 + viewType * 225;
-                int addTotal = 0;
-                int add = 1;
-                int numItem = viewType;
-                while (add != 0)
-                {
-                    add = numItem / 4;
-                    addTotal += add * 30;
-                    numItem = add;
-                }
-                layoutParams.height += addTotal;
-                Log.e("arilpan", " dishes size: " + viewType + ",height:" + layoutParams.height);
-            }
-            holder.dish_discount_item_recyview.setLayoutManager(new LinearLayoutManager
-                    (_mActivity.getApplicationContext(), LinearLayoutManager.VERTICAL, true));
+
+//            if (viewType > 0) {
+//                layoutParams.height = 35 + viewType * 225;
+//                int addTotal = 0;
+//                int add = 1;
+//                int numItem = viewType;
+//                while (add != 0) {
+//                    add = numItem / 4;
+//                    addTotal += add * 30;
+//                    numItem = add;
+//                }
+//                layoutParams.height += addTotal;
+//                Log.e("arilpan", " dishes size: " + viewType + ",height:" + layoutParams.height);
+//            }
+
+//            holder.dish_discount_item_recyview.setLayoutManager(new LinearLayoutManager
+//                    (_mActivity.getApplicationContext(), LinearLayoutManager.VERTICAL, true));
+
+//            MyLayoutManager manager = new MyLayoutManager(_mActivity.getApplicationContext());
+//            manager.setOrientation(LinearLayout.VERTICAL);//Ä¬ÈÏÊÇLinearLayout.VERTICAL
+//            holder.dish_discount_item_recyview.setLayoutManager(manager);
+
+            holder.dish_discount_item_recyview.setLayoutManager(new
+                    ItemGridLayoutManager(_mActivity.getApplicationContext(),
+                    1, mAdapter, holder.dish_discount_item_recyview));
 //            holder.dish_discount_item_recyview.setLayoutParams(layoutParams);
 /****************************************************************************/
             return holder;
         }
 
         @Override
-        public void onBindViewHolder(MyViewHolder holder, int position)
-        {
+        public void onBindViewHolder(MyViewHolder holder, int position) {
             holder.dish_discount_item_recyview.setMinimumHeight(35);
 
             APPDishDiscount.ValueBean.DataBean order = mDatas.get(position);
 //            holder.discount_item_type.setText(order.getTotalPrice());
             int key = discountDishesMapKey.get(position);
-            switch (key)
-            {
+            switch (key) {
 //                case 0:
 //                    holder.discount_item_type.setText("零折免费菜品");
 //                    break;
@@ -371,37 +400,40 @@ public class DiscountDishesFragment extends BaseFragment
 
 
             holder.dish_discount_item_recyview.setAdapter(
-                    new RecyclerView.Adapter()
-                    {
+                    new RecyclerView.Adapter() {
                         @Override
-                        public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int
-                                viewType)
-                        {
+                        public RecyclerView.ViewHolder onCreateViewHolder(final ViewGroup parent, int
+                                viewType) {
                             final MyItemViewHolder itemholder = new MyItemViewHolder(
                                     LayoutInflater.from(parent.getContext()).
                                             inflate(R.layout.discount_list_item,
                                                     parent,
                                                     false));
-
+//                            ViewTreeObserver vto = parent.getViewTreeObserver();
+//                            vto.addOnPreDrawListener(new ViewTreeObserver.OnPreDrawListener() {
+//                                @Override
+//                                public boolean onPreDraw() {
+//                                    int height = parent.getMeasuredHeight();
+//                                    int width = parent.getMeasuredWidth();
+//                                    Log.e("arilpan", "---cal height:" + height);
+//                                    return true;
+//                                }
+//                            });
 
                             return itemholder;
                         }
 
                         @Override
-                        public void onBindViewHolder(RecyclerView.ViewHolder holder, int position)
-                        {
+                        public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
                             final MyItemViewHolder newholder = (MyItemViewHolder) holder;
                             final String dish_id = itemDishes.get(position).getDishes_id();
 
                             Log.e("arilpan", "position1 dish_id:" + dish_id);
-                            newholder.dish_rlayout.setOnClickListener(new View.OnClickListener()
-                            {
+                            newholder.dish_rlayout.setOnClickListener(new View.OnClickListener() {
                                 @Override
-                                public void onClick(View v)
-                                {
+                                public void onClick(View v) {
 //                                    int position = newholder.getAdapterPosition();
-                                    if (itemDishes != null)
-                                    {
+                                    if (itemDishes != null) {
                                         Log.e("arilpan", "position1 dish_id:" + dish_id);
                                         EventBus.getDefault().post(
                                                 new StartBrotherEvent(
@@ -410,8 +442,7 @@ public class DiscountDishesFragment extends BaseFragment
                                 }
                             });
 
-                            if (position < itemDishes.size())
-                            {
+                            if (position < itemDishes.size()) {
                                 APPDishDiscount.ValueBean.DataBean dish = itemDishes.get(position);
                                 newholder.dish_name.setText(dish.getDishes_name());
                                 newholder.dish_price.setText("￥" + dish.getDishes_price());
@@ -423,8 +454,7 @@ public class DiscountDishesFragment extends BaseFragment
                                         .error(R.drawable.preferential_list_item_zanwutupian).
                                         into(newholder.dish_icon);
                                 Log.e("arilpan", "position2 dish_id:" + dish.getDishes_id());
-                            } else
-                            {
+                            } else {
                                 Log.e("arilpan", " will throw java.lang.IndexOutOfBoundsException");
                             }
 
@@ -439,13 +469,11 @@ public class DiscountDishesFragment extends BaseFragment
 //                        }
 
                         @Override
-                        public int getItemCount()
-                        {
+                        public int getItemCount() {
                             return itemDishes.size();
                         }
 
-                        class MyItemViewHolder extends RecyclerView.ViewHolder
-                        {
+                        class MyItemViewHolder extends RecyclerView.ViewHolder {
                             RelativeLayout dish_rlayout;
                             ImageView dish_icon;
                             TextView dish_name;
@@ -453,8 +481,7 @@ public class DiscountDishesFragment extends BaseFragment
                             TextView dish_old_price;
                             TextView dish_desc;
 
-                            public MyItemViewHolder(View view)
-                            {
+                            public MyItemViewHolder(View view) {
                                 super(view);
                                 view.setMinimumHeight(35);
                                 dish_rlayout = (RelativeLayout) view.findViewById(R.id
@@ -477,19 +504,14 @@ public class DiscountDishesFragment extends BaseFragment
 
 
         @Override
-        public int getItemViewType(int position)
-        {
+        public int getItemViewType(int position) {
             itemDishes = new ArrayList<APPDishDiscount.ValueBean.DataBean>();
-            if (discountDishesMapKey != null)
-            {
+            if (discountDishesMapKey != null) {
                 int key = discountDishesMapKey.get(position);
                 List<String> ids = discountDishesMap.get(key);
-                for (String id : ids)
-                {
-                    for (APPDishDiscount.ValueBean.DataBean dataBean : mDatas)
-                    {
-                        if (dataBean.getDishes_id().equals(id))
-                        {
+                for (String id : ids) {
+                    for (APPDishDiscount.ValueBean.DataBean dataBean : mDatas) {
+                        if (dataBean.getDishes_id().equals(id)) {
                             //todo:speed up
                             itemDishes.add(dataBean);
                         }
@@ -501,22 +523,18 @@ public class DiscountDishesFragment extends BaseFragment
         }
 
         @Override
-        public int getItemCount()
-        {
-            if (discountDishesMap != null)
-            {
+        public int getItemCount() {
+            if (discountDishesMap != null) {
                 return discountDishesMap.size();
             }
             return 0;
         }
 
-        class MyViewHolder extends RecyclerView.ViewHolder
-        {
+        class MyViewHolder extends RecyclerView.ViewHolder {
             RecyclerView dish_discount_item_recyview;
             TextView discount_item_type;
 
-            public MyViewHolder(View view)
-            {
+            public MyViewHolder(View view) {
                 super(view);
                 view.setMinimumHeight(35);
                 dish_discount_item_recyview = (RecyclerView) view.findViewById(

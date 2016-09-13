@@ -43,6 +43,13 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import com.avast.android.dialogs.fragment.SimpleDialogFragment;
+import com.avast.android.dialogs.iface.IDateDialogListener;
+import com.avast.android.dialogs.iface.IListDialogListener;
+import com.avast.android.dialogs.iface.IMultiChoiceListDialogListener;
+import com.avast.android.dialogs.iface.ISimpleDialogCancelListener;
+import com.avast.android.dialogs.iface.ISimpleDialogListener;
+
 import okhttp3.FormBody;
 import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
@@ -58,7 +65,49 @@ import okio.BufferedSink;
  * Created by aril_pan@qq.com on 16/8.
  */
 public class CancleOrderFragment extends BaseFragment
+        implements ISimpleDialogListener
 {
+    int REQUEST_SIMPLE_DIALOG = 42;
+    @Override
+    public void onPositiveButtonClicked(int requestCode)
+    {
+
+        if (requestCode == REQUEST_SIMPLE_DIALOG)
+        {
+            Log.e("arilpan", "CancleOrderFragment Positive button clicked");
+            EventBus.getDefault().post(new NetworkEvent(RequestType.ORDER_DELETE,
+                    order_id));
+
+        } else
+        {
+            Log.e("arilpan", "CancleOrderFragment Positive button clicked");
+        }
+    }
+    @Override
+    public void onNegativeButtonClicked(int requestCode)
+    {
+        String tag = getTag();
+        if (requestCode == REQUEST_SIMPLE_DIALOG)
+        {
+            Log.e("arilpan", "CancleOrderFragment Negative button clicked");
+        } else
+        {
+            Log.e("arilpan", "CancleOrderFragment Negative button clicked");
+        }
+    }
+
+    @Override
+    public void onNeutralButtonClicked(int requestCode)
+    {
+        if (requestCode == REQUEST_SIMPLE_DIALOG)
+        {
+            Log.e("arilpan", "CancleOrderFragment Neutral button clicked");
+        } else
+        {
+            Log.e("arilpan", "CancleOrderFragment Neutral button clicked");
+        }
+    }
+
 
     public CancleOrderFragment()
     {
@@ -137,8 +186,21 @@ public class CancleOrderFragment extends BaseFragment
         public void deleteOrder(int pos)
         {
             order_id = datas.get(pos).getOrder_id();
-            EventBus.getDefault().post(new NetworkEvent(RequestType.ORDER_DELETE,
-                    order_id));
+            SimpleDialogFragment.createBuilder(getContext(),
+                    getFragmentManager())
+                    .setTitle(" 是否删除订单?")
+                    .setTargetFragment(
+                            CancleOrderFragment.this, REQUEST_SIMPLE_DIALOG
+                    )
+                    .setMessage("提示: 点击右侧\"删除\"删除订单.")
+                    .setPositiveButtonText("删除")
+                    .setNegativeButtonText("不删除")
+//                    .setTag(String.valueOf(pos))
+                    .setNeutralButtonText("再想想?")
+//                    .setRequestCode(REQUEST_SIMPLE_DIALOG)
+                    .show();
+
+
         }
 
         @Override
