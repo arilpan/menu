@@ -1,7 +1,5 @@
 package com.xdkj.campus.menu.api;
 
-import android.database.DatabaseUtils;
-
 /**
  * Created by aril_pan@qq.com on 16-8-25.
  */
@@ -80,16 +78,16 @@ public class APIAddr
      * 排行
      */
     public static String dish_rank_url = BASE_URL +
-            "/shop_dishes_info.do?iDisplayStart=0" +
-            "&iDisplayLength=10&org_id=";
+            "/shop_dishes_info.do?iDisplayStart=###" +
+            "&iDisplayLength=$$$&org_id=";
     /**
      * 热门--查看更多==>与排行一个接口
      */
     public static String dish_hot_more_url = BASE_URL +
-            "/shop_dishes_info.do?iDisplayStart=0" +
-            "&iDisplayLength=10&org_id=";
+            "/shop_dishes_info.do?iDisplayStart=###" +
+            "&iDisplayLength=$$$&org_id=";
     /**
-     * 折扣菜品
+     * 折扣菜品 ?? todo:这儿需要分页？
      */
     public static String dish_discount_url = BASE_URL +
             "/shop_discountDishes_info" +
@@ -133,7 +131,7 @@ public class APIAddr
      * 新闻列表
      */
     public static String news_list_url = BASE_NEWS_URL +
-            "/appListNews.do?iDisplayStart=0&iDisplayLength=10";
+            "/appListNews.do?iDisplayStart=###&iDisplayLength=$$$";
 
 
     /**

@@ -94,7 +94,7 @@
 
         </activity>
         <activity
-            android:name=".DemoActivity"
+            android:name="com.zfeng.swiperefreshload.RecyclerViewDemoActivity"
             android:label="Test Dialog">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>

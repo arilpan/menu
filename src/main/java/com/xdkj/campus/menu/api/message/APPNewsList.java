@@ -631,6 +631,16 @@ public class APPNewsList
 
             public static class DataBean
             {
+                @Override
+                public boolean equals(Object obj) {
+                    APPNewsList.ValueBean.ListBean.DataBean s=(APPNewsList.ValueBean.ListBean.DataBean)obj;
+                    return news_id.equals(s.news_id) && createtime.equals(s.createtime);
+                }
+                @Override
+                public int hashCode() {
+                    String in = news_id + createtime;
+                    return in.hashCode();
+                }
                 private String news_id;
                 private String news_title;
                 private String news_content;

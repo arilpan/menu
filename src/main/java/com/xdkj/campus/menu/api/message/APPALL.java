@@ -733,6 +733,16 @@ public class APPALL
 
         public static class DataBean
         {
+            @Override
+            public boolean equals(Object obj) {
+                DataBean s=(DataBean)obj;
+                return dishes_id.equals(s.dishes_id) && dishes_name.equals(s.dishes_name);
+            }
+            @Override
+            public int hashCode() {
+                String in = dishes_id + dishes_name;
+                return in.hashCode();
+            }
             private String dishes_id;
             private String store_id;
             private String store_name;

@@ -16,7 +16,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import com.bumptech.glide.Glide;
@@ -239,13 +238,10 @@ public class DiscountDishesFragment extends BaseFragment
     }
 
     class MyLayoutManager extends LinearLayoutManager {
-
         public MyLayoutManager(Context context) {
             super(context);
             // TODO Auto-generated constructor stub
         }
-
-
         @Override
         public void onMeasure(RecyclerView.Recycler recycler, RecyclerView.State state,
                               int widthSpec,

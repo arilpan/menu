@@ -1,21 +1,20 @@
 package com.xdkj.campus.menu.ui.news;
 
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.Nullable;
-import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-
+import cn.bingoogolapple.bgabanner.BGABanner;
 import com.bumptech.glide.Glide;
 import com.squareup.moshi.JsonAdapter;
 import com.squareup.moshi.Types;
-import com.squareup.picasso.Picasso;
 import com.xdkj.campus.menu.MainActivity;
 import com.xdkj.campus.menu.R;
 import com.xdkj.campus.menu.adapter.NewsListAdapter;
@@ -26,26 +25,26 @@ import com.xdkj.campus.menu.entity.RequestType;
 import com.xdkj.campus.menu.event.NetworkEvent;
 import com.xdkj.campus.menu.event.StartBrotherEvent;
 import com.xdkj.campus.menu.listener.OnItemClickListener;
-
+import com.zfeng.swiperefreshload.SwipeRefreshLoadLayout;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
+import okhttp3.ResponseBody;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.ArrayList;
+import java.util.LinkedHashSet;
 import java.util.List;
-
-import cn.bingoogolapple.bgabanner.BGABanner;
-import okhttp3.OkHttpClient;
-import okhttp3.Request;
-import okhttp3.Response;
-import okhttp3.ResponseBody;
+import java.util.Set;
 
 /**
  * Created by aril_pan@qq.com on 16/8.
  */
 public class NewsListFragment extends BaseFragment
-        implements SwipeRefreshLayout
-        .OnRefreshListener
+//        implements SwipeRefreshLayout
+//        .OnRefreshListener
 {
     int SECOND = 1;
 
@@ -55,12 +54,11 @@ public class NewsListFragment extends BaseFragment
 
     private boolean mInAtTop = true;
     private int mScrollTotal;
-    private SwipeRefreshLayout mRefreshLayout;
+    private SwipeRefreshLoadLayout mRefreshLayout;
     private RecyclerView mRecy;
     private NewsListAdapter mAdapter;
 
-    public static NewsListFragment newInstance()
-    {
+    public static NewsListFragment newInstance() {
         Bundle args = new Bundle();
         NewsListFragment fragment = new NewsListFragment();
         fragment.setArguments(args);
@@ -70,8 +68,7 @@ public class NewsListFragment extends BaseFragment
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable
-    Bundle savedInstanceState)
-    {
+            Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_dish_news, container, false);
         initView(view);
         return view;
@@ -81,29 +78,26 @@ public class NewsListFragment extends BaseFragment
 
 
     /****************************************************************/
-    private void initView(View view)
-    {
+    private void initView(View view) {
         ((TextView) view.findViewById(R.id.title_middle)).setText("新闻资讯");
         view.findViewById(R.id.title_ll_left).setOnClickListener(new View
-                .OnClickListener()
-        {
+                .OnClickListener() {
             @Override
-            public void onClick(View v)
-            {
+            public void onClick(View v) {
                 _mActivity.onBackPressed();
             }
         });
         EventBus.getDefault().register(this);
 
+        datas = new ArrayList<>();
+
         news_banner = (BGABanner) view.findViewById(R.id.news_banner);
-        news_banner.setAdapter(new BGABanner.Adapter()
-        {
+        news_banner.setAdapter(new BGABanner.Adapter() {
             @Override
             public void fillBannerItem(BGABanner banner,
                                        View view,
                                        Object model,
-                                       int position)
-            {
+                                       int position) {
                 Log.e("arilpan", "model to string " + model.toString());
                 Glide.with(view.getContext())
                         .load(APIAddr.BASE_IMG_URL + model.toString())
@@ -114,39 +108,32 @@ public class NewsListFragment extends BaseFragment
 
 
         mRecy = (RecyclerView) view.findViewById(R.id.news_recyview);
-        mRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.refresh_layout);
-        mRefreshLayout.setOnRefreshListener(this);
+        mRefreshLayout = (SwipeRefreshLoadLayout) view.findViewById(R.id.refresh_layout);
         mAdapter = new NewsListAdapter(_mActivity);
         mRecy.setHasFixedSize(true);
-        mRecy.setLayoutManager(new StaggeredGridLayoutManager(1,
-                StaggeredGridLayoutManager
-                        .VERTICAL));
-
+//        mRecy.setLayoutManager(new StaggeredGridLayoutManager(1,
+//                StaggeredGridLayoutManager
+//                        .VERTICAL));
+        mRecy.setLayoutManager(new LinearLayoutManager(_mActivity));
         mRecy.setAdapter(mAdapter);
 
         //滑动事件
-        mRecy.addOnScrollListener(new RecyclerView.OnScrollListener()
-        {
+        mRecy.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
-            public void onScrolled(RecyclerView recyclerView, int dx, int dy)
-            {
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
                 super.onScrolled(recyclerView, dx, dy);
                 mScrollTotal += dy;
-                if (mScrollTotal <= 0)
-                {
+                if (mScrollTotal <= 0) {
                     mInAtTop = true;
-                } else
-                {
+                } else {
                     mInAtTop = false;
                 }
             }
         });
         //点击事件
-        mAdapter.setOnItemClickListener(new OnItemClickListener()
-        {
+        mAdapter.setOnItemClickListener(new OnItemClickListener() {
             @Override
-            public void onItemClick(int position, View view, RecyclerView.ViewHolder holder)
-            {
+            public void onItemClick(int position, View view, RecyclerView.ViewHolder holder) {
                 Log.e("arilpan", " NewsListAdapter onItemClick  ");
                 // 通知MainActivity跳转至CycleFragment
                 EventBus.getDefault().post(
@@ -156,66 +143,121 @@ public class NewsListFragment extends BaseFragment
             }
         });
 
-
+        mRefreshLayout.setOnRefreshListener(new SwipeRefreshLoadLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                refreshContent();
+            }
+        });
+        mRefreshLayout.setLoadMoreListener(new SwipeRefreshLoadLayout.LoadMoreListener() {
+            @Override
+            public void loadMore() {
+                loadMoreData();
+            }
+        });
         EventBus.getDefault().post(new NetworkEvent(RequestType.NEWS_LIST));
 
     }
 
-    @Override
-    public void onRefresh()
-    {
-        mRefreshLayout.postDelayed(new Runnable()
-        {
+    int start = 0;
+    int end = 10;
+    boolean isLoadMore = false;
+    boolean isRefresh = true;
+
+    private void refreshContent() {
+        new Handler().postDelayed(new Runnable() {
             @Override
-            public void run()
-            {
+            public void run() {
+                isLoadMore = false;
+                isRefresh = true;
+                EventBus.getDefault().post(new NetworkEvent(RequestType.NEWS_LIST));
+                Log.e("arilpan", "调用 refreshContent  ");
                 mRefreshLayout.setRefreshing(false);
             }
-        }, 1500);
+        }, 1000);
     }
 
+    private void loadMoreData() {
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                isLoadMore = true;
+                isRefresh = false;
+                EventBus.getDefault().post(new NetworkEvent(RequestType.NEWS_LIST));
+                Log.e("arilpan", "调用loadMoreData  ");
+                mRefreshLayout.setLoadMore(false);
+            }
+        }, 1000);
+    }
+
+    private String getUrl(String url) {
+        if (isRefresh) {
+            return url.replace("###", String.valueOf(0)).
+                    replace("$$$", String.valueOf(10));
+        } else if (isLoadMore) {
+            start += 10;
+            return url.replace("###", String.valueOf(start)).
+                    replace("$$$", String.valueOf(end));
+        }
+        return url.replace("###", String.valueOf(0)).
+                replace("$$$", String.valueOf(10));
+    }
+
+
+//    @Override
+//    public void onRefresh()
+//    {
+//        mRefreshLayout.postDelayed(new Runnable()
+//        {
+//            @Override
+//            public void run()
+//            {
+//                mRefreshLayout.setRefreshing(false);
+//            }
+//        }, 1500);
+//    }
+
     @Subscribe(threadMode = ThreadMode.ASYNC)
-    public void onNetWork(NetworkEvent event)
-    {
+    public void onNetWork(NetworkEvent event) {
         Log.e("arilpan", "NewsListFragment哥 你调用咩?");
-        if (RequestType.NEWS_LIST == event.reqType)
-        {
-            Log.e("arilpan", "新闻列表url:" + event.url);
+        if (RequestType.NEWS_LIST == event.reqType) {
+
             setData(getData(event));
         }
 
     }
 
-    public List<APPNewsList.ValueBean.ListBean.DataBean> getData(NetworkEvent event)
-    {
+    public List<APPNewsList.ValueBean.ListBean.DataBean> getData(NetworkEvent event) {
         ResponseBody body = null;
-        try
-        {
+        try {
             final JsonAdapter<APPNewsList>
                     COM_JSON_ADAPTER = MainActivity.MOSHI.adapter(
                     Types.newParameterizedType(APPNewsList.class));
             OkHttpClient client = new OkHttpClient();
+            String url = event.url;
+            url = getUrl(url);
+            Log.e("arilpan", "新闻列表url:" + event.url);
             Request request = new Request.Builder()
-                    .url(event.url)
+                    .url(url)
                     .build();
             Response response = client.newCall(request).execute();
             body = response.body();
 
             APPNewsList datas_arry = COM_JSON_ADAPTER.fromJson(body.source());
             body.close();
-            datas = datas_arry.getValue().getList().getData();
-
             imgs = new ArrayList<>();
             imgs.add(datas_arry.getValue().getUrl1());
             imgs.add(datas_arry.getValue().getUrl2());
             imgs.add(datas_arry.getValue().getUrl3());
 
-            return datas;
-        } catch (Exception e)
-        {
+            List<APPNewsList.ValueBean.ListBean.DataBean> newdatas = datas_arry.getValue().getList().getData();
+            Log.e("arilpan", "size :" + newdatas.size());
+
+
+            return newdatas;
+        } catch (Exception e) {
             e.printStackTrace();
-        } finally
-        {
+        } finally {
             body.close();
         }
         return null;
@@ -223,25 +265,36 @@ public class NewsListFragment extends BaseFragment
 
     List<APPNewsList.ValueBean.ListBean.DataBean> datas;
 
-    public void setData(final List<APPNewsList.ValueBean.ListBean.DataBean> items)
-    {
-        try
-        {
-            _mActivity.runOnUiThread(new Runnable()
-            {
+    public static List<APPNewsList.ValueBean.ListBean.DataBean> removeDuplicate(List<APPNewsList.ValueBean.ListBean.DataBean> list) {
+        Set set = new LinkedHashSet<APPNewsList.ValueBean.ListBean.DataBean>();
+        set.addAll(list);
+        list.clear();
+        list.addAll(set);
+        return list;
+    }
+
+    public void setData(final List<APPNewsList.ValueBean.ListBean.DataBean> items) {
+        try {
+            _mActivity.runOnUiThread(new Runnable() {
                 @Override
-                public void run()
-                {
-                    if (items != null)
+                public void run() {
+                    if(imgs!=null)
                     {
-                        mAdapter.setDatas(items);
                         news_banner.setData(imgs, null);
+                    }
+                    if (items != null) {
+
+                        datas.addAll(items);
+                        removeDuplicate(datas);
+                        mAdapter.setDatas(datas);
+
+                    } else {
+                        start -= 10;
                     }
                     //stuff that updates ui
                 }
             });
-        } catch (Exception e)
-        {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
@@ -269,21 +322,18 @@ public class NewsListFragment extends BaseFragment
 //    {
 //        start(event.targetFragment);
 //    }
-    private void scrollToTop()
-    {
+    private void scrollToTop() {
         mRecy.smoothScrollToPosition(0);
     }
 
     @Override
-    public boolean onBackPressedSupport()
-    {
+    public boolean onBackPressedSupport() {
         // 默认flase，继续向上传递
         return super.onBackPressedSupport();
     }
 
     @Override
-    public void onDestroyView()
-    {
+    public void onDestroyView() {
         super.onDestroyView();
         mRecy.setAdapter(null);
         EventBus.getDefault().unregister(this);

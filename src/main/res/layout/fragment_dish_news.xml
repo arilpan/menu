@@ -14,7 +14,7 @@
         android:id="@+id/news_banner"
         android:layout_width="match_parent"
         android:layout_height="150dp"
-        android:layout_marginBottom="10dp"
+        android:layout_marginBottom="5dp"
         style="@style/MatchMatch"
         android:clickable="true"
         app:banner_pageChangeDuration="2000"
@@ -30,16 +30,11 @@
 
 
 
-    <android.support.v4.widget.SwipeRefreshLayout
+    <com.zfeng.swiperefreshload.SwipeRefreshLoadLayout
         android:id="@+id/refresh_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginBottom="10dp">
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/news_recyview"
                 android:layout_width="0dp"
@@ -47,7 +42,5 @@
                 android:layout_weight="1"
                 android:background="#F8F8F8">
             </android.support.v7.widget.RecyclerView>
-
-        </LinearLayout>
-    </android.support.v4.widget.SwipeRefreshLayout>
+    </com.zfeng.swiperefreshload.SwipeRefreshLoadLayout>
 </LinearLayout>
